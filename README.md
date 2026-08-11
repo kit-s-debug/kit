@@ -40,15 +40,19 @@ on touch/coarse-pointer devices.
 Nothing here is final content — placeholders are marked so they're easy to
 find and replace.
 
-- **Logo** — currently a two-line "Eddie / Rocks" wordmark set in Bebas
-  Neue (the condensed, stamped-look face closest to the real logo visible
-  in your screenshots), gold gradient on the second line. This is a
-  recreation, not the real file — two attempts to paste the actual logo
-  into chat both came through unreadable (rendered blank/white), most
-  likely because it's a white or transparent-background file with nothing
-  behind it. Please resend it either on a dark background or as a
-  flattened JPG, and I'll swap the `.wordmark` markup in `index.html` for
-  an `<img>` pointing at it.
+- **Logo** — `assets/images/logo.svg`, used via `<img>` in both the header
+  and footer `.wordmark` links. This is a hand-built recreation, not the
+  original file: two attempts to paste the real logo into chat came through
+  unreadable (rendered blank/white, most likely a transparent-background
+  file with nothing behind it), but a later screenshot with a dark
+  background behind it was visible, so the stacked "EDDIE / ROCKS" mark,
+  proportions, and stamped/distressed edge texture were rebuilt from that
+  (bold condensed type + an SVG turbulence/displacement filter for the
+  rough edges — see `<filter id="stamp">` in the SVG). It should read as
+  very close, but it is not a pixel-exact copy. If you have the original
+  logo file, send it on a dark background or as a flattened JPG/PNG and
+  replace `assets/images/logo.svg` directly (same filename, no markup
+  changes needed).
 - **Photos** — every image currently points at a generated placeholder SVG
   in `assets/images/` (gold-glow gradients labelled with what should go
   there: hero, Main Floor, RnB Floor, gallery shots, etc.). Replace each
@@ -69,7 +73,8 @@ find and replace.
 
 ## Fonts
 
-Bodoni Moda, Hanken Grotesk and Bebas Neue are self-hosted in
-`assets/fonts/` (SIL Open Font License — see the `LICENSE-*.txt` files
-alongside them), pulled in via `@font-face` in `css/styles.css`. No
-external font requests.
+Bodoni Moda and Hanken Grotesk are self-hosted in `assets/fonts/` (SIL Open
+Font License — see the `LICENSE-*.txt` files alongside them), pulled in via
+`@font-face` in `css/styles.css`. No external font requests. The logo SVG
+embeds its own copy of Anton (also OFL) so it renders correctly wherever
+it's used, independent of the page's fonts.

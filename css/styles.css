@@ -173,18 +173,13 @@ p{ margin:0; }
   max-width:var(--container); margin:0 auto; padding:20px 28px; height:var(--header-h);
   display:flex; align-items:center; justify-content:space-between;
 }
-.wordmark{
-  display:flex; flex-direction:column; line-height:.78; text-decoration:none;
-  font-family:"Bebas Neue", var(--font-display); font-weight:400; font-size:19px;
-  letter-spacing:.03em; text-transform:uppercase;
+.wordmark{ display:inline-flex; text-decoration:none; }
+.logo-mark{
+  height:38px; width:auto; display:block;
+  filter:drop-shadow(0 0 0 transparent); transition:filter .3s ease;
 }
-.wordmark span{ display:block; }
-.wordmark .wm-1{ color:var(--ivory); }
-.wordmark .wm-2{
-  background:var(--gold-gradient); background-size:250% 100%;
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.wordmark--footer{ font-size:30px; }
+.wordmark:hover .logo-mark{ filter:drop-shadow(0 0 14px rgba(212,175,55,.55)); }
+.wordmark--footer .logo-mark{ height:74px; }
 .primary-nav ul{ list-style:none; display:flex; gap:36px; margin:0; padding:0; }
 .primary-nav a{
   position:relative; text-decoration:none; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
