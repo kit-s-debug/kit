@@ -12,156 +12,132 @@
 
 <header class="site-header" id="site-header">
   <div class="header-inner">
-    <a href="#top" class="wordmark">
-      <span class="wordmark-line">Eddie</span>
-      <span class="wordmark-line wordmark-line--accent">Rocks</span>
-    </a>
-
-    <nav class="primary-nav" aria-label="Primary">
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-
-    <div class="header-actions">
-      <a href="#experience" class="btn btn--outline">Private Hire</a>
-      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav">
-        <span class="nav-toggle-bars" aria-hidden="true"></span>
-        <span class="visually-hidden">Menu</span>
-      </button>
-    </div>
-  </div>
-
-  <div class="mobile-nav" id="mobile-nav" hidden>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#floors">Floors</a></li>
-      <li><a href="#experience">Private Hire</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <a href="#top" class="wordmark">Eddie Rocks</a>
+    <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu-overlay">
+      <span>Menu</span>
+      <span class="menu-btn-bars" aria-hidden="true"></span>
+    </button>
   </div>
 </header>
+
+<div class="menu-overlay" id="menu-overlay" hidden>
+  <div class="menu-overlay-top">
+    <a href="#top" class="wordmark">Eddie Rocks</a>
+    <button type="button" class="menu-close" id="menu-close" aria-label="Close menu">✕</button>
+  </div>
+  <nav class="menu-links" aria-label="Primary">
+    <a href="#about"><span class="menu-index">01</span>About</a>
+    <a href="#floors"><span class="menu-index">02</span>Floors</a>
+    <a href="#experience"><span class="menu-index">03</span>Private Hire</a>
+    <a href="#gallery"><span class="menu-index">04</span>Gallery</a>
+    <a href="#events"><span class="menu-index">05</span>Events</a>
+    <a href="#contact"><span class="menu-index">06</span>Contact</a>
+  </nav>
+  <div class="menu-overlay-meta">
+    <a href="tel:01437779595">01437 779595</a>
+    <a href="mailto:contact@eddies.co">contact@eddies.co</a>
+  </div>
+</div>
 
 <main id="main">
 
   <section class="hero" id="top">
-    <img class="hero-bg" src="assets/images/hero.svg" alt="" loading="eager">
-    <div class="hero-scrim" aria-hidden="true"></div>
-    <div class="hero-content">
-      <p class="eyebrow reveal">Haverfordwest — Quay Street</p>
-      <h1 class="reveal">Every night here<br>is the occasion.</h1>
-      <p class="hero-sub reveal">West Wales' number one nightclub — two floors, one address, built for the nights you plan ahead for.</p>
-      <div class="hero-actions reveal">
-        <a href="#experience" class="btn btn--solid">Reserve Private Hire</a>
-        <a href="#floors" class="btn btn--text">View the Floors <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-    <a href="#about" class="scroll-cue" aria-label="Scroll to content">
-      <span></span>
-    </a>
+    <p class="mono-label reveal">West Wales' No.1 nightclub</p>
+    <h1 class="reveal"><span>Eddie</span><span class="accent">Rocks</span></h1>
+    <p class="hero-sub reveal">Haverfordwest, on the quay. Two floors, private hire, and a night that doesn't need a filter.</p>
+    <a href="#floors" class="scroll-cue reveal" aria-label="Scroll to content"><span></span></a>
   </section>
 
-  <section class="stat-strip" id="about">
-    <div class="stat-strip-inner">
-      <div class="about-copy reveal">
-        <p class="eyebrow">About Eddie Rocks</p>
-        <h2>West Wales' No.1 nightclub, on the quay.</h2>
-        <p>Two floors under one roof on Quay Street in Haverfordwest — resident nights, showcase events, and private hire for the occasions that need the whole room.</p>
-      </div>
-      <dl class="stats reveal">
-        <div class="stat">
-          <dt>Reputation</dt>
-          <dd>№1 nightclub in West&nbsp;Wales</dd>
-        </div>
-        <div class="stat">
-          <dt>Layout</dt>
-          <dd>2 floors under one roof</dd>
-        </div>
-        <div class="stat">
-          <dt>Address</dt>
-          <dd>Quay Street, Haverfordwest</dd>
-        </div>
-      </dl>
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee">
+      <span><b>Showcase Events</b> — resident nights, every weekend</span>
+      <span><b>VIP Nights</b> — booth &amp; table reservations</span>
+      <span><b>Private Hire</b> — the whole venue, your occasion</span>
+      <span><b>Main Floor</b> — Eddie's, ground level</span>
+      <span><b>RnB Floor</b> — one flight up</span>
+      <span><b>Showcase Events</b> — resident nights, every weekend</span>
+      <span><b>VIP Nights</b> — booth &amp; table reservations</span>
+      <span><b>Private Hire</b> — the whole venue, your occasion</span>
+      <span><b>Main Floor</b> — Eddie's, ground level</span>
+      <span><b>RnB Floor</b> — one flight up</span>
     </div>
+  </div>
+
+  <section class="about" id="about">
+    <div class="about-copy reveal">
+      <p class="mono-label">About</p>
+      <h2>West Wales' No.1 nightclub, on the quay.</h2>
+      <p>Two floors on Quay Street in Haverfordwest — resident nights, showcase events, and private hire for the occasions that need the whole room.</p>
+    </div>
+    <dl class="about-stats reveal">
+      <div><dt>01</dt><dd>№1 nightclub in West Wales</dd></div>
+      <div><dt>02</dt><dd>2 floors, one address</dd></div>
+      <div><dt>03</dt><dd>Quay Street, Haverfordwest</dd></div>
+    </dl>
   </section>
 
   <section class="floors" id="floors" aria-labelledby="floors-heading">
     <div class="floors-head reveal">
-      <p class="eyebrow">Under one roof</p>
+      <p class="mono-label">Under one roof</p>
       <h2 id="floors-heading">Two floors, two nights</h2>
-      <p>Eddie's sits above <span class="locator">The Forbidden Florist</span> on Quay Street — take the stairs up to the Main Floor, then up again for the RnB Floor.</p>
+      <p>Eddie's sits above <span class="accent-text">The Forbidden Florist</span> on Quay Street — up the stairs for the Main Floor, up again for the RnB Floor.</p>
     </div>
-
-    <article class="floor-panel reveal">
-      <div class="floor-media">
+    <div class="floors-grid">
+      <article class="floor-block reveal">
+        <span class="floor-num">01</span>
         <img src="assets/images/floor-main.svg" alt="Main Floor at Eddie Rocks" loading="lazy">
-      </div>
-      <div class="floor-copy">
-        <span class="floor-index">01</span>
         <h3>Main Floor</h3>
-        <p>The room that built the reputation. Full sound rig, resident DJs, and the floor that's busy every weekend — first up the stairs from Quay Street.</p>
-        <a href="#events" class="btn btn--text">See what's on <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
-
-    <article class="floor-panel floor-panel--reverse reveal">
-      <div class="floor-media">
+        <p>The room that built the reputation. Full sound rig, resident DJs, busy every weekend — first up the stairs from Quay Street.</p>
+        <a href="#events" class="text-link">See what's on <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="floor-block reveal">
+        <span class="floor-num">02</span>
         <img src="assets/images/floor-rnb.svg" alt="RnB Floor at Eddie Rocks" loading="lazy">
-      </div>
-      <div class="floor-copy">
-        <span class="floor-index">02</span>
         <h3>RnB Floor</h3>
-        <p>One flight up, the tempo shifts. Smoother sets, later nights, and the floor to head for once the Main Floor's warmed up.</p>
-        <a href="#experience" class="btn btn--text">Book the floor <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
+        <p>One flight up, the tempo shifts. Smoother sets, later nights — head up once the Main Floor's warmed up.</p>
+        <a href="#experience" class="text-link">Book the floor <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
   </section>
 
   <section class="experience" id="experience" aria-labelledby="experience-heading">
     <div class="experience-head reveal">
-      <p class="eyebrow">The Eddie's experience</p>
+      <p class="mono-label">The Eddie's experience</p>
       <h2 id="experience-heading">Three ways to spend the night</h2>
     </div>
-    <div class="experience-grid">
+    <div class="experience-scroller">
       <article class="experience-card reveal">
+        <span class="mono-label">01 / Showcase</span>
         <img src="assets/images/feature-showcase-events.svg" alt="" loading="lazy">
         <h3>Showcase Events</h3>
         <p>Resident and guest line-ups on the Main Floor, for the nights the whole room turns up.</p>
-        <a href="#events" class="btn btn--text">View events <span aria-hidden="true">→</span></a>
+        <a href="#events" class="text-link">View events <span aria-hidden="true">→</span></a>
       </article>
       <article class="experience-card reveal">
+        <span class="mono-label">02 / VIP</span>
         <img src="assets/images/feature-vip-nights.svg" alt="" loading="lazy">
         <h3>VIP Nights</h3>
         <p>Booth and table reservations, with a drinks package built for comfort over chaos.</p>
-        <a href="#contact" class="btn btn--text">Enquire <span aria-hidden="true">→</span></a>
+        <a href="#contact" class="text-link">Enquire <span aria-hidden="true">→</span></a>
       </article>
       <article class="experience-card reveal">
+        <span class="mono-label">03 / Hire</span>
         <img src="assets/images/feature-private-hire.svg" alt="" loading="lazy">
         <h3>Private Hire</h3>
         <p>Close the doors to everyone but your guest list — either floor, styled to the occasion.</p>
-        <a href="#contact" class="btn btn--text">Book now <span aria-hidden="true">→</span></a>
+        <a href="#contact" class="text-link">Book now <span aria-hidden="true">→</span></a>
       </article>
     </div>
   </section>
 
-  <section class="cta-banner reveal">
-    <img class="cta-bg" src="assets/images/cta-banner.svg" alt="" loading="lazy">
-    <div class="cta-scrim" aria-hidden="true"></div>
-    <div class="cta-content">
-      <h2>Book your night now.</h2>
-      <p>Get the full Eddie's experience for you and your group with a VIP or private hire package.</p>
-      <a href="#contact" class="btn btn--solid">Private Hire Enquiry</a>
-    </div>
+  <section class="statement reveal">
+    <h2>Book your<br>night now.</h2>
+    <a href="#contact" class="btn">Private Hire Enquiry</a>
   </section>
 
   <section class="gallery" id="gallery" aria-labelledby="gallery-heading">
     <div class="gallery-head reveal">
-      <p class="eyebrow">Capture the moment</p>
+      <p class="mono-label">Capture the moment</p>
       <h2 id="gallery-heading">Gallery</h2>
     </div>
     <ul class="gallery-grid" id="gallery-grid">
@@ -176,7 +152,7 @@
 
   <section class="events" id="events" aria-labelledby="events-heading">
     <div class="events-inner reveal">
-      <p class="eyebrow">What's on</p>
+      <p class="mono-label">What's on</p>
       <h2 id="events-heading">Upcoming Events</h2>
       <div class="events-empty">
         <p>New nights are announced regularly on the Main and RnB floors. Check back here, or follow along on social for the next one.</p>
@@ -187,15 +163,11 @@
 
   <section class="contact" id="contact" aria-labelledby="contact-heading">
     <div class="contact-inner reveal">
-      <p class="eyebrow">Find us</p>
+      <p class="mono-label">Find us</p>
       <h2 id="contact-heading">Quay Street, Haverfordwest</h2>
-      <p class="contact-locator">Above <span class="locator">The Forbidden Florist</span> — Main Floor entrance from Quay Street.</p>
+      <p class="contact-locator">Above <span class="accent-text">The Forbidden Florist</span> — Main Floor entrance from Quay Street.</p>
       <div class="contact-grid">
-        <address>
-          4 Quay Street<br>
-          Haverfordwest<br>
-          SA61 1BG
-        </address>
+        <address>4 Quay Street<br>Haverfordwest<br>SA61 1BG</address>
         <div class="contact-links">
           <a href="tel:01437779595">01437 779595</a>
           <a href="mailto:contact@eddies.co">contact@eddies.co</a>
@@ -207,12 +179,8 @@
 </main>
 
 <footer class="site-footer">
+  <p class="footer-big">Eddie<br>Rocks.</p>
   <div class="footer-inner">
-    <a href="#top" class="wordmark wordmark--footer">
-      <span class="wordmark-line">Eddie</span>
-      <span class="wordmark-line wordmark-line--accent">Rocks</span>
-    </a>
-
     <nav aria-label="Footer">
       <ul>
         <li><a href="#about">About</a></li>
@@ -222,7 +190,6 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-
     <div class="footer-meta">
       <address>4 Quay Street, Haverfordwest, SA61 1BG</address>
       <p><a href="tel:01437779595">01437 779595</a> · <a href="mailto:contact@eddies.co">contact@eddies.co</a></p>
@@ -239,7 +206,6 @@
       </ul>
     </div>
   </div>
-
   <div class="footer-legal">
     <p>© <span id="footer-year"></span> Eddie Rocks, Haverfordwest.</p>
   </div>

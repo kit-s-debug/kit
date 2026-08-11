@@ -3,7 +3,7 @@
 
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ---------- sticky header shrink/blur ---------- */
+  /* ---------- sticky header shadow/blur ---------- */
   var header = document.getElementById("site-header");
   function onScroll() {
     header.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -11,19 +11,34 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ---------- mobile nav toggle ---------- */
-  var navToggle = document.getElementById("nav-toggle");
-  var mobileNav = document.getElementById("mobile-nav");
-  navToggle.addEventListener("click", function () {
-    var open = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!open));
-    mobileNav.hidden = open;
-  });
-  mobileNav.addEventListener("click", function (e) {
-    if (e.target.tagName === "A") {
-      navToggle.setAttribute("aria-expanded", "false");
-      mobileNav.hidden = true;
-    }
+  /* ---------- full-screen menu overlay ---------- */
+  var menuBtn = document.getElementById("menu-btn");
+  var menuClose = document.getElementById("menu-close");
+  var menuOverlay = document.getElementById("menu-overlay");
+  var menuLastFocused = null;
+
+  function openMenu() {
+    menuLastFocused = document.activeElement;
+    menuOverlay.hidden = false;
+    menuBtn.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+    menuClose.focus();
+    document.addEventListener("keydown", onMenuKeydown);
+  }
+  function closeMenu() {
+    menuOverlay.hidden = true;
+    menuBtn.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+    document.removeEventListener("keydown", onMenuKeydown);
+    if (menuLastFocused) menuLastFocused.focus();
+  }
+  function onMenuKeydown(e) {
+    if (e.key === "Escape") closeMenu();
+  }
+  menuBtn.addEventListener("click", openMenu);
+  menuClose.addEventListener("click", closeMenu);
+  menuOverlay.querySelectorAll(".menu-links a").forEach(function (link) {
+    link.addEventListener("click", closeMenu);
   });
 
   /* ---------- reveal on scroll ---------- */
@@ -56,7 +71,7 @@
   var lightboxPrev = document.getElementById("lightbox-prev");
   var lightboxNext = document.getElementById("lightbox-next");
   var currentIndex = 0;
-  var lastFocused = null;
+  var lightboxLastFocused = null;
 
   function showImage(index) {
     currentIndex = (index + galleryImages.length) % galleryImages.length;
@@ -64,27 +79,23 @@
     lightboxImage.src = item.src;
     lightboxImage.alt = item.alt;
   }
-
   function openLightbox(index) {
-    lastFocused = document.activeElement;
+    lightboxLastFocused = document.activeElement;
     showImage(index);
     lightbox.hidden = false;
     lightboxClose.focus();
     document.addEventListener("keydown", onLightboxKeydown);
   }
-
   function closeLightbox() {
     lightbox.hidden = true;
     document.removeEventListener("keydown", onLightboxKeydown);
-    if (lastFocused) lastFocused.focus();
+    if (lightboxLastFocused) lightboxLastFocused.focus();
   }
-
   function onLightboxKeydown(e) {
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") showImage(currentIndex - 1);
     if (e.key === "ArrowRight") showImage(currentIndex + 1);
   }
-
   document.querySelectorAll(".gallery-item").forEach(function (btn) {
     btn.addEventListener("click", function () {
       openLightbox(parseInt(btn.dataset.index, 10));

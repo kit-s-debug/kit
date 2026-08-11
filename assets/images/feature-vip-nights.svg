@@ -1,43 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" role="img" aria-label="PLACEHOLDER — VIP NIGHTS">
   <defs>
     <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(95 0.5 0.5)">
-      <stop offset="0%" stop-color="#1E1720"/>
-      <stop offset="55%" stop-color="#120E14"/>
-      <stop offset="100%" stop-color="#120E14"/>
+      <stop offset="0%" stop-color="#211E24"/>
+      <stop offset="60%" stop-color="#0A0A0C"/>
+      <stop offset="100%" stop-color="#0A0A0C"/>
     </linearGradient>
-    <radialGradient id="glow" cx="30%" cy="20%" r="65%">
-      <stop offset="0%" stop-color="#C9A24B" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#C9A24B" stop-opacity="0"/>
+    <radialGradient id="glow" cx="25%" cy="18%" r="60%">
+      <stop offset="0%" stop-color="#9C4A6C" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#9C4A6C" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="900" height="700" fill="url(#g)"/>
   <rect width="900" height="700" fill="url(#glow)"/>
-  <circle cx="560.6" cy="519.3" r="1.9" fill="#C9A24B" opacity="0.13"/>
-    <circle cx="665.9" cy="645.6" r="0.6" fill="#C9A24B" opacity="0.09"/>
-    <circle cx="849.0" cy="454.3" r="2.0" fill="#C9A24B" opacity="0.05"/>
-    <circle cx="422.2" cy="172.6" r="1.5" fill="#C9A24B" opacity="0.10"/>
-    <circle cx="11.8" cy="151.7" r="1.0" fill="#C9A24B" opacity="0.13"/>
-    <circle cx="689.2" cy="111.7" r="1.9" fill="#C9A24B" opacity="0.05"/>
-    <circle cx="555.7" cy="88.7" r="0.6" fill="#C9A24B" opacity="0.13"/>
-    <circle cx="188.5" cy="150.8" r="2.2" fill="#C9A24B" opacity="0.13"/>
-    <circle cx="260.4" cy="673.0" r="1.5" fill="#C9A24B" opacity="0.11"/>
-    <circle cx="184.3" cy="658.7" r="1.7" fill="#C9A24B" opacity="0.14"/>
-    <circle cx="804.4" cy="209.2" r="1.2" fill="#C9A24B" opacity="0.06"/>
-    <circle cx="131.1" cy="45.6" r="1.1" fill="#C9A24B" opacity="0.10"/>
-    <circle cx="3.0" cy="474.6" r="1.1" fill="#C9A24B" opacity="0.07"/>
-    <circle cx="736.7" cy="336.5" r="1.1" fill="#C9A24B" opacity="0.09"/>
-    <circle cx="634.2" cy="39.9" r="2.2" fill="#C9A24B" opacity="0.04"/>
-    <circle cx="674.8" cy="591.4" r="0.6" fill="#C9A24B" opacity="0.12"/>
-    <circle cx="329.6" cy="405.0" r="0.6" fill="#C9A24B" opacity="0.04"/>
-    <circle cx="162.8" cy="668.6" r="0.9" fill="#C9A24B" opacity="0.12"/>
-    <circle cx="836.7" cy="659.4" r="1.2" fill="#C9A24B" opacity="0.08"/>
-    <circle cx="472.2" cy="542.9" r="0.8" fill="#C9A24B" opacity="0.11"/>
-    <circle cx="717.5" cy="601.8" r="0.7" fill="#C9A24B" opacity="0.13"/>
-    <circle cx="82.1" cy="238.5" r="1.6" fill="#C9A24B" opacity="0.13"/>
-    <circle cx="306.0" cy="646.9" r="1.5" fill="#C9A24B" opacity="0.07"/>
-    <circle cx="285.1" cy="124.2" r="0.7" fill="#C9A24B" opacity="0.05"/>
-    <circle cx="620.3" cy="697.7" r="0.9" fill="#C9A24B" opacity="0.04"/>
-    <circle cx="888.0" cy="373.5" r="1.2" fill="#C9A24B" opacity="0.06"/>
-  <rect x="0.5" y="0.5" width="899" height="699" fill="none" stroke="#C9A24B" stroke-opacity="0.18"/>
-  <text x="450.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif" font-size="20" letter-spacing="2" fill="#F1E9DD" fill-opacity="0.4">PLACEHOLDER — VIP NIGHTS</text>
+  <circle cx="560.6" cy="519.3" r="1.7" fill="#EDEAE2" opacity="0.12"/>
+    <circle cx="665.9" cy="645.6" r="0.6" fill="#EDEAE2" opacity="0.08"/>
+    <circle cx="849.0" cy="454.3" r="1.9" fill="#EDEAE2" opacity="0.06"/>
+    <circle cx="422.2" cy="172.6" r="1.4" fill="#EDEAE2" opacity="0.09"/>
+    <circle cx="11.8" cy="151.7" r="1.0" fill="#EDEAE2" opacity="0.11"/>
+    <circle cx="689.2" cy="111.7" r="1.7" fill="#EDEAE2" opacity="0.06"/>
+    <circle cx="555.7" cy="88.7" r="0.6" fill="#EDEAE2" opacity="0.11"/>
+    <circle cx="188.5" cy="150.8" r="2.0" fill="#EDEAE2" opacity="0.11"/>
+    <circle cx="260.4" cy="673.0" r="1.4" fill="#EDEAE2" opacity="0.10"/>
+    <circle cx="184.3" cy="658.7" r="1.6" fill="#EDEAE2" opacity="0.12"/>
+    <circle cx="804.4" cy="209.2" r="1.1" fill="#EDEAE2" opacity="0.06"/>
+    <circle cx="131.1" cy="45.6" r="1.0" fill="#EDEAE2" opacity="0.09"/>
+    <circle cx="3.0" cy="474.6" r="1.1" fill="#EDEAE2" opacity="0.07"/>
+    <circle cx="736.7" cy="336.5" r="1.0" fill="#EDEAE2" opacity="0.08"/>
+    <circle cx="634.2" cy="39.9" r="2.0" fill="#EDEAE2" opacity="0.05"/>
+    <circle cx="674.8" cy="591.4" r="0.6" fill="#EDEAE2" opacity="0.11"/>
+    <circle cx="329.6" cy="405.0" r="0.6" fill="#EDEAE2" opacity="0.05"/>
+    <circle cx="162.8" cy="668.6" r="0.9" fill="#EDEAE2" opacity="0.10"/>
+    <circle cx="836.7" cy="659.4" r="1.1" fill="#EDEAE2" opacity="0.07"/>
+    <circle cx="472.2" cy="542.9" r="0.8" fill="#EDEAE2" opacity="0.10"/>
+  <rect x="0.5" y="0.5" width="899" height="699" fill="none" stroke="#EDEAE2" stroke-opacity="0.12"/>
+  <text x="450.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-family="ui-monospace, monospace" font-size="20" letter-spacing="1.5" fill="#EDEAE2" fill-opacity="0.38">PLACEHOLDER — VIP NIGHTS</text>
 </svg>
