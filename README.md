@@ -1,10 +1,10 @@
-# Eddie Rocks — After Hours Minimal redesign
+# Eddie Rocks — Gold Standard redesign
 
-A static rebuild of eddies.co in the "After Hours Minimal" direction:
-near-black and bone with a muted wine-violet accent, huge type-driven hero
-(Unbounded + JetBrains Mono + Hanken Grotesk), a running ticker, a
-full-screen menu overlay, and scroll-driven interactions in place of the
-old blue-gradient template look.
+A static rebuild of eddies.co in the "Gold Standard" direction: true black
+with a metallic gold gradient, a high-contrast fashion serif (Bodoni Moda)
+for headlines, a custom cursor with hover states, magnetic buttons, a
+scroll-linked parallax hero, and hover-triggered image reveals — the kind
+of detail work a premium agency build usually charges for.
 
 ## Preview locally
 
@@ -16,26 +16,44 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000`.
 
+## Interactive details in this build
+
+- **Custom cursor** — a gold ring follows the pointer and expands over
+  links, buttons, and gallery images (shows a "View" label on gallery
+  items). Disabled automatically on touch devices.
+- **Magnetic buttons** — primary buttons and key links pull gently toward
+  the cursor on hover (`data-magnetic` attribute in `index.html`).
+- **Hero scroll effect** — the hero image and headline parallax/fade as
+  you scroll past them (`js/main.js`, `updateParallax`).
+- **Tilt on hover** — floor photos and experience cards tilt slightly
+  toward the cursor (`data-tilt` attribute).
+- **Shimmer text** — gold gradient headlines animate a slow shine sweep
+  (`.shimmer` class).
+- **Grain overlay + gold-tinted scrollbar** for a more filmic, considered
+  finish than flat black.
+
+All of the above respects `prefers-reduced-motion` and is skipped/disabled
+on touch/coarse-pointer devices.
+
 ## Swapping in the real logo and photos
 
 Nothing here is final content — placeholders are marked so they're easy to
 find and replace.
 
-- **Logo** — currently a text wordmark styled with Unbounded (`.wordmark` in
-  `index.html`, appears in the header and the full-screen menu). To use the
-  real Eddie Rocks logo file instead, drop it in `assets/images/` and
-  replace the `.wordmark` blocks with an `<img>` tag pointing to it.
-  (A logo file was pasted into chat once, but it came through unreadable —
-  effectively a blank image — so nothing was extracted from it. Please
-  resend it as an attached file.)
+- **Logo** — currently a two-line "Eddie / Rocks" wordmark set in Bebas
+  Neue (the condensed, stamped-look face closest to the real logo visible
+  in your screenshots), gold gradient on the second line. This is a
+  recreation, not the real file — two attempts to paste the actual logo
+  into chat both came through unreadable (rendered blank/white), most
+  likely because it's a white or transparent-background file with nothing
+  behind it. Please resend it either on a dark background or as a
+  flattened JPG, and I'll swap the `.wordmark` markup in `index.html` for
+  an `<img>` pointing at it.
 - **Photos** — every image currently points at a generated placeholder SVG
-  in `assets/images/` (moody gradients labelled with what should go there:
-  Main Floor, RnB Floor, gallery shots, etc.). Replace each file with the
-  real photo **using the same filename** and it drops straight in — no
-  markup changes needed. Recommended sizes are roughly the placeholder's
-  dimensions (see `alt` text and surrounding markup in `index.html` for
-  which image is which). This direction is intentionally type-first, so
-  there's no hero background photo — everything above the fold is type.
+  in `assets/images/` (gold-glow gradients labelled with what should go
+  there: hero, Main Floor, RnB Floor, gallery shots, etc.). Replace each
+  file with the real photo **using the same filename** and it drops
+  straight in — no markup changes needed.
 - **Social links** — the Facebook/Instagram/X icons in the footer currently
   link to `#`. Update the `href`s in `index.html` once you have the real
   profile URLs.
@@ -51,7 +69,7 @@ find and replace.
 
 ## Fonts
 
-Unbounded, JetBrains Mono and Hanken Grotesk are self-hosted in
+Bodoni Moda, Hanken Grotesk and Bebas Neue are self-hosted in
 `assets/fonts/` (SIL Open Font License — see the `LICENSE-*.txt` files
 alongside them), pulled in via `@font-face` in `css/styles.css`. No
 external font requests.
