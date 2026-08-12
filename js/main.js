@@ -75,7 +75,6 @@
 
   /* ---------- custom cursor ---------- */
   var cursor = document.getElementById("cursor");
-  var cursorLabel = cursor ? cursor.querySelector(".cursor-label") : null;
   if (cursor && canHover) {
     var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
     var tx = cx, ty = cy;
@@ -83,8 +82,8 @@
       tx = e.clientX; ty = e.clientY;
     });
     function loop() {
-      cx += (tx - cx) * 0.22;
-      cy += (ty - cy) * 0.22;
+      cx += (tx - cx) * 0.5;
+      cy += (ty - cy) * 0.5;
       cursor.style.transform = "translate3d(" + cx + "px," + cy + "px,0) translate(-50%,-50%)";
       window.requestAnimationFrame(loop);
     }
@@ -95,14 +94,8 @@
 
     var hoverables = document.querySelectorAll("a, button, [data-magnetic], .gallery-item, [data-tilt]");
     hoverables.forEach(function (el) {
-      el.addEventListener("mouseenter", function () {
-        cursor.classList.add("is-hovering");
-        if (cursorLabel) cursorLabel.textContent = el.dataset.cursor || "";
-      });
-      el.addEventListener("mouseleave", function () {
-        cursor.classList.remove("is-hovering");
-        if (cursorLabel) cursorLabel.textContent = "";
-      });
+      el.addEventListener("mouseenter", function () { cursor.classList.add("is-hovering"); });
+      el.addEventListener("mouseleave", function () { cursor.classList.remove("is-hovering"); });
     });
   } else if (cursor) {
     cursor.remove();
