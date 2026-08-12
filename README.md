@@ -1,10 +1,17 @@
 # Eddie Rocks — Charcoal & Silver redesign
 
 A static rebuild of eddies.co in the "Charcoal & Silver" direction: a
-neutral graphite base with a brushed-silver metallic accent (no gold, no
-black-and-gold cliché), Newsreader for headlines, Public Sans for body/UI,
-and considered interaction detail without anything gimmicky — a small,
-subtle cursor accent rather than a large custom cursor.
+neutral graphite base with a brushed-silver metallic accent, and a type
+system tied to the club's own brand mark rather than a generic elegant
+pairing — Anton (the same face used in the logo) for the handful of
+moments that should genuinely shout, Instrument Serif italic for section
+headings, and Public Sans for body/UI. Built after feedback that the
+previous pass read as templated and thin — this version adds the content
+sections real nightclub sites actually carry (researched via web search:
+door policy, DJ lineup, FAQ, live countdown, table booking, newsletter
+signup) plus a handful of handmade graphic details (ticket-stub scalloped
+dividers, halftone texture, polaroid gallery tiles) so it doesn't read as
+a single generic template.
 
 ## Preview locally
 
@@ -16,67 +23,78 @@ python3 -m http.server 8000
 
 Then open `http://localhost:8000`.
 
-## Interactive details in this build
+## What's on the page now
 
-- **Subtle cursor accent** — a small 8px dot (not a large ring) that grows
-  slightly over links, buttons, and gallery images. Disabled automatically
-  on touch devices.
-- **Magnetic buttons** — primary buttons and key links pull gently toward
-  the cursor on hover (`data-magnetic` attribute in `index.html`).
-- **Hero scroll effect** — the hero image and headline parallax/fade as
-  you scroll past them (`js/main.js`, `updateParallax`).
-- **Tilt on hover** — floor photos and experience cards tilt slightly
-  toward the cursor (`data-tilt` attribute).
-- **Shimmer text** — silver gradient headlines animate a slow shine sweep
-  (`.shimmer` class).
-- **Gallery hover label** — a plain CSS "View" pill fades in over gallery
-  photos on hover/focus (`.view-label`), independent of the cursor.
-- **Grain overlay + silver-tinted scrollbar** for a more filmic, considered
-  finish than flat charcoal.
+Beyond the original hero/floors/gallery/contact, this pass adds:
 
-All of the above respects `prefers-reduced-motion` and is skipped/disabled
-on touch/coarse-pointer devices.
+- **Utility ticker** — a thin marquee above the header with hours, dress
+  code and ID policy (a pattern real venue sites use to answer the most
+  common questions before a visitor even scrolls).
+- **Live doors-open countdown** — in the hero, genuinely computed in JS
+  (`nextDoorsOpen` in `js/main.js`) to the next Friday or Saturday 9pm,
+  not a fabricated one-off event.
+- **Lineup / Residents section** — role-based cards (Main Floor resident,
+  RnB Floor resident, guest selectors) rather than invented DJ names —
+  swap in real names/photos/bios when you have them.
+- **Door Policy strip** — age, dress code, hours, entry, styled as an
+  info panel.
+- **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
+  the disclosure itself), covering booking, age, dress code, private hire
+  and parking.
+- **Newsletter signup** in the footer — the front-end flow (validation +
+  a client-side "you're on the list" confirmation) is built; **it isn't
+  wired to a real email provider**. Hook it up to Mailchimp/Klaviyo/etc.
+  before relying on it to actually collect addresses.
+- **Sticky "Reserve a Table" bar** on mobile only, with a one-tap call
+  button.
+- **Interaction details**: small dot cursor, magnetic buttons, hero
+  scroll parallax, hover tilt on floor/experience images, silver shimmer
+  headline text, ticket-stub scalloped section edges, a subtle halftone
+  accent, and two gallery photos with a rotated polaroid/tape treatment.
+  All respect `prefers-reduced-motion` and are disabled on touch/coarse-
+  pointer devices.
 
 ## Swapping in the real logo and photos
 
 Nothing here is final content — placeholders are marked so they're easy to
 find and replace.
 
-- **Logo** — `assets/images/logo.svg`, used via `<img>` in both the header
-  and footer `.wordmark` links. This is a hand-built recreation, not the
-  original file: two attempts to paste the real logo into chat came through
-  unreadable (rendered blank/white, most likely a transparent-background
-  file with nothing behind it), but a later screenshot with a dark
-  background behind it was visible, so the stacked "EDDIE / ROCKS" mark,
-  proportions, and stamped/distressed edge texture were rebuilt from that
-  (bold condensed type + an SVG turbulence/displacement filter for the
-  rough edges — see `<filter id="stamp">` in the SVG). It should read as
-  very close, but it is not a pixel-exact copy. If you have the original
-  logo file, send it on a dark background or as a flattened JPG/PNG and
-  replace `assets/images/logo.svg` directly (same filename, no markup
-  changes needed).
-- **Photos** — every image currently points at a generated placeholder SVG
-  in `assets/images/` (charcoal/silver gradients labelled with what should
-  go there: hero, Main Floor, RnB Floor, gallery shots, etc.). Replace each
-  file with the real photo **using the same filename** and it drops
-  straight in — no markup changes needed.
-- **Social links** — the Facebook/Instagram/X icons in the footer currently
-  link to `#`. Update the `href`s in `index.html` once you have the real
-  profile URLs.
+- **Logo** — `assets/images/logo.svg`, used via `<img>` in the header and
+  footer. This is a hand-built recreation, not the original file: two
+  attempts to paste the real logo into chat came through unreadable
+  (blank/white), but a later screenshot with a dark background behind it
+  was visible, so the stacked "EDDIE / ROCKS" mark and stamped/distressed
+  texture were rebuilt from that (Anton + an SVG turbulence/displacement
+  filter — see `<filter id="stamp">` in the SVG). Close, not pixel-exact.
+  Send the original on a dark background or as a flattened JPG/PNG and
+  replace `assets/images/logo.svg` directly (same filename).
+- **Photos** — every image points at a generated placeholder SVG in
+  `assets/images/` (charcoal/silver gradients labelled with what should go
+  there). Replace each file with the real photo **using the same
+  filename** — no markup changes needed.
+- **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
+  Update the `href`s in `index.html` once you have the real profile URLs.
 
-## Content notes / assumptions to double-check
+## Content that needs confirming before launch
 
-- Floor copy (Main Floor / RnB Floor descriptions) and the "Above The
-  Forbidden Florist" locator line are written from what was described in
-  chat, not sourced from the club — reword anything that's off.
-- The "Upcoming Events" section ships with an honest empty state rather
-  than placeholder events, since there was no real events data to work
-  from. Wire it up to whatever's used to manage events when ready.
+Everything below reads confidently on the page but is an assumption or
+industry-standard placeholder, not confirmed fact — check and edit before
+this goes live:
+
+- **Opening hours, dress code, age policy, capacity numbers** in the Door
+  Policy strip and floor capacity badges — generic/typical for a UK
+  nightclub, not sourced from the venue.
+- **FAQ answers** — sensible generic answers, not venue-confirmed.
+- **Resident/lineup section** — deliberately uses role labels ("Main
+  Floor Resident") instead of inventing real DJ names or using stock
+  photos as if they were real people.
+- Floor descriptions and the "Above The Forbidden Florist" locator line
+  are written from what was described in chat.
+- **"Upcoming Events"** ships with an honest empty state rather than
+  fabricated events, since there's no real events data to work from.
 
 ## Fonts
 
-Newsreader and Public Sans are self-hosted in `assets/fonts/` (SIL Open
-Font License — see the `LICENSE-*.txt` files alongside them), pulled in
-via `@font-face` in `css/styles.css`. No external font requests. The logo
-SVG embeds its own copy of Anton (also OFL) so it renders correctly
-wherever it's used, independent of the page's fonts.
+Anton, Instrument Serif and Public Sans are self-hosted in `assets/fonts/`
+(SIL Open Font License — see the `LICENSE-*.txt` files alongside them),
+pulled in via `@font-face` in `css/styles.css`. No external font requests.

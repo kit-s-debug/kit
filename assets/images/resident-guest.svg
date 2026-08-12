@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="PLACEHOLDER — GUEST SELECTORS">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(160 0.5 0.5)">
+      <stop offset="0%" stop-color="#1F2124"/>
+      <stop offset="60%" stop-color="#151618"/>
+      <stop offset="100%" stop-color="#151618"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="26%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#5C5E62" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#5C5E62" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <rect width="800" height="800" fill="url(#glow)"/>
+  <circle cx="739.9" cy="758.9" r="1.7" fill="#B7BABE" opacity="0.06"/>
+    <circle cx="473.6" cy="339.0" r="1.2" fill="#B7BABE" opacity="0.06"/>
+    <circle cx="153.6" cy="355.7" r="0.9" fill="#B7BABE" opacity="0.09"/>
+    <circle cx="19.8" cy="68.6" r="1.5" fill="#B7BABE" opacity="0.08"/>
+    <circle cx="410.1" cy="587.4" r="1.0" fill="#B7BABE" opacity="0.05"/>
+    <circle cx="626.5" cy="471.3" r="1.4" fill="#B7BABE" opacity="0.10"/>
+    <circle cx="776.6" cy="290.2" r="1.5" fill="#B7BABE" opacity="0.08"/>
+    <circle cx="457.6" cy="528.4" r="1.0" fill="#B7BABE" opacity="0.06"/>
+    <circle cx="379.3" cy="574.3" r="1.3" fill="#B7BABE" opacity="0.09"/>
+    <circle cx="513.9" cy="145.6" r="0.8" fill="#B7BABE" opacity="0.08"/>
+    <circle cx="652.7" cy="156.5" r="0.7" fill="#B7BABE" opacity="0.06"/>
+    <circle cx="31.1" cy="220.5" r="1.3" fill="#B7BABE" opacity="0.12"/>
+    <circle cx="264.6" cy="295.7" r="0.9" fill="#B7BABE" opacity="0.07"/>
+    <circle cx="622.1" cy="439.2" r="0.9" fill="#B7BABE" opacity="0.06"/>
+    <circle cx="627.0" cy="565.7" r="1.6" fill="#B7BABE" opacity="0.07"/>
+    <circle cx="436.4" cy="735.0" r="1.3" fill="#B7BABE" opacity="0.13"/>
+  <rect x="0.5" y="0.5" width="799" height="799" fill="none" stroke="#B7BABE" stroke-opacity="0.2"/>
+  <text x="400.0" y="400.0" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif" font-size="23" letter-spacing="2" fill="#F2F2F0" fill-opacity="0.38">PLACEHOLDER — GUEST SELECTORS</text>
+</svg>

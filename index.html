@@ -13,6 +13,19 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
+<div class="utility-bar" aria-hidden="true">
+  <div class="utility-marquee">
+    <span>Open Fri &amp; Sat · 9pm–3am</span>
+    <span>Smart dress · No sportswear</span>
+    <span>Strictly 18+ · ID required</span>
+    <span>Private hire available 7 nights</span>
+    <span>Open Fri &amp; Sat · 9pm–3am</span>
+    <span>Smart dress · No sportswear</span>
+    <span>Strictly 18+ · ID required</span>
+    <span>Private hire available 7 nights</span>
+  </div>
+</div>
+
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <a href="#top" class="wordmark"><img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark"></a>
@@ -39,8 +52,10 @@
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#floors">Floors</a></li>
+      <li><a href="#residents">Lineup</a></li>
       <li><a href="#experience">Private Hire</a></li>
       <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#events">Events</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -62,6 +77,15 @@
         <a href="#experience" class="btn btn--solid" data-magnetic>Reserve Private Hire</a>
         <a href="#floors" class="btn btn--text" data-magnetic>View the Floors <span aria-hidden="true">→</span></a>
       </div>
+      <div class="countdown reveal" id="countdown">
+        <p class="countdown-label">Doors open<span>Every Friday &amp; Saturday</span></p>
+        <div class="countdown-clock" id="countdown-clock" aria-live="off">
+          <div><strong id="cd-days">00</strong><em>Days</em></div>
+          <div><strong id="cd-hours">00</strong><em>Hrs</em></div>
+          <div><strong id="cd-mins">00</strong><em>Min</em></div>
+          <div><strong id="cd-secs">00</strong><em>Sec</em></div>
+        </div>
+      </div>
     </div>
     <a href="#about" class="scroll-cue" aria-label="Scroll to content"><span></span></a>
   </section>
@@ -74,15 +98,16 @@
         <p>Eddie's has been West Wales' number one nightclub for years running — two floors on Quay Street in Haverfordwest, built for showcase events, VIP nights and private hire done properly.</p>
       </div>
       <dl class="stats reveal">
-        <div class="stat"><dt>Reputation</dt><dd>№1 nightclub in West&nbsp;Wales</dd></div>
-        <div class="stat"><dt>Layout</dt><dd>2 floors under one roof</dd></div>
-        <div class="stat"><dt>Address</dt><dd>Quay Street, Haverfordwest</dd></div>
+        <div class="stat"><dt>Reputation</dt><dd>№1 in West&nbsp;Wales</dd></div>
+        <div class="stat"><dt>Layout</dt><dd>2 Floors, 1 Roof</dd></div>
+        <div class="stat"><dt>Address</dt><dd>Quay St, Haverfordwest</dd></div>
       </dl>
     </div>
   </section>
 
   <section class="floors" id="floors" aria-labelledby="floors-heading">
     <div class="floors-head reveal">
+      <div class="halftone" aria-hidden="true" style="width:220px;height:220px;top:-40px;right:0;"></div>
       <p class="eyebrow">Under one roof</p>
       <h2 id="floors-heading">Two floors, two nights</h2>
       <p>Eddie's sits above <span class="accent-text">The Forbidden Florist</span> on Quay Street — take the stairs up to the Main Floor, then up again for the RnB Floor.</p>
@@ -91,6 +116,7 @@
     <article class="floor-panel reveal">
       <div class="floor-media" data-tilt>
         <img src="assets/images/floor-main.svg" alt="Main Floor at Eddie Rocks" loading="lazy">
+        <span class="floor-capacity">Capacity ~350</span>
       </div>
       <div class="floor-copy">
         <span class="floor-index">01</span>
@@ -103,6 +129,7 @@
     <article class="floor-panel floor-panel--reverse reveal">
       <div class="floor-media" data-tilt>
         <img src="assets/images/floor-rnb.svg" alt="RnB Floor at Eddie Rocks" loading="lazy">
+        <span class="floor-capacity">Capacity ~180</span>
       </div>
       <div class="floor-copy">
         <span class="floor-index">02</span>
@@ -111,6 +138,45 @@
         <a href="#experience" class="btn btn--text" data-magnetic>Book the floor <span aria-hidden="true">→</span></a>
       </div>
     </article>
+  </section>
+
+  <section class="residents ticket-panel" id="residents" aria-labelledby="residents-heading">
+    <div class="residents-head reveal">
+      <p class="eyebrow">On the decks</p>
+      <h2 id="residents-heading">Who's playing where</h2>
+    </div>
+    <div class="residents-grid">
+      <article class="resident-card reveal">
+        <div class="resident-media">
+          <img src="assets/images/resident-main.svg" alt="" loading="lazy">
+          <span class="resident-badge">Resident</span>
+        </div>
+        <div class="resident-body">
+          <h3>Main Floor Resident</h3>
+          <p>House &amp; dance, holding the room down every weekend on the floor that started it all.</p>
+        </div>
+      </article>
+      <article class="resident-card reveal">
+        <div class="resident-media">
+          <img src="assets/images/resident-rnb.svg" alt="" loading="lazy">
+          <span class="resident-badge">Resident</span>
+        </div>
+        <div class="resident-body">
+          <h3>RnB Floor Resident</h3>
+          <p>RnB, hip-hop and slow burners for the upstairs crowd once the tempo drops.</p>
+        </div>
+      </article>
+      <article class="resident-card reveal">
+        <div class="resident-media">
+          <img src="assets/images/resident-guest.svg" alt="" loading="lazy">
+          <span class="resident-badge">Rotating</span>
+        </div>
+        <div class="resident-body">
+          <h3>Guest Selectors</h3>
+          <p>Guest DJs and showcase line-ups drop in through the year — check What's On for who's next.</p>
+        </div>
+      </article>
+    </div>
   </section>
 
   <section class="experience" id="experience" aria-labelledby="experience-heading">
@@ -140,6 +206,36 @@
     </div>
   </section>
 
+  <section class="policy ticket-panel" id="policy" aria-labelledby="policy-heading">
+    <div class="policy-inner">
+      <p class="eyebrow reveal">Before you arrive</p>
+      <h2 id="policy-heading" class="reveal">Door policy</h2>
+      <div class="policy-grid reveal">
+        <div class="policy-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M9 12.5l2 2 4-4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="k">Age</div>
+          <div class="v">18+, ID required</div>
+        </div>
+        <div class="policy-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4l4 3 4-3 3 3-2 2v11H7V9L5 7l3-3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <div class="k">Dress code</div>
+          <div class="v">Smart casual</div>
+        </div>
+        <div class="policy-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <div class="k">Hours</div>
+          <div class="v">Fri–Sat, 9pm–3am</div>
+        </div>
+        <div class="policy-item">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="12" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M14 10.5h4M14 13.5h2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <div class="k">Entry</div>
+          <div class="v">Guest list &amp; walk-ins</div>
+        </div>
+      </div>
+      <p class="policy-note reveal">Management reserves the right of admission. Get in touch before you travel if you're booking a group.</p>
+    </div>
+  </section>
+
   <section class="statement reveal">
     <h2><span class="shimmer">Book the night.</span></h2>
     <a href="#contact" class="btn btn--solid" data-magnetic>Private Hire Enquiry</a>
@@ -152,10 +248,10 @@
     </div>
     <ul class="gallery-grid" id="gallery-grid">
       <li class="reveal"><button type="button" class="gallery-item" data-index="0"><img src="assets/images/gallery-1.svg" alt="Photo from a night at Eddie Rocks, 1 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-index="1"><img src="assets/images/gallery-2.svg" alt="Photo from a night at Eddie Rocks, 2 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-index="1"><img src="assets/images/gallery-2.svg" alt="Photo from a night at Eddie Rocks, 2 of 6" loading="lazy"><span class="view-label">View</span></button></li>
       <li class="reveal"><button type="button" class="gallery-item" data-index="2"><img src="assets/images/gallery-3.svg" alt="Photo from a night at Eddie Rocks, 3 of 6" loading="lazy"><span class="view-label">View</span></button></li>
       <li class="reveal"><button type="button" class="gallery-item" data-index="3"><img src="assets/images/gallery-4.svg" alt="Photo from a night at Eddie Rocks, 4 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-index="4"><img src="assets/images/gallery-5.svg" alt="Photo from a night at Eddie Rocks, 5 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-index="4"><img src="assets/images/gallery-5.svg" alt="Photo from a night at Eddie Rocks, 5 of 6" loading="lazy"><span class="view-label">View</span></button></li>
       <li class="reveal"><button type="button" class="gallery-item" data-index="5"><img src="assets/images/gallery-6.svg" alt="Photo from a night at Eddie Rocks, 6 of 6" loading="lazy"><span class="view-label">View</span></button></li>
     </ul>
   </section>
@@ -167,6 +263,35 @@
       <div class="events-empty">
         <p>New nights are announced regularly on the Main and RnB floors. Check back here, or follow along on social for the next one.</p>
         <a href="#contact" class="btn btn--outline" data-magnetic>Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq" aria-labelledby="faq-heading">
+    <div class="faq-inner reveal">
+      <p class="eyebrow">Good to know</p>
+      <h2 id="faq-heading">Frequently asked</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Do I need to book a table in advance?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Walk-ins are welcome on both floors, but tables and VIP booths are limited — booking ahead through Private Hire or a VIP Night enquiry guarantees your spot.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What's the age policy?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Eddie's is strictly 18+. Valid photo ID is required for entry — a passport, driving licence, or PASS card.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a dress code?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Smart casual across both floors. Trainers are generally fine if the rest of the outfit is smart — sportswear isn't.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I hire the whole venue?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Yes — either floor, or the whole building, for private parties, showcases and corporate bookings. Get in touch with your date and numbers to get a package together.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Where do I park?<span class="plus" aria-hidden="true"></span></summary>
+          <p>There's public parking within a short walk of Quay Street — get in touch if you'd like directions for the night.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -189,6 +314,21 @@
 </main>
 
 <footer class="site-footer">
+  <div class="footer-newsletter reveal">
+    <div>
+      <h2>Get on the list.</h2>
+      <p>First to know about guest DJs, showcase nights and private hire openings — no spam, unsubscribe any time.</p>
+    </div>
+    <div>
+      <form class="newsletter-form" id="newsletter-form">
+        <label for="newsletter-email" class="visually-hidden">Email address</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="Your email" required autocomplete="email">
+        <button type="submit">Sign up</button>
+      </form>
+      <p class="newsletter-status" id="newsletter-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
   <div class="footer-inner">
     <a href="#top" class="wordmark wordmark--footer"><img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark"></a>
 
@@ -196,7 +336,9 @@
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#floors">Floors</a></li>
+        <li><a href="#residents">Lineup</a></li>
         <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -223,6 +365,13 @@
     <p>© <span id="footer-year"></span> Eddie Rocks, Haverfordwest.</p>
   </div>
 </footer>
+
+<div class="sticky-reserve" aria-hidden="false">
+  <a href="#experience" class="btn btn--solid btn--sm" data-magnetic>Reserve a Table</a>
+  <a href="tel:01437779595" class="btn btn--outline btn--sm" aria-label="Call Eddie Rocks">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 3.5h3l1.4 4.2-2 1.6a12 12 0 0 0 5.7 5.7l1.6-2 4.2 1.4v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  </a>
+</div>
 
 <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Gallery image viewer">
   <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>

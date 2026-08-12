@@ -182,4 +182,52 @@
   /* ---------- footer year ---------- */
   var yearEl = document.getElementById("footer-year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ---------- doors-open countdown (next Fri/Sat 9pm) ---------- */
+  var cdDays = document.getElementById("cd-days");
+  var cdHours = document.getElementById("cd-hours");
+  var cdMins = document.getElementById("cd-mins");
+  var cdSecs = document.getElementById("cd-secs");
+  if (cdDays && cdHours && cdMins && cdSecs) {
+    function nextDoorsOpen(now) {
+      for (var i = 0; i < 8; i++) {
+        var d = new Date(now);
+        d.setDate(now.getDate() + i);
+        d.setHours(21, 0, 0, 0);
+        var day = d.getDay();
+        if ((day === 5 || day === 6) && d.getTime() > now.getTime()) return d;
+      }
+      return null;
+    }
+    function pad(n) { return String(n).padStart(2, "0"); }
+    var target = nextDoorsOpen(new Date());
+    function tick() {
+      var now = new Date();
+      if (!target || target.getTime() <= now.getTime()) target = nextDoorsOpen(now);
+      var diff = Math.max(0, target.getTime() - now.getTime());
+      var days = Math.floor(diff / 86400000);
+      var hours = Math.floor((diff % 86400000) / 3600000);
+      var mins = Math.floor((diff % 3600000) / 60000);
+      var secs = Math.floor((diff % 60000) / 1000);
+      cdDays.textContent = pad(days);
+      cdHours.textContent = pad(hours);
+      cdMins.textContent = pad(mins);
+      cdSecs.textContent = pad(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  /* ---------- newsletter form ---------- */
+  var newsletterForm = document.getElementById("newsletter-form");
+  var newsletterStatus = document.getElementById("newsletter-status");
+  if (newsletterForm && newsletterStatus) {
+    newsletterForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var emailInput = document.getElementById("newsletter-email");
+      if (!emailInput.value) return;
+      newsletterStatus.textContent = "Thanks — you're on the list.";
+      newsletterForm.reset();
+    });
+  }
 })();
