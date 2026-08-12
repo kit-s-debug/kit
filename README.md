@@ -81,9 +81,10 @@ Everything below reads confidently on the page but is an assumption or
 industry-standard placeholder, not confirmed fact — check and edit before
 this goes live:
 
-- **Opening hours, dress code, age policy, capacity numbers** in the Door
-  Policy strip and floor capacity badges — generic/typical for a UK
-  nightclub, not sourced from the venue.
+- **Opening hours, age policy, capacity numbers** in the Door Policy strip
+  and floor capacity badges — generic/typical for a UK nightclub, not
+  sourced from the venue. (Dress code is confirmed: there isn't one —
+  already reflected across the ticker, Door Policy strip, and FAQ.)
 - **FAQ answers** — sensible generic answers, not venue-confirmed.
 - **Resident/lineup section** — deliberately uses role labels ("Main
   Floor Resident") instead of inventing real DJ names or using stock
