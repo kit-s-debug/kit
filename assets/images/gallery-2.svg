@@ -1,35 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="PLACEHOLDER — GALLERY 02">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(94 0.5 0.5)">
-      <stop offset="0%" stop-color="#1F2124"/>
-      <stop offset="60%" stop-color="#151618"/>
-      <stop offset="100%" stop-color="#151618"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="24%" cy="18%" r="58%">
-      <stop offset="0%" stop-color="#5C5E62" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#5C5E62" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="800" height="800" fill="url(#g)"/>
-  <rect width="800" height="800" fill="url(#glow)"/>
-  <circle cx="379.7" cy="526.0" r="1.4" fill="#B7BABE" opacity="0.06"/>
-    <circle cx="8.7" cy="299.8" r="0.9" fill="#B7BABE" opacity="0.11"/>
-    <circle cx="552.5" cy="481.2" r="1.3" fill="#B7BABE" opacity="0.10"/>
-    <circle cx="116.2" cy="352.0" r="0.8" fill="#B7BABE" opacity="0.12"/>
-    <circle cx="47.1" cy="655.1" r="0.7" fill="#B7BABE" opacity="0.10"/>
-    <circle cx="269.6" cy="323.7" r="1.6" fill="#B7BABE" opacity="0.05"/>
-    <circle cx="48.6" cy="732.0" r="1.2" fill="#B7BABE" opacity="0.06"/>
-    <circle cx="789.7" cy="757.4" r="0.7" fill="#B7BABE" opacity="0.08"/>
-    <circle cx="108.1" cy="250.0" r="1.3" fill="#B7BABE" opacity="0.06"/>
-    <circle cx="557.5" cy="41.1" r="0.8" fill="#B7BABE" opacity="0.12"/>
-    <circle cx="320.4" cy="335.1" r="1.3" fill="#B7BABE" opacity="0.09"/>
-    <circle cx="307.7" cy="24.4" r="1.5" fill="#B7BABE" opacity="0.13"/>
-    <circle cx="781.0" cy="530.9" r="1.0" fill="#B7BABE" opacity="0.08"/>
-    <circle cx="552.1" cy="539.0" r="0.7" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="290.7" cy="409.1" r="1.6" fill="#B7BABE" opacity="0.09"/>
-    <circle cx="22.5" cy="658.1" r="1.1" fill="#B7BABE" opacity="0.09"/>
-    <circle cx="177.7" cy="341.8" r="1.1" fill="#B7BABE" opacity="0.11"/>
-    <circle cx="82.1" cy="440.0" r="0.8" fill="#B7BABE" opacity="0.11"/>
-  <rect x="0.5" y="0.5" width="799" height="799" fill="none" stroke="#B7BABE" stroke-opacity="0.2"/>
-  <text x="400.0" y="400.0" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif" font-size="23" letter-spacing="2" fill="#F2F2F0" fill-opacity="0.38">PLACEHOLDER — GALLERY 02</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800"><defs><filter id="soft"><feGaussianBlur stdDeviation="1.1"/></filter><filter id="softer"><feGaussianBlur stdDeviation="2.4"/></filter><radialGradient id="glowM" cx="30%" cy="10%" r="70%"><stop offset="0%" stop-color="#7A4A63" stop-opacity="0.4"/><stop offset="100%" stop-color="#7A4A63" stop-opacity="0"/></radialGradient><radialGradient id="glowC" cx="75%" cy="8%" r="65%"><stop offset="0%" stop-color="#3E6B72" stop-opacity="0.32"/><stop offset="100%" stop-color="#3E6B72" stop-opacity="0"/></radialGradient><linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1F2124"/><stop offset="45%" stop-color="#151618"/><stop offset="100%" stop-color="#0C0D0E"/></linearGradient></defs><rect width="800" height="800" fill="url(#bg)"/><rect width="800" height="800" fill="url(#glowM)"/><rect width="800" height="800" fill="url(#glowC)"/><defs><radialGradient id="haze0379" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#7A4A63" stop-opacity="0.22"/><stop offset="100%" stop-color="#7A4A63" stop-opacity="0"/></radialGradient></defs>
+<circle cx="379.7" cy="263.0" r="218.6" fill="url(#haze0379)"/>
+<defs><radialGradient id="haze1305" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5C5E62" stop-opacity="0.22"/><stop offset="100%" stop-color="#5C5E62" stop-opacity="0"/></radialGradient></defs>
+<circle cx="305.3" cy="398.6" r="198.0" fill="url(#haze1305)"/><defs><linearGradient id="beam0153" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4E5E7" stop-opacity="0.20"/><stop offset="100%" stop-color="#E4E5E7" stop-opacity="0"/></linearGradient></defs>
+<polygon points="132.2,-30 174.2,-30 329.3,496.0 -22.9,496.0" fill="url(#beam0153)"/>
+<defs><linearGradient id="beam1410" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4E5E7" stop-opacity="0.16"/><stop offset="100%" stop-color="#E4E5E7" stop-opacity="0"/></linearGradient></defs>
+<polygon points="394.5,-30 426.1,-30 573.5,496.0 247.1,496.0" fill="url(#beam1410)"/>
+<defs><linearGradient id="beam2692" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4E5E7" stop-opacity="0.15"/><stop offset="100%" stop-color="#E4E5E7" stop-opacity="0"/></linearGradient></defs>
+<polygon points="677.7,-30 707.6,-30 886.2,496.0 499.1,496.0" fill="url(#beam2692)"/><rect x="238.5" y="368.0" width="323.0" height="57.0" rx="4.8" fill="#0A0A0B"/>
+<circle cx="322.5" cy="390.8" r="17.1" fill="#1F2124" fill-opacity="0.7" stroke="#B7BABE" stroke-opacity="0.35"/>
+<circle cx="322.5" cy="390.8" r="4.8" fill="#B7BABE" fill-opacity="0.5"/>
+<circle cx="477.5" cy="390.8" r="17.1" fill="#1F2124" fill-opacity="0.7" stroke="#B7BABE" stroke-opacity="0.35"/>
+<circle cx="477.5" cy="390.8" r="4.8" fill="#B7BABE" fill-opacity="0.5"/>
+<path d="M332.1,289.6 Q323.4,368.0 350.6,373.7 L449.4,373.7 Q476.6,368.0 467.9,289.6 Q400.0,264.0 332.1,289.6 Z" fill="#0A0A0B"/>
+<circle cx="400.0" cy="267.4" r="29.6" fill="#0A0A0B"/>
+<path d="M368.9,267.4 Q400.0,227.4 431.1,267.4" stroke="#B7BABE" stroke-opacity="0.5" stroke-width="4.8" fill="none" stroke-linecap="round"/>
+<path d="M348.1,311.0 L313.6,362.3" stroke="#0A0A0B" stroke-width="15.2" stroke-linecap="round"/><rect x="0.5" y="0.5" width="799" height="799" fill="none" stroke="#B7BABE" stroke-opacity="0.18"/></svg>

@@ -1,35 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" role="img" aria-label="PLACEHOLDER — PRIVATE HIRE">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(130 0.5 0.5)">
-      <stop offset="0%" stop-color="#1F2124"/>
-      <stop offset="60%" stop-color="#151618"/>
-      <stop offset="100%" stop-color="#151618"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="24%" cy="18%" r="58%">
-      <stop offset="0%" stop-color="#5C5E62" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#5C5E62" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="900" height="700" fill="url(#g)"/>
-  <rect width="900" height="700" fill="url(#glow)"/>
-  <circle cx="212.4" cy="72.2" r="1.1" fill="#B7BABE" opacity="0.06"/>
-    <circle cx="59.9" cy="281.1" r="1.7" fill="#B7BABE" opacity="0.11"/>
-    <circle cx="688.6" cy="155.3" r="1.2" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="155.4" cy="74.3" r="0.9" fill="#B7BABE" opacity="0.12"/>
-    <circle cx="746.0" cy="564.7" r="1.6" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="278.9" cy="438.9" r="1.5" fill="#B7BABE" opacity="0.12"/>
-    <circle cx="792.0" cy="60.7" r="1.3" fill="#B7BABE" opacity="0.10"/>
-    <circle cx="455.4" cy="124.5" r="1.2" fill="#B7BABE" opacity="0.06"/>
-    <circle cx="841.1" cy="605.8" r="1.3" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="818.0" cy="400.7" r="1.7" fill="#B7BABE" opacity="0.12"/>
-    <circle cx="457.5" cy="289.8" r="1.3" fill="#B7BABE" opacity="0.08"/>
-    <circle cx="145.2" cy="213.6" r="1.6" fill="#B7BABE" opacity="0.05"/>
-    <circle cx="41.7" cy="438.4" r="0.9" fill="#B7BABE" opacity="0.09"/>
-    <circle cx="424.1" cy="240.0" r="1.8" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="371.5" cy="141.9" r="1.4" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="320.2" cy="522.9" r="1.0" fill="#B7BABE" opacity="0.09"/>
-    <circle cx="813.9" cy="70.7" r="0.7" fill="#B7BABE" opacity="0.07"/>
-    <circle cx="688.6" cy="430.8" r="0.9" fill="#B7BABE" opacity="0.08"/>
-  <rect x="0.5" y="0.5" width="899" height="699" fill="none" stroke="#B7BABE" stroke-opacity="0.2"/>
-  <text x="450.0" y="350.0" text-anchor="middle" dominant-baseline="middle" font-family="Georgia, serif" font-size="20" letter-spacing="2" fill="#F2F2F0" fill-opacity="0.38">PLACEHOLDER — PRIVATE HIRE</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700"><defs><filter id="soft"><feGaussianBlur stdDeviation="1.1"/></filter><filter id="softer"><feGaussianBlur stdDeviation="2.4"/></filter><radialGradient id="glowM" cx="30%" cy="10%" r="70%"><stop offset="0%" stop-color="#7A4A63" stop-opacity="0.4"/><stop offset="100%" stop-color="#7A4A63" stop-opacity="0"/></radialGradient><radialGradient id="glowC" cx="75%" cy="8%" r="65%"><stop offset="0%" stop-color="#3E6B72" stop-opacity="0.32"/><stop offset="100%" stop-color="#3E6B72" stop-opacity="0"/></radialGradient><linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#1F2124"/><stop offset="45%" stop-color="#151618"/><stop offset="100%" stop-color="#0C0D0E"/></linearGradient></defs><rect width="900" height="700" fill="url(#bg)"/><rect width="900" height="700" fill="url(#glowM)"/><rect width="900" height="700" fill="url(#glowC)"/><defs><radialGradient id="haze0714" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#3E6B72" stop-opacity="0.22"/><stop offset="100%" stop-color="#3E6B72" stop-opacity="0"/></radialGradient></defs>
+<circle cx="714.0" cy="287.7" r="223.1" fill="url(#haze0714)"/>
+<defs><radialGradient id="haze133" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#5C5E62" stop-opacity="0.22"/><stop offset="100%" stop-color="#5C5E62" stop-opacity="0"/></radialGradient></defs>
+<circle cx="33.1" cy="51.0" r="235.9" fill="url(#haze133)"/><defs><linearGradient id="beam0215" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4E5E7" stop-opacity="0.22"/><stop offset="100%" stop-color="#E4E5E7" stop-opacity="0"/></linearGradient></defs>
+<polygon points="191.4,-30 240.4,-30 384.4,385.0 47.3,385.0" fill="url(#beam0215)"/>
+<defs><linearGradient id="beam1691" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4E5E7" stop-opacity="0.21"/><stop offset="100%" stop-color="#E4E5E7" stop-opacity="0"/></linearGradient></defs>
+<polygon points="670.9,-30 712.2,-30 884.0,385.0 499.1,385.0" fill="url(#beam1691)"/><ellipse cx="388.6" cy="195.4" rx="25.0" ry="31.3" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="388.6" y1="226.6" x2="384.8" y2="270.6" stroke="#B7BABE" stroke-opacity="0.25"/>
+<ellipse cx="510.7" cy="208.6" rx="25.5" ry="31.8" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="510.7" y1="240.4" x2="508.0" y2="284.4" stroke="#B7BABE" stroke-opacity="0.25"/>
+<ellipse cx="368.6" cy="220.0" rx="25.0" ry="31.3" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="368.6" y1="251.3" x2="367.8" y2="295.3" stroke="#B7BABE" stroke-opacity="0.25"/>
+<ellipse cx="368.8" cy="159.7" rx="23.1" ry="28.9" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="368.8" y1="188.6" x2="365.4" y2="232.6" stroke="#B7BABE" stroke-opacity="0.25"/>
+<ellipse cx="540.3" cy="198.9" rx="18.2" ry="22.8" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="540.3" y1="221.7" x2="542.8" y2="265.7" stroke="#B7BABE" stroke-opacity="0.25"/>
+<ellipse cx="422.1" cy="233.3" rx="26.2" ry="32.7" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="422.1" y1="266.0" x2="422.3" y2="310.0" stroke="#B7BABE" stroke-opacity="0.25"/>
+<ellipse cx="478.9" cy="209.8" rx="25.0" ry="31.3" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.35"/>
+<line x1="478.9" y1="241.1" x2="486.5" y2="285.1" stroke="#B7BABE" stroke-opacity="0.25"/><rect x="352.5" y="480.0" width="195.0" height="104.0" rx="7.8" fill="#0A0A0B" stroke="#B7BABE" stroke-opacity="0.25"/>
+<rect x="411.0" y="511.2" width="78.0" height="41.6" fill="#1F2124" stroke="#B7BABE" stroke-opacity="0.55"/>
+<text x="450.0" y="537.2" text-anchor="middle" font-family="Georgia, serif" font-size="13.0" letter-spacing="2" fill="#E4E5E7">RESERVED</text><rect x="0.5" y="0.5" width="899" height="699" fill="none" stroke="#B7BABE" stroke-opacity="0.18"/></svg>
