@@ -183,6 +183,7 @@ p{ margin:0; }
   max-width:var(--container); margin:0 auto; padding:20px 28px; height:var(--header-h);
   display:flex; align-items:center; justify-content:space-between;
 }
+.header-brand{ display:flex; align-items:center; gap:18px; }
 .wordmark{ display:inline-flex; text-decoration:none; }
 .logo-mark{
   height:38px; width:auto; display:block;
@@ -190,6 +191,20 @@ p{ margin:0; }
 }
 .wordmark:hover .logo-mark{ filter:drop-shadow(0 0 12px rgba(228,229,231,.5)); }
 .wordmark--footer .logo-mark{ height:74px; }
+
+.sister-badge{
+  display:none; align-items:baseline; gap:0; text-decoration:none; color:var(--dim);
+  font-size:11.5px; letter-spacing:.03em; padding-left:18px; border-left:1px solid var(--line-strong);
+  transition:color .2s ease;
+}
+.sister-badge strong{ font-family:var(--font-accent); font-style:italic; font-weight:400; color:var(--silver-bright); margin-left:4px; font-size:14px; transition:color .2s ease; }
+.sister-badge:hover{ color:var(--white); }
+.sister-badge:hover strong{ color:var(--white); }
+.mobile-nav-sister{
+  display:block; margin-top:18px; padding-top:18px; border-top:1px solid var(--line);
+  text-decoration:none; color:var(--dim); font-size:12.5px; letter-spacing:.03em;
+}
+.mobile-nav-sister strong{ font-family:var(--font-accent); font-style:italic; font-weight:400; color:var(--silver-bright); margin-left:4px; font-size:16px; }
 
 .primary-nav ul{ list-style:none; display:flex; gap:36px; margin:0; padding:0; }
 .primary-nav a{
@@ -508,6 +523,9 @@ p{ margin:0; }
 .sticky-reserve{ display:none; }
 
 /* ============ responsive ============ */
+@media (min-width:901px){
+  .sister-badge{ display:inline-flex; }
+}
 @media (max-width:900px){
   .primary-nav{ display:none; }
   .header-actions .btn--outline{ display:none; }
