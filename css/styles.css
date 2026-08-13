@@ -381,6 +381,21 @@ p{ margin:0; }
 .policy-item .v{ font-family:var(--font-accent); font-style:italic; font-size:18px; color:var(--white); }
 .policy-note{ margin-top:22px; color:var(--dim); font-size:13px; }
 
+/* ============ reviews ============ */
+.reviews{ padding:100px 28px; text-align:center; }
+.reviews-head{ max-width:var(--container); margin:0 auto 48px; }
+.reviews-note{ color:var(--dim); font-size:13px; margin-top:12px; }
+.reviews-grid{
+  max-width:var(--container); margin:0 auto 40px; display:grid; grid-template-columns:repeat(2, 1fr); gap:1px;
+  background:var(--line); border:1px solid var(--line); text-align:left;
+}
+.review-card{ background:var(--charcoal); margin:0; padding:36px 34px; }
+.review-stars{ color:var(--silver-bright); letter-spacing:.12em; font-size:14px; margin-bottom:16px; }
+.review-card p{
+  font-family:var(--font-accent); font-style:italic; font-size:21px; line-height:1.5; color:var(--white); margin:0 0 18px;
+}
+.review-card footer cite{ font-style:normal; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dim); }
+
 /* ============ statement ============ */
 .statement{
   padding:120px 28px; text-align:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
@@ -536,6 +551,7 @@ p{ margin:0; }
   .floor-panel--reverse .floor-media{ order:0; }
   .experience-grid{ grid-template-columns:1fr; }
   .residents-grid{ grid-template-columns:1fr; }
+  .reviews-grid{ grid-template-columns:1fr; }
   .policy-grid{ grid-template-columns:repeat(2, 1fr); }
   .gallery-grid{ grid-template-columns:repeat(2, 1fr); }
   .footer-inner{ grid-template-columns:1fr; gap:32px; }

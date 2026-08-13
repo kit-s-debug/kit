@@ -47,6 +47,17 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   before relying on it to actually collect addresses.
 - **Sticky "Reserve a Table" bar** on mobile only, with a one-tap call
   button.
+- **Reviews section** — two real, attributed quotes pulled from public
+  TripAdvisor reviews (linked back to the source), plus a factual note
+  on TripAdvisor ranking. See "Reviews research" below for what I could
+  and couldn't verify.
+- **Labrinth sister-venue badge** next to the logo (header on desktop,
+  bottom of the menu on mobile) — links to `#` until there's a real URL.
+- **Illustrated placeholder scenes** (crowd/DJ booth/VIP table under
+  stage lights) replacing the earlier abstract gradient boxes — still
+  illustration, not photography (no real photo source is reachable from
+  this dev environment), but closer to "a nightclub." Swap for real
+  photos any time, same filenames.
 - **Interaction details**: small dot cursor, magnetic buttons, hero
   scroll parallax, hover tilt on floor/experience images, silver shimmer
   headline text, ticket-stub scalloped section edges, a subtle halftone
@@ -93,6 +104,45 @@ this goes live:
   are written from what was described in chat.
 - **"Upcoming Events"** ships with an honest empty state rather than
   fabricated events, since there's no real events data to work from.
+
+## Reviews research (and what I couldn't confirm)
+
+Searched for real public information about Eddie Rocks/"Eddies Haverfordwest"
+to add a genuine Reviews section and any certificates. Direct fetches of
+Google/TripAdvisor/gov.uk pages are blocked in this environment, so this is
+from search snippets only — treat it as a starting point, not verified fact:
+
+- **Real and used on the site**: Eddie Rocks/"Eddies Haverfordwest" is
+  listed on [TripAdvisor](https://www.tripadvisor.co.uk/Attraction_Review-g552047-d5915191-Reviews-Eddies_Haverfordwest-Haverfordwest_Pembrokeshire_Wales.html)
+  with 11 reviews, ranked #3 of 4 nightlife venues in Haverfordwest. Two
+  positive quotes found there are used in the new Reviews section, both
+  linked back to the source.
+- **No numeric star rating shown on the site, deliberately.** Search
+  results gave conflicting signals (one summary said "5 stars on
+  reviews.co.uk," another said "Google users haven't given this place a
+  high rating"), and I can't verify either figure directly — displaying a
+  wrong rating on your own site would be worse than showing none. If you
+  can pull the actual current number from your Google Business Profile or
+  TripAdvisor dashboard, send it over and I'll add it properly (ideally as
+  a live widget rather than a hardcoded number, so it doesn't go stale).
+- **Certificates: none found, none added.** No confirmed Best Bar None,
+  Purple Flag, SIA, or similar nightlife accreditation turned up in
+  search. There's a UK Food Hygiene Rating Scheme listing under the name
+  "Eddies" (ratings.food.gov.uk/business/444083), which is a genuine
+  government inspection certificate many venues display — but the page
+  itself is unreachable from here, so I don't have the actual score. If
+  you have the certificate (it's usually a sticker near the entrance) or
+  know the number, tell me and I'll add it properly.
+- **Worth flagging**: some low-quality directory/aggregator sites
+  (Yelp, evendo.com) describe the venue as having a snooker bar and a
+  third room called "Fever." That contradicts what you told me directly
+  (two floors — Main Floor and RnB Floor, ground floor is the separate
+  Forbidden Florist business), so I did not use it. Likely just stale or
+  wrong listing data, but flagging in case it's not.
+- Also confirmed: mixed/negative reviews exist too (complaints about
+  music, drink prices, and a £5 entry charge). Not used on the site —
+  showcasing only positive testimonials is normal practice — but worth
+  knowing they're out there publicly.
 
 ## Fonts
 
