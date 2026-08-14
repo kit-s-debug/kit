@@ -3,15 +3,20 @@
 A static rebuild of eddies.co in the "Charcoal & Silver" direction: a
 neutral graphite base with a brushed-silver metallic accent, and a type
 system tied to the club's own brand mark rather than a generic elegant
-pairing — Anton (the same face used in the logo) for the handful of
-moments that should genuinely shout, Instrument Serif italic for section
-headings, and Public Sans for body/UI. Built after feedback that the
-previous pass read as templated and thin — this version adds the content
-sections real nightclub sites actually carry (researched via web search:
-door policy, DJ lineup, FAQ, live countdown, table booking, newsletter
-signup) plus a handful of handmade graphic details (ticket-stub scalloped
-dividers, halftone texture, polaroid gallery tiles) so it doesn't read as
-a single generic template.
+pairing. Anton (the same face used in the logo) for the handful of
+moments that should genuinely shout, Cormorant Garamond italic for
+section headings, and Public Sans for body/UI. Built after feedback that
+the previous pass read as templated and thin, then run through a second
+"anti-slop" pass (see below) to strip out the AI-generated tells that
+crept back in: em dashes, an eyebrow label on nearly every section, a
+repeated hairline-bordered grid used for four different sections, a
+three-equal-cards layout, and CTA buttons that all meant the same thing
+in five different words. This version adds the content sections real
+nightclub sites actually carry (researched via web search: door policy,
+DJ lineup, FAQ, live countdown, table booking, newsletter signup) plus a
+handful of handmade graphic details (ticket-stub scalloped dividers,
+halftone texture, polaroid gallery tiles) so it doesn't read as a single
+generic template.
 
 ## Preview locally
 
@@ -92,10 +97,11 @@ Everything below reads confidently on the page but is an assumption or
 industry-standard placeholder, not confirmed fact — check and edit before
 this goes live:
 
-- **Opening hours, age policy, capacity numbers** in the Door Policy strip
-  and floor capacity badges — generic/typical for a UK nightclub, not
-  sourced from the venue. (Dress code is confirmed: there isn't one —
-  already reflected across the ticker, Door Policy strip, and FAQ.)
+- **Opening hours and age policy** in the Door Policy strip — generic/
+  typical for a UK nightclub, not sourced from the venue. (Dress code is
+  confirmed: there isn't one, already reflected across the ticker, Door
+  Policy strip, and FAQ.) Per-floor capacity numbers were dropped rather
+  than displaying an invented figure.
 - **FAQ answers** — sensible generic answers, not venue-confirmed.
 - **Resident/lineup section** — deliberately uses role labels ("Main
   Floor Resident") instead of inventing real DJ names or using stock
@@ -146,6 +152,7 @@ from search snippets only — treat it as a starting point, not verified fact:
 
 ## Fonts
 
-Anton, Instrument Serif and Public Sans are self-hosted in `assets/fonts/`
-(SIL Open Font License — see the `LICENSE-*.txt` files alongside them),
-pulled in via `@font-face` in `css/styles.css`. No external font requests.
+Anton, Cormorant Garamond and Public Sans are self-hosted in
+`assets/fonts/` (SIL Open Font License, see the `LICENSE-*.txt` files
+alongside them), pulled in via `@font-face` in `css/styles.css`. No
+external font requests.

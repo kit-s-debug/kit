@@ -226,7 +226,7 @@
       e.preventDefault();
       var emailInput = document.getElementById("newsletter-email");
       if (!emailInput.value) return;
-      newsletterStatus.textContent = "Thanks — you're on the list.";
+      newsletterStatus.textContent = "Thanks, you're on the list.";
       newsletterForm.reset();
     });
   }
