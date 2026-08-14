@@ -211,16 +211,23 @@ find and replace.
   (`assets/images/feature-showcase-events.jpg`, a DJ on the decks under
   stage lights and smoke; `assets/images/feature-vip-nights.jpg`,
   premium bottles lined up along the bar; and `assets/images/
-  feature-private-hire.jpg`, a card payment terminal on the bar). Every
-  other placeholder can be replaced the same way: drop the real photo in
-  **using the same filename** — no markup changes needed for the SVG
-  ones; anything already swapped to a real photo is a `.jpg`, so replace
-  that file directly. As a standing rule for this project: whenever a
-  placeholder is replaced, the old placeholder file gets deleted rather
-  than left unused in the repo (that's why `hero.svg`,
-  `floor-florist.svg`, `floor-main.svg`, `floor-rnb.svg`,
-  `feature-showcase-events.svg`, `feature-vip-nights.svg` and
-  `feature-private-hire.svg` are all gone).
+  feature-private-hire.jpg`, a card payment terminal on the bar). Both
+  resident cards in the "Who's playing where" section are real photos
+  too now (`assets/images/resident-main.jpg`, the same packed-crowd shot
+  used on the Main Bar building panel, and `assets/images/
+  resident-rnb.jpg`, a close-up of raised hands under blue light) — only
+  **Guest Selectors** in that section is still the generated
+  illustration, since it's a rotating slot rather than a specific
+  resident. Every other placeholder can be replaced the same way: drop
+  the real photo in **using the same filename** — no markup changes
+  needed for the SVG ones; anything already swapped to a real photo is a
+  `.jpg`, so replace that file directly. As a standing rule for this
+  project: whenever a placeholder is replaced, the old placeholder file
+  gets deleted rather than left unused in the repo (that's why
+  `hero.svg`, `floor-florist.svg`, `floor-main.svg`, `floor-rnb.svg`,
+  `feature-showcase-events.svg`, `feature-vip-nights.svg`,
+  `feature-private-hire.svg`, `resident-main.svg` and `resident-rnb.svg`
+  are all gone).
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
