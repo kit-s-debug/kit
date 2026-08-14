@@ -12,19 +12,38 @@
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  /* ---------- mobile nav toggle ---------- */
+  /* ---------- mobile nav: slide-in drawer ---------- */
   var navToggle = document.getElementById("nav-toggle");
   var mobileNav = document.getElementById("mobile-nav");
+  var mobileNavBackdrop = document.getElementById("mobile-nav-backdrop");
+  mobileNav.inert = true;
+  function openMobileNav() {
+    navToggle.setAttribute("aria-expanded", "true");
+    mobileNav.classList.add("is-open");
+    mobileNavBackdrop.classList.add("is-open");
+    mobileNav.inert = false;
+    document.body.style.overflow = "hidden";
+    var firstLink = mobileNav.querySelector("a");
+    if (firstLink) firstLink.focus();
+  }
+  function closeMobileNav() {
+    navToggle.setAttribute("aria-expanded", "false");
+    mobileNav.classList.remove("is-open");
+    mobileNavBackdrop.classList.remove("is-open");
+    mobileNav.inert = true;
+    document.body.style.overflow = "";
+    navToggle.focus();
+  }
   navToggle.addEventListener("click", function () {
     var open = navToggle.getAttribute("aria-expanded") === "true";
-    navToggle.setAttribute("aria-expanded", String(!open));
-    mobileNav.hidden = open;
+    if (open) closeMobileNav(); else openMobileNav();
   });
   mobileNav.addEventListener("click", function (e) {
-    if (e.target.tagName === "A") {
-      navToggle.setAttribute("aria-expanded", "false");
-      mobileNav.hidden = true;
-    }
+    if (e.target.tagName === "A") closeMobileNav();
+  });
+  mobileNavBackdrop.addEventListener("click", closeMobileNav);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") closeMobileNav();
   });
 
   /* ---------- reveal on scroll ---------- */

@@ -84,6 +84,16 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   before relying on it to actually collect addresses.
 - **Sticky "Reserve a Table" bar** on mobile only, with a one-tap call
   button.
+- **Mobile menu** is a full-height slide-in drawer (not a dropdown) with a
+  blurred backdrop, numbered links that cascade in on open, and a footer
+  with the sister-venue badge and contact details. Closes on a link click,
+  backdrop click, or Escape; marked `inert` while closed so it can't be
+  tabbed into, and locks background scroll while open.
+- **A light 3D tilt on scroll-reveal** — sections settle in with a small
+  `perspective`/`rotateX` lean on top of the usual fade-up, instead of a
+  flat slide. Kept deliberately subtle; the building's own entrance is a
+  slightly more pronounced version since it's the first thing after the
+  hero.
 - **Reviews section** — two real, attributed quotes pulled from public
   TripAdvisor reviews (linked back to the source), plus a factual note
   on TripAdvisor ranking. See "Reviews research" below for what I could

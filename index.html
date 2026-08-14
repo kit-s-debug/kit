@@ -51,22 +51,31 @@
       </button>
     </div>
   </div>
-
-  <div class="mobile-nav" id="mobile-nav" hidden>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#floors">Floors</a></li>
-      <li><a href="#residents">Lineup</a></li>
-      <li><a href="#experience">Private Hire</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#reviews">Reviews</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="#" class="mobile-nav-sister">Also by Eddie's: <strong>Labrinth</strong></a>
-  </div>
 </header>
+
+<div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
+<div class="mobile-nav" id="mobile-nav">
+  <nav aria-label="Mobile">
+    <ul>
+      <li style="--i:0"><a href="#about"><span class="mobile-nav-num">01</span>About</a></li>
+      <li style="--i:1"><a href="#floors"><span class="mobile-nav-num">02</span>The Building</a></li>
+      <li style="--i:2"><a href="#residents"><span class="mobile-nav-num">03</span>Lineup</a></li>
+      <li style="--i:3"><a href="#experience"><span class="mobile-nav-num">04</span>Private Hire</a></li>
+      <li style="--i:4"><a href="#gallery"><span class="mobile-nav-num">05</span>Gallery</a></li>
+      <li style="--i:5"><a href="#reviews"><span class="mobile-nav-num">06</span>Reviews</a></li>
+      <li style="--i:6"><a href="#faq"><span class="mobile-nav-num">07</span>FAQ</a></li>
+      <li style="--i:7"><a href="#events"><span class="mobile-nav-num">08</span>Events</a></li>
+      <li style="--i:8"><a href="#contact"><span class="mobile-nav-num">09</span>Contact</a></li>
+    </ul>
+  </nav>
+  <div class="mobile-nav-foot">
+    <a href="#" class="mobile-nav-sister">Also by Eddie's: <strong>Labrinth</strong></a>
+    <div class="mobile-nav-contact">
+      <a href="tel:01437779595">01437 779595</a>
+      <a href="mailto:contact@eddies.co">contact@eddies.co</a>
+    </div>
+  </div>
+</div>
 
 <main id="main">
 
@@ -79,7 +88,7 @@
     <div class="hero-content" id="hero-content">
       <p class="eyebrow reveal">Haverfordwest, Quay Street</p>
       <h1 class="reveal"><span class="shimmer">A Night Out,</span><br>Done Right.</h1>
-      <p class="hero-sub reveal">West Wales' number one nightclub: two floors, one address, and a night that's always worth showing up sharp for.</p>
+      <p class="hero-sub reveal">Two floors, one address on Quay Street, and a night out that's earned its reputation the hard way.</p>
       <div class="hero-actions reveal">
         <a href="#contact" class="btn btn--solid" data-magnetic>Reserve a Table</a>
         <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
@@ -100,7 +109,7 @@
     <div class="stat-strip-inner">
       <div class="about-copy reveal">
         <h2>Two floors. One reputation.</h2>
-        <p>Eddie's has been West Wales' number one nightclub for years running. Two floors on Quay Street in Haverfordwest, built for showcase events, VIP nights and private hire done properly.</p>
+        <p>Eddie's has been West Wales' number one nightclub for years running: two floors on Quay Street that handle showcase events, VIP nights and private hire without cutting corners.</p>
       </div>
       <dl class="stats reveal">
         <div class="stat"><dt>Reputation</dt><dd>№1 in West&nbsp;Wales</dd></div>
@@ -114,7 +123,7 @@
     <div class="floors-head reveal">
       <div class="halftone" aria-hidden="true" style="width:220px;height:220px;top:-40px;right:0;"></div>
       <h2 id="floors-heading">One building, three floors</h2>
-      <p>Quay Street, ground up: <span class="accent-text">The Forbidden Florist</span> restaurant, then Eddie's Main Bar, then the RnB Bar on top. Tap a floor to open it up.</p>
+      <p>Three floors on Quay Street: <span class="accent-text">The Forbidden Florist</span> on the ground, Eddie's Main Bar above it, and the RnB Bar on top. Tap a floor to step inside.</p>
     </div>
 
     <div class="building reveal" id="building">
@@ -144,7 +153,7 @@
                   <img src="assets/images/floor-rnb.svg" alt="RnB Bar at Eddie Rocks" loading="lazy">
                 </div>
                 <div class="level-copy">
-                  <p>One flight up from the Main Bar, the tempo shifts: smoother sets, later nights, and the floor to head for once things have warmed up downstairs.</p>
+                  <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours, and low light that's easy to stay lost in.</p>
                   <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -175,7 +184,7 @@
                   <img src="assets/images/floor-main.svg" alt="Main Bar at Eddie Rocks" loading="lazy">
                 </div>
                 <div class="level-copy">
-                  <p>The room that built the reputation. Full sound rig, resident DJs, and the bar that's busy every weekend, first up the stairs from Quay Street.</p>
+                  <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Friday or Saturday, first up the stairs from Quay Street.</p>
                   <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -206,7 +215,7 @@
                   <img src="assets/images/floor-florist.svg" alt="The Forbidden Florist, ground floor" loading="lazy">
                 </div>
                 <div class="level-copy">
-                  <p>The ground floor is home to The Forbidden Florist, a separate restaurant, not run by Eddie's. Eddie's own entrance and the staircase up to the Main Bar and RnB Bar sit alongside it on Quay Street.</p>
+                  <p>The ground floor belongs to The Forbidden Florist, a separate restaurant with no connection to Eddie's beyond sharing a building. Head up the staircase alongside it for the Main Bar and RnB Bar.</p>
                 </div>
               </div>
             </div>
@@ -231,7 +240,7 @@
         </div>
         <div class="resident-body">
           <h3>Main Bar Resident</h3>
-          <p>House &amp; dance, holding the room down every weekend on the floor that started it all.</p>
+          <p>House and dance every weekend, holding down the floor that started it all.</p>
         </div>
       </article>
       <article class="resident-card reveal" data-spotlight>
@@ -241,7 +250,7 @@
         </div>
         <div class="resident-body">
           <h3>RnB Bar Resident</h3>
-          <p>RnB, hip-hop and slow burners for the upstairs crowd once the tempo drops.</p>
+          <p>RnB, hip-hop and slow-burners for the upstairs crowd once the tempo drops.</p>
         </div>
       </article>
       <article class="resident-card reveal" data-spotlight>
@@ -277,7 +286,7 @@
       <article class="experience-card reveal" data-spotlight>
         <div class="experience-media" data-tilt><img src="assets/images/feature-private-hire.svg" alt="" loading="lazy"></div>
         <h3>Private Hire</h3>
-        <p>Close the doors to everyone but your guest list, either floor, styled to the occasion.</p>
+        <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
         <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
       </article>
     </div>
@@ -380,7 +389,7 @@
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">04</span><span class="faq-q">Can I hire the whole venue?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Yes, either floor, or the whole building, for private parties, showcases and corporate bookings. Get in touch with your date and numbers to get a package together.</p>
+          <p>Yes, either floor or the whole building, for private parties, showcases and corporate bookings. Get in touch with your date and numbers to get a package together.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">05</span><span class="faq-q">Where do I park?</span><span class="plus" aria-hidden="true"></span></summary>
@@ -393,7 +402,7 @@
   <section class="contact" id="contact" aria-labelledby="contact-heading">
     <div class="contact-inner reveal">
       <h2 id="contact-heading">Quay Street, Haverfordwest</h2>
-      <p class="contact-locator">Above <span class="accent-text">The Forbidden Florist</span>, Main Bar entrance from Quay Street.</p>
+      <p class="contact-locator">Above <span class="accent-text">The Forbidden Florist</span>, with the Main Bar entrance on Quay Street.</p>
       <div class="contact-grid">
         <div class="contact-details">
           <address>4 Quay Street<br>Haverfordwest<br>SA61 1BG</address>
