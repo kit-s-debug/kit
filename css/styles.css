@@ -438,9 +438,11 @@ rect.neon-sign-tube{ fill:none; stroke:var(--neon-pink); stroke-width:2.4; opaci
 text.neon-sign-tube{ fill:var(--neon-pink); fill-opacity:.28; transition:fill-opacity .5s ease; }
 rect.neon-sign-glow{ fill:none; stroke:var(--neon-pink); stroke-width:5; opacity:0; filter:blur(4px); transition:opacity .5s ease; }
 text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transition:opacity .5s ease; }
-.building-floor--rnb:hover rect.neon-sign-tube{ opacity:.95; }
-.building-floor--rnb:hover text.neon-sign-tube{ fill-opacity:.95; }
-.building-floor--rnb:hover .neon-sign-glow{ opacity:.75; animation:neon-flicker 2.6s ease-in-out infinite; }
+@media (hover:hover) and (pointer:fine){
+  .building-floor--rnb:hover rect.neon-sign-tube{ opacity:.95; }
+  .building-floor--rnb:hover text.neon-sign-tube{ fill-opacity:.95; }
+  .building-floor--rnb:hover .neon-sign-glow{ opacity:.75; animation:neon-flicker 2.6s ease-in-out infinite; }
+}
 
 @keyframes neon-flicker{
   0%,100%{ opacity:.75; }
@@ -483,8 +485,10 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   transform-box:fill-box; transform-origin:50% 50%;
   transition:transform .9s cubic-bezier(.34,0,.2,1) .25s, opacity .7s ease .35s;
 }
-.building-floor--florist:hover .cage-door{ transform:rotate(-42deg); }
-.building-floor--florist:hover .cage-bird{ transform:translate(10px,-150px) rotate(-18deg) scale(.6); opacity:0; }
+@media (hover:hover) and (pointer:fine){
+  .building-floor--florist:hover .cage-door{ transform:rotate(-42deg); }
+  .building-floor--florist:hover .cage-bird{ transform:translate(10px,-150px) rotate(-18deg) scale(.6); opacity:0; }
+}
 
 /* plaque: the readable label sitting over the illustration */
 .floor-plaque{

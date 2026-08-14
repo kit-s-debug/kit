@@ -100,9 +100,12 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   open and sends the bird flying up and off the top of the building,
   fading out as it goes; hovering the RnB floor lights the neon sign up
   from a dim, barely-there outline to a full glowing "RnB" with a subtle
-  flicker. Both are `:hover`-only — on touch, tapping still opens the
-  floor panel as normal, it just skips the decorative animation — and
-  collapse to an instant state change under `prefers-reduced-motion`
+  flicker. Both are gated behind `@media (hover:hover) and (pointer:fine)`
+  so only real mouse/trackpad input can trigger them — on touch, tapping
+  still opens the floor panel as normal, it just skips the decorative
+  animation with no risk of it getting visually "stuck" lit/open from a
+  lingering touch — and collapse to an instant state change under
+  `prefers-reduced-motion`
   along with everything else on the page.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
   the disclosure itself), covering booking, age, dress code, private hire
