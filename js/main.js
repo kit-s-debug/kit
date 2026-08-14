@@ -149,6 +149,27 @@
     });
   }
 
+  /* ---------- building levels (expand/collapse) ---------- */
+  var buildingLevels = document.querySelectorAll(".building-level");
+  buildingLevels.forEach(function (level) {
+    var btn = level.querySelector(".level-toggle-btn");
+    var wrap = level.querySelector(".level-panel-wrap");
+    wrap.inert = !level.classList.contains("is-open");
+    btn.addEventListener("click", function () {
+      var wasOpen = level.classList.contains("is-open");
+      buildingLevels.forEach(function (other) {
+        other.classList.remove("is-open");
+        other.querySelector(".level-toggle-btn").setAttribute("aria-expanded", "false");
+        other.querySelector(".level-panel-wrap").inert = true;
+      });
+      if (!wasOpen) {
+        level.classList.add("is-open");
+        btn.setAttribute("aria-expanded", "true");
+        wrap.inert = false;
+      }
+    });
+  });
+
   /* ---------- gallery lightbox ---------- */
   var galleryImages = Array.prototype.map.call(
     document.querySelectorAll("#gallery-grid img"),

@@ -47,9 +47,19 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
 - **Live doors-open countdown** — in the hero, genuinely computed in JS
   (`nextDoorsOpen` in `js/main.js`) to the next Friday or Saturday 9pm,
   not a fabricated one-off event.
-- **Lineup / Residents section** — role-based cards (Main Floor resident,
-  RnB Floor resident, guest selectors) rather than invented DJ names —
+- **Lineup / Residents section** — role-based cards (Main Bar resident,
+  RnB Bar resident, guest selectors) rather than invented DJ names —
   swap in real names/photos/bios when you have them.
+- **Interactive building** — the old side-by-side floor panels are now a
+  clickable building cross-section: ground floor The Forbidden Florist,
+  then Eddie's Main Bar, then the RnB Bar on top. Tap a floor's row and
+  it opens with a smooth height animation (CSS grid `0fr → 1fr`, not a
+  JS-measured height) to reveal a framed photo and description; opening
+  one closes whichever was open, like a normal accordion. Built with
+  plain `<button>`s and `aria-expanded`/`role="region"`, and the closed
+  panels are marked `inert` so keyboard/screen-reader users can't tab
+  into content that's visually collapsed. Main Bar is open by default so
+  the section isn't empty on load.
 - **Door Policy strip** — age, dress code, hours, entry, styled as an
   info panel.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
@@ -119,10 +129,15 @@ this goes live:
   than displaying an invented figure.
 - **FAQ answers** — sensible generic answers, not venue-confirmed.
 - **Resident/lineup section** — deliberately uses role labels ("Main
-  Floor Resident") instead of inventing real DJ names or using stock
+  Bar Resident") instead of inventing real DJ names or using stock
   photos as if they were real people.
 - Floor descriptions and the "Above The Forbidden Florist" locator line
   are written from what was described in chat.
+- **The Forbidden Florist panel in the building** — kept deliberately
+  thin: it states the one confirmed fact (ground floor, separate
+  restaurant, not run by Eddie's) and nothing else. No cuisine, hours or
+  menu details are invented for someone else's business. If you want
+  more said about it there, send over what's actually true.
 - **"Upcoming Events"** ships with an honest empty state rather than
   fabricated events, since there's no real events data to work from.
 
@@ -157,7 +172,7 @@ from search snippets only — treat it as a starting point, not verified fact:
 - **Worth flagging**: some low-quality directory/aggregator sites
   (Yelp, evendo.com) describe the venue as having a snooker bar and a
   third room called "Fever." That contradicts what you told me directly
-  (two floors — Main Floor and RnB Floor, ground floor is the separate
+  (two floors — Main Bar and RnB Bar, ground floor is the separate
   Forbidden Florist business), so I did not use it. Likely just stale or
   wrong listing data, but flagging in case it's not.
 - Also confirmed: mixed/negative reviews exist too (complaints about

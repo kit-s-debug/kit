@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest</title>
-<meta name="description" content="Eddie Rocks, Haverfordwest. Two floors on Quay Street: Main Floor and the RnB Floor. Private hire, VIP nights and showcase events.">
+<meta name="description" content="Eddie Rocks, Haverfordwest. Above The Forbidden Florist on Quay Street: Eddie's Main Bar and RnB Bar. Private hire, VIP nights and showcase events.">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -82,7 +82,7 @@
       <p class="hero-sub reveal">West Wales' number one nightclub: two floors, one address, and a night that's always worth showing up sharp for.</p>
       <div class="hero-actions reveal">
         <a href="#contact" class="btn btn--solid" data-magnetic>Reserve a Table</a>
-        <a href="#floors" class="btn btn--text" data-magnetic>View the Floors <span aria-hidden="true">→</span></a>
+        <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
       </div>
       <div class="countdown reveal" id="countdown">
         <p class="countdown-label">Doors open<span>Every Friday &amp; Saturday</span></p>
@@ -113,33 +113,84 @@
   <section class="floors" id="floors" aria-labelledby="floors-heading">
     <div class="floors-head reveal">
       <div class="halftone" aria-hidden="true" style="width:220px;height:220px;top:-40px;right:0;"></div>
-      <h2 id="floors-heading">Two floors, two nights</h2>
-      <p>Eddie's sits above <span class="accent-text">The Forbidden Florist</span> on Quay Street. Take the stairs up to the Main Floor, then up again for the RnB Floor.</p>
+      <h2 id="floors-heading">One building, three floors</h2>
+      <p>Quay Street, ground up: <span class="accent-text">The Forbidden Florist</span> restaurant, then Eddie's Main Bar, then the RnB Bar on top. Tap a floor to open it up.</p>
     </div>
 
-    <article class="floor-panel reveal">
-      <div class="floor-media" data-tilt data-spotlight>
-        <img src="assets/images/floor-main.svg" alt="Main Floor at Eddie Rocks" loading="lazy">
-      </div>
-      <div class="floor-copy">
-        <span class="floor-index">01</span>
-        <h3>Main Floor</h3>
-        <p>The room that built the reputation. Full sound rig, resident DJs, and the floor that's busy every weekend, first up the stairs from Quay Street.</p>
-        <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
-      </div>
-    </article>
+    <div class="building reveal" id="building">
 
-    <article class="floor-panel floor-panel--reverse reveal">
-      <div class="floor-media" data-tilt data-spotlight>
-        <img src="assets/images/floor-rnb.svg" alt="RnB Floor at Eddie Rocks" loading="lazy">
+      <div class="building-level" id="level-rnb">
+        <button type="button" class="level-toggle-btn" aria-expanded="false" aria-controls="panel-rnb" id="btn-rnb">
+          <span class="level-num">03</span>
+          <span class="level-titles">
+            <span class="level-name">RnB Bar</span>
+            <span class="level-hint">Top floor · Eddie's</span>
+          </span>
+          <span class="level-icon" aria-hidden="true"></span>
+        </button>
+        <div class="level-panel-wrap">
+          <div class="level-panel" id="panel-rnb" role="region" aria-labelledby="btn-rnb">
+            <div class="level-panel-inner">
+              <div class="level-media" data-spotlight>
+                <img src="assets/images/floor-rnb.svg" alt="RnB Bar at Eddie Rocks" loading="lazy">
+              </div>
+              <div class="level-copy">
+                <p>One flight up from the Main Bar, the tempo shifts: smoother sets, later nights, and the floor to head for once things have warmed up downstairs.</p>
+                <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="floor-copy">
-        <span class="floor-index">02</span>
-        <h3>RnB Floor</h3>
-        <p>One flight up, the tempo shifts. Smoother sets, later nights, and the floor to head for once the Main Floor's warmed up.</p>
-        <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+
+      <div class="building-level is-open" id="level-main">
+        <button type="button" class="level-toggle-btn" aria-expanded="true" aria-controls="panel-main" id="btn-main">
+          <span class="level-num">02</span>
+          <span class="level-titles">
+            <span class="level-name">Main Bar</span>
+            <span class="level-hint">First floor · Eddie's</span>
+          </span>
+          <span class="level-icon" aria-hidden="true"></span>
+        </button>
+        <div class="level-panel-wrap">
+          <div class="level-panel" id="panel-main" role="region" aria-labelledby="btn-main">
+            <div class="level-panel-inner">
+              <div class="level-media" data-spotlight>
+                <img src="assets/images/floor-main.svg" alt="Main Bar at Eddie Rocks" loading="lazy">
+              </div>
+              <div class="level-copy">
+                <p>The room that built the reputation. Full sound rig, resident DJs, and the bar that's busy every weekend, first up the stairs from Quay Street.</p>
+                <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </article>
+
+      <div class="building-level building-level--other" id="level-florist">
+        <button type="button" class="level-toggle-btn" aria-expanded="false" aria-controls="panel-florist" id="btn-florist">
+          <span class="level-num">01</span>
+          <span class="level-titles">
+            <span class="level-name">The Forbidden Florist</span>
+            <span class="level-hint">Ground floor · separate restaurant</span>
+          </span>
+          <span class="level-icon" aria-hidden="true"></span>
+        </button>
+        <div class="level-panel-wrap">
+          <div class="level-panel" id="panel-florist" role="region" aria-labelledby="btn-florist">
+            <div class="level-panel-inner">
+              <div class="level-media" data-spotlight>
+                <img src="assets/images/floor-florist.svg" alt="The Forbidden Florist, ground floor" loading="lazy">
+              </div>
+              <div class="level-copy">
+                <p>The ground floor is home to The Forbidden Florist, a separate restaurant, not run by Eddie's. Eddie's own entrance and the staircase up to the Main Bar and RnB Bar sit alongside it on Quay Street.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <section class="residents ticket-panel" id="residents" aria-labelledby="residents-heading">
@@ -154,7 +205,7 @@
           <span class="resident-badge">Resident</span>
         </div>
         <div class="resident-body">
-          <h3>Main Floor Resident</h3>
+          <h3>Main Bar Resident</h3>
           <p>House &amp; dance, holding the room down every weekend on the floor that started it all.</p>
         </div>
       </article>
@@ -164,7 +215,7 @@
           <span class="resident-badge">Resident</span>
         </div>
         <div class="resident-body">
-          <h3>RnB Floor Resident</h3>
+          <h3>RnB Bar Resident</h3>
           <p>RnB, hip-hop and slow burners for the upstairs crowd once the tempo drops.</p>
         </div>
       </article>
@@ -189,7 +240,7 @@
       <article class="experience-card reveal" data-spotlight>
         <div class="experience-media" data-tilt><img src="assets/images/feature-showcase-events.svg" alt="" loading="lazy"></div>
         <h3>Showcase Events</h3>
-        <p>Resident and guest line-ups on the Main Floor, for the nights the whole room turns up.</p>
+        <p>Resident and guest line-ups on the Main Bar, for the nights the whole room turns up.</p>
         <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
       </article>
       <article class="experience-card reveal" data-spotlight>
@@ -317,7 +368,7 @@
   <section class="contact" id="contact" aria-labelledby="contact-heading">
     <div class="contact-inner reveal">
       <h2 id="contact-heading">Quay Street, Haverfordwest</h2>
-      <p class="contact-locator">Above <span class="accent-text">The Forbidden Florist</span>, Main Floor entrance from Quay Street.</p>
+      <p class="contact-locator">Above <span class="accent-text">The Forbidden Florist</span>, Main Bar entrance from Quay Street.</p>
       <div class="contact-grid">
         <div class="contact-details">
           <address>4 Quay Street<br>Haverfordwest<br>SA61 1BG</address>
