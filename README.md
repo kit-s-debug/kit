@@ -92,7 +92,17 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   doorway, and a few birds fly across the upper sky. The RnB floor scene
   got a retro neon sign reading "RnB" (pink, two-layer glow — a blurred
   under-layer plus a crisp stroke on top, same technique as a real neon
-  tube) mounted above the crowd.
+  tube) mounted above the crowd. Those aren't just static illustrations
+  in the opened-panel photo, either — the birdcage and neon sign are also
+  drawn as inline SVG directly on the closed building facade itself, and
+  react to hover: hovering The Forbidden Florist swings the cage door
+  open and sends the bird flying up and off the top of the building,
+  fading out as it goes; hovering the RnB floor lights the neon sign up
+  from a dim, barely-there outline to a full glowing "RnB" with a subtle
+  flicker. Both are `:hover`-only — on touch, tapping still opens the
+  floor panel as normal, it just skips the decorative animation — and
+  collapse to an instant state change under `prefers-reduced-motion`
+  along with everything else on the page.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
   the disclosure itself), covering booking, age, dress code, private hire
   and parking.

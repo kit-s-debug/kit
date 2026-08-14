@@ -68,6 +68,8 @@
   --silver-bright:#F3B98C;
   --silver-deep:#A85C38;
   --silver-gradient:linear-gradient(100deg, var(--silver-deep) 0%, var(--silver) 25%, var(--silver-bright) 50%, var(--silver) 75%, var(--silver-deep) 100%);
+  --gold-accent:#C9A24B;
+  --neon-pink:#FF4FA3;
 
   --font-display:"Anton", ui-sans-serif, sans-serif;
   --font-accent:"Cormorant Garamond", ui-serif, Georgia, serif;
@@ -425,6 +427,30 @@ p{ margin:0; }
   92%{ opacity:0; }
 }
 
+/* retro neon sign — RnB floor, unlit until hover */
+.floor-neon-sign{
+  position:absolute; z-index:2; top:20px; left:50%; transform:translateX(-50%);
+  width:150px; pointer-events:none;
+}
+.floor-neon-sign svg{ width:100%; height:auto; overflow:visible; }
+.floor-neon-sign text{ font-family:"Anton", ui-sans-serif, sans-serif; font-size:19px; }
+rect.neon-sign-tube{ fill:none; stroke:var(--neon-pink); stroke-width:2.4; opacity:.28; transition:opacity .5s ease; }
+text.neon-sign-tube{ fill:var(--neon-pink); fill-opacity:.28; transition:fill-opacity .5s ease; }
+rect.neon-sign-glow{ fill:none; stroke:var(--neon-pink); stroke-width:5; opacity:0; filter:blur(4px); transition:opacity .5s ease; }
+text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transition:opacity .5s ease; }
+.building-floor--rnb:hover rect.neon-sign-tube{ opacity:.95; }
+.building-floor--rnb:hover text.neon-sign-tube{ fill-opacity:.95; }
+.building-floor--rnb:hover .neon-sign-glow{ opacity:.75; animation:neon-flicker 2.6s ease-in-out infinite; }
+
+@keyframes neon-flicker{
+  0%,100%{ opacity:.75; }
+  92%{ opacity:.75; }
+  94%{ opacity:.35; }
+  96%{ opacity:.75; }
+  97%{ opacity:.25; }
+  98%{ opacity:.75; }
+}
+
 /* ground floor shopfront — florist, deliberately quieter */
 .floor-awning{
   position:absolute; top:0; left:0; right:0; height:16px; z-index:1;
@@ -439,6 +465,26 @@ p{ margin:0; }
 .floor-shop-windows{ position:absolute; inset:28px 24px auto; height:60px; z-index:1; display:flex; justify-content:space-between; pointer-events:none; }
 .floor-shop-windows .win{ width:30px; height:44px; opacity:.4; box-shadow:none; }
 .building-floor--florist:hover .win{ opacity:.55; box-shadow:0 0 14px -4px rgba(243,185,140,.4); }
+
+/* hanging birdcage — florist floor, cage opens and the bird flies off on hover */
+.floor-birdcage{
+  position:absolute; z-index:3; top:10px; left:50%; transform:translateX(-50%);
+  width:52px; pointer-events:none; overflow:visible;
+}
+.floor-birdcage svg{ width:100%; height:auto; overflow:visible; }
+.cage-metal{ stroke:var(--gold-accent); stroke-width:1.6; fill:none; }
+.cage-base{ fill:var(--charcoal); opacity:.5; }
+.cage-door{
+  transform-box:fill-box; transform-origin:50% 0%;
+  transition:transform .5s cubic-bezier(.32,.9,.3,1.2);
+}
+.cage-bird{
+  stroke:var(--silver-bright); stroke-width:2; stroke-linecap:round; fill:none;
+  transform-box:fill-box; transform-origin:50% 50%;
+  transition:transform .9s cubic-bezier(.34,0,.2,1) .25s, opacity .7s ease .35s;
+}
+.building-floor--florist:hover .cage-door{ transform:rotate(-42deg); }
+.building-floor--florist:hover .cage-bird{ transform:translate(10px,-150px) rotate(-18deg) scale(.6); opacity:0; }
 
 /* plaque: the readable label sitting over the illustration */
 .floor-plaque{
