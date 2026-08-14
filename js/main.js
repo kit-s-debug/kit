@@ -104,14 +104,32 @@
   /* ---------- magnetic buttons ---------- */
   if (canHover && !reducedMotion) {
     document.querySelectorAll("[data-magnetic]").forEach(function (el) {
+      var mx = 0, my = 0, pressed = false;
+      function apply() {
+        el.style.transform = "translate(" + mx + "px," + my + "px) scale(" + (pressed ? 0.96 : 1) + ")";
+      }
       el.addEventListener("mousemove", function (e) {
         var rect = el.getBoundingClientRect();
-        var relX = e.clientX - rect.left - rect.width / 2;
-        var relY = e.clientY - rect.top - rect.height / 2;
-        el.style.transform = "translate(" + relX * 0.28 + "px," + relY * 0.35 + "px)";
+        mx = (e.clientX - rect.left - rect.width / 2) * 0.28;
+        my = (e.clientY - rect.top - rect.height / 2) * 0.35;
+        apply();
       });
       el.addEventListener("mouseleave", function () {
+        mx = 0; my = 0; pressed = false;
         el.style.transform = "";
+      });
+      el.addEventListener("mousedown", function () { pressed = true; apply(); });
+      el.addEventListener("mouseup", function () { pressed = false; apply(); });
+    });
+  }
+
+  /* ---------- cursor-follow spotlight on cards ---------- */
+  if (canHover && !reducedMotion) {
+    document.querySelectorAll("[data-spotlight]").forEach(function (el) {
+      el.addEventListener("mousemove", function (e) {
+        var rect = el.getBoundingClientRect();
+        el.style.setProperty("--sx", ((e.clientX - rect.left) / rect.width * 100) + "%");
+        el.style.setProperty("--sy", ((e.clientY - rect.top) / rect.height * 100) + "%");
       });
     });
   }

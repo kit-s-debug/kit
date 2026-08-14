@@ -1,20 +1,29 @@
-# Eddie Rocks — Charcoal & Silver redesign
+# Eddie Rocks — Velvet Ember redesign
 
-A static rebuild of eddies.co in the "Charcoal & Silver" direction: a
-neutral graphite base with a brushed-silver metallic accent, and a type
-system tied to the club's own brand mark rather than a generic elegant
-pairing. Anton (the same face used in the logo) for the handful of
+A static rebuild of eddies.co. The palette moved from an earlier cooler
+"Charcoal & Silver" direction to **Velvet Ember**: a deep aubergine-plum
+base with a single warm amber-coral accent and cream text, at the
+request to move off charcoal into something more inviting without
+sliding into the previously-rejected gold-and-black look — this is a
+warm wine/candlelight register instead, not metallic. Type system is
+still tied to the club's own brand mark rather than a generic elegant
+pairing: Anton (the same face used in the logo) for the handful of
 moments that should genuinely shout, Cormorant Garamond italic for
-section headings, and Public Sans for body/UI. Built after feedback that
-the previous pass read as templated and thin, then run through a second
-"anti-slop" pass (see below) to strip out the AI-generated tells that
-crept back in: em dashes, an eyebrow label on nearly every section, a
-repeated hairline-bordered grid used for four different sections, a
-three-equal-cards layout, and CTA buttons that all meant the same thing
-in five different words. This version adds the content sections real
-nightclub sites actually carry (researched via web search: door policy,
-DJ lineup, FAQ, live countdown, table booking, newsletter signup) plus a
-handful of handmade graphic details (ticket-stub scalloped dividers,
+section headings, and Public Sans for body/UI.
+
+Built after several feedback rounds: an "anti-slop" pass stripped out
+AI-generated tells (em dashes, an eyebrow on nearly every section, a
+repeated hairline-bordered grid reused across four sections, a
+three-equal-cards layout, five different CTA phrasings for the same
+action); a follow-up "glow-up" pass then added the finishing detail a
+template usually skips — a cursor-follow spotlight highlight on cards, a
+double-bezel framed-photo treatment on every image, nested icon-in-button
+hover physics, a live-pulse doors-open indicator, an ambient drifting
+glow behind the hero, and a FAQ rebuilt as a clean border-bottom list
+instead of another bordered grid. This version also carries the content
+sections real nightclub sites actually have (researched via web search:
+door policy, DJ lineup, FAQ, live countdown, table booking, newsletter
+signup) plus handmade graphic details (ticket-stub scalloped dividers,
 halftone texture, polaroid gallery tiles) so it doesn't read as a single
 generic template.
 
@@ -63,12 +72,18 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   illustration, not photography (no real photo source is reachable from
   this dev environment), but closer to "a nightclub." Swap for real
   photos any time, same filenames.
-- **Interaction details**: small dot cursor, magnetic buttons, hero
-  scroll parallax, hover tilt on floor/experience images, silver shimmer
-  headline text, ticket-stub scalloped section edges, a subtle halftone
-  accent, and two gallery photos with a rotated polaroid/tape treatment.
-  All respect `prefers-reduced-motion` and are disabled on touch/coarse-
-  pointer devices.
+- **Interaction details**: small dot cursor, magnetic buttons with press
+  feedback, a cursor-follow spotlight highlight on floor/experience/
+  resident/review/gallery cards, hero scroll parallax plus a slow ambient
+  glow drifting behind it, hover tilt on floor/experience images, amber
+  shimmer headline text, ticket-stub scalloped section edges, a subtle
+  halftone accent, and two gallery photos with a rotated polaroid/tape
+  treatment. All respect `prefers-reduced-motion` and are disabled on
+  touch/coarse-pointer devices.
+- **Framed-photo treatment** — floor, experience, resident and gallery
+  images sit in a double-bezel frame (a warm gradient inset border around
+  each photo) instead of a flat crop, so every "photograph" on the page
+  reads as mounted rather than just an `<img>` dropped on the page.
 
 ## Swapping in the real logo and photos
 
@@ -85,9 +100,9 @@ find and replace.
   Send the original on a dark background or as a flattened JPG/PNG and
   replace `assets/images/logo.svg` directly (same filename).
 - **Photos** — every image points at a generated placeholder SVG in
-  `assets/images/` (charcoal/silver gradients labelled with what should go
-  there). Replace each file with the real photo **using the same
-  filename** — no markup changes needed.
+  `assets/images/` (warm amber/plum gradient scenes standing in for real
+  venue photography). Replace each file with the real photo **using the
+  same filename** — no markup changes needed.
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
@@ -156,3 +171,13 @@ Anton, Cormorant Garamond and Public Sans are self-hosted in
 `assets/fonts/` (SIL Open Font License, see the `LICENSE-*.txt` files
 alongside them), pulled in via `@font-face` in `css/styles.css`. No
 external font requests.
+
+## Colour
+
+Velvet Ember lives entirely as CSS custom properties at the top of
+`css/styles.css` (`--charcoal`, `--panel`, `--silver*`, `--white`,
+`--dim` — names are carried over from the earlier direction but now hold
+warm plum/amber/cream values). Changing the palette again only means
+editing that `:root` block plus the handful of hardcoded shadow-tint
+`rgba()` values called out in a comment nearby, and regenerating the
+illustration SVGs in `assets/images/` with matching tones.

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest</title>
 <meta name="description" content="Eddie Rocks, Haverfordwest. Two floors on Quay Street: Main Floor and the RnB Floor. Private hire, VIP nights and showcase events.">
+<link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -74,6 +75,7 @@
       <img class="hero-bg" src="assets/images/hero.svg" alt="" loading="eager">
       <div class="hero-scrim" aria-hidden="true"></div>
     </div>
+    <div class="hero-ambient" aria-hidden="true"></div>
     <div class="hero-content" id="hero-content">
       <p class="eyebrow reveal">Haverfordwest, Quay Street</p>
       <h1 class="reveal"><span class="shimmer">A Night Out,</span><br>Done Right.</h1>
@@ -116,7 +118,7 @@
     </div>
 
     <article class="floor-panel reveal">
-      <div class="floor-media" data-tilt>
+      <div class="floor-media" data-tilt data-spotlight>
         <img src="assets/images/floor-main.svg" alt="Main Floor at Eddie Rocks" loading="lazy">
       </div>
       <div class="floor-copy">
@@ -128,7 +130,7 @@
     </article>
 
     <article class="floor-panel floor-panel--reverse reveal">
-      <div class="floor-media" data-tilt>
+      <div class="floor-media" data-tilt data-spotlight>
         <img src="assets/images/floor-rnb.svg" alt="RnB Floor at Eddie Rocks" loading="lazy">
       </div>
       <div class="floor-copy">
@@ -146,7 +148,7 @@
       <h2 id="residents-heading">Who's playing where</h2>
     </div>
     <div class="residents-grid">
-      <article class="resident-card reveal">
+      <article class="resident-card reveal" data-spotlight>
         <div class="resident-media">
           <img src="assets/images/resident-main.svg" alt="" loading="lazy">
           <span class="resident-badge">Resident</span>
@@ -156,7 +158,7 @@
           <p>House &amp; dance, holding the room down every weekend on the floor that started it all.</p>
         </div>
       </article>
-      <article class="resident-card reveal">
+      <article class="resident-card reveal" data-spotlight>
         <div class="resident-media">
           <img src="assets/images/resident-rnb.svg" alt="" loading="lazy">
           <span class="resident-badge">Resident</span>
@@ -166,7 +168,7 @@
           <p>RnB, hip-hop and slow burners for the upstairs crowd once the tempo drops.</p>
         </div>
       </article>
-      <article class="resident-card reveal">
+      <article class="resident-card reveal" data-spotlight>
         <div class="resident-media">
           <img src="assets/images/resident-guest.svg" alt="" loading="lazy">
           <span class="resident-badge">Rotating</span>
@@ -184,19 +186,19 @@
       <h2 id="experience-heading">Three ways to spend the night</h2>
     </div>
     <div class="experience-grid">
-      <article class="experience-card reveal">
+      <article class="experience-card reveal" data-spotlight>
         <div class="experience-media" data-tilt><img src="assets/images/feature-showcase-events.svg" alt="" loading="lazy"></div>
         <h3>Showcase Events</h3>
         <p>Resident and guest line-ups on the Main Floor, for the nights the whole room turns up.</p>
         <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
       </article>
-      <article class="experience-card reveal">
+      <article class="experience-card reveal" data-spotlight>
         <div class="experience-media" data-tilt><img src="assets/images/feature-vip-nights.svg" alt="" loading="lazy"></div>
         <h3>VIP Nights</h3>
         <p>Booth and table reservations, with a drinks package built for comfort over chaos.</p>
         <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
       </article>
-      <article class="experience-card reveal">
+      <article class="experience-card reveal" data-spotlight>
         <div class="experience-media" data-tilt><img src="assets/images/feature-private-hire.svg" alt="" loading="lazy"></div>
         <h3>Private Hire</h3>
         <p>Close the doors to everyone but your guest list, either floor, styled to the occasion.</p>
@@ -241,12 +243,12 @@
       <p class="reviews-note">Ranked #3 of 4 nightlife venues in Haverfordwest on TripAdvisor.</p>
     </div>
     <div class="reviews-grid">
-      <blockquote class="review-card reveal">
+      <blockquote class="review-card reveal" data-spotlight>
         <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
         <p>&ldquo;5&#42; for the owners and staff of this club&hellip; the place to be to enjoy and cater your needs for a night out.&rdquo;</p>
         <footer><cite>TripAdvisor review</cite></footer>
       </blockquote>
-      <blockquote class="review-card reveal">
+      <blockquote class="review-card reveal" data-spotlight>
         <p>&ldquo;Amazing nights out, amazing club! The place to be in Haverfordwest!!&rdquo;</p>
         <footer><cite>TripAdvisor review</cite></footer>
       </blockquote>
@@ -264,12 +266,12 @@
       <h2 id="gallery-heading">Gallery</h2>
     </div>
     <ul class="gallery-grid" id="gallery-grid">
-      <li class="reveal"><button type="button" class="gallery-item" data-index="0"><img src="assets/images/gallery-1.svg" alt="Photo from a night at Eddie Rocks, 1 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-index="1"><img src="assets/images/gallery-2.svg" alt="Photo from a night at Eddie Rocks, 2 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-index="2"><img src="assets/images/gallery-3.svg" alt="Photo from a night at Eddie Rocks, 3 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-index="3"><img src="assets/images/gallery-4.svg" alt="Photo from a night at Eddie Rocks, 4 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-index="4"><img src="assets/images/gallery-5.svg" alt="Photo from a night at Eddie Rocks, 5 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-index="5"><img src="assets/images/gallery-6.svg" alt="Photo from a night at Eddie Rocks, 6 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="0"><img src="assets/images/gallery-1.svg" alt="Photo from a night at Eddie Rocks, 1 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-spotlight data-index="1"><img src="assets/images/gallery-2.svg" alt="Photo from a night at Eddie Rocks, 2 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="2"><img src="assets/images/gallery-3.svg" alt="Photo from a night at Eddie Rocks, 3 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="3"><img src="assets/images/gallery-4.svg" alt="Photo from a night at Eddie Rocks, 4 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-spotlight data-index="4"><img src="assets/images/gallery-5.svg" alt="Photo from a night at Eddie Rocks, 5 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="5"><img src="assets/images/gallery-6.svg" alt="Photo from a night at Eddie Rocks, 6 of 6" loading="lazy"><span class="view-label">View</span></button></li>
     </ul>
   </section>
 
