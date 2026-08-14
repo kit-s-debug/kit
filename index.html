@@ -7,7 +7,14 @@
 <meta name="description" content="Eddie Rocks, Haverfordwest. Three floors on Quay Street: The Forbidden Florist, the Main Bar and the RnB Bar. Private hire, VIP nights and showcase events.">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
-<script>if ("scrollRestoration" in history) history.scrollRestoration = "manual";</script>
+<script>
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  function forceScrollTop() { window.scrollTo(0, 0); }
+  document.addEventListener("DOMContentLoaded", forceScrollTop);
+  window.addEventListener("load", forceScrollTop);
+  [0, 60, 150, 300, 600, 1200].forEach(function (ms) { setTimeout(forceScrollTop, ms); });
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -297,7 +304,7 @@
         <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
       </article>
       <article class="experience-card reveal" data-spotlight>
-        <div class="experience-media" data-tilt><img src="assets/images/feature-private-hire.svg" alt="" loading="lazy"></div>
+        <div class="experience-media" data-tilt><img src="assets/images/feature-private-hire.jpg" alt="A card payment terminal on the bar with the venue lit up behind it" loading="lazy"></div>
         <h3>Private Hire</h3>
         <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
         <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>

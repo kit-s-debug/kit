@@ -41,11 +41,20 @@ Then open `http://localhost:8000`.
 
 Beyond the original hero/floors/gallery/contact, this pass adds:
 
-- **Always opens at the top.** `history.scrollRestoration = "manual"` is
-  set in a small inline script in `<head>`, so a refresh or a
-  back/forward navigation doesn't leave the browser's remembered scroll
-  position wherever the visitor last left off — the page consistently
-  loads at the very top instead.
+- **Always opens at the top.** A small inline script in `<head>` handles
+  two separate causes of landing mid-page: `history.scrollRestoration =
+  "manual"` stops the browser restoring a remembered scroll position on
+  refresh or back/forward navigation, and — since the URL keeps whatever
+  `#section` hash was last clicked (e.g. after visiting `#gallery`), the
+  browser will otherwise auto-scroll straight to that section on the next
+  load — the script also strips the hash from the URL via
+  `history.replaceState` before the browser can act on it, plus a few
+  staggered `scrollTo(0,0)` calls (on `DOMContentLoaded`, `load`, and a
+  handful of short timeouts) to catch that auto-scroll even if it fires
+  asynchronously after slower-loading resources. Stress-tested by loading
+  the page with a `#section` hash repeatedly; it now lands at the top
+  every time. Clicking a nav link to jump to a section after the page has
+  already loaded is unaffected and still scrolls normally.
 - **No separate "About" section.** There used to be a stat-strip section
   right after the hero ("Two/Three floors. One reputation." plus a
   reputation/layout/address stat list) that mostly repeated what the
@@ -185,16 +194,20 @@ find and replace.
   shown as a small badge above the panel copy), `assets/images/
   floor-main.jpg` (a packed Main Bar dancefloor) and `assets/images/
   floor-rnb.jpg` (the DJ booth on the RnB floor, hands up under green
-  lights). The **VIP Nights** card in the Experience section is real too
-  now (`assets/images/feature-vip-nights.jpg`, premium bottles lined up
-  along the bar). Every other placeholder can be replaced the same way:
-  drop the real photo in **using the same filename** — no markup changes
-  needed for the SVG ones; anything already swapped to a real photo is a
-  `.jpg`, so replace that file directly. As a standing rule for this
-  project: whenever a placeholder is replaced, the old placeholder file
-  gets deleted rather than left unused in the repo (that's why
-  `hero.svg`, `floor-florist.svg`, `floor-main.svg`, `floor-rnb.svg` and
-  `feature-vip-nights.svg` are all gone).
+  lights). The **VIP Nights** and **Private Hire** cards in the
+  Experience section are real too now (`assets/images/
+  feature-vip-nights.jpg`, premium bottles lined up along the bar, and
+  `assets/images/feature-private-hire.jpg`, a card payment terminal on
+  the bar). Only the **Showcase Events** card in that section is still
+  the generated illustration. Every other placeholder can be replaced
+  the same way: drop the real photo in **using the same filename** — no
+  markup changes needed for the SVG ones; anything already swapped to a
+  real photo is a `.jpg`, so replace that file directly. As a standing
+  rule for this project: whenever a placeholder is replaced, the old
+  placeholder file gets deleted rather than left unused in the repo
+  (that's why `hero.svg`, `floor-florist.svg`, `floor-main.svg`,
+  `floor-rnb.svg`, `feature-vip-nights.svg` and
+  `feature-private-hire.svg` are all gone).
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
