@@ -118,78 +118,101 @@
     </div>
 
     <div class="building reveal" id="building">
+      <div class="building-illustration">
+        <div class="building-cap" aria-hidden="true"></div>
 
-      <div class="building-level" id="level-rnb">
-        <button type="button" class="level-toggle-btn" aria-expanded="false" aria-controls="panel-rnb" id="btn-rnb">
-          <span class="level-num">03</span>
-          <span class="level-titles">
-            <span class="level-name">RnB Bar</span>
-            <span class="level-hint">Top floor · Eddie's</span>
-          </span>
-          <span class="level-icon" aria-hidden="true"></span>
-        </button>
-        <div class="level-panel-wrap">
-          <div class="level-panel" id="panel-rnb" role="region" aria-labelledby="btn-rnb">
-            <div class="level-panel-inner">
-              <div class="level-media" data-spotlight>
-                <img src="assets/images/floor-rnb.svg" alt="RnB Bar at Eddie Rocks" loading="lazy">
-              </div>
-              <div class="level-copy">
-                <p>One flight up from the Main Bar, the tempo shifts: smoother sets, later nights, and the floor to head for once things have warmed up downstairs.</p>
-                <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+        <div class="building-level" id="level-rnb">
+          <button type="button" class="building-floor building-floor--rnb" aria-expanded="false" aria-controls="panel-rnb" id="btn-rnb">
+            <span class="floor-windows" aria-hidden="true">
+              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
+              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
+            </span>
+            <span class="floor-plaque">
+              <span class="level-num">03</span>
+              <span class="level-titles">
+                <span class="level-name">RnB Bar</span>
+                <span class="level-hint">Top floor · Eddie's</span>
+              </span>
+              <span class="level-icon" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="level-panel-wrap">
+            <div class="level-panel" id="panel-rnb" role="region" aria-labelledby="btn-rnb">
+              <div class="level-panel-inner">
+                <div class="level-media" data-spotlight>
+                  <img src="assets/images/floor-rnb.svg" alt="RnB Bar at Eddie Rocks" loading="lazy">
+                </div>
+                <div class="level-copy">
+                  <p>One flight up from the Main Bar, the tempo shifts: smoother sets, later nights, and the floor to head for once things have warmed up downstairs.</p>
+                  <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="building-level is-open" id="level-main">
-        <button type="button" class="level-toggle-btn" aria-expanded="true" aria-controls="panel-main" id="btn-main">
-          <span class="level-num">02</span>
-          <span class="level-titles">
-            <span class="level-name">Main Bar</span>
-            <span class="level-hint">First floor · Eddie's</span>
-          </span>
-          <span class="level-icon" aria-hidden="true"></span>
-        </button>
-        <div class="level-panel-wrap">
-          <div class="level-panel" id="panel-main" role="region" aria-labelledby="btn-main">
-            <div class="level-panel-inner">
-              <div class="level-media" data-spotlight>
-                <img src="assets/images/floor-main.svg" alt="Main Bar at Eddie Rocks" loading="lazy">
-              </div>
-              <div class="level-copy">
-                <p>The room that built the reputation. Full sound rig, resident DJs, and the bar that's busy every weekend, first up the stairs from Quay Street.</p>
-                <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+        <div class="building-level is-open" id="level-main">
+          <button type="button" class="building-floor building-floor--main" aria-expanded="true" aria-controls="panel-main" id="btn-main">
+            <span class="floor-windows" aria-hidden="true">
+              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
+              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
+            </span>
+            <span class="floor-plaque">
+              <span class="level-num">02</span>
+              <span class="level-titles">
+                <span class="level-name">Main Bar</span>
+                <span class="level-hint">First floor · Eddie's</span>
+              </span>
+              <span class="level-icon" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="level-panel-wrap">
+            <div class="level-panel" id="panel-main" role="region" aria-labelledby="btn-main">
+              <div class="level-panel-inner">
+                <div class="level-media" data-spotlight>
+                  <img src="assets/images/floor-main.svg" alt="Main Bar at Eddie Rocks" loading="lazy">
+                </div>
+                <div class="level-copy">
+                  <p>The room that built the reputation. Full sound rig, resident DJs, and the bar that's busy every weekend, first up the stairs from Quay Street.</p>
+                  <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="building-level building-level--other" id="level-florist">
-        <button type="button" class="level-toggle-btn" aria-expanded="false" aria-controls="panel-florist" id="btn-florist">
-          <span class="level-num">01</span>
-          <span class="level-titles">
-            <span class="level-name">The Forbidden Florist</span>
-            <span class="level-hint">Ground floor · separate restaurant</span>
-          </span>
-          <span class="level-icon" aria-hidden="true"></span>
-        </button>
-        <div class="level-panel-wrap">
-          <div class="level-panel" id="panel-florist" role="region" aria-labelledby="btn-florist">
-            <div class="level-panel-inner">
-              <div class="level-media" data-spotlight>
-                <img src="assets/images/floor-florist.svg" alt="The Forbidden Florist, ground floor" loading="lazy">
-              </div>
-              <div class="level-copy">
-                <p>The ground floor is home to The Forbidden Florist, a separate restaurant, not run by Eddie's. Eddie's own entrance and the staircase up to the Main Bar and RnB Bar sit alongside it on Quay Street.</p>
+        <div class="building-level building-level--other" id="level-florist">
+          <button type="button" class="building-floor building-floor--florist" aria-expanded="false" aria-controls="panel-florist" id="btn-florist">
+            <span class="floor-awning" aria-hidden="true"></span>
+            <span class="floor-arch" aria-hidden="true"></span>
+            <span class="floor-shop-windows" aria-hidden="true">
+              <span class="win"></span><span class="win"></span>
+            </span>
+            <span class="floor-plaque">
+              <span class="level-num">01</span>
+              <span class="level-titles">
+                <span class="level-name">The Forbidden Florist</span>
+                <span class="level-hint">Ground floor · separate restaurant</span>
+              </span>
+              <span class="level-icon" aria-hidden="true"></span>
+            </span>
+          </button>
+          <div class="level-panel-wrap">
+            <div class="level-panel" id="panel-florist" role="region" aria-labelledby="btn-florist">
+              <div class="level-panel-inner">
+                <div class="level-media" data-spotlight>
+                  <img src="assets/images/floor-florist.svg" alt="The Forbidden Florist, ground floor" loading="lazy">
+                </div>
+                <div class="level-copy">
+                  <p>The ground floor is home to The Forbidden Florist, a separate restaurant, not run by Eddie's. Eddie's own entrance and the staircase up to the Main Bar and RnB Bar sit alongside it on Quay Street.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
+        <div class="building-foundation" aria-hidden="true"></div>
+      </div>
     </div>
   </section>
 

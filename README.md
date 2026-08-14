@@ -50,16 +50,20 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
 - **Lineup / Residents section** — role-based cards (Main Bar resident,
   RnB Bar resident, guest selectors) rather than invented DJ names —
   swap in real names/photos/bios when you have them.
-- **Interactive building** — the old side-by-side floor panels are now a
-  clickable building cross-section: ground floor The Forbidden Florist,
-  then Eddie's Main Bar, then the RnB Bar on top. Tap a floor's row and
-  it opens with a smooth height animation (CSS grid `0fr → 1fr`, not a
-  JS-measured height) to reveal a framed photo and description; opening
-  one closes whichever was open, like a normal accordion. Built with
-  plain `<button>`s and `aria-expanded`/`role="region"`, and the closed
-  panels are marked `inert` so keyboard/screen-reader users can't tab
-  into content that's visually collapsed. Main Bar is open by default so
-  the section isn't empty on load.
+- **A literal illustrated building** — the old side-by-side floor panels
+  are now an actual building facade, drawn in CSS: a cornice cap, three
+  storeys, and a foundation strip labelled "Quay Street." Each storey is
+  a clickable floor: the top two (RnB Bar, Main Bar) are rows of lit
+  windows that brighten further on hover/open; the ground floor is a
+  striped shopfront awning over an arched doorway for The Forbidden
+  Florist. Clicking a floor opens with a smooth height animation (CSS
+  grid `0fr → 1fr`, not a JS-measured height) to reveal a framed photo
+  and description right inside the building frame; opening one closes
+  whichever was open, like a normal accordion. Built with plain
+  `<button>`s and `aria-expanded`/`role="region"`, and closed panels are
+  marked `inert` so keyboard/screen-reader users can't tab into content
+  that's visually collapsed. Main Bar is open by default so the building
+  isn't empty on load.
 - **Door Policy strip** — age, dress code, hours, entry, styled as an
   info panel.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for

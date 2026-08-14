@@ -152,14 +152,14 @@
   /* ---------- building levels (expand/collapse) ---------- */
   var buildingLevels = document.querySelectorAll(".building-level");
   buildingLevels.forEach(function (level) {
-    var btn = level.querySelector(".level-toggle-btn");
+    var btn = level.querySelector(".building-floor");
     var wrap = level.querySelector(".level-panel-wrap");
     wrap.inert = !level.classList.contains("is-open");
     btn.addEventListener("click", function () {
       var wasOpen = level.classList.contains("is-open");
       buildingLevels.forEach(function (other) {
         other.classList.remove("is-open");
-        other.querySelector(".level-toggle-btn").setAttribute("aria-expanded", "false");
+        other.querySelector(".building-floor").setAttribute("aria-expanded", "false");
         other.querySelector(".level-panel-wrap").inert = true;
       });
       if (!wasOpen) {
