@@ -167,10 +167,18 @@ find and replace.
   filter — see `<filter id="stamp">` in the SVG). Close, not pixel-exact.
   Send the original on a dark background or as a flattened JPG/PNG and
   replace `assets/images/logo.svg` directly (same filename).
-- **Photos** — every image points at a generated placeholder SVG in
+- **Photos** — every image still points at a generated placeholder SVG in
   `assets/images/` (warm amber/plum gradient scenes standing in for real
-  venue photography). Replace each file with the real photo **using the
-  same filename** — no markup changes needed.
+  venue photography), **except the hero background**, which is now a
+  real photo (`assets/images/hero.jpg`, a crowd and DJ shot). It's a
+  small source file (516×224), so it's stretched full-bleed behind a
+  dark scrim and the page's grain overlay — both were already there for
+  the placeholder gradients, and they happen to hide the low resolution
+  well, but a higher-resolution version would look sharper if one's
+  available. Every other placeholder can be replaced the same way: drop
+  the real photo in **using the same filename** — no markup changes
+  needed for the SVG ones; the hero is now a `.jpg` so swap that file
+  directly too.
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
