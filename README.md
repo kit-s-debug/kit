@@ -90,22 +90,19 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   connected structure, and the RnB Bar and Main Bar windows get
   randomized flickering disco-light beams (colour/timing generated fresh
   in JS on every load, skipped entirely rather than just frozen under
-  `prefers-reduced-motion`). The RnB floor's opened-panel photo is still
-  the generated illustration, now with a retro neon sign reading "RnB"
-  (pink, two-layer glow — a blurred under-layer plus a crisp stroke on
-  top, same technique as a real neon tube) mounted above the crowd. The
-  Forbidden Florist's opened-panel photo used to be a matching
-  illustration (golden birdcage, shrubs, birds) but is now a real photo
-  of the venue (see "Swapping in the real logo and photos" below) — the
-  illustrated birdcage lives on only as the small hover decoration on the
-  closed building facade, described next. That facade decoration isn't
-  just a static illustration, either — the birdcage and neon sign are
-  drawn as inline SVG directly on the closed floor button itself (separate
-  from the opened-panel photo), and react to hover: hovering The
-  Forbidden Florist swings the cage door open and sends the bird flying
-  up and off the top of the building, fading out as it goes; hovering the
-  RnB floor lights the neon sign up from a dim, barely-there outline to a
-  full glowing "RnB" with a subtle flicker. Both are gated behind
+  `prefers-reduced-motion`). All three opened-panel photos are now real
+  (see "Swapping in the real logo and photos" below) rather than the
+  generated illustrations they started as — the illustrated versions
+  (golden birdcage/shrubs/birds for the Florist, a retro neon "RnB" sign
+  for the RnB Bar) live on only as small hover decorations on the closed
+  building facade, described next. Those facade decorations aren't just
+  static illustrations, either — the birdcage and neon sign are drawn as
+  inline SVG directly on the closed floor button itself (separate from
+  the opened-panel photo), and react to hover: hovering The Forbidden
+  Florist swings the cage door open and sends the bird flying up and off
+  the top of the building, fading out as it goes; hovering the RnB floor
+  lights the neon sign up from a dim, barely-there outline to a full
+  glowing "RnB" with a subtle flicker. Both are gated behind
   `@media (hover:hover) and (pointer:fine)` so only real mouse/trackpad
   input can trigger them — on touch, tapping still opens the floor panel
   as normal, it just skips the decorative animation with no risk of it
@@ -177,17 +174,20 @@ find and replace.
   dark scrim and the page's grain overlay — both were already there for
   the placeholder gradients, and they happen to hide the low resolution
   well, but a higher-resolution version would look sharper if one's
-  available. The Forbidden Florist's building-panel photo is also real
-  now (`assets/images/floor-florist.jpg`, the floral-draped bar under
-  string lights), alongside its actual logo
-  (`assets/images/florist-logo.jpg`, shown as a small badge above the
-  panel copy). Every other placeholder can be replaced the same way:
-  drop the real photo in **using the same filename** — no markup changes
+  available. All three building-panel photos are now real too:
+  `assets/images/floor-florist.jpg` (the floral-draped bar under string
+  lights, alongside its actual logo at `assets/images/florist-logo.jpg`
+  shown as a small badge above the panel copy), `assets/images/
+  floor-main.jpg` (a packed Main Bar dancefloor) and `assets/images/
+  floor-rnb.jpg` (the DJ booth on the RnB floor, hands up under green
+  lights). Every other placeholder can be replaced the same way: drop
+  the real photo in **using the same filename** — no markup changes
   needed for the SVG ones; anything already swapped to a real photo is a
   `.jpg`, so replace that file directly. As a standing rule for this
   project: whenever a placeholder is replaced, the old placeholder file
   gets deleted rather than left unused in the repo (that's why
-  `hero.svg` and `floor-florist.svg` are gone).
+  `hero.svg`, `floor-florist.svg`, `floor-main.svg` and `floor-rnb.svg`
+  are all gone).
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
