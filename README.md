@@ -48,12 +48,15 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   carries that content on its own now — and repointed the nav item that
   used to link to it (`#about`) to `#floors` ("The Building") instead,
   across the primary nav, mobile drawer and footer.
-- **Utility ticker** — a thin marquee above the header with hours, dress
-  code and ID policy (a pattern real venue sites use to answer the most
-  common questions before a visitor even scrolls).
+- **Utility ticker** — a thin marquee above the header with opening days,
+  entry fee, hours, dress code and ID policy (a pattern real venue sites
+  use to answer the most common questions before a visitor even scrolls).
+  Open Wednesday, Friday and Saturday: Wednesday and Friday are free
+  entry, 9pm–2am; Saturday is 9pm–late with an entry fee that varies by
+  the night. Same facts are in the FAQ's first two questions.
 - **Live doors-open countdown** — genuinely computed in JS
-  (`nextDoorsOpen` in `js/main.js`) to the next Friday or Saturday 9pm,
-  not a fabricated one-off event. Lives as a compact, non-scrolling
+  (`nextDoorsOpen` in `js/main.js`) to the next Wednesday, Friday or
+  Saturday 9pm, not a fabricated one-off event. Lives as a compact, non-scrolling
   segment inside the utility ticker bar (days/hours/mins, no seconds —
   a persistent header element re-rendering every second was too twitchy)
   rather than as a boxed card in the hero.
@@ -177,14 +180,20 @@ Everything below reads confidently on the page but is an assumption or
 industry-standard placeholder, not confirmed fact — check and edit before
 this goes live:
 
-- **Opening hours and age policy** — generic/typical for a UK nightclub,
-  not sourced from the venue. (Dress code is confirmed: there isn't one,
-  reflected in the ticker and FAQ.) There used to be a dedicated Door
-  Policy grid repeating age/dress-code/hours/entry; it's been removed as
-  redundant with the ticker and FAQ, which already cover the same
-  ground. Per-floor capacity numbers were dropped rather than displaying
-  an invented figure.
-- **FAQ answers** — sensible generic answers, not venue-confirmed.
+- **Opening days, hours and entry fee** — confirmed directly: open
+  Wednesday, Friday and Saturday; Wednesday and Friday are free entry,
+  9pm–2am; Saturday is 9pm–late with an entry fee that varies by the
+  night. Reflected in the ticker, the FAQ's first two questions, and the
+  live countdown. **Age policy is still generic/typical for a UK
+  nightclub (18+, photo ID), not venue-confirmed.** (Dress code is
+  confirmed: there isn't one, reflected in the ticker and FAQ.) There
+  used to be a dedicated Door Policy grid repeating age/dress-code/hours/
+  entry; it's been removed as redundant with the ticker and FAQ, which
+  already cover the same ground. Per-floor capacity numbers were dropped
+  rather than displaying an invented figure.
+- **FAQ answers** — opening days/hours and entry fee (questions 1–2) are
+  venue-confirmed; the rest (booking, age, dress code, private hire,
+  parking) are sensible generic answers, not venue-confirmed.
 - **Resident/lineup section** — deliberately uses role labels ("Main
   Bar Resident") instead of inventing real DJ names or using stock
   photos as if they were real people.

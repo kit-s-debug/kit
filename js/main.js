@@ -268,7 +268,7 @@
         d.setDate(now.getDate() + i);
         d.setHours(21, 0, 0, 0);
         var day = d.getDay();
-        if ((day === 5 || day === 6) && d.getTime() > now.getTime()) return d;
+        if ((day === 3 || day === 5 || day === 6) && d.getTime() > now.getTime()) return d;
       }
       return null;
     }
