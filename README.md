@@ -41,6 +41,11 @@ Then open `http://localhost:8000`.
 
 Beyond the original hero/floors/gallery/contact, this pass adds:
 
+- **Always opens at the top.** `history.scrollRestoration = "manual"` is
+  set in a small inline script in `<head>`, so a refresh or a
+  back/forward navigation doesn't leave the browser's remembered scroll
+  position wherever the visitor last left off — the page consistently
+  loads at the very top instead.
 - **No separate "About" section.** There used to be a stat-strip section
   right after the hero ("Two/Three floors. One reputation." plus a
   reputation/layout/address stat list) that mostly repeated what the
