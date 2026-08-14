@@ -347,18 +347,8 @@ p{ margin:0; }
   mask-image:radial-gradient(circle, black, transparent 72%);
 }
 
-/* ============ stat strip / about ============ */
-.stat-strip{ padding:64px 28px; border-bottom:1px solid var(--line); }
-.stat-strip-inner{ max-width:var(--container); margin:0 auto; display:grid; grid-template-columns:1.1fr 1fr; gap:60px; align-items:start; }
-.about-copy h2{ margin:14px 0 20px; }
-.about-copy p{ color:var(--dim); max-width:44ch; line-height:1.75; }
-.stats{ display:grid; gap:26px; margin:0; }
-.stat{ border-top:1px solid var(--line); padding-top:16px; }
-.stat dt{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--silver); margin-bottom:6px; }
-.stat dd{ margin:0; font-family:var(--font-display); text-transform:uppercase; font-size:26px; letter-spacing:-.01em; }
-
 /* ============ floors: interactive building ============ */
-.floors{ padding:0 0 64px; }
+.floors{ padding:64px 0; }
 .floors-head{ max-width:var(--container); margin:0 auto; padding:0 28px 36px; position:relative; }
 .floors-head p:last-child{ color:var(--dim); max-width:56ch; margin-top:14px; }
 
@@ -792,7 +782,6 @@ p{ margin:0; }
   .header-actions .btn--outline{ display:none; }
   .nav-toggle{ display:inline-flex; align-items:center; justify-content:center; }
 
-  .stat-strip-inner{ grid-template-columns:1fr; gap:40px; }
   .level-panel-inner{ grid-template-columns:1fr; gap:20px; padding:24px 20px; }
   .building-floor{ min-height:150px; }
   .floor-plaque{ gap:14px; padding:18px 18px; }

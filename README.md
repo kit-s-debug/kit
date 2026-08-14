@@ -41,6 +41,13 @@ Then open `http://localhost:8000`.
 
 Beyond the original hero/floors/gallery/contact, this pass adds:
 
+- **No separate "About" section.** There used to be a stat-strip section
+  right after the hero ("Two/Three floors. One reputation." plus a
+  reputation/layout/address stat list) that mostly repeated what the
+  hero copy already says. Removed it entirely — the merged hero line
+  carries that content on its own now — and repointed the nav item that
+  used to link to it (`#about`) to `#floors` ("The Building") instead,
+  across the primary nav, mobile drawer and footer.
 - **Utility ticker** — a thin marquee above the header with hours, dress
   code and ID policy (a pattern real venue sites use to answer the most
   common questions before a visitor even scrolls).
