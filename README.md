@@ -86,7 +86,13 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   connected structure, and the RnB Bar and Main Bar windows get
   randomized flickering disco-light beams (colour/timing generated fresh
   in JS on every load, skipped entirely rather than just frozen under
-  `prefers-reduced-motion`).
+  `prefers-reduced-motion`). The ground-floor Forbidden Florist scene now
+  leans further into "florist": a small golden birdcage (with a perched
+  bird inside) hangs centre-frame, green shrubs sit either side of the
+  doorway, and a few birds fly across the upper sky. The RnB floor scene
+  got a retro neon sign reading "RnB" (pink, two-layer glow — a blurred
+  under-layer plus a crisp stroke on top, same technique as a real neon
+  tube) mounted above the crowd.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
   the disclosure itself), covering booking, age, dress code, private hire
   and parking.

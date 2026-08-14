@@ -4,7 +4,14 @@
 <circle cx="474.1" cy="363.0" r="264.8" fill="url(#haze1474)"/><defs><linearGradient id="beam0230" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F3B98C" stop-opacity="0.19"/><stop offset="100%" stop-color="#F3B98C" stop-opacity="0"/></linearGradient></defs>
 <polygon points="209.9,-30 251.6,-30 490.3,750.0 -28.8,750.0" fill="url(#beam0230)"/>
 <defs><linearGradient id="beam1776" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F3B98C" stop-opacity="0.16"/><stop offset="100%" stop-color="#F3B98C" stop-opacity="0"/></linearGradient></defs>
-<polygon points="753.2,-30 800.6,-30 1000.8,750.0 553.0,750.0" fill="url(#beam1776)"/><g filter="url(#softer)">
+<polygon points="753.2,-30 800.6,-30 1000.8,750.0 553.0,750.0" fill="url(#beam1776)"/><g filter="url(#softer)" opacity="0.75">
+<rect x="357.0" y="425.6" width="286.0" height="98.8" rx="49.4" fill="none" stroke="#FF4FA3" stroke-width="6.5"/>
+<text x="500.0" y="489.3" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="41.6" fill="#FF4FA3">RnB</text>
+</g>
+<rect x="357.0" y="425.6" width="286.0" height="98.8" rx="49.4" fill="none" stroke="#FF4FA3" stroke-opacity="0.9" stroke-width="2.9"/>
+<text x="500.0" y="489.3" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="41.6" fill="#FF4FA3" fill-opacity="0.95">RnB</text>
+<line x1="385.6" y1="425.6" x2="385.6" y2="404.8" stroke="#A85C38" stroke-width="2.6"/>
+<line x1="614.4" y1="425.6" x2="614.4" y2="404.8" stroke="#A85C38" stroke-width="2.6"/><g filter="url(#softer)">
 <ellipse cx="10.8" cy="739.2" rx="2.4" ry="6.0" fill="#0F0A0C"/><circle cx="10.8" cy="733.5" r="2.3" fill="#0F0A0C"/>
 <ellipse cx="30.3" cy="735.5" rx="2.4" ry="6.0" fill="#0F0A0C"/><circle cx="30.3" cy="729.8" r="2.3" fill="#0F0A0C"/>
 <ellipse cx="48.7" cy="737.4" rx="2.4" ry="6.0" fill="#0F0A0C"/><circle cx="48.7" cy="731.7" r="2.3" fill="#0F0A0C"/>
