@@ -4,6 +4,10 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  /* ---------- hero background video ---------- */
+  var heroVideo = document.getElementById("hero-video");
+  if (heroVideo && reducedMotion) { heroVideo.pause(); }
+
   /* ---------- sticky header shrink/blur ---------- */
   var header = document.getElementById("site-header");
   function onScroll() {

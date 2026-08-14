@@ -180,15 +180,28 @@ find and replace.
   filter — see `<filter id="stamp">` in the SVG). Close, not pixel-exact.
   Send the original on a dark background or as a flattened JPG/PNG and
   replace `assets/images/logo.svg` directly (same filename).
+- **Hero background is a real video now**, not a photo. A `<video autoplay
+  muted loop playsinline>` (`assets/video/hero.webm` + an `assets/video/
+  hero.mp4` fallback for browsers that don't support WebM, e.g. Safari)
+  replaced the static `hero.jpg`, using real in-venue footage — the
+  source was a 19.5MB/16s phone screen-recording, compressed down to
+  ~943KB (WebM) / ~1.7MB (MP4) at 720px wide, which is a comfortable size
+  for a looping background on a real connection. `hero.jpg` wasn't
+  deleted — it's kept as the `poster` (shown while the video loads and
+  as the fallback if video can't play at all), so it's still in active
+  use, not an orphaned placeholder. Respects `prefers-reduced-motion`:
+  the video is explicitly paused via JS for anyone with that preference,
+  leaving the poster frame static instead of autoplaying motion at them.
+  One honest caveat: the source footage is a portrait phone recording
+  (aspect ~0.62), quite different from the hero's wide landscape box, so
+  `object-fit: cover` (same as the photo before it) crops in tighter on
+  wide desktop screens than on mobile — checked both and it still reads
+  as atmospheric club lighting rather than an awkward crop, but it's
+  worth a look on the real deployed site to judge for yourself.
 - **Photos** — every image still points at a generated placeholder SVG in
   `assets/images/` (warm amber/plum gradient scenes standing in for real
-  venue photography), **except the hero background**, which is now a
-  real photo (`assets/images/hero.jpg`, a crowd and DJ shot). It's a
-  small source file (516×224), so it's stretched full-bleed behind a
-  dark scrim and the page's grain overlay — both were already there for
-  the placeholder gradients, and they happen to hide the low resolution
-  well, but a higher-resolution version would look sharper if one's
-  available. All three building-panel photos are now real too:
+  venue photography), except the ones already swapped for real photos.
+  All three building-panel photos are real:
   `assets/images/floor-florist.jpg` (the floral-draped bar under string
   lights, alongside its actual logo at `assets/images/florist-logo.jpg`
   shown as a small badge above the panel copy), `assets/images/
