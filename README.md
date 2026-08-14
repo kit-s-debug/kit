@@ -76,8 +76,9 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   closes whichever was open, like a normal accordion. Built with plain
   `<button>`s and `aria-expanded`/`role="region"`, and closed panels are
   marked `inert` so keyboard/screen-reader users can't tab into content
-  that's visually collapsed. Main Bar is open by default so the building
-  isn't empty on load. Opening a floor now zooms and focus-pulls into
+  that's visually collapsed. All three floors start closed on load (was
+  Main Bar open by default; changed since it looked like it was stuck
+  open every time you visited). Opening a floor now zooms and focus-pulls into
   view (a scale + blur transition on the panel content on top of the
   height reveal), the building's own scroll-entrance is a slower
   cinematic scale+fade instead of the standard section fade so arriving
