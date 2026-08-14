@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest</title>
-<meta name="description" content="Eddie Rocks, Haverfordwest. Above The Forbidden Florist on Quay Street: Eddie's Main Bar and RnB Bar. Private hire, VIP nights and showcase events.">
+<meta name="description" content="Eddie Rocks, Haverfordwest. Three floors on Quay Street: The Forbidden Florist, the Main Bar and the RnB Bar. Private hire, VIP nights and showcase events.">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,16 +14,22 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
-<div class="utility-bar" aria-hidden="true">
-  <div class="utility-marquee">
-    <span>Open Fri &amp; Sat · 9pm–3am</span>
-    <span>No dress code · Come as you are</span>
-    <span>Strictly 18+ · ID required</span>
-    <span>Private hire available 7 nights</span>
-    <span>Open Fri &amp; Sat · 9pm–3am</span>
-    <span>No dress code · Come as you are</span>
-    <span>Strictly 18+ · ID required</span>
-    <span>Private hire available 7 nights</span>
+<div class="utility-bar">
+  <div class="utility-marquee-clip" aria-hidden="true">
+    <div class="utility-marquee">
+      <span>Open Fri &amp; Sat · 9pm–3am</span>
+      <span>No dress code · Come as you are</span>
+      <span>Strictly 18+ · ID required</span>
+      <span>Private hire available 7 nights</span>
+      <span>Open Fri &amp; Sat · 9pm–3am</span>
+      <span>No dress code · Come as you are</span>
+      <span>Strictly 18+ · ID required</span>
+      <span>Private hire available 7 nights</span>
+    </div>
+  </div>
+  <div class="utility-countdown" id="countdown" aria-live="off">
+    <span class="utility-countdown-dot" aria-hidden="true"></span>
+    Doors in <strong id="cd-days">0</strong>d <strong id="cd-hours">00</strong>h <strong id="cd-mins">00</strong>m
   </div>
 </div>
 
@@ -88,19 +94,10 @@
     <div class="hero-content" id="hero-content">
       <p class="eyebrow reveal">Haverfordwest, Quay Street</p>
       <h1 class="reveal"><span class="shimmer">A Night Out,</span><br>Done Right.</h1>
-      <p class="hero-sub reveal">Two floors, one address on Quay Street, and a night out that's earned its reputation the hard way.</p>
+      <p class="hero-sub reveal">Eddie Rocks is West Wales' number one nightclub. Whether it's your regular weekend out or one of our show-stopping events, three floors under one roof mean we can cater to any night out.</p>
       <div class="hero-actions reveal">
         <a href="#contact" class="btn btn--solid" data-magnetic>Enquire</a>
         <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
-      </div>
-      <div class="countdown reveal" id="countdown">
-        <p class="countdown-label">Doors open<span>Every Friday &amp; Saturday</span></p>
-        <div class="countdown-clock" id="countdown-clock" aria-live="off">
-          <div><strong id="cd-days">00</strong><em>Days</em></div>
-          <div><strong id="cd-hours">00</strong><em>Hrs</em></div>
-          <div><strong id="cd-mins">00</strong><em>Min</em></div>
-          <div><strong id="cd-secs">00</strong><em>Sec</em></div>
-        </div>
       </div>
     </div>
   </section>
@@ -108,12 +105,12 @@
   <section class="stat-strip" id="about">
     <div class="stat-strip-inner">
       <div class="about-copy reveal">
-        <h2>Two floors. One reputation.</h2>
-        <p>Eddie's has been West Wales' number one nightclub for years running: two floors on Quay Street that handle showcase events, VIP nights and private hire without cutting corners.</p>
+        <h2>Three floors. One reputation.</h2>
+        <p>Eddie's has kept it going for years on Quay Street, handling showcase events, VIP nights and private hire without cutting corners.</p>
       </div>
       <dl class="stats reveal">
         <div class="stat"><dt>Reputation</dt><dd>№1 in West&nbsp;Wales</dd></div>
-        <div class="stat"><dt>Layout</dt><dd>2 Floors, 1 Roof</dd></div>
+        <div class="stat"><dt>Layout</dt><dd>3 Floors, 1 Roof</dd></div>
         <div class="stat"><dt>Address</dt><dd>Quay St, Haverfordwest</dd></div>
       </dl>
     </div>
@@ -192,7 +189,7 @@
           </div>
         </div>
 
-        <div class="building-level building-level--other" id="level-florist">
+        <div class="building-level" id="level-florist">
           <button type="button" class="building-floor building-floor--florist" aria-expanded="false" aria-controls="panel-florist" id="btn-florist">
             <span class="floor-awning" aria-hidden="true"></span>
             <span class="floor-arch" aria-hidden="true"></span>
@@ -203,7 +200,7 @@
               <span class="level-num">01</span>
               <span class="level-titles">
                 <span class="level-name">The Forbidden Florist</span>
-                <span class="level-hint">Ground floor · separate restaurant</span>
+                <span class="level-hint">Ground floor · Eddie's</span>
               </span>
               <span class="level-icon" aria-hidden="true"></span>
             </span>
@@ -215,7 +212,8 @@
                   <img src="assets/images/floor-florist.svg" alt="The Forbidden Florist, ground floor" loading="lazy">
                 </div>
                 <div class="level-copy">
-                  <p>The ground floor belongs to The Forbidden Florist, a separate restaurant with no connection to Eddie's beyond sharing a building. Head up the staircase alongside it for the Main Bar and RnB Bar.</p>
+                  <p>Ground floor, same roof, same crew. The Forbidden Florist sets the tone before you head up the staircase for the Main Bar and RnB Bar.</p>
+                  <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
                 </div>
               </div>
             </div>
@@ -292,34 +290,6 @@
     </div>
   </section>
 
-  <section class="policy ticket-panel" id="policy" aria-labelledby="policy-heading">
-    <div class="policy-inner">
-      <h2 id="policy-heading" class="reveal">Door policy</h2>
-      <div class="policy-grid reveal">
-        <div class="policy-item">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M9 12.5l2 2 4-4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div class="k">Age</div>
-          <div class="v">18+, ID required</div>
-        </div>
-        <div class="policy-item">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 4l4 3 4-3 3 3-2 2v11H7V9L5 7l3-3Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
-          <div class="k">Dress code</div>
-          <div class="v">None, come as you are</div>
-        </div>
-        <div class="policy-item">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.4"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <div class="k">Hours</div>
-          <div class="v">Fri–Sat, 9pm–3am</div>
-        </div>
-        <div class="policy-item">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><circle cx="9" cy="12" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M14 10.5h4M14 13.5h2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-          <div class="k">Entry</div>
-          <div class="v">Guest list &amp; walk-ins</div>
-        </div>
-      </div>
-      <p class="policy-note reveal">Management reserves the right of admission. Get in touch before you travel if you're booking a group.</p>
-    </div>
-  </section>
 
   <section class="reviews" id="reviews" aria-labelledby="reviews-heading">
     <div class="reviews-head reveal">

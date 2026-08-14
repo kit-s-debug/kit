@@ -44,22 +44,29 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
 - **Utility ticker** — a thin marquee above the header with hours, dress
   code and ID policy (a pattern real venue sites use to answer the most
   common questions before a visitor even scrolls).
-- **Live doors-open countdown** — in the hero, genuinely computed in JS
+- **Live doors-open countdown** — genuinely computed in JS
   (`nextDoorsOpen` in `js/main.js`) to the next Friday or Saturday 9pm,
-  not a fabricated one-off event.
-- **Lineup / Residents section** — role-based cards (Main Bar resident,
-  RnB Bar resident, guest selectors) rather than invented DJ names —
-  swap in real names/photos/bios when you have them.
+  not a fabricated one-off event. Lives as a compact, non-scrolling
+  segment inside the utility ticker bar (days/hours/mins, no seconds —
+  a persistent header element re-rendering every second was too twitchy)
+  rather than as a boxed card in the hero.
+- **Lineup / Residents section** and **Experience section** ("Three ways
+  to spend the night") are both horizontal scroll-snap strips now
+  instead of a grid that forced everything to stack tall on narrower
+  screens — cards are fixed-width, swipeable, edge-masked with a fade,
+  and centred within the normal content column on wide viewports.
 - **A literal illustrated building** — the old side-by-side floor panels
   are now an actual building facade, drawn in CSS: a cornice cap, three
   storeys, and a foundation strip labelled "Quay Street." Each storey is
   a clickable floor: the top two (RnB Bar, Main Bar) are rows of lit
   windows that brighten further on hover/open; the ground floor is a
   striped shopfront awning over an arched doorway for The Forbidden
-  Florist. Clicking a floor opens with a smooth height animation (CSS
-  grid `0fr → 1fr`, not a JS-measured height) to reveal a framed photo
-  and description right inside the building frame; opening one closes
-  whichever was open, like a normal accordion. Built with plain
+  Florist — same business, same building, just a different room, styled
+  differently because it's a different kind of space, not because it's
+  someone else's. Clicking a floor opens with a smooth height animation
+  (CSS grid `0fr → 1fr`, not a JS-measured height) to reveal a framed
+  photo and description right inside the building frame; opening one
+  closes whichever was open, like a normal accordion. Built with plain
   `<button>`s and `aria-expanded`/`role="region"`, and closed panels are
   marked `inert` so keyboard/screen-reader users can't tab into content
   that's visually collapsed. Main Bar is open by default so the building
@@ -73,8 +80,6 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   randomized flickering disco-light beams (colour/timing generated fresh
   in JS on every load, skipped entirely rather than just frozen under
   `prefers-reduced-motion`).
-- **Door Policy strip** — age, dress code, hours, entry, styled as an
-  info panel.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
   the disclosure itself), covering booking, age, dress code, private hire
   and parking.
@@ -82,8 +87,8 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   a client-side "you're on the list" confirmation) is built; **it isn't
   wired to a real email provider**. Hook it up to Mailchimp/Klaviyo/etc.
   before relying on it to actually collect addresses.
-- **Sticky "Reserve a Table" bar** on mobile only, with a one-tap call
-  button.
+- **Sticky "Enquire" bar** on mobile only, with a one-tap call button
+  (was "Reserve a Table" — dropped that wording sitewide).
 - **Mobile menu** is a full-height slide-in drawer (not a dropdown) with a
   blurred backdrop, numbered links that cascade in on open, and a footer
   with the sister-venue badge and contact details. Closes on a link click,
@@ -145,11 +150,13 @@ Everything below reads confidently on the page but is an assumption or
 industry-standard placeholder, not confirmed fact — check and edit before
 this goes live:
 
-- **Opening hours and age policy** in the Door Policy strip — generic/
-  typical for a UK nightclub, not sourced from the venue. (Dress code is
-  confirmed: there isn't one, already reflected across the ticker, Door
-  Policy strip, and FAQ.) Per-floor capacity numbers were dropped rather
-  than displaying an invented figure.
+- **Opening hours and age policy** — generic/typical for a UK nightclub,
+  not sourced from the venue. (Dress code is confirmed: there isn't one,
+  reflected in the ticker and FAQ.) There used to be a dedicated Door
+  Policy grid repeating age/dress-code/hours/entry; it's been removed as
+  redundant with the ticker and FAQ, which already cover the same
+  ground. Per-floor capacity numbers were dropped rather than displaying
+  an invented figure.
 - **FAQ answers** — sensible generic answers, not venue-confirmed.
 - **Resident/lineup section** — deliberately uses role labels ("Main
   Bar Resident") instead of inventing real DJ names or using stock
@@ -157,10 +164,10 @@ this goes live:
 - Floor descriptions and the "Above The Forbidden Florist" locator line
   are written from what was described in chat.
 - **The Forbidden Florist panel in the building** — kept deliberately
-  thin: it states the one confirmed fact (ground floor, separate
-  restaurant, not run by Eddie's) and nothing else. No cuisine, hours or
-  menu details are invented for someone else's business. If you want
-  more said about it there, send over what's actually true.
+  thin, describing it as the same business under one roof (confirmed
+  directly) without inventing cuisine, hours or menu details that
+  weren't given. If you want more said about it there, send over what's
+  actually true.
 - **"Upcoming Events"** ships with an honest empty state rather than
   fabricated events, since there's no real events data to work from.
 
@@ -194,10 +201,18 @@ from search snippets only — treat it as a starting point, not verified fact:
   know the number, tell me and I'll add it properly.
 - **Worth flagging**: some low-quality directory/aggregator sites
   (Yelp, evendo.com) describe the venue as having a snooker bar and a
-  third room called "Fever." That contradicts what you told me directly
-  (two floors — Main Bar and RnB Bar, ground floor is the separate
-  Forbidden Florist business), so I did not use it. Likely just stale or
-  wrong listing data, but flagging in case it's not.
+  third room called "Fever." I didn't use it — the naming doesn't match
+  anything you've told me — but now that it's confirmed there are three
+  floors under one roof rather than two, it's at least plausible that
+  "Fever" is a stale or renamed reference to one of them rather than
+  pure aggregator noise. Worth a look if you want to chase it down, not
+  used on the site either way.
+- A separate search also surfaced real eddies.co page titles describing
+  the venue with a "Gold Room" and "Main Clubroom" rather than "Main
+  Bar"/"RnB Bar." I kept the names you've given me directly throughout
+  this project rather than switching to search-snippet names, but
+  flagging it in case your naming has changed and you want the site
+  updated to match.
 - Also confirmed: mixed/negative reviews exist too (complaints about
   music, drink prices, and a £5 entry charge). Not used on the site —
   showcasing only positive testimonials is normal practice — but worth
