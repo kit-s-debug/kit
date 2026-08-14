@@ -63,7 +63,16 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   `<button>`s and `aria-expanded`/`role="region"`, and closed panels are
   marked `inert` so keyboard/screen-reader users can't tab into content
   that's visually collapsed. Main Bar is open by default so the building
-  isn't empty on load.
+  isn't empty on load. Opening a floor now zooms and focus-pulls into
+  view (a scale + blur transition on the panel content on top of the
+  height reveal), the building's own scroll-entrance is a slower
+  cinematic scale+fade instead of the standard section fade so arriving
+  at it from the hero feels like one deliberate move, the hard border
+  between floors is now a soft inset shadow so the storeys read as one
+  connected structure, and the RnB Bar and Main Bar windows get
+  randomized flickering disco-light beams (colour/timing generated fresh
+  in JS on every load, skipped entirely rather than just frozen under
+  `prefers-reduced-motion`).
 - **Door Policy strip** — age, dress code, hours, entry, styled as an
   info panel.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for

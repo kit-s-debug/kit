@@ -170,6 +170,22 @@
     });
   });
 
+  /* ---------- random disco light flicker (RnB Bar + Main Bar windows) ---------- */
+  if (!reducedMotion) {
+    var discoColors = ["#F3B98C", "#C85C7E", "#4FA8A0", "#E2895E"];
+    document.querySelectorAll(".floor-disco").forEach(function (container) {
+      for (var i = 0; i < 6; i++) {
+        var beam = document.createElement("span");
+        beam.className = "beam";
+        beam.style.setProperty("--beam-x", (6 + Math.random() * 88) + "%");
+        beam.style.setProperty("--beam-color", discoColors[Math.floor(Math.random() * discoColors.length)]);
+        beam.style.setProperty("--beam-dur", (2.6 + Math.random() * 2.4) + "s");
+        beam.style.setProperty("--beam-delay", (Math.random() * 4.5) + "s");
+        container.appendChild(beam);
+      }
+    });
+  }
+
   /* ---------- gallery lightbox ---------- */
   var galleryImages = Array.prototype.map.call(
     document.querySelectorAll("#gallery-grid img"),
