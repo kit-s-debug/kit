@@ -90,26 +90,28 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   connected structure, and the RnB Bar and Main Bar windows get
   randomized flickering disco-light beams (colour/timing generated fresh
   in JS on every load, skipped entirely rather than just frozen under
-  `prefers-reduced-motion`). The ground-floor Forbidden Florist scene now
-  leans further into "florist": a small golden birdcage (with a perched
-  bird inside) hangs centre-frame, green shrubs sit either side of the
-  doorway, and a few birds fly across the upper sky. The RnB floor scene
-  got a retro neon sign reading "RnB" (pink, two-layer glow — a blurred
-  under-layer plus a crisp stroke on top, same technique as a real neon
-  tube) mounted above the crowd. Those aren't just static illustrations
-  in the opened-panel photo, either — the birdcage and neon sign are also
-  drawn as inline SVG directly on the closed building facade itself, and
-  react to hover: hovering The Forbidden Florist swings the cage door
-  open and sends the bird flying up and off the top of the building,
-  fading out as it goes; hovering the RnB floor lights the neon sign up
-  from a dim, barely-there outline to a full glowing "RnB" with a subtle
-  flicker. Both are gated behind `@media (hover:hover) and (pointer:fine)`
-  so only real mouse/trackpad input can trigger them — on touch, tapping
-  still opens the floor panel as normal, it just skips the decorative
-  animation with no risk of it getting visually "stuck" lit/open from a
-  lingering touch — and collapse to an instant state change under
-  `prefers-reduced-motion`
-  along with everything else on the page.
+  `prefers-reduced-motion`). The RnB floor's opened-panel photo is still
+  the generated illustration, now with a retro neon sign reading "RnB"
+  (pink, two-layer glow — a blurred under-layer plus a crisp stroke on
+  top, same technique as a real neon tube) mounted above the crowd. The
+  Forbidden Florist's opened-panel photo used to be a matching
+  illustration (golden birdcage, shrubs, birds) but is now a real photo
+  of the venue (see "Swapping in the real logo and photos" below) — the
+  illustrated birdcage lives on only as the small hover decoration on the
+  closed building facade, described next. That facade decoration isn't
+  just a static illustration, either — the birdcage and neon sign are
+  drawn as inline SVG directly on the closed floor button itself (separate
+  from the opened-panel photo), and react to hover: hovering The
+  Forbidden Florist swings the cage door open and sends the bird flying
+  up and off the top of the building, fading out as it goes; hovering the
+  RnB floor lights the neon sign up from a dim, barely-there outline to a
+  full glowing "RnB" with a subtle flicker. Both are gated behind
+  `@media (hover:hover) and (pointer:fine)` so only real mouse/trackpad
+  input can trigger them — on touch, tapping still opens the floor panel
+  as normal, it just skips the decorative animation with no risk of it
+  getting visually "stuck" lit/open from a lingering touch — and collapse
+  to an instant state change under `prefers-reduced-motion` along with
+  everything else on the page.
 - **FAQ** — a native `<details>/<summary>` accordion (no JS needed for
   the disclosure itself), covering booking, age, dress code, private hire
   and parking.
@@ -175,10 +177,17 @@ find and replace.
   dark scrim and the page's grain overlay — both were already there for
   the placeholder gradients, and they happen to hide the low resolution
   well, but a higher-resolution version would look sharper if one's
-  available. Every other placeholder can be replaced the same way: drop
-  the real photo in **using the same filename** — no markup changes
-  needed for the SVG ones; the hero is now a `.jpg` so swap that file
-  directly too.
+  available. The Forbidden Florist's building-panel photo is also real
+  now (`assets/images/floor-florist.jpg`, the floral-draped bar under
+  string lights), alongside its actual logo
+  (`assets/images/florist-logo.jpg`, shown as a small badge above the
+  panel copy). Every other placeholder can be replaced the same way:
+  drop the real photo in **using the same filename** — no markup changes
+  needed for the SVG ones; anything already swapped to a real photo is a
+  `.jpg`, so replace that file directly. As a standing rule for this
+  project: whenever a placeholder is replaced, the old placeholder file
+  gets deleted rather than left unused in the repo (that's why
+  `hero.svg` and `floor-florist.svg` are gone).
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
@@ -207,11 +216,11 @@ this goes live:
   photos as if they were real people.
 - Floor descriptions and the "Above The Forbidden Florist" locator line
   are written from what was described in chat.
-- **The Forbidden Florist panel in the building** — kept deliberately
-  thin, describing it as the same business under one roof (confirmed
-  directly) without inventing cuisine, hours or menu details that
-  weren't given. If you want more said about it there, send over what's
-  actually true.
+- **The Forbidden Florist panel in the building** — now has a real photo
+  and the real logo, but the copy itself is still kept deliberately thin,
+  describing it as the same business under one roof (confirmed directly)
+  without inventing cuisine, hours or menu details that weren't given. If
+  you want more said about it there, send over what's actually true.
 - **"Upcoming Events"** ships with an honest empty state rather than
   fabricated events, since there's no real events data to work from.
 
