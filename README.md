@@ -79,6 +79,16 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   instead of a grid that forced everything to stack tall on narrower
   screens — cards are fixed-width, swipeable, edge-masked with a fade,
   and centred within the normal content column on wide viewports.
+- **Experience cards got a premium redesign** — Showcase Events, VIP
+  Nights and Private Hire now carry a small pill-shaped category badge
+  over the photo (Showcase / VIP / Private), a numbered index (01/02/03)
+  in the opposite corner echoing the building's own floor-numbering
+  language, an italic serif title matching the floor-panel names instead
+  of plain bold sans, a thicker "mounted photo" bezel with a touch of
+  extra saturation/contrast on the image, a deeper resting shadow so the
+  cards read as sitting above the page rather than flat on it, and a
+  gold hairline across the top edge that only appears on hover alongside
+  a bigger lift and a warmer glow shadow.
 - **A literal illustrated building** — the old side-by-side floor panels
   are now an actual building facade, drawn in CSS: a cornice cap, three
   storeys, and a foundation strip labelled "Quay Street." Each storey is
@@ -213,6 +223,31 @@ find and replace.
   deployment), that's most likely the preview sandbox's stricter
   autoplay/CSP policy for inlined `data:` video — the underlying site
   files are confirmed working when served normally.
+- **Hero got a cinematic pass** — it was reading as too empty, mostly
+  video with a lot of dead space to the right of the text on wide
+  screens. Added: a radial vignette darkening the edges/corners
+  (widescreen framing effect on top of the existing top-to-bottom
+  scrim), thin `--charcoal` letterbox bars along the very top/bottom
+  edges of the hero for an anamorphic-film feel, a second warm glow in
+  `.hero-ambient` so the depth reads from both sides instead of just the
+  top-left, and — the biggest fix for the empty feeling — a cluster of
+  randomized light beams (`.hero-disco`, reusing the same technique as
+  the building's own disco-light windows) sweeping the right-hand
+  two-fifths of the frame, deliberately kept clear of the text column.
+  Also added a small pulsing scroll cue (a dot dripping down a thin
+  line) at the bottom centre, a common "there's more below" affordance
+  the hero didn't have. All of it is skipped under
+  `prefers-reduced-motion` same as the rest of the page's motion.
+- **Animations sped up across the board** — the whole site read as
+  sluggish. Cut roughly a third to half off the major durations:
+  scroll-reveal fade (.6s→.4s), the building's entrance (.85s→.55s),
+  card hover lifts and image zooms, the floor-panel open/close
+  animation, the birdcage door/bird and neon-sign hover effects, the
+  mobile-menu slide and its item cascade, and the slower ambient loops
+  (headline shimmer 8s→4.5s, hero ambient drift 22s→10s, ticker marquee
+  24s→16s, disco beams and the RnB neon flicker). Nothing here changes
+  *what* animates, only how quickly it gets there — the intent was
+  energy, not different motion.
 - **Photos** — every image still points at a generated placeholder SVG in
   `assets/images/` (warm amber/plum gradient scenes standing in for real
   venue photography), except the ones already swapped for real photos.

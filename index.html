@@ -102,8 +102,12 @@
         <source src="assets/video/hero.webm" type="video/webm">
         <source src="assets/video/hero.mp4" type="video/mp4">
       </video>
+      <div class="hero-vignette" aria-hidden="true"></div>
       <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="hero-disco" aria-hidden="true"></div>
     </div>
+    <div class="hero-letterbox hero-letterbox--top" aria-hidden="true"></div>
+    <div class="hero-letterbox hero-letterbox--bottom" aria-hidden="true"></div>
     <div class="hero-ambient" aria-hidden="true"></div>
     <div class="hero-content" id="hero-content">
       <p class="eyebrow reveal">Haverfordwest, Quay Street</p>
@@ -114,6 +118,7 @@
         <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
       </div>
     </div>
+    <div class="hero-scrollcue reveal" aria-hidden="true"><span></span></div>
   </section>
 
   <section class="floors" id="floors" aria-labelledby="floors-heading">
@@ -295,19 +300,31 @@
     </div>
     <div class="experience-grid">
       <article class="experience-card reveal" data-spotlight>
-        <div class="experience-media" data-tilt><img src="assets/images/feature-showcase-events.jpg" alt="A DJ on the decks under stage lights and smoke" loading="lazy"></div>
+        <div class="experience-media" data-tilt>
+          <img src="assets/images/feature-showcase-events.jpg" alt="A DJ on the decks under stage lights and smoke" loading="lazy">
+          <span class="experience-badge">Showcase</span>
+        </div>
+        <span class="experience-index" aria-hidden="true">01</span>
         <h3>Showcase Events</h3>
         <p>Resident and guest line-ups on the Main Bar, for the nights the whole room turns up.</p>
         <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
       </article>
       <article class="experience-card reveal" data-spotlight>
-        <div class="experience-media" data-tilt><img src="assets/images/feature-vip-nights.jpg" alt="Premium bottles lined up along the bar" loading="lazy"></div>
+        <div class="experience-media" data-tilt>
+          <img src="assets/images/feature-vip-nights.jpg" alt="Premium bottles lined up along the bar" loading="lazy">
+          <span class="experience-badge">VIP</span>
+        </div>
+        <span class="experience-index" aria-hidden="true">02</span>
         <h3>VIP Nights</h3>
         <p>Booth and table reservations, with a drinks package built for comfort over chaos.</p>
         <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
       </article>
       <article class="experience-card reveal" data-spotlight>
-        <div class="experience-media" data-tilt><img src="assets/images/feature-private-hire.jpg" alt="A card payment terminal on the bar with the venue lit up behind it" loading="lazy"></div>
+        <div class="experience-media" data-tilt>
+          <img src="assets/images/feature-private-hire.jpg" alt="A card payment terminal on the bar with the venue lit up behind it" loading="lazy">
+          <span class="experience-badge">Private</span>
+        </div>
+        <span class="experience-index" aria-hidden="true">03</span>
         <h3>Private Hire</h3>
         <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
         <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>

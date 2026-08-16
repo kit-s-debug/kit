@@ -208,7 +208,7 @@
     });
   });
 
-  /* ---------- random disco light flicker (RnB Bar + Main Bar windows) ---------- */
+  /* ---------- random disco light flicker (hero, RnB Bar + Main Bar windows) ---------- */
   if (!reducedMotion) {
     var discoColors = ["#F3B98C", "#C85C7E", "#4FA8A0", "#E2895E"];
     document.querySelectorAll(".floor-disco").forEach(function (container) {
@@ -217,9 +217,22 @@
         beam.className = "beam";
         beam.style.setProperty("--beam-x", (6 + Math.random() * 88) + "%");
         beam.style.setProperty("--beam-color", discoColors[Math.floor(Math.random() * discoColors.length)]);
-        beam.style.setProperty("--beam-dur", (2.6 + Math.random() * 2.4) + "s");
-        beam.style.setProperty("--beam-delay", (Math.random() * 4.5) + "s");
+        beam.style.setProperty("--beam-dur", (1.8 + Math.random() * 1.6) + "s");
+        beam.style.setProperty("--beam-delay", (Math.random() * 2.8) + "s");
         container.appendChild(beam);
+      }
+    });
+    // hero beams cluster on the right side of the frame, where the text
+    // isn't, so they add movement and depth without fighting the copy
+    document.querySelectorAll(".hero-disco").forEach(function (container) {
+      for (var j = 0; j < 5; j++) {
+        var hbeam = document.createElement("span");
+        hbeam.className = "beam";
+        hbeam.style.setProperty("--beam-x", (52 + Math.random() * 42) + "%");
+        hbeam.style.setProperty("--beam-color", discoColors[Math.floor(Math.random() * discoColors.length)]);
+        hbeam.style.setProperty("--beam-dur", (1.6 + Math.random() * 1.4) + "s");
+        hbeam.style.setProperty("--beam-delay", (Math.random() * 2.2) + "s");
+        container.appendChild(hbeam);
       }
     });
   }
