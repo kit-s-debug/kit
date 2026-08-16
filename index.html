@@ -10,9 +10,17 @@
 <script>
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
   if (location.hash) history.replaceState(null, "", location.pathname + location.search);
-  function forceScrollTop() { window.scrollTo(0, 0); }
+  var userScrolled = false;
+  function markUserScrolled() { userScrolled = true; }
+  function forceScrollTop() { if (!userScrolled) window.scrollTo(0, 0); }
   document.addEventListener("DOMContentLoaded", forceScrollTop);
   window.addEventListener("load", forceScrollTop);
+  window.addEventListener("wheel", markUserScrolled, { once: true, passive: true });
+  window.addEventListener("touchmove", markUserScrolled, { once: true, passive: true });
+  window.addEventListener("click", markUserScrolled, { once: true, passive: true });
+  window.addEventListener("keydown", function (e) {
+    if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"].indexOf(e.key) > -1) markUserScrolled();
+  }, { once: true });
   [0, 60, 150, 300, 600, 1200].forEach(function (ms) { setTimeout(forceScrollTop, ms); });
 </script>
 </head>
@@ -159,7 +167,7 @@
           <div class="level-panel-wrap">
             <div class="level-panel" id="panel-rnb" role="region" aria-labelledby="btn-rnb">
               <div class="level-panel-inner">
-                <div class="level-media" data-spotlight>
+                <div class="level-media" data-spotlight data-tilt>
                   <img src="assets/images/floor-rnb.jpg" alt="A packed RnB Bar dancefloor with the DJ on the decks, hands up under green lights" loading="lazy">
                 </div>
                 <div class="level-copy">
@@ -190,7 +198,7 @@
           <div class="level-panel-wrap">
             <div class="level-panel" id="panel-main" role="region" aria-labelledby="btn-main">
               <div class="level-panel-inner">
-                <div class="level-media" data-spotlight>
+                <div class="level-media" data-spotlight data-tilt>
                   <img src="assets/images/floor-main.jpg" alt="A packed Main Bar dancefloor under lights" loading="lazy">
                 </div>
                 <div class="level-copy">
@@ -237,7 +245,7 @@
           <div class="level-panel-wrap">
             <div class="level-panel" id="panel-florist" role="region" aria-labelledby="btn-florist">
               <div class="level-panel-inner">
-                <div class="level-media" data-spotlight>
+                <div class="level-media" data-spotlight data-tilt>
                   <img src="assets/images/floor-florist.jpg" alt="Inside The Forbidden Florist: a floral-draped bar under string lights" loading="lazy">
                 </div>
                 <div class="level-copy">
@@ -262,7 +270,7 @@
     </div>
     <div class="residents-grid">
       <article class="resident-card reveal" data-spotlight>
-        <div class="resident-media">
+        <div class="resident-media" data-tilt>
           <img src="assets/images/resident-main.jpg" alt="A packed crowd with hands up under purple stage lights" loading="lazy">
           <span class="resident-badge">Resident</span>
         </div>
@@ -272,7 +280,7 @@
         </div>
       </article>
       <article class="resident-card reveal" data-spotlight>
-        <div class="resident-media">
+        <div class="resident-media" data-tilt>
           <img src="assets/images/resident-rnb.jpg" alt="Hands raised close-up in the crowd under blue light" loading="lazy">
           <span class="resident-badge">Resident</span>
         </div>
@@ -282,7 +290,7 @@
         </div>
       </article>
       <article class="resident-card reveal" data-spotlight>
-        <div class="resident-media">
+        <div class="resident-media" data-tilt>
           <img src="assets/images/resident-guest.svg" alt="" loading="lazy">
           <span class="resident-badge">Rotating</span>
         </div>

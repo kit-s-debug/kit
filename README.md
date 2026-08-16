@@ -55,6 +55,18 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   the page with a `#section` hash repeatedly; it now lands at the top
   every time. Clicking a nav link to jump to a section after the page has
   already loaded is unaffected and still scrolls normally.
+  **Found and fixed a real bug in this while testing something unrelated:**
+  the repeated top-lock retries run for up to 1.2s after load, and the
+  first version reasserted scroll-position-0 on that schedule
+  unconditionally — so a visitor who started scrolling, clicking a nav
+  link, or pressing an arrow key/spacebar within that 1.2s window would
+  get yanked back to the top mid-scroll. Now the first wheel/touch/click/
+  scroll-key input flips a flag that cancels every remaining retry, so
+  the top-lock only ever fights the browser's own hash-scroll, never a
+  real visitor. Verified: scrolling, and separately clicking a nav link,
+  at several points inside that window (50ms/300ms/400ms/800ms/1100ms
+  after load) all now stick, while the hash-load fix still lands at the
+  top every time across repeated tests.
 - **No separate "About" section.** There used to be a stat-strip section
   right after the hero ("Two/Three floors. One reputation." plus a
   reputation/layout/address stat list) that mostly repeated what the
@@ -166,11 +178,23 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
 - **Interaction details**: small dot cursor, magnetic buttons with press
   feedback, a cursor-follow spotlight highlight on floor/experience/
   resident/review/gallery cards, hero scroll parallax plus a slow ambient
-  glow drifting behind it, hover tilt on floor/experience images, amber
-  shimmer headline text, ticket-stub scalloped section edges, a subtle
-  halftone accent, and two gallery photos with a rotated polaroid/tape
-  treatment. All respect `prefers-reduced-motion` and are disabled on
-  touch/coarse-pointer devices.
+  glow drifting behind it, amber shimmer headline text, ticket-stub
+  scalloped section edges, a subtle halftone accent, and two gallery
+  photos with a rotated polaroid/tape treatment. All respect
+  `prefers-reduced-motion` and are disabled on touch/coarse-pointer
+  devices.
+- **3D tilt got a lot more pronounced**, and now covers the building's
+  floor photos and the resident cards, not just the Experience cards it
+  used to be limited to. Rotation range roughly tripled (was ±6°, now up
+  to ±16°), it's smoothed with smoothing-lerp'd (spring-like easing via
+  `requestAnimationFrame` rather than snapping straight to the cursor
+  position), it lifts the photo slightly toward the viewer
+  (`scale3d(1.035,...)`) at full tilt, and it casts a drop-shadow that
+  shifts opposite the tilt direction so the light appears to come from a
+  fixed source — the same technique real "premium tilt card" UI uses.
+  Transform and the dynamic shadow are both set as inline styles from JS
+  specifically so they can't fight the existing per-element `box-shadow`
+  CSS rules on those three different card types.
 - **Framed-photo treatment** — floor, experience, resident and gallery
   images sit in a double-bezel frame (a warm gradient inset border around
   each photo) instead of a flat crop, so every "photograph" on the page

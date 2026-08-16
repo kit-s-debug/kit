@@ -172,17 +172,37 @@
     });
   }
 
-  /* ---------- tilt on floor/experience media ---------- */
+  /* ---------- 3D tilt on floor/experience/resident photo frames ---------- */
   if (canHover && !reducedMotion) {
     document.querySelectorAll("[data-tilt]").forEach(function (el) {
+      var rafId = null;
+      var rotX = 0, rotY = 0, targetX = 0, targetY = 0, scale = 1, targetScale = 1;
+      function step() {
+        rotX += (targetX - rotX) * 0.16;
+        rotY += (targetY - rotY) * 0.16;
+        scale += (targetScale - scale) * 0.16;
+        el.style.transform = "perspective(600px) rotateX(" + rotX.toFixed(2) + "deg) rotateY(" + rotY.toFixed(2) + "deg) scale3d(" + scale.toFixed(3) + "," + scale.toFixed(3) + ",1)";
+        el.style.filter = "drop-shadow(" + (-rotY * 1.6).toFixed(1) + "px " + (rotX * 1.6).toFixed(1) + "px 20px rgba(0,0,0,.5))";
+        var settled = Math.abs(targetX - rotX) < 0.02 && Math.abs(targetY - rotY) < 0.02 && Math.abs(targetScale - scale) < 0.001;
+        if (!settled) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          rafId = null;
+        }
+      }
+      function ensureLoop() { if (!rafId) rafId = requestAnimationFrame(step); }
       el.addEventListener("mousemove", function (e) {
         var rect = el.getBoundingClientRect();
         var px = (e.clientX - rect.left) / rect.width - 0.5;
         var py = (e.clientY - rect.top) / rect.height - 0.5;
-        el.style.transform = "perspective(800px) rotateX(" + (-py * 6) + "deg) rotateY(" + (px * 6) + "deg)";
+        targetX = -py * 16;
+        targetY = px * 16;
+        targetScale = 1.035;
+        ensureLoop();
       });
       el.addEventListener("mouseleave", function () {
-        el.style.transform = "";
+        targetX = 0; targetY = 0; targetScale = 1;
+        ensureLoop();
       });
     });
   }

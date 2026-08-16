@@ -582,6 +582,11 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   transition:opacity .35s ease;
 }
 [data-spotlight]:hover::before{ opacity:1; }
+
+/* ============ 3D tilt on photo frames (building/experience/resident) ============ */
+/* transform and the responsive drop-shadow are both driven inline from JS
+   (see main.js) so they can't fight the per-element box-shadow rules below */
+[data-tilt]{ transform-style:preserve-3d; will-change:transform; }
 .level-num{
   flex:0 0 auto; width:52px; font-family:var(--font-display); text-transform:uppercase; font-size:36px;
   color:var(--silver-deep); line-height:1; letter-spacing:-.01em; transition:color .3s ease;
