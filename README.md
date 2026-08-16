@@ -198,6 +198,21 @@ find and replace.
   wide desktop screens than on mobile — checked both and it still reads
   as atmospheric club lighting rather than an awkward crop, but it's
   worth a look on the real deployed site to judge for yourself.
+  Also hardened against a real bug that showed up in testing: the video
+  could get stuck showing a paused/play-icon state instead of running.
+  Two defenses now, since either could be the cause depending on
+  browser/host: (1) Safari/WebKit shows a native
+  `::-webkit-media-controls-start-playback-button` overlay on an unplayed
+  inline video even without the `controls` attribute — hidden via CSS;
+  (2) some hosting contexts block programmatic/attribute autoplay until
+  the page gets a user gesture — JS now explicitly calls `.play()` on
+  load and retries once on the page's first click/tap/keypress. Verified
+  locally the video plays immediately and stays playing after a click,
+  with no visible play/pause icon. If it still shows paused specifically
+  in the claude.ai artifact preview link (as opposed to a real
+  deployment), that's most likely the preview sandbox's stricter
+  autoplay/CSP policy for inlined `data:` video — the underlying site
+  files are confirmed working when served normally.
 - **Photos** — every image still points at a generated placeholder SVG in
   `assets/images/` (warm amber/plum gradient scenes standing in for real
   venue photography), except the ones already swapped for real photos.

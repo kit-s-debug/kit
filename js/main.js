@@ -6,7 +6,22 @@
 
   /* ---------- hero background video ---------- */
   var heroVideo = document.getElementById("hero-video");
-  if (heroVideo && reducedMotion) { heroVideo.pause(); }
+  if (heroVideo) {
+    if (reducedMotion) {
+      heroVideo.pause();
+    } else {
+      var tryPlayHeroVideo = function () {
+        var p = heroVideo.play();
+        if (p && p.catch) p.catch(function () {});
+      };
+      tryPlayHeroVideo();
+      // some browsers block programmatic/attribute autoplay until the
+      // page has had a user gesture; retry once on the first one
+      ["click", "touchstart", "keydown"].forEach(function (evt) {
+        document.addEventListener(evt, tryPlayHeroVideo, { once: true, passive: true });
+      });
+    }
+  }
 
   /* ---------- sticky header shrink/blur ---------- */
   var header = document.getElementById("site-header");
