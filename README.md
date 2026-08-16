@@ -177,12 +177,13 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   photos any time, same filenames.
 - **Interaction details**: small dot cursor, magnetic buttons with press
   feedback, a cursor-follow spotlight highlight on floor/experience/
-  resident/review/gallery cards, hero scroll parallax plus a slow ambient
-  glow drifting behind it, amber shimmer headline text, ticket-stub
-  scalloped section edges, a subtle halftone accent, and two gallery
-  photos with a rotated polaroid/tape treatment. All respect
-  `prefers-reduced-motion` and are disabled on touch/coarse-pointer
-  devices.
+  resident/review/gallery cards, hero text scroll parallax (fades and
+  drifts up as you scroll past it — the background's own scroll-driven
+  movement now lives in the 3D scene instead, described above), amber
+  shimmer headline text, ticket-stub scalloped section edges, a subtle
+  halftone accent, and two gallery photos with a rotated polaroid/tape
+  treatment. All respect `prefers-reduced-motion` and are disabled on
+  touch/coarse-pointer devices.
 - **3D tilt got a lot more pronounced**, and now covers the building's
   floor photos and the resident cards, not just the Experience cards it
   used to be limited to. Rotation range roughly tripled (was ±6°, now up
@@ -214,54 +215,60 @@ find and replace.
   filter — see `<filter id="stamp">` in the SVG). Close, not pixel-exact.
   Send the original on a dark background or as a flattened JPG/PNG and
   replace `assets/images/logo.svg` directly (same filename).
-- **Hero background is a real video now**, not a photo. A `<video autoplay
-  muted loop playsinline>` (`assets/video/hero.webm` + an `assets/video/
-  hero.mp4` fallback for browsers that don't support WebM, e.g. Safari)
-  replaced the static `hero.jpg`, using real in-venue footage — the
-  source was a 19.5MB/16s phone screen-recording, compressed down to
-  ~943KB (WebM) / ~1.7MB (MP4) at 720px wide, which is a comfortable size
-  for a looping background on a real connection. `hero.jpg` wasn't
-  deleted — it's kept as the `poster` (shown while the video loads and
-  as the fallback if video can't play at all), so it's still in active
-  use, not an orphaned placeholder. Respects `prefers-reduced-motion`:
-  the video is explicitly paused via JS for anyone with that preference,
-  leaving the poster frame static instead of autoplaying motion at them.
-  One honest caveat: the source footage is a portrait phone recording
-  (aspect ~0.62), quite different from the hero's wide landscape box, so
-  `object-fit: cover` (same as the photo before it) crops in tighter on
-  wide desktop screens than on mobile — checked both and it still reads
-  as atmospheric club lighting rather than an awkward crop, but it's
-  worth a look on the real deployed site to judge for yourself.
-  Also hardened against a real bug that showed up in testing: the video
-  could get stuck showing a paused/play-icon state instead of running.
-  Two defenses now, since either could be the cause depending on
-  browser/host: (1) Safari/WebKit shows a native
-  `::-webkit-media-controls-start-playback-button` overlay on an unplayed
-  inline video even without the `controls` attribute — hidden via CSS;
-  (2) some hosting contexts block programmatic/attribute autoplay until
-  the page gets a user gesture — JS now explicitly calls `.play()` on
-  load and retries once on the page's first click/tap/keypress. Verified
-  locally the video plays immediately and stays playing after a click,
-  with no visible play/pause icon. If it still shows paused specifically
-  in the claude.ai artifact preview link (as opposed to a real
-  deployment), that's most likely the preview sandbox's stricter
-  autoplay/CSP policy for inlined `data:` video — the underlying site
-  files are confirmed working when served normally.
+- **Hero background is a real WebGL 3D scene now**, not a video or photo.
+  `js/hero3d.js` (loaded as an ES module, `<script type="module">`) draws
+  a large abstract metallic object — a torus knot, `MeshPhysicalMaterial`
+  with `metalness:1` — lit by three point lights in the same amber/
+  magenta/teal trio already used by the building's disco-light windows,
+  inside `THREE.FogExp2` for depth, with ~300 drifting ember-like
+  particles and a cheap procedural gradient environment map (a 2px-wide
+  canvas gradient, no external HDR file) so the metal actually has
+  something to reflect. The object auto-rotates slowly, leans subtly
+  toward the cursor on mouse move (gated to `hover:hover` devices, like
+  the site's other hover effects), and the camera pulls back and drifts
+  down as the hero scrolls out of view, fading the canvas alongside it.
+  Renders to a `<canvas id="hero3d">` in place of the old `<video>`;
+  the canvas has a dark radial-gradient CSS background of its own so
+  there's a reasonable fallback for the rare browser without WebGL
+  (checked via a runtime `getContext` probe — the script just leaves the
+  canvas showing that gradient if it fails) and something to look at
+  while the scene spins up. `prefers-reduced-motion` gets a single
+  rendered frame at a fixed angle and no rAF loop at all, not just a
+  paused animation — verified by screenshotting twice a second and a
+  half apart and diffing pixel-for-pixel identical. Pauses the whole
+  render loop via `IntersectionObserver` when the hero scrolls out of
+  view, so it isn't burning GPU/battery for a page with several other
+  scroll-driven effects further down.
+  **New dependency**: Three.js r160, self-hosted (not a CDN script) at
+  `assets/vendor/three.module.min.js` (~670KB, MIT licensed, fetched via
+  `npm pack three` and pulled out of the tarball since it's the only
+  build in the project — no bundler, no `node_modules`, no build step;
+  it's just another static file the browser loads), matching how the
+  fonts are already self-hosted rather than pulled from Google Fonts.
+  This replaced the real crowd-video hero from the previous pass at the
+  user's request ("replace it entirely"). The video/photo assets
+  (`assets/video/hero.webm`, `assets/video/hero.mp4`,
+  `assets/images/hero.jpg`) are **not deleted** — unlike the generated
+  SVG placeholders this project deletes on replacement, these are real
+  footage the venue provided, not throwaway placeholder art, so they're
+  left in the repo unused rather than discarded. They're free to reuse
+  elsewhere (the gallery, social, etc.) or wire back into the hero later
+  if the 3D direction doesn't stick.
 - **Hero got a cinematic pass** — it was reading as too empty, mostly
   video with a lot of dead space to the right of the text on wide
-  screens. Added: a radial vignette darkening the edges/corners
-  (widescreen framing effect on top of the existing top-to-bottom
-  scrim), thin `--charcoal` letterbox bars along the very top/bottom
-  edges of the hero for an anamorphic-film feel, a second warm glow in
-  `.hero-ambient` so the depth reads from both sides instead of just the
-  top-left, and — the biggest fix for the empty feeling — a cluster of
-  randomized light beams (`.hero-disco`, reusing the same technique as
-  the building's own disco-light windows) sweeping the right-hand
-  two-fifths of the frame, deliberately kept clear of the text column.
-  Also added a small pulsing scroll cue (a dot dripping down a thin
-  line) at the bottom centre, a common "there's more below" affordance
-  the hero didn't have. All of it is skipped under
-  `prefers-reduced-motion` same as the rest of the page's motion.
+  screens. Added a radial vignette darkening the edges/corners
+  (widescreen framing effect on top of the scrim) and thin `--charcoal`
+  letterbox bars along the very top/bottom edges of the hero for an
+  anamorphic-film feel — both still in place. The emptiness itself is
+  now solved a different way: the WebGL 3D object described above fills
+  that right-hand space with real depth, light and motion instead of the
+  flat CSS light-beam trick (`.hero-disco`) and second ambient glow
+  (`.hero-ambient`) this bullet originally described — both were removed
+  once the 3D scene made them redundant. Also added a small pulsing
+  scroll cue (a dot dripping down a thin line) at the bottom centre, a
+  common "there's more below" affordance the hero didn't have. All of it
+  is skipped under `prefers-reduced-motion` same as the rest of the
+  page's motion.
 - **Animations sped up across the board** — the whole site read as
   sluggish. Cut roughly a third to half off the major durations:
   scroll-reveal fade (.6s→.4s), the building's entrance (.85s→.55s),

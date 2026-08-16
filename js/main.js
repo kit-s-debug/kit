@@ -4,25 +4,6 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* ---------- hero background video ---------- */
-  var heroVideo = document.getElementById("hero-video");
-  if (heroVideo) {
-    if (reducedMotion) {
-      heroVideo.pause();
-    } else {
-      var tryPlayHeroVideo = function () {
-        var p = heroVideo.play();
-        if (p && p.catch) p.catch(function () {});
-      };
-      tryPlayHeroVideo();
-      // some browsers block programmatic/attribute autoplay until the
-      // page has had a user gesture; retry once on the first one
-      ["click", "touchstart", "keydown"].forEach(function (evt) {
-        document.addEventListener(evt, tryPlayHeroVideo, { once: true, passive: true });
-      });
-    }
-  }
-
   /* ---------- sticky header shrink/blur ---------- */
   var header = document.getElementById("site-header");
   function onScroll() {
@@ -85,7 +66,6 @@
   }
 
   /* ---------- hero scroll parallax ---------- */
-  var heroParallax = document.getElementById("hero-parallax");
   var heroContent = document.getElementById("hero-content");
   var hero = document.querySelector(".hero");
   if (hero && !reducedMotion) {
@@ -93,7 +73,6 @@
     function updateParallax() {
       var rect = hero.getBoundingClientRect();
       var progress = Math.min(Math.max(-rect.top / rect.height, 0), 1);
-      heroParallax.style.transform = "translate3d(0," + progress * 90 + "px,0) scale(" + (1 + progress * 0.08) + ")";
       heroContent.style.transform = "translate3d(0," + progress * 40 + "px,0)";
       heroContent.style.opacity = String(1 - progress * 1.1);
       ticking = false;
@@ -240,19 +219,6 @@
         beam.style.setProperty("--beam-dur", (1.8 + Math.random() * 1.6) + "s");
         beam.style.setProperty("--beam-delay", (Math.random() * 2.8) + "s");
         container.appendChild(beam);
-      }
-    });
-    // hero beams cluster on the right side of the frame, where the text
-    // isn't, so they add movement and depth without fighting the copy
-    document.querySelectorAll(".hero-disco").forEach(function (container) {
-      for (var j = 0; j < 5; j++) {
-        var hbeam = document.createElement("span");
-        hbeam.className = "beam";
-        hbeam.style.setProperty("--beam-x", (52 + Math.random() * 42) + "%");
-        hbeam.style.setProperty("--beam-color", discoColors[Math.floor(Math.random() * discoColors.length)]);
-        hbeam.style.setProperty("--beam-dur", (1.6 + Math.random() * 1.4) + "s");
-        hbeam.style.setProperty("--beam-delay", (Math.random() * 2.2) + "s");
-        container.appendChild(hbeam);
       }
     });
   }
