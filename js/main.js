@@ -74,16 +74,22 @@
     /* a landscape crop cover-fitted into a phone's portrait hero zooms in
        so far the room disappears, so narrow screens get a portrait cut of
        the same clip instead */
-    var tall = window.matchMedia("(max-width: 700px)").matches;
-    var base = heroVideo.getAttribute(tall ? "data-src-tall" : "data-src-wide");
-    if (tall) heroVideo.poster = heroVideo.getAttribute("data-poster-tall");
-    [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (pair) {
-      var source = document.createElement("source");
-      source.src = base + "." + pair[0];
-      source.type = pair[1];
-      heroVideo.appendChild(source);
-    });
-    heroVideo.load();
+    var variant = window.matchMedia("(max-width: 700px)").matches ? "tall" : "wide";
+    if (variant === "tall") {
+      var tallPoster = heroVideo.getAttribute("data-poster-tall");
+      if (tallPoster) heroVideo.poster = tallPoster;
+    }
+    if (!heroVideo.querySelector("source")) {
+      [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (pair) {
+        var src = heroVideo.getAttribute("data-" + pair[0] + "-" + variant);
+        if (!src) return;
+        var source = document.createElement("source");
+        source.src = src;
+        source.type = pair[1];
+        heroVideo.appendChild(source);
+      });
+      heroVideo.load();
+    }
 
     /* autoplay can be refused until a gesture in some embedded contexts,
        which would leave the frame frozen on the poster */
