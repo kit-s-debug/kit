@@ -52,7 +52,7 @@
 }
 
 /* Palette lives here. A few shadow/overlay rgba() values elsewhere in this
-   file (box-shadow glows, the hero scrim, the lightbox backdrop) are
+   file (box-shadow glows, the hero grade and vignette) are
    hardcoded rather than var()-driven for gradient-stop reasons — they're
    tinted to match these tokens by hand, so update them together if this
    palette changes again. */
@@ -785,54 +785,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 .statement h2{ font-family:var(--font-display); font-style:normal; text-transform:uppercase; font-size:clamp(42px, 8vw, 84px); letter-spacing:-.01em; }
 
-/* ============ gallery ============ */
-/* Four real photographs of the three rooms, sized unevenly so the section
-   reads as a picture edit rather than a grid of thumbnails. */
-.gallery{ padding:var(--section-y) 28px; }
-.gallery-head{ max-width:var(--container); margin:0 auto 40px; }
-.gallery-grid{
-  max-width:var(--container); margin:0 auto; list-style:none; padding:0;
-  display:grid; grid-template-columns:1.55fr 1fr; gap:14px;
-}
-.gallery-cell{ position:relative; margin:0; }
-/* two landscape frames stack in the left column while one portrait frame
-   runs the full height beside them, then a wide plate closes the section */
-.gallery-cell:nth-child(1){ grid-column:1; grid-row:1; }
-.gallery-cell:nth-child(2){ grid-column:2; grid-row:1 / span 2; }
-.gallery-cell:nth-child(3){ grid-column:1; grid-row:2; }
-.gallery-cell:nth-child(4){ grid-column:1 / -1; grid-row:3; }
-.gallery-cell--wide .gallery-item{ aspect-ratio:16/9; }
-.gallery-cell--tall{ height:100%; }
-.gallery-cell--tall .gallery-item{ height:100%; }
-.gallery-cell:nth-child(4) .gallery-item{ aspect-ratio:21/9; }
-
-.gallery-item{
-  display:block; width:100%; cursor:none; position:relative; overflow:hidden;
-  padding:0; border:0; border-radius:4px; background:var(--panel-2);
-}
-.gallery-item img{
-  width:100%; height:100%; object-fit:cover; display:block;
-  transition:transform .5s cubic-bezier(.22,.85,.32,1), filter .3s ease;
-}
-.gallery-item::after{
-  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:linear-gradient(180deg, transparent 45%, rgba(10,5,7,.82) 100%);
-  opacity:.85; transition:opacity .3s ease;
-}
-.gallery-item:hover img,.gallery-item:focus-visible img{ transform:scale(1.045); }
-.gallery-item:hover::after,.gallery-item:focus-visible::after{ opacity:1; }
-/* the caption names the room, which is the whole point of the section */
-.gallery-caption{
-  position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 24px;
-  display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; text-align:left;
-}
-.gallery-caption-room{
-  font-family:var(--font-accent); font-style:italic; font-size:21px; color:var(--white);
-}
-.gallery-caption-note{
-  font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--silver);
-}
-
 /* ============ FAQ ============ */
 .faq{ padding:0 28px var(--section-y); }
 .faq-inner{ max-width:var(--container); margin:0 auto; border-top:1px solid var(--line); padding-top:40px; }
@@ -967,10 +919,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 /* cascading stagger for grid rows so sections feel less like one flat fade */
 .reviews-grid .review-card:nth-child(1){ transition-delay:0s; }
 .reviews-grid .review-card:nth-child(2){ transition-delay:.07s; }
-.gallery-grid li:nth-child(1){ transition-delay:0s; }
-.gallery-grid li:nth-child(2){ transition-delay:.05s; }
-.gallery-grid li:nth-child(3){ transition-delay:.1s; }
-.gallery-grid li:nth-child(4){ transition-delay:.15s; }
 
 /* the experience rows arrive from the side the photograph sits on, so the
    alternating layout is legible in the motion as well as the layout */
@@ -980,20 +928,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
 /* anchor targets clear the sticky header instead of hiding under it */
 [id]{ scroll-margin-top:calc(var(--header-h) + 18px); }
-
-/* ============ lightbox ============ */
-.lightbox{ position:fixed; inset:0; z-index:400; background:rgba(15,9,12,.95); display:flex; align-items:center; justify-content:center; }
-.lightbox[hidden]{ display:none; }
-.lightbox-image{ max-width:min(90vw, 1100px); max-height:82vh; object-fit:contain; border:1px solid var(--line); }
-.lightbox-close,.lightbox-nav{
-  position:absolute; background:transparent; border:1px solid var(--line-strong); color:var(--white);
-  border-radius:50%; width:48px; height:48px; font-size:20px; cursor:none;
-  display:flex; align-items:center; justify-content:center; transition:background .2s ease, border-color .2s ease;
-}
-.lightbox-close:hover,.lightbox-nav:hover{ background:var(--silver-bright); color:var(--charcoal); border-color:var(--silver-bright); }
-.lightbox-close{ top:24px; right:24px; }
-.lightbox-prev{ left:24px; top:50%; transform:translateY(-50%); }
-.lightbox-next{ right:24px; top:50%; transform:translateY(-50%); }
 
 /* ============ sticky mobile reserve bar ============ */
 /* Floats in only once the hero is behind you, so the first screen is the
@@ -1022,7 +956,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .level-name{ font-size:19px; }
   .reviews-grid{ grid-template-columns:1fr; }
   .reviews-grid .review-card:nth-child(2){ margin-top:0; }
-  .gallery-grid{ grid-template-columns:repeat(2, 1fr); }
   .footer-inner{ grid-template-columns:1fr; gap:32px; }
   .footer-meta{ text-align:left; }
   .social-links{ justify-content:flex-start; }
@@ -1049,17 +982,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .experience-row:nth-child(even) .experience-media{ order:0; }
   .experience-row.reveal,
   .experience-row:nth-child(even).reveal{ transform:perspective(1000px) translateY(22px) rotateX(4deg); }
-
-  /* one column, full-width plates: on a phone the asymmetry just makes
-     everything small, so the photographs get the whole width instead */
-  .gallery-grid{ grid-template-columns:1fr; gap:10px; }
-  .gallery-cell:nth-child(1),.gallery-cell:nth-child(2),
-  .gallery-cell:nth-child(3),.gallery-cell:nth-child(4){ grid-column:1; grid-row:auto; }
-  .gallery-cell--tall{ height:auto; }
-  .gallery-cell--tall .gallery-item{ height:auto; aspect-ratio:4/5; }
-  .gallery-cell:nth-child(4) .gallery-item{ aspect-ratio:16/9; }
-  .gallery-caption{ padding:16px 18px; }
-  .gallery-caption-room{ font-size:18px; }
 
   .hero-facts{ gap:26px; }
   .level-meta{ gap:24px; }
@@ -1105,7 +1027,7 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
   .experience-body p,.level-copy p,.events-empty p{ font-size:15px; line-height:1.65; }
   .experience-list,.experience-head,.floors-head,.building{ padding-left:20px; padding-right:20px; }
-  .gallery,.reviews,.faq,.events,.contact{ padding-left:20px; padding-right:20px; }
+  .reviews,.faq,.events,.contact{ padding-left:20px; padding-right:20px; }
   .review-card{ padding:26px 22px; }
   .review-card p{ font-size:18px; }
   .faq-item summary{ padding:18px 14px; font-size:14.5px; gap:11px; }

@@ -173,7 +173,7 @@
     document.addEventListener("mousedown", function () { cursor.classList.add("is-clicking"); });
     document.addEventListener("mouseup", function () { cursor.classList.remove("is-clicking"); });
 
-    var hoverables = document.querySelectorAll("a, button, [data-magnetic], .gallery-item, [data-tilt]");
+    var hoverables = document.querySelectorAll("a, button, [data-magnetic], [data-tilt]");
     hoverables.forEach(function (el) {
       el.addEventListener("mouseenter", function () { cursor.classList.add("is-hovering"); });
       el.addEventListener("mouseleave", function () { cursor.classList.remove("is-hovering"); });
@@ -311,54 +311,6 @@
       }
     });
   }
-
-  /* ---------- gallery lightbox ---------- */
-  var galleryImages = Array.prototype.map.call(
-    document.querySelectorAll("#gallery-grid img"),
-    function (img) { return { src: img.currentSrc || img.src, alt: img.alt }; }
-  );
-  var lightbox = document.getElementById("lightbox");
-  var lightboxImage = document.getElementById("lightbox-image");
-  var lightboxClose = document.getElementById("lightbox-close");
-  var lightboxPrev = document.getElementById("lightbox-prev");
-  var lightboxNext = document.getElementById("lightbox-next");
-  var currentIndex = 0;
-  var lightboxLastFocused = null;
-
-  function showImage(index) {
-    currentIndex = (index + galleryImages.length) % galleryImages.length;
-    var item = galleryImages[currentIndex];
-    lightboxImage.src = item.src;
-    lightboxImage.alt = item.alt;
-  }
-  function openLightbox(index) {
-    lightboxLastFocused = document.activeElement;
-    showImage(index);
-    lightbox.hidden = false;
-    lightboxClose.focus();
-    document.addEventListener("keydown", onLightboxKeydown);
-  }
-  function closeLightbox() {
-    lightbox.hidden = true;
-    document.removeEventListener("keydown", onLightboxKeydown);
-    if (lightboxLastFocused) lightboxLastFocused.focus();
-  }
-  function onLightboxKeydown(e) {
-    if (e.key === "Escape") closeLightbox();
-    if (e.key === "ArrowLeft") showImage(currentIndex - 1);
-    if (e.key === "ArrowRight") showImage(currentIndex + 1);
-  }
-  document.querySelectorAll(".gallery-item").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      openLightbox(parseInt(btn.dataset.index, 10));
-    });
-  });
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightboxPrev.addEventListener("click", function () { showImage(currentIndex - 1); });
-  lightboxNext.addEventListener("click", function () { showImage(currentIndex + 1); });
-  lightbox.addEventListener("click", function (e) {
-    if (e.target === lightbox) closeLightbox();
-  });
 
   /* ---------- footer year ---------- */
   var yearEl = document.getElementById("footer-year");
