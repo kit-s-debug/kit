@@ -67,6 +67,24 @@ Beyond the original hero/floors/contact, this pass adds:
   at several points inside that window (50ms/300ms/400ms/800ms/1100ms
   after load) all now stick, while the hash-load fix still lands at the
   top every time across repeated tests.
+- **Labrinth's hero is the venue's own footage**, same treatment as Eddie
+  Rocks. Cut from a 7-second recording the client supplied, using the first
+  4 seconds — the packed crowd under the arched ceiling — and stopping
+  before the red DJ segment and the black tail the clip ends on.
+  Encoded to `assets/video/labrinth-loop.mp4|.webm` (1440x810 landscape band
+  cropped out of the portrait original) and `labrinth-loop-portrait.*`
+  (636x848 for phones), both dropped from 60fps to 30 since it is a
+  background loop, with `labrinth-room.jpg` / `labrinth-room-portrait.jpg`
+  as posters and as the whole hero under `prefers-reduced-motion`.
+  The grade cools the shadows toward the page's ink base while leaving the
+  room's magenta and violet in the highlights — a teal/magenta split rather
+  than fighting the actual lighting, so the jade UI reads as deliberate
+  against it. The drawn maze motif is gone: it stood in for footage that
+  now exists.
+  `main.js` drives both heroes; it picks the cut per viewport from the same
+  `data-webm-*`/`data-mp4-*` attributes, and its hero query now matches
+  `.hero, .lab-hero` with the `#hero-content` parallax null-guarded, since
+  only the footage layer is shared between the two venues.
 - **Two venues, one switcher, two sites.** Labrinth used to be a passive
   "Also by Eddie's: Labrinth" badge — on desktop beside the logo, and again
   down in the mobile drawer's footer, linked to `#`. It's now an actual

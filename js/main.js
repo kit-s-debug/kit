@@ -114,14 +114,19 @@
   /* ---------- hero scroll parallax ---------- */
   var heroContent = document.getElementById("hero-content");
   var heroMedia = document.getElementById("hero-media");
-  var hero = document.querySelector(".hero");
+  /* both venues have a footage hero, they just carry different class names */
+  var hero = document.querySelector(".hero, .lab-hero");
   if (hero && !reducedMotion) {
     var ticking = false;
     function updateParallax() {
       var rect = hero.getBoundingClientRect();
       var progress = Math.min(Math.max(-rect.top / rect.height, 0), 1);
-      heroContent.style.transform = "translate3d(0," + progress * 46 + "px,0)";
-      heroContent.style.opacity = String(1 - progress * 1.15);
+      /* Labrinth's hero has no #hero-content wrapper — only the footage
+         layer is shared between the two venues */
+      if (heroContent) {
+        heroContent.style.transform = "translate3d(0," + progress * 46 + "px,0)";
+        heroContent.style.opacity = String(1 - progress * 1.15);
+      }
       /* the footage holds its ground while the type lifts away, so the
          section reads as depth rather than one flat sheet scrolling */
       if (heroMedia) heroMedia.style.transform = "translate3d(0," + progress * 14 + "%,0)";

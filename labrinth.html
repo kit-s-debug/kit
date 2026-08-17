@@ -36,14 +36,21 @@
 <main id="main">
 
   <section class="lab-hero" id="top">
-    <!-- The name made visual: a single continuous path folding back on
-         itself. Drawn rather than decorative — it is the one motif this
-         venue owns outright. -->
-    <svg class="lab-maze" viewBox="0 0 400 400" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-      <path d="M200 20 L380 20 L380 380 L20 380 L20 60 L340 60 L340 340 L60 340 L60 100
-               L300 100 L300 300 L100 300 L100 140 L260 140 L260 260 L140 260 L140 180
-               L220 180 L220 220 L180 220"/>
-    </svg>
+    <!-- The venue's own footage carries this section, so the drawn maze
+         motif that stood in for it has gone. Sources are attached by
+         main.js, which picks the landscape or portrait cut per viewport. -->
+    <div class="hero-media" id="hero-media" aria-hidden="true">
+      <video class="hero-video" id="hero-video" muted loop playsinline preload="none"
+             poster="assets/images/labrinth-room.jpg"
+             data-webm-wide="assets/video/labrinth-loop.webm"
+             data-mp4-wide="assets/video/labrinth-loop.mp4"
+             data-webm-tall="assets/video/labrinth-loop-portrait.webm"
+             data-mp4-tall="assets/video/labrinth-loop-portrait.mp4"
+             data-poster-tall="assets/images/labrinth-room-portrait.jpg"></video>
+      <div class="hero-grade"></div>
+      <div class="hero-vignette"></div>
+    </div>
+
     <div class="lab-hero-inner">
       <p class="lab-eyebrow">Also by Eddie's</p>
       <h1>Labrinth</h1>

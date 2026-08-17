@@ -1064,6 +1064,7 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
      gets the graded still instead — the video is never played at all. */
   .hero-video{ display:none; }
   .hero-media{ background:url("../assets/images/hero-room.jpg") center/cover no-repeat; }
+  .theme-labrinth .hero-media{ background-image:url("../assets/images/labrinth-room.jpg"); }
 }
 
 /* ==========================================================================
@@ -1100,21 +1101,21 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
 .lab-hero{
   position:relative; overflow:hidden;
-  min-height:min(82vh, 780px); display:flex; align-items:center;
-  padding:calc(var(--header-h) + 40px) 28px 60px;
-  background:radial-gradient(ellipse 70% 70% at 62% 40%, var(--panel-2) 0%, var(--charcoal) 72%);
+  min-height:min(88vh, 860px); display:flex; align-items:flex-end;
+  padding:calc(var(--header-h) + 40px) 28px 64px;
+  background:var(--charcoal);
 }
-.lab-maze{
-  position:absolute; top:50%; right:4%; width:min(46vw, 520px); height:auto;
-  transform:translateY(-50%); pointer-events:none;
-  fill:none; stroke:var(--silver); stroke-width:2.2; opacity:.16;
-  stroke-linecap:square; stroke-linejoin:miter;
-  /* the path draws itself once on arrival, then stays put */
-  stroke-dasharray:4200; stroke-dashoffset:4200;
-  animation:maze-draw 3.4s cubic-bezier(.22,.85,.32,1) .2s forwards;
+/* the shared hero-media/grade/vignette stack is retuned to Labrinth's ink,
+   and the scrim runs the other way to Eddie's since the type sits lower */
+.theme-labrinth .hero-grade{
+  background:
+    linear-gradient(96deg, rgba(6,14,16,.9) 0%, rgba(6,14,16,.62) 34%, rgba(6,14,16,.14) 62%, transparent 86%),
+    linear-gradient(180deg, rgba(6,14,16,.66) 0%, transparent 26%, transparent 54%, var(--charcoal) 100%);
 }
-@keyframes maze-draw{ to{ stroke-dashoffset:0; } }
-.lab-hero-inner{ position:relative; z-index:1; max-width:var(--container); margin:0 auto; width:100%; }
+.theme-labrinth .hero-vignette{
+  background:radial-gradient(ellipse 86% 84% at 52% 46%, transparent 44%, rgba(4,10,11,.46) 82%, rgba(4,10,11,.8) 100%);
+}
+.lab-hero-inner{ position:relative; z-index:2; max-width:var(--container); margin:0 auto; width:100%; }
 .lab-eyebrow{
   font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
   color:var(--silver); margin-bottom:22px;
@@ -1141,7 +1142,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
 @media (max-width:900px){
   .lab-hero{ padding-top:calc(var(--header-h) + 24px); }
-  .lab-maze{ right:-24%; width:96vw; opacity:.1; }
   .footer-inner--lab{ grid-template-columns:1fr; gap:26px; }
   .venue-switch--footer{ justify-self:start; }
   .lab-contact{ padding:24px; gap:22px; }
