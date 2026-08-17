@@ -77,6 +77,9 @@
 
   --header-h:84px;
   --container:1180px;
+  /* one vertical rhythm unit for every section, so the page breathes at a
+     consistent scale instead of each section picking its own padding */
+  --section-y:clamp(64px, 8vw, 116px);
 
   color-scheme: dark;
 }
@@ -308,68 +311,96 @@ p{ margin:0; }
 .mobile-nav-contact a:hover{ color:var(--silver-bright); }
 
 /* ============ hero ============ */
-.hero{ position:relative; min-height:min(86vh, 780px); display:flex; align-items:center; overflow:hidden; background:var(--charcoal); }
-.hero-parallax{ position:absolute; inset:0; }
-/* the WebGL scene (js/hero3d.js) draws into this canvas; the dark
-   gradient behind it is what shows while the scene loads and is the
-   fallback for the rare browser with WebGL unavailable */
-.hero-bg{
-  position:absolute; inset:0; width:100%; height:100%; display:block; pointer-events:none;
-  background:radial-gradient(ellipse 70% 60% at 65% 45%, var(--panel-2) 0%, var(--charcoal) 68%);
-  transition:opacity .6s ease;
+/* Real footage of the room carries this section: a strobing crowd shot from
+   the Main Bar floor, graded warm to sit inside the palette. Everything
+   layered over it exists to keep the type legible, nothing more. */
+.hero{
+  position:relative; min-height:min(84vh, 860px); overflow:hidden; background:var(--charcoal);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:calc(var(--header-h) + 24px) 0 0;
+}
+.hero-media{ position:absolute; inset:0; overflow:hidden; }
+.hero-video{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
+  /* a very slow push-in stops an 8s loop from reading as a repeating GIF */
+  animation:hero-drift 34s ease-in-out infinite alternate;
+  transform-origin:58% 42%;
+}
+@keyframes hero-drift{ from{ transform:scale(1.02); } to{ transform:scale(1.09); } }
+/* WebKit will otherwise paint a start-playback button over an inline video */
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-start-playback-button,
+.hero-video::-webkit-media-controls-panel{ display:none !important; -webkit-appearance:none; }
+
+.hero-grade{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(96deg, rgba(15,8,12,.88) 0%, rgba(15,8,12,.56) 32%, rgba(15,8,12,.08) 58%, transparent 82%),
+    linear-gradient(180deg, rgba(15,8,12,.62) 0%, transparent 24%, transparent 58%, var(--charcoal) 100%);
 }
 .hero-vignette{
   position:absolute; inset:0;
-  background:radial-gradient(ellipse 78% 78% at 50% 48%, transparent 42%, rgba(10,5,7,.5) 78%, rgba(10,5,7,.82) 100%);
+  background:radial-gradient(ellipse 86% 84% at 54% 44%, transparent 46%, rgba(10,5,7,.4) 84%, rgba(10,5,7,.74) 100%);
 }
-/* darkens the text column on the left for contrast while leaving the
-   3D object's side of the frame clear; fades to the next section at
-   the bottom */
-.hero-scrim{
-  position:absolute; inset:0;
-  background:
-    linear-gradient(100deg, rgba(27,17,22,.9) 0%, rgba(27,17,22,.62) 38%, transparent 60%),
-    linear-gradient(180deg, transparent 0%, rgba(27,17,22,.35) 72%, var(--charcoal) 100%);
+
+.hero-content{
+  position:relative; z-index:2; width:100%; max-width:var(--container);
+  margin:0 auto; padding:0 28px 46px;
 }
-.hero-letterbox{
-  position:absolute; left:0; right:0; height:clamp(8px, 2vh, 20px); z-index:3; pointer-events:none;
-  background:var(--charcoal);
+/* place, set as a hairline-separated rail rather than another eyebrow */
+.hero-place{
+  display:flex; align-items:center; gap:14px; margin:0 0 22px;
+  font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--silver);
 }
-.hero-letterbox--top{ top:0; }
-.hero-letterbox--bottom{ bottom:0; }
-.hero-content{ position:relative; z-index:2; max-width:var(--container); margin:0 auto; padding:0 28px; width:100%; }
-.hero h1{ font-size:clamp(46px, 8vw, 92px); max-width:13ch; margin-bottom:24px; }
-.hero-sub{ color:var(--dim); font-size:17px; line-height:1.7; max-width:44ch; margin-bottom:28px; }
-.hero-actions{ display:flex; gap:24px; align-items:center; flex-wrap:wrap; }
+.hero-place span+span::before{
+  content:""; display:inline-block; width:26px; height:1px; margin-right:14px; vertical-align:middle;
+  background:var(--silver-deep);
+}
+.hero h1{
+  font-size:clamp(58px, 11.5vw, 148px); line-height:.86; letter-spacing:-.025em;
+  margin:0 0 34px; max-width:11ch;
+}
+/* the second line is the emphasis, so it stays in Anton and takes the
+   copper — same family, different colour, no borrowed serif */
+.hero h1 em{ font-style:normal; color:var(--silver-bright); }
+
+.hero-lower{ display:flex; gap:56px; align-items:flex-end; flex-wrap:wrap; }
+.hero-sub{ color:var(--dim); font-size:16px; line-height:1.75; max-width:42ch; flex:1 1 340px; }
+.hero-actions{ display:flex; gap:26px; align-items:center; flex-wrap:wrap; flex:0 0 auto; }
+
+/* the bottom rail: the practical facts, where a nightclub poster would put them */
+.hero-rail{
+  position:relative; z-index:2; width:100%; max-width:var(--container);
+  margin:0 auto; padding:18px 28px 22px;
+  display:flex; align-items:center; justify-content:space-between; gap:28px;
+  border-top:1px solid var(--line);
+}
+.hero-facts{ display:flex; gap:44px; margin:0; flex-wrap:wrap; }
+.hero-facts div{ display:flex; flex-direction:column; gap:3px; }
+.hero-facts dt{
+  font-size:9.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--silver-deep);
+}
+.hero-facts dd{
+  margin:0; font-family:var(--font-accent); font-style:italic; font-size:17px; color:var(--white);
+}
 .hero-scrollcue{
-  position:absolute; left:50%; bottom:34px; transform:translateX(-50%); z-index:3;
-  width:1px; height:36px;
-  background:linear-gradient(180deg, transparent, rgba(246,225,213,.32) 35%, rgba(246,225,213,.32));
+  flex:0 0 auto; position:relative; width:1px; height:44px; text-decoration:none;
+  background:linear-gradient(180deg, var(--line-strong), transparent);
 }
 .hero-scrollcue span{
   position:absolute; left:50%; top:0; width:5px; height:5px; margin-left:-2.5px; border-radius:50%;
-  background:var(--silver-bright); box-shadow:0 0 8px rgba(243,185,140,.7);
-  animation:scrollcue-drop 1.6s cubic-bezier(.6,0,.4,1) infinite;
+  background:var(--silver-bright); box-shadow:0 0 9px rgba(243,185,140,.8);
+  animation:scrollcue-drop 1.9s cubic-bezier(.6,0,.4,1) infinite;
 }
 @keyframes scrollcue-drop{
   0%{ top:0; opacity:0; }
-  15%{ opacity:1; }
-  85%{ opacity:1; }
+  18%{ opacity:1; }
+  82%{ opacity:1; }
   100%{ top:100%; opacity:0; }
 }
 
 @keyframes pulse-dot{ 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
 
-
-/* ============ ticket-stub panel edges ============ */
-.ticket-panel{ position:relative; background:var(--panel-2); z-index:0; }
-.ticket-panel::before,.ticket-panel::after{
-  content:""; position:absolute; left:0; right:0; height:15px; z-index:1;
-  background-image:radial-gradient(circle at 13px 7.5px, var(--charcoal) 7.5px, transparent 8px);
-  background-size:26px 15px; background-repeat:repeat-x;
-}
-.ticket-panel::before{ top:-1px; }
-.ticket-panel::after{ bottom:-1px; transform:scaleY(-1); }
 
 /* ============ halftone accent ============ */
 .halftone{
@@ -381,14 +412,20 @@ p{ margin:0; }
 }
 
 /* ============ floors: interactive building ============ */
-.floors{ padding:64px 0; }
+.floors{ padding:var(--section-y) 0; }
 .floors-head{ max-width:var(--container); margin:0 auto; padding:0 28px 36px; position:relative; }
 .floors-head p:last-child{ color:var(--dim); max-width:56ch; margin-top:14px; }
 
-.building{ max-width:var(--container); margin:0 auto; padding:0 28px; }
+/* The facade is the one place 3D earns its keep on this site: the whole
+   block sits on a perspective and tips as you scroll past, so three
+   stacked rows read as a building you are looking up at. The angle is
+   driven from main.js and clamped small — it should be felt, not noticed. */
+.building{ max-width:var(--container); margin:0 auto; padding:0 28px; perspective:1600px; }
 .building-illustration{
   border-radius:16px; overflow:hidden; border:1px solid var(--line-strong);
   box-shadow:0 60px 100px -60px rgba(0,0,0,.7);
+  transform-style:preserve-3d; will-change:transform;
+  transform:rotateX(var(--facade-tilt, 0deg)); transform-origin:50% 50%;
 }
 .building-cap{ height:14px; background:linear-gradient(180deg, var(--silver-deep) 0%, var(--panel-2) 100%); }
 .building-foundation{
@@ -420,22 +457,35 @@ p{ margin:0; }
   position:absolute; inset:16px 24px auto; height:72px; z-index:1;
   display:grid; grid-template-columns:repeat(9, 1fr); align-items:start; pointer-events:none;
 }
+/* lit glass rather than a filled block: a hot core behind a dark frame,
+   with the light bleeding out onto the brickwork around it */
 .win{
-  width:24px; height:34px; border-radius:2px; justify-self:center; position:relative;
-  background:linear-gradient(160deg, var(--silver-bright) 0%, var(--silver) 55%, var(--silver-deep) 100%);
-  box-shadow:0 0 16px -2px rgba(243,185,140,.55), inset 0 0 0 1px rgba(10,5,7,.35);
-  opacity:.82; transition:opacity .45s ease, box-shadow .45s ease;
+  width:24px; height:34px; border-radius:1px; justify-self:center; position:relative;
+  background:
+    linear-gradient(180deg, rgba(255,239,224,.96) 0%, var(--silver-bright) 34%, var(--silver) 74%, var(--silver-deep) 100%);
+  box-shadow:
+    0 0 12px -1px rgba(243,185,140,.7),
+    0 0 34px 2px rgba(226,137,94,.28),
+    inset 0 0 0 1.5px rgba(10,5,7,.55);
+  opacity:.9; transition:opacity .45s ease, box-shadow .45s ease, filter .45s ease;
 }
-.win::before,.win::after{ content:""; position:absolute; background:rgba(10,5,7,.4); }
-.win::before{ left:50%; top:2px; bottom:2px; width:1.5px; transform:translateX(-50%); }
-.win::after{ top:50%; left:2px; right:2px; height:1.5px; transform:translateY(-50%); }
-.win:nth-child(3n){
-  opacity:.32; box-shadow:none;
-  background:linear-gradient(160deg, var(--panel-2) 0%, var(--charcoal) 100%);
+/* the glazing bars, kept thin so the pane still reads as glass */
+.win::before,.win::after{ content:""; position:absolute; background:rgba(10,5,7,.5); }
+.win::before{ left:50%; top:1.5px; bottom:1.5px; width:1.2px; transform:translateX(-50%); }
+.win::after{ top:44%; left:1.5px; right:1.5px; height:1.2px; }
+/* an irregular scatter of dark windows so the facade doesn't read as a grid */
+.win:nth-child(3n),.win:nth-child(7n){
+  opacity:.3; box-shadow:inset 0 0 0 1.5px rgba(10,5,7,.5);
+  background:linear-gradient(180deg, var(--panel-2) 0%, var(--charcoal) 100%);
 }
+.win:nth-child(4n){ opacity:.62; }
 .building-floor:hover .win,
 .building-floor[aria-expanded="true"] .win{
-  opacity:1; box-shadow:0 0 22px -2px rgba(243,185,140,.8), inset 0 0 0 1px rgba(10,5,7,.35);
+  opacity:1; filter:brightness(1.12);
+  box-shadow:
+    0 0 16px 0 rgba(243,185,140,.85),
+    0 0 46px 6px rgba(226,137,94,.4),
+    inset 0 0 0 1.5px rgba(10,5,7,.55);
 }
 
 /* random disco light spilling out of the windows — the two Eddie's floors only */
@@ -582,7 +632,15 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .level-titles{ flex:1; display:flex; flex-direction:column; gap:5px; }
 .level-name{ font-family:var(--font-accent); font-style:italic; font-weight:400; font-size:24px; color:var(--white); }
 .level-hint{ font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--dim); }
-.level-copy p{ color:var(--dim); line-height:1.75; margin-bottom:20px; max-width:40ch; }
+.level-copy p{ color:var(--dim); line-height:1.75; margin-bottom:22px; max-width:40ch; }
+/* what actually gets played on this floor, which is the detail people
+   are looking for when they open a panel */
+.level-meta{ display:flex; gap:36px; margin:0 0 24px; flex-wrap:wrap; }
+.level-meta div{ display:flex; flex-direction:column; gap:4px; }
+.level-meta dt{
+  font-size:9.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--silver-deep);
+}
+.level-meta dd{ margin:0; font-size:14px; color:var(--white); }
 .florist-logo{
   display:block; width:96px; height:96px; object-fit:cover; border-radius:10px;
   margin-bottom:18px; border:1px solid var(--line-strong);
@@ -590,91 +648,43 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 
 /* ============ experience ============ */
-.experience{ padding:40px 0 72px; border-top:1px solid var(--line); }
-.experience-head{ max-width:var(--container); margin:0 auto 32px; padding:0 28px; }
-.experience-grid{
-  max-width:var(--container); margin:0 auto;
-  display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:28px;
-  padding:2px 28px 14px; -webkit-overflow-scrolling:touch;
-  mask-image:linear-gradient(90deg, transparent, black 28px, black calc(100% - 28px), transparent);
+/* An editorial run of three rows rather than three matching cards: the
+   photograph carries each one, and the rows alternate side so the eye
+   travels down the page instead of scanning across a shelf. */
+.experience{ padding:var(--section-y) 0; }
+.experience-head{ max-width:var(--container); margin:0 auto 8px; padding:0 28px; }
+.experience-list{
+  max-width:var(--container); margin:0 auto; padding:0 28px; list-style:none;
+  counter-reset:none;
 }
-.experience-card{
-  position:relative; flex:0 0 min(78vw, 320px); scroll-snap-align:start;
-  background:linear-gradient(165deg, var(--panel) 0%, var(--panel-2) 100%);
-  border:1px solid var(--line); border-radius:12px; overflow:hidden;
-  box-shadow:0 30px 60px -44px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.04);
-  display:flex; flex-direction:column;
-  transition:border-color .25s ease, box-shadow .3s ease, transform .25s cubic-bezier(.22,.85,.32,1);
+.experience-row{
+  display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(32px, 5vw, 72px);
+  align-items:center; padding:clamp(38px, 5vw, 62px) 0; border-bottom:1px solid var(--line);
 }
-.experience-card::before{
-  content:""; position:absolute; top:0; left:12%; right:12%; height:2px; z-index:2;
-  background:var(--silver-gradient); opacity:0; transform:scaleX(.6); transform-origin:50% 50%;
-  transition:opacity .3s ease, transform .3s cubic-bezier(.22,.85,.32,1);
-}
-.experience-card:hover{
-  border-color:var(--silver); transform:translateY(-8px);
-  box-shadow:0 40px 80px -32px rgba(226,137,94,.4), inset 0 1px 0 rgba(255,255,255,.06);
-}
-.experience-card:hover::before{ opacity:1; transform:scaleX(1); }
+.experience-row:last-child{ border-bottom:0; padding-bottom:0; }
+.experience-row:nth-child(even) .experience-media{ order:2; }
 .experience-media{
-  position:relative; overflow:hidden; aspect-ratio:9/7; transform-style:preserve-3d; padding:8px;
-  background:linear-gradient(155deg, var(--panel-2) 0%, var(--charcoal) 100%);
-  box-shadow:inset 0 0 0 1px rgba(10,5,7,.4);
+  position:relative; overflow:hidden; border-radius:4px; aspect-ratio:16/10;
+  transform-style:preserve-3d; background:var(--panel-2);
 }
 .experience-media img{
-  width:100%; height:100%; object-fit:cover; border-radius:6px;
-  filter:saturate(1.1) contrast(1.03); transition:transform .42s ease, filter .3s ease;
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .55s cubic-bezier(.22,.85,.32,1);
 }
-.experience-card:hover .experience-media img{ transform:scale(1.06); filter:saturate(1.22) contrast(1.05) brightness(1.04); }
-.experience-badge{
-  position:absolute; top:16px; left:16px; z-index:2;
-  background:rgba(10,5,7,.72); backdrop-filter:blur(3px); border:1px solid rgba(243,185,140,.4);
-  padding:5px 12px; border-radius:999px;
-  font-family:var(--font-body); font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--silver-bright);
-}
+.experience-row:hover .experience-media img{ transform:scale(1.05); }
+.experience-body{ max-width:44ch; }
 .experience-index{
-  position:absolute; top:16px; right:16px; z-index:2;
-  font-family:var(--font-display); font-size:15px; color:var(--silver-deep);
-  letter-spacing:.02em; opacity:.85;
+  display:block; font-family:var(--font-display); font-size:13px; letter-spacing:.16em;
+  color:var(--silver-deep); margin-bottom:16px;
 }
-.experience-card h3,.experience-card p,.experience-card a{ margin-left:24px; margin-right:24px; }
-.experience-card h3{
-  margin-top:22px; margin-bottom:10px; font-family:var(--font-accent); font-style:italic; font-weight:400; font-size:23px;
+.experience-body h3{
+  font-family:var(--font-accent); font-style:italic; font-weight:400;
+  font-size:clamp(28px, 3.4vw, 40px); line-height:1.1; margin-bottom:14px;
 }
-.experience-card p{ color:var(--dim); line-height:1.7; margin-bottom:16px; }
-.experience-card a{ margin-bottom:22px; align-self:flex-start; }
-
-/* ============ residents / lineup ============ */
-.residents{ padding:56px 0; }
-.residents-head{ max-width:var(--container); margin:0 auto 32px; padding:0 28px; }
-.residents-grid{
-  max-width:var(--container); margin:0 auto;
-  display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:28px;
-  padding:2px 28px 14px; -webkit-overflow-scrolling:touch;
-  mask-image:linear-gradient(90deg, transparent, black 28px, black calc(100% - 28px), transparent);
-}
-.resident-card{
-  flex:0 0 min(74vw, 280px); scroll-snap-align:start;
-  background:var(--charcoal); border:1px solid var(--line); border-radius:6px; overflow:hidden; padding:0; transition:border-color .3s ease;
-}
-.resident-card:hover{ border-color:var(--silver-deep); }
-.resident-media{
-  aspect-ratio:1/1; overflow:hidden; position:relative; padding:5px;
-  background:linear-gradient(155deg, var(--panel-2) 0%, var(--charcoal) 100%);
-}
-.resident-media img{ width:100%; height:100%; object-fit:cover; border-radius:3px; filter:grayscale(.3) sepia(.12); transition:filter .3s ease, transform .42s ease; }
-.resident-card:hover .resident-media img{ filter:grayscale(0); transform:scale(1.05); }
-.resident-badge{
-  position:absolute; top:12px; left:12px; background:var(--charcoal); border:1px solid var(--line-strong);
-  padding:5px 11px; font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--silver);
-}
-.resident-body{ padding:22px 24px 26px; }
-.resident-body h3{ margin-bottom:6px; }
-.resident-body p{ color:var(--dim); font-size:14px; line-height:1.65; }
+.experience-body p{ color:var(--dim); line-height:1.75; margin-bottom:22px; }
 
 /* ============ reviews ============ */
-.reviews{ padding:56px 28px; text-align:center; }
+.reviews{ padding:var(--section-y) 28px; text-align:center; }
 .reviews-head{ max-width:var(--container); margin:0 auto 32px; }
 .reviews-note{ color:var(--dim); font-size:13px; margin-top:12px; }
 .reviews-grid{
@@ -693,48 +703,61 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
 /* ============ statement ============ */
 .statement{
-  padding:72px 28px; text-align:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:calc(var(--section-y) * 1.1) 28px; text-align:center; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
   display:flex; flex-direction:column; align-items:center; gap:28px;
 }
 .statement h2{ font-family:var(--font-display); font-style:normal; text-transform:uppercase; font-size:clamp(42px, 8vw, 84px); letter-spacing:-.01em; }
 
 /* ============ gallery ============ */
-.gallery{ padding:64px 28px; overflow:visible; }
-.gallery-head{ max-width:var(--container); margin:0 auto 32px; }
-.gallery-grid{ max-width:var(--container); margin:0 auto; list-style:none; padding:0; display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; }
-.gallery-grid li{ position:relative; transition:transform .35s ease; }
+/* Four real photographs of the three rooms, sized unevenly so the section
+   reads as a picture edit rather than a grid of thumbnails. */
+.gallery{ padding:var(--section-y) 28px; }
+.gallery-head{ max-width:var(--container); margin:0 auto 40px; }
+.gallery-grid{
+  max-width:var(--container); margin:0 auto; list-style:none; padding:0;
+  display:grid; grid-template-columns:1.55fr 1fr; gap:14px;
+}
+.gallery-cell{ position:relative; margin:0; }
+/* two landscape frames stack in the left column while one portrait frame
+   runs the full height beside them, then a wide plate closes the section */
+.gallery-cell:nth-child(1){ grid-column:1; grid-row:1; }
+.gallery-cell:nth-child(2){ grid-column:2; grid-row:1 / span 2; }
+.gallery-cell:nth-child(3){ grid-column:1; grid-row:2; }
+.gallery-cell:nth-child(4){ grid-column:1 / -1; grid-row:3; }
+.gallery-cell--wide .gallery-item{ aspect-ratio:16/9; }
+.gallery-cell--tall{ height:100%; }
+.gallery-cell--tall .gallery-item{ height:100%; }
+.gallery-cell:nth-child(4) .gallery-item{ aspect-ratio:21/9; }
+
 .gallery-item{
-  display:block; width:100%; padding:5px; cursor:none;
-  aspect-ratio:1/1; overflow:hidden; border-radius:8px; position:relative;
-  background:linear-gradient(155deg, var(--panel-2) 0%, var(--charcoal) 100%);
-  border:1px solid var(--line); transition:border-color .3s ease;
+  display:block; width:100%; cursor:none; position:relative; overflow:hidden;
+  padding:0; border:0; border-radius:4px; background:var(--panel-2);
 }
-.gallery-item img{ width:100%; height:100%; object-fit:cover; border-radius:4px; transition:transform .42s ease, filter .3s ease; }
-.gallery-item:hover img,.gallery-item:focus-visible img{ transform:scale(1.08); filter:brightness(.7); }
-.gallery-item:hover,.gallery-item:focus-visible{ border-color:var(--silver); }
-.view-label{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.9); z-index:3;
-  padding:9px 20px; border:1px solid var(--silver-bright); border-radius:999px;
-  font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--white);
-  opacity:0; transition:opacity .3s ease, transform .3s ease; background:rgba(27,17,22,.4); backdrop-filter:blur(4px);
+.gallery-item img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .5s cubic-bezier(.22,.85,.32,1), filter .3s ease;
 }
-.gallery-item:hover .view-label,.gallery-item:focus-visible .view-label{ opacity:1; transform:translate(-50%,-50%) scale(1); }
-/* a couple of tiles get a hand-set polaroid treatment, breaking the grid's rigidity */
-.gallery-grid li.is-polaroid{
-  background:var(--white); padding:9px 9px 26px; box-shadow:0 24px 46px -22px rgba(0,0,0,.6); z-index:1;
+.gallery-item::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(180deg, transparent 45%, rgba(10,5,7,.82) 100%);
+  opacity:.85; transition:opacity .3s ease;
 }
-.gallery-grid li.is-polaroid:nth-child(2){ transform:rotate(-3deg); }
-.gallery-grid li.is-polaroid:nth-child(5){ transform:rotate(2deg); }
-.gallery-grid li.is-polaroid:hover{ transform:rotate(0deg); }
-.gallery-grid li.is-polaroid .gallery-item{ border-radius:0; padding:0; background:none; border:0; }
-.gallery-grid li.is-polaroid .gallery-item img{ border-radius:0; }
-.gallery-grid li.is-polaroid::before{
-  content:""; position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-4deg);
-  width:56px; height:20px; background:rgba(247,236,226,.35); border:1px solid rgba(247,236,226,.5);
+.gallery-item:hover img,.gallery-item:focus-visible img{ transform:scale(1.045); }
+.gallery-item:hover::after,.gallery-item:focus-visible::after{ opacity:1; }
+/* the caption names the room, which is the whole point of the section */
+.gallery-caption{
+  position:absolute; left:0; right:0; bottom:0; z-index:2; padding:22px 24px;
+  display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; text-align:left;
+}
+.gallery-caption-room{
+  font-family:var(--font-accent); font-style:italic; font-size:21px; color:var(--white);
+}
+.gallery-caption-note{
+  font-size:10px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--silver);
 }
 
 /* ============ FAQ ============ */
-.faq{ padding:0 28px 64px; }
+.faq{ padding:0 28px var(--section-y); }
 .faq-inner{ max-width:var(--container); margin:0 auto; border-top:1px solid var(--line); padding-top:40px; }
 .faq-inner h2{ margin:14px 0 24px; }
 .faq-list{ border-top:1px solid var(--line); }
@@ -764,7 +787,7 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .faq-item p{ color:var(--dim); line-height:1.7; padding:0 24px 22px 52px; font-size:14px; }
 
 /* ============ events ============ */
-.events{ padding:0 28px 64px; }
+.events{ padding:0 28px var(--section-y); }
 .events-inner{ max-width:var(--container); margin:0 auto; border-top:1px solid var(--line); padding-top:40px; }
 .events-inner h2{ margin:14px 0 24px; }
 .events-empty{
@@ -774,18 +797,21 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .events-empty p{ color:var(--dim); max-width:46ch; line-height:1.7; }
 
 /* ============ contact ============ */
-.contact{ padding:0 28px 72px; }
+.contact{ padding:0 28px var(--section-y); }
 .contact-inner{ max-width:var(--container); margin:0 auto; border-top:1px solid var(--line); padding-top:40px; }
 .contact-inner h2{ margin:14px 0 10px; }
 .contact-locator{ color:var(--dim); margin-bottom:28px; display:block; }
-.contact-grid{ display:flex; gap:60px; flex-wrap:wrap; align-items:flex-start; }
+.contact-grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);
+  gap:clamp(32px, 5vw, 72px); align-items:start;
+}
 .contact-details address{ font-style:normal; color:var(--white); font-family:var(--font-accent); font-size:20px; line-height:1.7; }
 .contact-links{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
 .contact-links a{ text-decoration:none; color:var(--silver-bright); font-size:16px; }
 .contact-links a:hover{ color:var(--white); }
 
 .map-card{
-  position:relative; display:block; width:180px; height:180px; flex:0 0 auto;
+  position:relative; display:block; width:100%; aspect-ratio:16/10;
   border:1px solid var(--line-strong); border-radius:6px; overflow:hidden; background:var(--panel-2);
   text-decoration:none; transition:border-color .3s ease, box-shadow .3s ease;
 }
@@ -862,20 +888,21 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .building.reveal.is-visible{ opacity:1; transform:perspective(1200px) translateY(0) scale(1) rotateX(0); }
 
 /* cascading stagger for grid rows so sections feel less like one flat fade */
-.experience-grid .experience-card:nth-child(1){ transition-delay:0s; }
-.experience-grid .experience-card:nth-child(2){ transition-delay:.06s; }
-.experience-grid .experience-card:nth-child(3){ transition-delay:.12s; }
-.residents-grid .resident-card:nth-child(1){ transition-delay:0s; }
-.residents-grid .resident-card:nth-child(2){ transition-delay:.06s; }
-.residents-grid .resident-card:nth-child(3){ transition-delay:.12s; }
 .reviews-grid .review-card:nth-child(1){ transition-delay:0s; }
 .reviews-grid .review-card:nth-child(2){ transition-delay:.07s; }
 .gallery-grid li:nth-child(1){ transition-delay:0s; }
-.gallery-grid li:nth-child(2){ transition-delay:.04s; }
-.gallery-grid li:nth-child(3){ transition-delay:.08s; }
-.gallery-grid li:nth-child(4){ transition-delay:.12s; }
-.gallery-grid li:nth-child(5){ transition-delay:.16s; }
-.gallery-grid li:nth-child(6){ transition-delay:.2s; }
+.gallery-grid li:nth-child(2){ transition-delay:.05s; }
+.gallery-grid li:nth-child(3){ transition-delay:.1s; }
+.gallery-grid li:nth-child(4){ transition-delay:.15s; }
+
+/* the experience rows arrive from the side the photograph sits on, so the
+   alternating layout is legible in the motion as well as the layout */
+.experience-row.reveal{ transform:perspective(1000px) translateY(26px) translateX(-16px) rotateX(4deg); }
+.experience-row:nth-child(even).reveal{ transform:perspective(1000px) translateY(26px) translateX(16px) rotateX(4deg); }
+.experience-row.reveal.is-visible{ transform:perspective(1000px) translateY(0) translateX(0) rotateX(0); }
+
+/* anchor targets clear the sticky header instead of hiding under it */
+[id]{ scroll-margin-top:calc(var(--header-h) + 18px); }
 
 /* ============ lightbox ============ */
 .lightbox{ position:fixed; inset:0; z-index:400; background:rgba(15,9,12,.95); display:flex; align-items:center; justify-content:center; }
@@ -892,7 +919,10 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .lightbox-next{ right:24px; top:50%; transform:translateY(-50%); }
 
 /* ============ sticky mobile reserve bar ============ */
+/* Floats in only once the hero is behind you, so the first screen is the
+   room rather than a permanent orange slab across the bottom. */
 .sticky-reserve{ display:none; }
+.sticky-reserve.is-visible{ transform:translateY(0); opacity:1; }
 
 /* ============ responsive ============ */
 @media (min-width:901px){
@@ -925,25 +955,70 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .newsletter-form input{ flex:1; width:auto; }
 
   .sticky-reserve{
-    display:flex; position:fixed; left:0; right:0; bottom:0; z-index:120;
-    background:color-mix(in srgb, var(--charcoal) 92%, transparent); backdrop-filter:blur(10px);
-    border-top:1px solid var(--line-strong); padding:12px 16px; gap:10px;
+    display:flex; position:fixed; left:14px; right:14px; bottom:14px; z-index:120;
+    background:color-mix(in srgb, var(--charcoal) 88%, transparent); backdrop-filter:blur(14px);
+    border:1px solid var(--line-strong); border-radius:999px; padding:8px 8px 8px 10px; gap:8px;
+    box-shadow:0 22px 44px -20px rgba(0,0,0,.85);
+    transform:translateY(150%); opacity:0;
+    transition:transform .42s cubic-bezier(.22,.85,.32,1), opacity .3s ease;
   }
   .sticky-reserve a{ flex:1; justify-content:center; }
-  .sticky-reserve .btn--outline{ flex:0 0 auto; width:48px; padding:0; }
-  body{ padding-bottom:74px; }
+  .sticky-reserve .btn--outline{ flex:0 0 auto; width:44px; padding:0; }
+  body{ padding-bottom:16px; }
+}
+@media (max-width:900px){
+  /* the editorial rows stack, photograph first, so the picture still leads */
+  .experience-row{ grid-template-columns:1fr; gap:22px; }
+  .experience-row:nth-child(even) .experience-media{ order:0; }
+  .experience-row.reveal,
+  .experience-row:nth-child(even).reveal{ transform:perspective(1000px) translateY(22px) rotateX(4deg); }
+
+  /* one column, full-width plates: on a phone the asymmetry just makes
+     everything small, so the photographs get the whole width instead */
+  .gallery-grid{ grid-template-columns:1fr; gap:10px; }
+  .gallery-cell:nth-child(1),.gallery-cell:nth-child(2),
+  .gallery-cell:nth-child(3),.gallery-cell:nth-child(4){ grid-column:1; grid-row:auto; }
+  .gallery-cell--tall{ height:auto; }
+  .gallery-cell--tall .gallery-item{ height:auto; aspect-ratio:4/5; }
+  .gallery-cell:nth-child(4) .gallery-item{ aspect-ratio:16/9; }
+  .gallery-caption{ padding:16px 18px; }
+  .gallery-caption-room{ font-size:18px; }
+
+  .hero-facts{ gap:26px; }
+  .level-meta{ gap:24px; }
 }
 @media (max-width:560px){
-  .gallery-grid{ grid-template-columns:repeat(2, 1fr); gap:8px; }
-  .gallery-grid li.is-polaroid{ transform:none !important; }
-  .contact-grid{ gap:36px; }
+  .contact-grid{ grid-template-columns:1fr; gap:32px; }
   .header-inner{ padding:16px 20px; }
   .utility-countdown{ margin-right:16px; padding-left:14px; gap:6px; }
+
+  /* tighten the vertical type so a phone screen isn't a wall of copy */
+  .hero{ min-height:min(88vh, 720px); }
+  .hero-content{ padding-bottom:34px; }
+  .hero h1{ margin-bottom:24px; }
+  .hero-sub{ font-size:15px; line-height:1.6; max-width:36ch; }
+  .hero-lower{ gap:26px; }
+  .hero-rail{ padding:14px 20px 18px; }
+  .hero-facts{ gap:18px 22px; }
+  .hero-facts dd{ font-size:15px; }
+  .hero-place{ margin-bottom:16px; letter-spacing:.16em; }
+
+  .experience-body p,.level-copy p,.events-empty p{ font-size:15px; line-height:1.65; }
+  .experience-list,.experience-head,.floors-head,.building{ padding-left:20px; padding-right:20px; }
+  .gallery,.reviews,.faq,.events,.contact{ padding-left:20px; padding-right:20px; }
+  .review-card{ padding:26px 22px; }
+  .review-card p{ font-size:18px; }
+  .faq-item summary{ padding:18px 14px; font-size:14.5px; gap:11px; }
+  .faq-item p{ padding:0 14px 18px 40px; }
 }
 
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
   *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
   .reveal{ opacity:1; transform:none; }
-  .hero-parallax{ transform:none !important; }
+  .hero-media{ transform:none !important; }
+  /* the hero footage strobes hard. Anyone who has asked for reduced motion
+     gets the graded still instead — the video is never played at all. */
+  .hero-video{ display:none; }
+  .hero-media{ background:url("../assets/images/hero-room.jpg") center/cover no-repeat; }
 }

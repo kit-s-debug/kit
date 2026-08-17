@@ -65,16 +65,52 @@
     revealEls.forEach(function (el) { io.observe(el); });
   }
 
+  /* ---------- hero video ---------- */
+  /* Autoplay can be refused until a gesture in some embedded/sandboxed
+     contexts, which leaves the frame frozen on the poster. Ask once on
+     load, then retry on the first interaction. */
+  var heroVideo = document.getElementById("hero-video");
+  if (heroVideo && !reducedMotion) {
+    /* a landscape crop cover-fitted into a phone's portrait hero zooms in
+       so far the room disappears, so narrow screens get a portrait cut of
+       the same clip instead */
+    var tall = window.matchMedia("(max-width: 700px)").matches;
+    var base = heroVideo.getAttribute(tall ? "data-src-tall" : "data-src-wide");
+    if (tall) heroVideo.poster = heroVideo.getAttribute("data-poster-tall");
+    [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (pair) {
+      var source = document.createElement("source");
+      source.src = base + "." + pair[0];
+      source.type = pair[1];
+      heroVideo.appendChild(source);
+    });
+    heroVideo.load();
+
+    /* autoplay can be refused until a gesture in some embedded contexts,
+       which would leave the frame frozen on the poster */
+    var tryPlay = function () {
+      var attempt = heroVideo.play();
+      if (attempt && typeof attempt.catch === "function") attempt.catch(function () {});
+    };
+    tryPlay();
+    ["click", "touchstart", "keydown"].forEach(function (evt) {
+      window.addEventListener(evt, tryPlay, { once: true, passive: true });
+    });
+  }
+
   /* ---------- hero scroll parallax ---------- */
   var heroContent = document.getElementById("hero-content");
+  var heroMedia = document.getElementById("hero-media");
   var hero = document.querySelector(".hero");
   if (hero && !reducedMotion) {
     var ticking = false;
     function updateParallax() {
       var rect = hero.getBoundingClientRect();
       var progress = Math.min(Math.max(-rect.top / rect.height, 0), 1);
-      heroContent.style.transform = "translate3d(0," + progress * 40 + "px,0)";
-      heroContent.style.opacity = String(1 - progress * 1.1);
+      heroContent.style.transform = "translate3d(0," + progress * 46 + "px,0)";
+      heroContent.style.opacity = String(1 - progress * 1.15);
+      /* the footage holds its ground while the type lifts away, so the
+         section reads as depth rather than one flat sheet scrolling */
+      if (heroMedia) heroMedia.style.transform = "translate3d(0," + progress * 14 + "%,0)";
       ticking = false;
     }
     window.addEventListener(
@@ -88,6 +124,28 @@
       { passive: true }
     );
     updateParallax();
+  }
+
+  /* ---------- sticky enquire bar: only once the hero is behind you ---------- */
+  var stickyBar = document.querySelector(".sticky-reserve");
+  if (stickyBar && hero) {
+    var stickyTicking = false;
+    function updateSticky() {
+      var past = hero.getBoundingClientRect().bottom < 40;
+      stickyBar.classList.toggle("is-visible", past);
+      stickyTicking = false;
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!stickyTicking) {
+          window.requestAnimationFrame(updateSticky);
+          stickyTicking = true;
+        }
+      },
+      { passive: true }
+    );
+    updateSticky();
   }
 
   /* ---------- custom cursor ---------- */
@@ -184,6 +242,31 @@
         ensureLoop();
       });
     });
+  }
+
+  /* ---------- facade tilt: the building leans as it passes through view ---------- */
+  var building = document.getElementById("building");
+  if (building && !reducedMotion) {
+    var facadeTicking = false;
+    function updateFacade() {
+      var rect = building.getBoundingClientRect();
+      /* -1 when the block is entering from below, +1 once it has left the top */
+      var mid = (rect.top + rect.height / 2) / window.innerHeight;
+      var t = Math.min(Math.max((mid - 0.5) * 2, -1), 1);
+      building.style.setProperty("--facade-tilt", (t * 4.5).toFixed(2) + "deg");
+      facadeTicking = false;
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!facadeTicking) {
+          window.requestAnimationFrame(updateFacade);
+          facadeTicking = true;
+        }
+      },
+      { passive: true }
+    );
+    updateFacade();
   }
 
   /* ---------- building levels (expand/collapse) ---------- */

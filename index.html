@@ -84,13 +84,12 @@
   <nav aria-label="Mobile">
     <ul>
       <li style="--i:0"><a href="#floors"><span class="mobile-nav-num">01</span>The Building</a></li>
-      <li style="--i:1"><a href="#residents"><span class="mobile-nav-num">02</span>Lineup</a></li>
-      <li style="--i:2"><a href="#experience"><span class="mobile-nav-num">03</span>Private Hire</a></li>
-      <li style="--i:3"><a href="#gallery"><span class="mobile-nav-num">04</span>Gallery</a></li>
-      <li style="--i:4"><a href="#reviews"><span class="mobile-nav-num">05</span>Reviews</a></li>
-      <li style="--i:5"><a href="#faq"><span class="mobile-nav-num">06</span>FAQ</a></li>
-      <li style="--i:6"><a href="#events"><span class="mobile-nav-num">07</span>Events</a></li>
-      <li style="--i:7"><a href="#contact"><span class="mobile-nav-num">08</span>Contact</a></li>
+      <li style="--i:1"><a href="#experience"><span class="mobile-nav-num">02</span>Private Hire</a></li>
+      <li style="--i:2"><a href="#gallery"><span class="mobile-nav-num">03</span>Gallery</a></li>
+      <li style="--i:3"><a href="#reviews"><span class="mobile-nav-num">04</span>Reviews</a></li>
+      <li style="--i:4"><a href="#faq"><span class="mobile-nav-num">05</span>FAQ</a></li>
+      <li style="--i:5"><a href="#events"><span class="mobile-nav-num">06</span>Events</a></li>
+      <li style="--i:6"><a href="#contact"><span class="mobile-nav-num">07</span>Contact</a></li>
     </ul>
   </nav>
   <div class="mobile-nav-foot">
@@ -105,23 +104,38 @@
 <main id="main">
 
   <section class="hero" id="top">
-    <div class="hero-parallax" id="hero-parallax">
-      <canvas class="hero-bg" id="hero3d" aria-hidden="true"></canvas>
-      <div class="hero-vignette" aria-hidden="true"></div>
-      <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-media" id="hero-media" aria-hidden="true">
+      <!-- sources are attached by main.js so phones get the portrait cut of
+           the same footage; without JS the graded poster stands alone -->
+      <video class="hero-video" id="hero-video" muted loop playsinline preload="none"
+             poster="assets/images/hero-room.jpg"
+             data-src-wide="assets/video/hero-loop"
+             data-src-tall="assets/video/hero-loop-portrait"
+             data-poster-tall="assets/images/hero-room-portrait.jpg"></video>
+      <div class="hero-grade"></div>
+      <div class="hero-vignette"></div>
     </div>
-    <div class="hero-letterbox hero-letterbox--top" aria-hidden="true"></div>
-    <div class="hero-letterbox hero-letterbox--bottom" aria-hidden="true"></div>
+
     <div class="hero-content" id="hero-content">
-      <p class="eyebrow reveal">Haverfordwest, Quay Street</p>
-      <h1 class="reveal"><span class="shimmer">A Night Out,</span><br>Done Right.</h1>
-      <p class="hero-sub reveal">Eddie Rocks is West Wales' number one nightclub. Whether it's your regular weekend out or one of our show-stopping events, three floors under one roof mean we can cater to any night out.</p>
-      <div class="hero-actions reveal">
-        <a href="#contact" class="btn btn--solid" data-magnetic>Enquire</a>
-        <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
+      <p class="hero-place reveal"><span>Haverfordwest</span><span>Quay Street</span></p>
+      <h1 class="reveal">A Night Out,<br><em>Done Right.</em></h1>
+      <div class="hero-lower reveal">
+        <p class="hero-sub">Eddie Rocks is West Wales' number one nightclub. Whether it's your regular weekend out or one of our show-stopping events, three floors under one roof mean we can cater to any night out.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn--solid" data-magnetic>Enquire</a>
+          <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
-    <div class="hero-scrollcue reveal" aria-hidden="true"><span></span></div>
+
+    <div class="hero-rail">
+      <dl class="hero-facts">
+        <div><dt>Floors</dt><dd>Three</dd></div>
+        <div><dt>Doors</dt><dd>Wed · Fri · Sat</dd></div>
+        <div><dt>Entry</dt><dd>18+ · ID required</dd></div>
+      </dl>
+      <a class="hero-scrollcue" href="#floors" aria-label="Scroll to the building"><span aria-hidden="true"></span></a>
+    </div>
   </section>
 
   <section class="floors" id="floors" aria-labelledby="floors-heading">
@@ -167,6 +181,10 @@
                 </div>
                 <div class="level-copy">
                   <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours, and low light that's easy to stay lost in.</p>
+                  <dl class="level-meta">
+                    <div><dt>On the decks</dt><dd>RnB, hip-hop, slow-burners</dd></div>
+                    <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
+                  </dl>
                   <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -198,6 +216,10 @@
                 </div>
                 <div class="level-copy">
                   <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday, first up the stairs from Quay Street.</p>
+                  <dl class="level-meta">
+                    <div><dt>On the decks</dt><dd>House &amp; dance, guest line-ups</dd></div>
+                    <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
+                  </dl>
                   <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
                 </div>
               </div>
@@ -258,81 +280,47 @@
     </div>
   </section>
 
-  <section class="residents ticket-panel" id="residents" aria-labelledby="residents-heading">
-    <div class="residents-head reveal">
-      <p class="eyebrow">On the decks</p>
-      <h2 id="residents-heading">Who's playing where</h2>
-    </div>
-    <div class="residents-grid">
-      <article class="resident-card reveal" data-spotlight>
-        <div class="resident-media" data-tilt>
-          <img src="assets/images/resident-main.jpg" alt="A packed crowd with hands up under purple stage lights" loading="lazy">
-          <span class="resident-badge">Resident</span>
-        </div>
-        <div class="resident-body">
-          <h3>Main Bar Resident</h3>
-          <p>House and dance every weekend, holding down the floor that started it all.</p>
-        </div>
-      </article>
-      <article class="resident-card reveal" data-spotlight>
-        <div class="resident-media" data-tilt>
-          <img src="assets/images/resident-rnb.jpg" alt="Hands raised close-up in the crowd under blue light" loading="lazy">
-          <span class="resident-badge">Resident</span>
-        </div>
-        <div class="resident-body">
-          <h3>RnB Bar Resident</h3>
-          <p>RnB, hip-hop and slow-burners for the upstairs crowd once the tempo drops.</p>
-        </div>
-      </article>
-      <article class="resident-card reveal" data-spotlight>
-        <div class="resident-media" data-tilt>
-          <img src="assets/images/resident-guest.svg" alt="" loading="lazy">
-          <span class="resident-badge">Rotating</span>
-        </div>
-        <div class="resident-body">
-          <h3>Guest Selectors</h3>
-          <p>Guest DJs and showcase line-ups drop in through the year. Check What's On for who's next.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
   <section class="experience" id="experience" aria-labelledby="experience-heading">
     <div class="experience-head reveal">
+      <p class="eyebrow">Book it</p>
       <h2 id="experience-heading">Three ways to spend the night</h2>
     </div>
-    <div class="experience-grid">
-      <article class="experience-card reveal" data-spotlight>
+
+    <ol class="experience-list">
+      <li class="experience-row reveal">
         <div class="experience-media" data-tilt>
-          <img src="assets/images/feature-showcase-events.jpg" alt="A DJ on the decks under stage lights and smoke" loading="lazy">
-          <span class="experience-badge">Showcase</span>
+          <img src="assets/images/exp-showcase.jpg" alt="A DJ on the decks in the RnB Bar with the crowd's hands in the air" loading="lazy">
         </div>
-        <span class="experience-index" aria-hidden="true">01</span>
-        <h3>Showcase Events</h3>
-        <p>Resident and guest line-ups on the Main Bar, for the nights the whole room turns up.</p>
-        <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
-      </article>
-      <article class="experience-card reveal" data-spotlight>
+        <div class="experience-body">
+          <span class="experience-index" aria-hidden="true">01</span>
+          <h3>Showcase Events</h3>
+          <p>Resident and guest line-ups on the Main Bar, for the nights the whole room turns up.</p>
+          <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+        </div>
+      </li>
+      <li class="experience-row reveal">
         <div class="experience-media" data-tilt>
-          <img src="assets/images/feature-vip-nights.jpg" alt="Premium bottles lined up along the bar" loading="lazy">
-          <span class="experience-badge">VIP</span>
+          <img src="assets/images/exp-vip.jpg" alt="The Forbidden Florist bar, bottles and glassware under a floral canopy" loading="lazy">
         </div>
-        <span class="experience-index" aria-hidden="true">02</span>
-        <h3>VIP Nights</h3>
-        <p>Booth and table reservations, with a drinks package built for comfort over chaos.</p>
-        <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
-      </article>
-      <article class="experience-card reveal" data-spotlight>
+        <div class="experience-body">
+          <span class="experience-index" aria-hidden="true">02</span>
+          <h3>VIP Nights</h3>
+          <p>Booth and table reservations, with a drinks package built for comfort over chaos.</p>
+          <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+        </div>
+      </li>
+      <li class="experience-row reveal">
         <div class="experience-media" data-tilt>
-          <img src="assets/images/feature-private-hire.jpg" alt="A card payment terminal on the bar with the venue lit up behind it" loading="lazy">
-          <span class="experience-badge">Private</span>
+          <img src="assets/images/exp-private.jpg" alt="The Forbidden Florist floor laid out with tables and booth seating before service" loading="lazy">
         </div>
-        <span class="experience-index" aria-hidden="true">03</span>
-        <h3>Private Hire</h3>
-        <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
-        <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
-      </article>
-    </div>
+        <div class="experience-body">
+          <span class="experience-index" aria-hidden="true">03</span>
+          <h3>Private Hire</h3>
+          <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
+          <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+        </div>
+      </li>
+    </ol>
   </section>
 
 
@@ -363,15 +351,34 @@
 
   <section class="gallery" id="gallery" aria-labelledby="gallery-heading">
     <div class="gallery-head reveal">
-      <h2 id="gallery-heading">Gallery</h2>
+      <p class="eyebrow">Inside</p>
+      <h2 id="gallery-heading">The rooms, on a night that ran</h2>
     </div>
     <ul class="gallery-grid" id="gallery-grid">
-      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="0"><img src="assets/images/gallery-1.svg" alt="Photo from a night at Eddie Rocks, 1 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-spotlight data-index="1"><img src="assets/images/gallery-2.svg" alt="Photo from a night at Eddie Rocks, 2 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="2"><img src="assets/images/gallery-3.svg" alt="Photo from a night at Eddie Rocks, 3 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="3"><img src="assets/images/gallery-4.svg" alt="Photo from a night at Eddie Rocks, 4 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal is-polaroid"><button type="button" class="gallery-item" data-spotlight data-index="4"><img src="assets/images/gallery-5.svg" alt="Photo from a night at Eddie Rocks, 5 of 6" loading="lazy"><span class="view-label">View</span></button></li>
-      <li class="reveal"><button type="button" class="gallery-item" data-spotlight data-index="5"><img src="assets/images/gallery-6.svg" alt="Photo from a night at Eddie Rocks, 6 of 6" loading="lazy"><span class="view-label">View</span></button></li>
+      <li class="reveal gallery-cell gallery-cell--wide">
+        <button type="button" class="gallery-item" data-spotlight data-index="0">
+          <img src="assets/images/gallery-decks.jpg" alt="A DJ on the decks in the RnB Bar facing a packed crowd with their hands in the air" loading="lazy">
+          <span class="gallery-caption"><span class="gallery-caption-room">RnB Bar</span><span class="gallery-caption-note">Top floor</span></span>
+        </button>
+      </li>
+      <li class="reveal gallery-cell gallery-cell--tall">
+        <button type="button" class="gallery-item" data-spotlight data-index="1">
+          <img src="assets/images/gallery-hands.jpg" alt="Hands raised in the crowd, caught close up under the lights" loading="lazy">
+          <span class="gallery-caption"><span class="gallery-caption-room">Main Bar</span><span class="gallery-caption-note">Peak of the night</span></span>
+        </button>
+      </li>
+      <li class="reveal gallery-cell gallery-cell--tall">
+        <button type="button" class="gallery-item" data-spotlight data-index="2">
+          <img src="assets/images/gallery-crowd.jpg" alt="The Main Bar dancefloor packed shoulder to shoulder under the lighting rig" loading="lazy">
+          <span class="gallery-caption"><span class="gallery-caption-room">Main Bar</span><span class="gallery-caption-note">First floor</span></span>
+        </button>
+      </li>
+      <li class="reveal gallery-cell gallery-cell--wide">
+        <button type="button" class="gallery-item" data-spotlight data-index="3">
+          <img src="assets/images/gallery-florist.jpg" alt="The Forbidden Florist bar, floral canopy and booth seating under string lights" loading="lazy">
+          <span class="gallery-caption"><span class="gallery-caption-room">The Forbidden Florist</span><span class="gallery-caption-note">Ground floor</span></span>
+        </button>
+      </li>
     </ul>
   </section>
 
@@ -473,7 +480,6 @@
     <nav aria-label="Footer">
       <ul>
         <li><a href="#floors">The Building</a></li>
-        <li><a href="#residents">Lineup</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -518,7 +524,6 @@
   <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next photo">›</button>
 </div>
 
-<script type="module" src="js/hero3d.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

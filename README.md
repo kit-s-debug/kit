@@ -23,9 +23,9 @@ glow behind the hero, and a FAQ rebuilt as a clean border-bottom list
 instead of another bordered grid. This version also carries the content
 sections real nightclub sites actually have (researched via web search:
 door policy, DJ lineup, FAQ, live countdown, table booking, newsletter
-signup) plus handmade graphic details (ticket-stub scalloped dividers,
-halftone texture, polaroid gallery tiles) so it doesn't read as a single
-generic template.
+signup) plus handmade graphic details (halftone texture, lit-glass
+windows on the illustrated facade, an editorial photo edit for the
+gallery) so it doesn't read as a single generic template.
 
 ## Preview locally
 
@@ -86,21 +86,43 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   segment inside the utility ticker bar (days/hours/mins, no seconds —
   a persistent header element re-rendering every second was too twitchy)
   rather than as a boxed card in the hero.
-- **Lineup / Residents section** and **Experience section** ("Three ways
-  to spend the night") are both horizontal scroll-snap strips now
-  instead of a grid that forced everything to stack tall on narrower
-  screens — cards are fixed-width, swipeable, edge-masked with a fade,
-  and centred within the normal content column on wide viewports.
-- **Experience cards got a premium redesign** — Showcase Events, VIP
-  Nights and Private Hire now carry a small pill-shaped category badge
-  over the photo (Showcase / VIP / Private), a numbered index (01/02/03)
-  in the opposite corner echoing the building's own floor-numbering
-  language, an italic serif title matching the floor-panel names instead
-  of plain bold sans, a thicker "mounted photo" bezel with a touch of
-  extra saturation/contrast on the image, a deeper resting shadow so the
-  cards read as sitting above the page rather than flat on it, and a
-  gold hairline across the top edge that only appears on hover alongside
-  a bigger lift and a warmer glow shadow.
+- **The Residents / "Who's playing where" section was cut.** Three
+  unnamed residents ("Main Bar Resident", "RnB Bar Resident", "Guest
+  Selectors") with invented one-line bios was placeholder content
+  wearing a section heading — the single clearest "AI-generated site"
+  tell after the fake gallery. The who-plays-what information it carried
+  now lives where people actually look for it: a `.level-meta` list
+  inside each floor panel ("On the decks" / "Nights"). The `#residents`
+  entries were removed from the mobile drawer and footer nav with it.
+- **The Experience section is an editorial run, not three cards.**
+  "Three ways to spend the night" was three equal-width cards, each
+  wearing a category badge *and* a numbered index *and* an eyebrow —
+  decoration carrying no information. It's now three alternating
+  full-width rows (photo left/right, copy opposite), each led by a real
+  photograph of the actual room, with the number reduced to a small
+  Anton label. Rows reveal from the side their photo sits on, so the
+  alternation reads in the motion too.
+- **The building is where 3D actually earns its place.** The facade now
+  sits on a `perspective` and tips through about ±4.5° as it travels
+  through the viewport (`--facade-tilt`, driven from `main.js`), so three
+  stacked rows read as a building you're looking up at rather than three
+  bars. Deliberately small — it should be felt, not spotted. The windows
+  were the weakest craft on the page (flat brown blocks that read as a
+  chocolate bar); they're now lit glass — a hot near-white core falling
+  to copper, thin glazing bars, and two layers of glow bleeding onto the
+  brickwork — with an irregular `nth-child(3n)/(7n)/(4n)` scatter of dark
+  and half-lit panes so the facade stops reading as a grid.
+- **Sticky mobile CTA only appears once the hero is behind you.** It was
+  a permanent full-width gradient slab pinned across the bottom of every
+  screen including the first one. It's now a floating inset pill bar that
+  slides up on scroll past the hero, which also let `body` drop from
+  `padding-bottom:74px` to `16px`.
+- **One vertical rhythm for the whole page.** Every section had picked
+  its own padding (40/56/64/72px). They all now use a single
+  `--section-y: clamp(64px, 8vw, 116px)`, so the page breathes
+  consistently and scales properly on small screens. Anchor targets also
+  got `scroll-margin-top` — section headings were previously being
+  clipped underneath the sticky header on every in-page nav click.
 - **A literal illustrated building** — the old side-by-side floor panels
   are now an actual building facade, drawn in CSS: a cornice cap, three
   storeys, and a foundation strip labelled "Quay Street." Each storey is
@@ -170,23 +192,23 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   and couldn't verify.
 - **Labrinth sister-venue badge** next to the logo (header on desktop,
   bottom of the menu on mobile) — links to `#` until there's a real URL.
-- **Illustrated placeholder scenes** (crowd/DJ booth/VIP table under
-  stage lights) replacing the earlier abstract gradient boxes — still
-  illustration, not photography (no real photo source is reachable from
-  this dev environment), but closer to "a nightclub." Swap for real
-  photos any time, same filenames.
+- **Gallery is four real photographs, laid out as a picture edit.** It
+  used to be six machine-drawn SVGs — mauve gradients with a cartoon DJ
+  silhouette — in a rigid 3×2 grid, two of them wearing a rotated
+  "polaroid" treatment that overlapped its neighbours. All of that is
+  gone. It's now an asymmetric grid (two landscape frames stacked beside
+  one full-height portrait, then a wide plate closing the section), each
+  frame captioned with the room it shows, which is the actual point of
+  the section. Still wired to the existing lightbox.
 - **Interaction details**: small dot cursor, magnetic buttons with press
   feedback, a cursor-follow spotlight highlight on floor/experience/
-  resident/review/gallery cards, hero text scroll parallax (fades and
-  drifts up as you scroll past it — the background's own scroll-driven
-  movement now lives in the 3D scene instead, described above), amber
-  shimmer headline text, ticket-stub scalloped section edges, a subtle
-  halftone accent, and two gallery photos with a rotated polaroid/tape
-  treatment. All respect `prefers-reduced-motion` and are disabled on
-  touch/coarse-pointer devices.
-- **3D tilt got a lot more pronounced**, and now covers the building's
-  floor photos and the resident cards, not just the Experience cards it
-  used to be limited to. Rotation range roughly tripled (was ±6°, now up
+  review/gallery cards, hero parallax (the type lifts and fades while the
+  footage holds its ground, so the section reads as depth rather than one
+  flat sheet), amber shimmer headline text and a subtle halftone accent.
+  All respect `prefers-reduced-motion` and are disabled on touch/
+  coarse-pointer devices.
+- **3D tilt got a lot more pronounced**, and covers the building's floor
+  photos as well as the Experience photos. Rotation range roughly tripled (was ±6°, now up
   to ±16°), it's smoothed with smoothing-lerp'd (spring-like easing via
   `requestAnimationFrame` rather than snapping straight to the cursor
   position), it lifts the photo slightly toward the viewer
@@ -195,11 +217,13 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   fixed source — the same technique real "premium tilt card" UI uses.
   Transform and the dynamic shadow are both set as inline styles from JS
   specifically so they can't fight the existing per-element `box-shadow`
-  CSS rules on those three different card types.
-- **Framed-photo treatment** — floor, experience, resident and gallery
-  images sit in a double-bezel frame (a warm gradient inset border around
-  each photo) instead of a flat crop, so every "photograph" on the page
-  reads as mounted rather than just an `<img>` dropped on the page.
+  CSS rules on those card types.
+- **Framed-photo treatment** — the building's floor photos still sit in a
+  double-bezel frame (a warm gradient inset border) so they read as
+  mounted prints inside the panel. The Experience and gallery photographs
+  deliberately dropped the bezel in this pass: at the size they run now,
+  a frame around them reads as a widget, and the picture is stronger
+  bleeding to its own edge.
 
 ## Swapping in the real logo and photos
 
@@ -215,100 +239,81 @@ find and replace.
   filter — see `<filter id="stamp">` in the SVG). Close, not pixel-exact.
   Send the original on a dark background or as a flattened JPG/PNG and
   replace `assets/images/logo.svg` directly (same filename).
-- **Hero background is a real WebGL 3D scene now**, not a video or photo.
-  `js/hero3d.js` (loaded as an ES module, `<script type="module">`) draws
-  a large abstract metallic object — a torus knot, `MeshPhysicalMaterial`
-  with `metalness:1` — lit by three point lights in the same amber/
-  magenta/teal trio already used by the building's disco-light windows,
-  inside `THREE.FogExp2` for depth, with ~300 drifting ember-like
-  particles and a cheap procedural gradient environment map (a 2px-wide
-  canvas gradient, no external HDR file) so the metal actually has
-  something to reflect. The object auto-rotates slowly, leans subtly
-  toward the cursor on mouse move (gated to `hover:hover` devices, like
-  the site's other hover effects), and the camera pulls back and drifts
-  down as the hero scrolls out of view, fading the canvas alongside it.
-  Renders to a `<canvas id="hero3d">` in place of the old `<video>`;
-  the canvas has a dark radial-gradient CSS background of its own so
-  there's a reasonable fallback for the rare browser without WebGL
-  (checked via a runtime `getContext` probe — the script just leaves the
-  canvas showing that gradient if it fails) and something to look at
-  while the scene spins up. `prefers-reduced-motion` gets a single
-  rendered frame at a fixed angle and no rAF loop at all, not just a
-  paused animation — verified by screenshotting twice a second and a
-  half apart and diffing pixel-for-pixel identical. Pauses the whole
-  render loop via `IntersectionObserver` when the hero scrolls out of
-  view, so it isn't burning GPU/battery for a page with several other
-  scroll-driven effects further down.
-  **New dependency**: Three.js r160, self-hosted (not a CDN script) at
-  `assets/vendor/three.module.min.js` (~670KB, MIT licensed, fetched via
-  `npm pack three` and pulled out of the tarball since it's the only
-  build in the project — no bundler, no `node_modules`, no build step;
-  it's just another static file the browser loads), matching how the
-  fonts are already self-hosted rather than pulled from Google Fonts.
-  This replaced the real crowd-video hero from the previous pass at the
-  user's request ("replace it entirely"). The video/photo assets
-  (`assets/video/hero.webm`, `assets/video/hero.mp4`,
-  `assets/images/hero.jpg`) are **not deleted** — unlike the generated
-  SVG placeholders this project deletes on replacement, these are real
-  footage the venue provided, not throwaway placeholder art, so they're
-  left in the repo unused rather than discarded. They're free to reuse
-  elsewhere (the gallery, social, etc.) or wire back into the hero later
-  if the 3D direction doesn't stick.
-- **Hero got a cinematic pass** — it was reading as too empty, mostly
-  video with a lot of dead space to the right of the text on wide
-  screens. Added a radial vignette darkening the edges/corners
-  (widescreen framing effect on top of the scrim) and thin `--charcoal`
-  letterbox bars along the very top/bottom edges of the hero for an
-  anamorphic-film feel — both still in place. The emptiness itself is
-  now solved a different way: the WebGL 3D object described above fills
-  that right-hand space with real depth, light and motion instead of the
-  flat CSS light-beam trick (`.hero-disco`) and second ambient glow
-  (`.hero-ambient`) this bullet originally described — both were removed
-  once the 3D scene made them redundant. Also added a small pulsing
-  scroll cue (a dot dripping down a thin line) at the bottom centre, a
-  common "there's more below" affordance the hero didn't have. All of it
-  is skipped under `prefers-reduced-motion` same as the rest of the
-  page's motion.
+- **Hero background is the venue's own footage again.** The WebGL 3D
+  scene from the previous pass (a metallic torus knot, Three.js r160) has
+  been removed entirely — `js/hero3d.js` and
+  `assets/vendor/three.module.min.js` are deleted and the project has no
+  third-party JS dependency again. An abstract sculpture said "agency
+  template", not "nightclub in Haverfordwest", and the brief for this
+  pass was explicitly to use 3D only where it tells a story. It doesn't
+  here; it does on the building (below).
+  The hero now plays a graded 8-second cut of the real strobing
+  crowd footage, built with ffmpeg from `assets/video/hero.mp4`:
+  - `assets/video/hero-loop.mp4|.webm` — 1440×810 landscape band,
+    cropped out of the portrait original so wide screens don't get a
+    hard `object-fit` zoom.
+  - `assets/video/hero-loop-portrait.mp4|.webm` — 640×888, for phones.
+    The source was shot vertically on a phone, so a portrait cut is the
+    natural fit; the landscape one cover-fits into a tall hero so
+    aggressively that the room disappears.
+  - `assets/images/hero-room.jpg` + `hero-room-portrait.jpg` — graded
+    stills used as the `poster`, and as the whole hero for anyone with
+    reduced motion or JS off.
+  Sources are attached by `main.js` (not hard-coded `<source>` children)
+  so the right cut is chosen per viewport and **nothing downloads at all**
+  under `prefers-reduced-motion` — that path gets the still and never
+  creates a source element. This matters more than usual here: the
+  footage is a genuine strobe, and a full-screen strobe is a
+  photosensitivity risk, not just a motion preference.
+  The grade also deliberately compresses the highlights (ffmpeg `curves`
+  capping white around 0.64) — ungraded, the flashes blew the entire hero
+  to near-white, which both wrecked text contrast and made the strobe
+  far harsher than it should be. Measured in-browser across a full loop,
+  the rendered hero now swings roughly 26→101 mean luminance instead of
+  33→190: the flash still reads clearly, it just no longer whites out.
+- **The hero layout was rebuilt around the footage.** Display type is
+  much larger (`clamp(58px, 11.5vw, 148px)`, line-height .86) and
+  bottom-weighted rather than vertically centred, the second line takes
+  the copper as emphasis **in the same Anton face** rather than borrowing
+  a different family, and a `<dl>` rail along the bottom edge carries the
+  practical facts (floors / doors / entry) where a club poster would put
+  them. The old `.hero-disco`, `.hero-ambient`, `.hero-letterbox` and
+  `.hero-scrim` layers are gone, replaced by two overlays that exist only
+  to keep type legible over moving footage.
 - **Animations sped up across the board** — the whole site read as
   sluggish. Cut roughly a third to half off the major durations:
   scroll-reveal fade (.6s→.4s), the building's entrance (.85s→.55s),
   card hover lifts and image zooms, the floor-panel open/close
   animation, the birdcage door/bird and neon-sign hover effects, the
   mobile-menu slide and its item cascade, and the slower ambient loops
-  (headline shimmer 8s→4.5s, hero ambient drift 22s→10s, ticker marquee
-  24s→16s, disco beams and the RnB neon flicker). Nothing here changes
+  (headline shimmer 8s→4.5s, ticker marquee 24s→16s, disco beams and
+  the RnB neon flicker). Nothing here changes
   *what* animates, only how quickly it gets there — the intent was
   energy, not different motion.
-- **Photos** — every image still points at a generated placeholder SVG in
-  `assets/images/` (warm amber/plum gradient scenes standing in for real
-  venue photography), except the ones already swapped for real photos.
-  All three building-panel photos are real:
-  `assets/images/floor-florist.jpg` (the floral-draped bar under string
-  lights, alongside its actual logo at `assets/images/florist-logo.jpg`
-  shown as a small badge above the panel copy), `assets/images/
-  floor-main.jpg` (a packed Main Bar dancefloor) and `assets/images/
-  floor-rnb.jpg` (the DJ booth on the RnB floor, hands up under green
-  lights). All three cards in the Experience section are real too now
-  (`assets/images/feature-showcase-events.jpg`, a DJ on the decks under
-  stage lights and smoke; `assets/images/feature-vip-nights.jpg`,
-  premium bottles lined up along the bar; and `assets/images/
-  feature-private-hire.jpg`, a card payment terminal on the bar). Both
-  resident cards in the "Who's playing where" section are real photos
-  too now (`assets/images/resident-main.jpg`, the same packed-crowd shot
-  used on the Main Bar building panel, and `assets/images/
-  resident-rnb.jpg`, a close-up of raised hands under blue light) — only
-  **Guest Selectors** in that section is still the generated
-  illustration, since it's a rotating slot rather than a specific
-  resident. Every other placeholder can be replaced the same way: drop
-  the real photo in **using the same filename** — no markup changes
-  needed for the SVG ones; anything already swapped to a real photo is a
-  `.jpg`, so replace that file directly. As a standing rule for this
-  project: whenever a placeholder is replaced, the old placeholder file
-  gets deleted rather than left unused in the repo (that's why
-  `hero.svg`, `floor-florist.svg`, `floor-main.svg`, `floor-rnb.svg`,
-  `feature-showcase-events.svg`, `feature-vip-nights.svg`,
-  `feature-private-hire.svg`, `resident-main.svg` and `resident-rnb.svg`
-  are all gone).
+- **Photos are all real venue photography now.** The generated
+  placeholder SVGs are gone: `gallery-1.svg` … `gallery-6.svg` and
+  `resident-guest.svg` are deleted, and with them the last fabricated
+  "photos" on the site. Everything on the page is cut from four genuine
+  photographs the venue provided — the packed Main Bar, the RnB Bar DJ
+  booth facing a room with its hands up, a close-up of raised hands, and
+  The Forbidden Florist's floral bar.
+  Derived crops live alongside their sources and are generated by a
+  script (kept out of the repo; the crop boxes are recorded in the commit
+  that added them): `hero-room*.jpg`, `gallery-decks/hands/crowd/
+  florist.jpg`, `exp-showcase/vip/private.jpg`. All of them run through
+  one shared warm split-tone grade — shadows toward the aubergine
+  `#2B1B24`, highlights toward the copper `#F6C9A0` — so the whole site
+  reads as a single shoot rather than a folder of unrelated images. That
+  grade also fixed a real clash: the old Experience photos were cold
+  blue/cyan stock (one was a card payment terminal) sitting inside a warm
+  copper palette.
+  Two source files are kept in the repo despite not being referenced
+  directly — `assets/images/resident-rnb.jpg` and the original
+  `assets/video/hero.mp4|.webm` — because they're the masters the crops
+  and the hero loops are cut from, and re-cropping later needs them.
+  The standing rule still holds: when a *placeholder* is replaced, the
+  placeholder file gets deleted rather than left unused. Real venue
+  material is never deleted.
 - **Social links** — Facebook/Instagram/X icons in the footer link to `#`.
   Update the `href`s in `index.html` once you have the real profile URLs.
 
@@ -332,9 +337,11 @@ this goes live:
 - **FAQ answers** — opening days/hours and entry fee (questions 1–2) are
   venue-confirmed; the rest (booking, age, dress code, private hire,
   parking) are sensible generic answers, not venue-confirmed.
-- **Resident/lineup section** — deliberately uses role labels ("Main
-  Bar Resident") instead of inventing real DJ names or using stock
-  photos as if they were real people.
+- **Who plays which floor** — the `.level-meta` lines in the floor panels
+  ("RnB, hip-hop, slow-burners" / "House & dance, guest line-ups") are
+  written from what was described in chat, not from a booking sheet.
+  Deliberately no DJ names: role and genre only, so nothing invents a
+  real person.
 - Floor descriptions and the "Above The Forbidden Florist" locator line
   are written from what was described in chat.
 - **The Forbidden Florist panel in the building** — now has a real photo
