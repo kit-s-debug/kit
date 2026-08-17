@@ -96,19 +96,37 @@
         source.type = pair[1];
         heroVideo.appendChild(source);
       });
+      /* the element ships as preload="none" so the reduced-motion path
+         downloads nothing at all; once we've decided to play, it needs to
+         actually fetch or play() can be rejected for having no data */
+      heroVideo.preload = "auto";
       heroVideo.load();
     }
 
-    /* autoplay can be refused until a gesture in some embedded contexts,
-       which would leave the frame frozen on the poster */
+    /* Autoplay gets refused in more places than it used to — embedded and
+       sandboxed contexts, iOS low-power mode, and any browser that hasn't
+       decided the document is "engaged" yet. A single attempt on load
+       leaves the hero frozen on its poster, so keep asking: on every
+       readiness event, and on the first sign of any user activity. The
+       listeners tear themselves down once it's genuinely running. */
     var tryPlay = function () {
+      if (!heroVideo.paused) return;
       var attempt = heroVideo.play();
       if (attempt && typeof attempt.catch === "function") attempt.catch(function () {});
     };
-    tryPlay();
-    ["click", "touchstart", "keydown"].forEach(function (evt) {
-      window.addEventListener(evt, tryPlay, { once: true, passive: true });
+    var nudges = ["pointerdown", "touchstart", "keydown", "scroll", "mousemove"];
+    var listen = function (add) {
+      nudges.forEach(function (evt) {
+        if (add) window.addEventListener(evt, tryPlay, { passive: true });
+        else window.removeEventListener(evt, tryPlay);
+      });
+    };
+    ["loadeddata", "canplay", "canplaythrough"].forEach(function (evt) {
+      heroVideo.addEventListener(evt, tryPlay);
     });
+    heroVideo.addEventListener("playing", function () { listen(false); });
+    listen(true);
+    tryPlay();
   }
 
   /* ---------- hero scroll parallax ---------- */
