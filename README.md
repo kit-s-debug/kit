@@ -67,6 +67,30 @@ Beyond the original hero/floors/contact, this pass adds:
   at several points inside that window (50ms/300ms/400ms/800ms/1100ms
   after load) all now stick, while the hash-load fix still lands at the
   top every time across repeated tests.
+- **Labrinth has its own 3D building too, and it is two storeys.** Same
+  scroll-driven treatment as Eddie Rocks, on the venue's actual layout:
+  **02 Main Bar** upstairs with a live DJ, and **01 Rewind** downstairs for
+  90s and 00s classics you can sing along to on your own or as a group.
+  Rewind is deliberately not another dancefloor: it is built around a small
+  raised stage with two mic stands, a lyric screen, a mirror ball and booths
+  facing it, because that is what the room is for. The Main Bar upstairs is
+  the club floor — DJ booth with lit platters, speaker stacks, four sweeping
+  spots and the densest crowd — in the magenta and violet the venue's own
+  footage actually shows.
+- **The two buildings now share one engine.** `js/venue3d.js` owns
+  everything that was identical between them: renderer setup, the modelling
+  helpers, the shell and street, the camera journey, scroll binding, hover
+  picking and the render loop, plus all the performance constraints (no
+  shadow maps, no post-processing, instanced crowds, capped pixel ratio,
+  mobile tier, `IntersectionObserver` gating). `js/building3d.js` and
+  `js/labrinth3d.js` are now thin: a palette, a floor list, a frontage and
+  the contents of each room.
+  The camera journey is **generated from the floor count** rather than
+  hand-keyed, so a two-storey venue gets the same approach → in through the
+  top window → down a floor at a time → back out to the street, with the
+  slices sized to fit. Stage numbering follows the same rule (stage 0 is the
+  exterior, a floor's stage is its index + 1), which is why the markup can
+  label its copy panels by floor.
 - **Labrinth's hero is the venue's own footage**, same treatment as Eddie
   Rocks. Cut from a 7-second recording the client supplied, using the first
   4 seconds — the packed crowd under the arched ceiling — and stopping

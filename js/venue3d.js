@@ -1,0 +1,639 @@
+/* ==========================================================================
+   Shared engine for the venue buildings.
+
+   Both Eddie Rocks and Labrinth are stylised miniatures of a real building
+   with a scroll-driven camera that flies in through a window and travels
+   down through the floors. Everything that is the same for both — renderer
+   setup, the modelling helpers, the shell, the camera journey, the scroll
+   binding, hover picking and the render loop — lives here. Each venue
+   supplies only its palette, its floor list, its exterior detailing and the
+   contents of its rooms.
+
+   The constraints that keep this shippable are enforced here too: no shadow
+   maps, no post-processing, glow faked with additive sprites, shared
+   geometry, instanced crowds, a capped pixel ratio, a reduced mobile tier
+   and a render loop gated by an IntersectionObserver.
+   ========================================================================== */
+
+import * as THREE from "../assets/vendor/three.module.min.js";
+
+export function mountVenue(config) {
+  var canvas = document.getElementById(config.canvasId);
+  var section = document.getElementById(config.sectionId);
+  var scroller = document.getElementById(config.scrollerId);
+  var stage = document.getElementById(config.stageId);
+  if (!canvas || !section || !scroller || !stage) return;
+
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var isMobile = window.matchMedia("(max-width: 900px)").matches;
+
+  /* WebGL probe. If this fails the illustrated fallback stays in place —
+     the section is authored so the fallback is what's there until the 3D
+     scene declares itself ready. */
+  var hasGL = (function () {
+    try {
+      var t = document.createElement("canvas");
+      return !!(t.getContext("webgl2") || t.getContext("webgl"));
+    } catch (e) {
+      return false;
+    }
+  })();
+  if (!hasGL || reducedMotion) return;
+
+  /* The scroller is display:none until this class lands, and a hidden
+     element measures zero, so the renderer has to be sized afterwards. */
+  section.classList.add("is-3d-ready");
+
+  var C = config.palette;
+  var W = config.dims.W;
+  var D = config.dims.D;
+  var FH = config.dims.FH;
+  var FRONT = D / 2;
+  var BACK = -D / 2;
+  var FLOORS = config.floors.map(function (f, i) {
+    return { num: f.num, name: f.name, y: FH * i };
+  });
+  var N = FLOORS.length;
+  var ROOF = FH * N;
+
+  // ---------------------------------------------------------------- renderer
+  var renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: !isMobile,
+    alpha: false,
+    powerPreference: "high-performance",
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = config.exposure || 1.05;
+  renderer.setClearColor(C.night, 1);
+
+  var scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(C.night, config.fogDensity || 0.035);
+
+  var camera = new THREE.PerspectiveCamera(54, 1, 0.1, 120);
+  var camTarget = new THREE.Vector3();
+
+  // ------------------------------------------------------------- textures
+  /* one radial-gradient sprite, reused for every glow, haze puff and light
+     bloom — generated rather than loaded so there's no extra request */
+  function radialTexture(inner, outer) {
+    var c = document.createElement("canvas");
+    c.width = c.height = 128;
+    var ctx = c.getContext("2d");
+    var g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0, inner);
+    g.addColorStop(0.45, outer);
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 128, 128);
+    var t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }
+  var glowTex = radialTexture("rgba(255,255,255,1)", "rgba(255,255,255,0.28)");
+  var hazeTex = radialTexture("rgba(255,255,255,0.5)", "rgba(255,255,255,0.14)");
+
+  /* a cheap gradient standing in for a sky/street environment map, so metal
+     and glass have something to reflect without loading an HDR */
+  (function () {
+    var c = document.createElement("canvas");
+    c.width = 2;
+    c.height = 128;
+    var ctx = c.getContext("2d");
+    var g = ctx.createLinearGradient(0, 0, 0, 128);
+    g.addColorStop(0, C.envTop);
+    g.addColorStop(0.5, C.envMid);
+    g.addColorStop(1, C.envBottom);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 2, 128);
+    var t = new THREE.CanvasTexture(c);
+    t.mapping = THREE.EquirectangularReflectionMapping;
+    t.colorSpace = THREE.SRGBColorSpace;
+    scene.environment = t;
+  })();
+
+  // ------------------------------------------------------------- materials
+  var mat = {
+    brick: new THREE.MeshStandardMaterial({ color: C.brick, roughness: 0.92, metalness: 0.02 }),
+    brickDark: new THREE.MeshStandardMaterial({ color: C.brickDark, roughness: 0.95, metalness: 0.02 }),
+    stone: new THREE.MeshStandardMaterial({ color: C.stone, roughness: 0.8, metalness: 0.05 }),
+    dark: new THREE.MeshStandardMaterial({ color: C.interiorDark, roughness: 0.85 }),
+    metal: new THREE.MeshStandardMaterial({ color: C.metal, roughness: 0.35, metalness: 0.9 }),
+    silhouette: new THREE.MeshBasicMaterial({ color: C.silhouette }),
+  };
+
+  function emissive(color, intensity) {
+    return new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      emissive: color,
+      emissiveIntensity: intensity === undefined ? 1 : intensity,
+      roughness: 1,
+    });
+  }
+
+  // geometry reused everywhere; scale via mesh.scale rather than new geometry
+  var BOX = new THREE.BoxGeometry(1, 1, 1);
+  var CYL = new THREE.CylinderGeometry(0.5, 0.5, 1, 10);
+
+  function box(material, w, h, d, x, y, z, parent) {
+    var m = new THREE.Mesh(BOX, material);
+    m.scale.set(w, h, d);
+    m.position.set(x, y, z);
+    (parent || scene).add(m);
+    return m;
+  }
+  function cyl(material, r, h, x, y, z, parent) {
+    var m = new THREE.Mesh(CYL, material);
+    m.scale.set(r * 2, h, r * 2);
+    m.position.set(x, y, z);
+    (parent || scene).add(m);
+    return m;
+  }
+  function glow(color, size, x, y, z, opacity, parent) {
+    var s = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: glowTex,
+      color: color,
+      transparent: true,
+      opacity: opacity === undefined ? 0.75 : opacity,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    }));
+    s.scale.set(size, size, 1);
+    s.position.set(x, y, z);
+    (parent || scene).add(s);
+    return s;
+  }
+
+  // ------------------------------------------------ animated registries
+  var pulseLights = [];   // {light, base, speed, amp, floor}
+  var beams = [];         // {beam, phase, swing, speed}
+  var litWindows = [];    // {mesh, floor, speed}
+  var windowGlows = [];   // {sprite, floor, speed}
+  var crowds = [];
+  var dummy = new THREE.Object3D();
+
+  /* The crowd is the densest thing in either scene. As individual meshes it
+     was the bulk of the draw calls, so bodies and heads are one InstancedMesh
+     per room and the dance is written into the instance matrices. */
+  var CROWD_BODY = new THREE.CylinderGeometry(0.115, 0.115, 1, 8);
+  var CROWD_HEAD = new THREE.SphereGeometry(0.085, 7, 5);
+
+  function crowd(count, spread, baseY, z, parent, scale) {
+    var sc = scale || 1;
+    var bodies = new THREE.InstancedMesh(CROWD_BODY, mat.silhouette, count);
+    var heads = new THREE.InstancedMesh(CROWD_HEAD, mat.silhouette, count);
+    bodies.frustumCulled = false;
+    heads.frustumCulled = false;
+    var people = [];
+    for (var i = 0; i < count; i++) {
+      people.push({
+        x: (Math.random() - 0.5) * spread,
+        z: z + (Math.random() - 0.5) * 2.4,
+        h: (0.62 + Math.random() * 0.22) * sc,
+        sc: sc,
+        phase: Math.random() * 6.28,
+        amp: 0.05 + Math.random() * 0.08,
+      });
+    }
+    parent.add(bodies);
+    parent.add(heads);
+    crowds.push({ bodies: bodies, heads: heads, people: people, baseY: baseY });
+  }
+
+  // =====================================================================
+  //  SHELL — the parts every venue's building has
+  // =====================================================================
+  var building = new THREE.Group();
+  scene.add(building);
+
+  var WIN_W = 1.3, WIN_H = 1.62, WIN_SILL = 0.8;
+  var winCentres = [-W * 0.29, 0, W * 0.29];
+  var pierW = (W - WIN_W * 3) / 4;
+  var pierCentres = [
+    -W / 2 + pierW / 2,
+    -W * 0.29 + WIN_W / 2 + pierW / 2,
+    W * 0.29 - WIN_W / 2 - pierW / 2,
+    W / 2 - pierW / 2,
+  ];
+
+  /* A storey's street elevation. The centre opening is left unglazed
+     because that is the gap the camera actually flies through. */
+  function frontWallWithWindows(baseY, tone) {
+    box(mat.brick, W, WIN_SILL, 0.3, 0, baseY + WIN_SILL / 2, FRONT, building);
+    var lintelY = baseY + WIN_SILL + WIN_H;
+    box(mat.brick, W, FH - WIN_SILL - WIN_H, 0.3, 0, lintelY + (FH - WIN_SILL - WIN_H) / 2, FRONT, building);
+    for (var i = 0; i < pierCentres.length; i++) {
+      box(mat.brick, pierW, WIN_H, 0.3, pierCentres[i], baseY + WIN_SILL + WIN_H / 2, FRONT, building);
+    }
+    box(mat.stone, W + 0.16, 0.14, 0.42, 0, baseY + 0.05, FRONT, building);
+
+    var floorIndex = Math.round(baseY / FH);
+    for (var w = 0; w < winCentres.length; w++) {
+      if (w === 1) continue;                       // the way in
+      var wy = baseY + WIN_SILL + WIN_H / 2;
+      // dark reflective pane, with an emissive card behind it so light spills out
+      box(new THREE.MeshStandardMaterial({
+        color: 0x0b0609, roughness: 0.12, metalness: 0.6, transparent: true, opacity: 0.55,
+      }), WIN_W, WIN_H, 0.04, winCentres[w], wy, FRONT - 0.02, building);
+      var lit = box(emissive(tone, 2.4), WIN_W * 0.92, WIN_H * 0.9, 0.02, winCentres[w], wy, FRONT - 0.16, building);
+      litWindows.push({ mesh: lit, floor: floorIndex, speed: 2.2 + floorIndex * 0.6 });
+      windowGlows.push({
+        sprite: glow(tone, 2.6, winCentres[w], wy, FRONT + 0.35, 0.34, building),
+        floor: floorIndex,
+        speed: 2.2 + floorIndex * 0.6,
+      });
+    }
+  }
+
+  // upper storeys get windows; the ground floor is the venue's own frontage
+  for (var f = 1; f < N; f++) {
+    frontWallWithWindows(FLOORS[f].y, config.floors[f].windowTone);
+  }
+
+  // side walls, back wall, slabs, roof deck and cornice
+  for (var s = 0; s < N; s++) {
+    var y0 = FLOORS[s].y;
+    box(mat.brickDark, 0.3, FH, D, -W / 2, y0 + FH / 2, 0, building);
+    box(mat.brickDark, 0.3, FH, D, W / 2, y0 + FH / 2, 0, building);
+    box(mat.brickDark, W, FH, 0.3, 0, y0 + FH / 2, BACK, building);
+    box(mat.dark, W, 0.18, D, 0, y0, 0, building);
+  }
+  box(mat.dark, W, 0.2, D, 0, ROOF, 0, building);
+  box(mat.stone, W + 0.36, 0.3, D + 0.36, 0, ROOF + 0.14, 0, building);
+  box(mat.brickDark, 1.1, 0.75, 1.1, -W * 0.26, ROOF + 0.6, -1.0, building);
+  box(mat.metal, 0.36, 1.0, 0.36, W * 0.24, ROOF + 0.7, -0.7, building);
+
+  // street and pavement
+  box(new THREE.MeshStandardMaterial({ color: C.street, roughness: 0.95 }), 46, 0.2, 46, 0, -0.1, 0);
+  box(mat.stone, W + 5.5, 0.06, 2.6, 0, 0.02, FRONT + 1.4);
+
+  /* Neighbouring terrace, so the venue reads as mid-terrace rather than a
+     model on a table. Given a scatter of dim windows — as plain slabs they
+     just read as two black walls. */
+  (function neighbours() {
+    var sides = [
+      { x: -W / 2 - 2.9, w: 5.4, h: FH * (N - 0.7) },
+      { x: W / 2 + 3.1, w: 5.8, h: FH * (N - 0.85) },
+    ];
+    var dimWin = emissive(C.neighbourWindow, 0.55);
+    for (var n = 0; n < sides.length; n++) {
+      var side = sides[n];
+      box(mat.brickDark, side.w, side.h, D * 0.92, side.x, side.h / 2, -0.3);
+      box(mat.stone, side.w + 0.2, 0.24, D * 0.96, side.x, side.h + 0.1, -0.3);
+      for (var row = 0; row < 2; row++) {
+        for (var col = 0; col < 3; col++) {
+          if ((row + col + n) % 3 === 0) continue;
+          box(dimWin, 0.62, 0.95, 0.06,
+            side.x - side.w / 2 + 1.0 + col * (side.w - 2.0) / 2,
+            1.5 + row * (side.h / 2.4), D * 0.46 - 0.3);
+        }
+      }
+    }
+  })();
+
+  // ------------------------------------------------------------- ambience
+  scene.add(new THREE.AmbientLight(C.ambient, 2.4));
+  /* Without exterior light the facade is lit only by what leaks out of its
+     own windows and reads as a black silhouette. A streetlamp one side, a
+     soft sky fill the other. */
+  var lamp = new THREE.PointLight(C.lamp, 90, 34, 2);
+  lamp.position.set(-6.5, ROOF * 0.72, 9.5);
+  scene.add(lamp);
+  var skyFill = new THREE.DirectionalLight(C.skyFill, 0.85);
+  skyFill.position.set(7, 12, 8);
+  scene.add(skyFill);
+  cyl(mat.metal, 0.06, ROOF * 0.7, -6.5, ROOF * 0.35, 9.5);
+  glow(C.lamp, 2.6, -6.5, ROOF * 0.72, 9.5, 0.6);
+
+  /* haze: a few large additive puffs. Cheap, and it does more for the
+     nightclub read than any amount of extra geometry. */
+  var hazePuffs = [];
+  var hazeCount = isMobile ? 8 : 16;
+  for (var h = 0; h < hazeCount; h++) {
+    var puff = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: hazeTex,
+      color: h % 3 === 0 ? C.hazeB : C.hazeA,
+      transparent: true, opacity: 0.05,
+      blending: THREE.AdditiveBlending, depthWrite: false,
+    }));
+    var size = 3 + Math.random() * 4;
+    puff.scale.set(size, size, 1);
+    puff.position.set((Math.random() - 0.5) * 12, Math.random() * (ROOF + 1), (Math.random() - 0.5) * 10 + 2);
+    scene.add(puff);
+    hazePuffs.push({ s: puff, phase: Math.random() * 6.28, baseY: puff.position.y });
+  }
+
+  var moteCount = isMobile ? 90 : 220;
+  var motePos = new Float32Array(moteCount * 3);
+  for (var mi = 0; mi < moteCount; mi++) {
+    motePos[mi * 3] = (Math.random() - 0.5) * 16;
+    motePos[mi * 3 + 1] = Math.random() * (ROOF + 2);
+    motePos[mi * 3 + 2] = (Math.random() - 0.5) * 12 + 1;
+  }
+  var moteGeo = new THREE.BufferGeometry();
+  moteGeo.setAttribute("position", new THREE.BufferAttribute(motePos, 3));
+  var motes = new THREE.Points(moteGeo, new THREE.PointsMaterial({
+    color: C.mote, size: 0.035, transparent: true, opacity: 0.5,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true,
+  }));
+  scene.add(motes);
+
+  // =====================================================================
+  //  VENUE-SPECIFIC CONTENT
+  // =====================================================================
+  var ctx = {
+    THREE: THREE, scene: scene, building: building,
+    mat: mat, emissive: emissive, box: box, cyl: cyl, glow: glow, crowd: crowd,
+    pulseLights: pulseLights, beams: beams,
+    C: C, W: W, D: D, FH: FH, FRONT: FRONT, BACK: BACK, ROOF: ROOF,
+    isMobile: isMobile,
+  };
+
+  if (config.buildExterior) config.buildExterior(ctx);
+
+  var rooms = [];
+  for (var r = 0; r < N; r++) {
+    var room = new THREE.Group();
+    scene.add(room);
+    rooms.push(room);
+    config.floors[r].build(ctx, room, FLOORS[r].y, r);
+  }
+
+  // =====================================================================
+  //  CAMERA JOURNEY — generated from the floor count
+  // =====================================================================
+  /* Approach the building, fly in through the top storey's centre window,
+     work down a floor at a time, then pull back out onto the street. */
+  var EYE = 1.5;
+  var ENTER_AT = 0.20;
+  var EXIT_AT = 0.90;
+  var SLICE = (EXIT_AT - ENTER_AT) / N;
+
+  var KEYS = [
+    { t: 0.00, pos: [W * 1.5, ROOF * 0.65, D * 2.4], look: [0, ROOF * 0.5, 0] },
+    { t: 0.10, pos: [W * 0.97, ROOF * 0.78, D * 2.1], look: [0, ROOF * 0.52, 0] },
+    { t: ENTER_AT * 0.95, pos: [W * 0.44, ROOF + 0.5, D * 1.45], look: [0, FLOORS[N - 1].y + 1.5, 0] },
+  ];
+  for (var k = 0; k < N; k++) {
+    var idx = N - 1 - k;                 // top floor first, then downwards
+    var y = FLOORS[idx].y;
+    var t0 = ENTER_AT + k * SLICE;
+    var side = k % 2 ? -1 : 1;           // alternate which way we look
+    if (k === 0) {
+      // in through the window
+      KEYS.push({ t: t0 + SLICE * 0.1, pos: [0, y + EYE, FRONT + 1.2], look: [0, y + 1.4, BACK] });
+    } else {
+      // drop down the stairwell into the next room
+      KEYS.push({ t: t0 + SLICE * 0.02, pos: [side * 1.9, y + EYE + 1.4, FRONT - 1.6], look: [side * 0.2, y + 1.4, BACK] });
+    }
+    KEYS.push({ t: t0 + SLICE * 0.42, pos: [side * 1.7, y + EYE, FRONT - 1.1], look: [-side * 0.6, y + 1.25, BACK] });
+    KEYS.push({ t: t0 + SLICE * 0.86, pos: [-side * 1.9, y + EYE, FRONT - 2.6], look: [side * 1.8, y + 1.15, BACK + 0.6] });
+  }
+  KEYS.push({ t: 0.93, pos: [1.2, 1.8, FRONT + 5.0], look: [0, ROOF * 0.3, 0] });
+  KEYS.push({ t: 1.00, pos: [-W * 1.3, ROOF * 0.7, D * 2.1], look: [0, ROOF * 0.5, 0] });
+
+  function smoothstep(x) { return x * x * (3 - 2 * x); }
+
+  var tmpA = new THREE.Vector3();
+  var tmpB = new THREE.Vector3();
+  function sampleCamera(p) {
+    var i = 0;
+    while (i < KEYS.length - 2 && p > KEYS[i + 1].t) i++;
+    var a = KEYS[i], b = KEYS[i + 1];
+    var span = b.t - a.t;
+    var q = span <= 0 ? 0 : smoothstep(Math.min(Math.max((p - a.t) / span, 0), 1));
+    tmpA.set(a.pos[0], a.pos[1], a.pos[2]);
+    tmpB.set(b.pos[0], b.pos[1], b.pos[2]);
+    camera.position.lerpVectors(tmpA, tmpB, q);
+    tmpA.set(a.look[0], a.look[1], a.look[2]);
+    tmpB.set(b.look[0], b.look[1], b.look[2]);
+    camTarget.lerpVectors(tmpA, tmpB, q);
+  }
+
+  /* Stage 0 is the exterior; a floor's stage number is its index + 1, so the
+     markup can label panels by the floor they describe. */
+  function stageFor(p) {
+    if (p < ENTER_AT + SLICE * 0.08) return 0;
+    if (p >= EXIT_AT) return 0;
+    var k = Math.min(Math.floor((p - ENTER_AT) / SLICE), N - 1);
+    return (N - 1 - k) + 1;
+  }
+
+  var copyPanels = Array.prototype.slice.call(stage.querySelectorAll("[data-stage]"));
+  var currentStage = -1;
+  function setStage(n) {
+    if (n === currentStage) return;
+    currentStage = n;
+    copyPanels.forEach(function (el) {
+      el.classList.toggle("is-active", Number(el.dataset.stage) === n);
+    });
+    stage.setAttribute("data-current-stage", String(n));
+  }
+
+  // ------------------------------------------------------- scroll progress
+  /* Measured against the tall scroller holding the sticky stage, not the
+     whole section — the intro and fallback sit outside the pinned range. */
+  function readScroll() {
+    var rect = scroller.getBoundingClientRect();
+    var travel = scroller.offsetHeight - window.innerHeight;
+    if (travel <= 0) return 0;
+    return Math.min(Math.max(-rect.top / travel, 0), 1);
+  }
+
+  var progress = readScroll();
+  var targetProgress = progress;
+  var scrollTicking = false;
+  window.addEventListener("scroll", function () {
+    if (!scrollTicking) {
+      window.requestAnimationFrame(function () {
+        targetProgress = readScroll();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  }, { passive: true });
+
+  /* Scroll position stays the source of truth: picking a floor scrolls the
+     page to the point in the sequence where that floor is on screen, so the
+     camera and the scrollbar can never disagree. */
+  section.querySelectorAll("[data-goto-floor]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var idx = Number(btn.dataset.gotoFloor);
+      var k = N - 1 - idx;
+      var anchor = ENTER_AT + k * SLICE + SLICE * 0.5;
+      var travel = scroller.offsetHeight - window.innerHeight;
+      var top = scroller.getBoundingClientRect().top + window.scrollY + travel * anchor;
+      window.scrollTo({ top: top, behavior: "smooth" });
+    });
+  });
+
+  // ------------------------------------------------------------ hover focus
+  /* Raycast invisible slabs, one per floor, so hovering the building lights
+     that floor and names it. Pointer-fine only — on touch the buttons under
+     the canvas do this job. */
+  var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var pickTargets = [];
+  var hoverBoost = [];
+  for (var pf = 0; pf < N; pf++) {
+    var slab = new THREE.Mesh(new THREE.BoxGeometry(W, FH, D), new THREE.MeshBasicMaterial({ visible: false }));
+    slab.position.set(0, FLOORS[pf].y + FH / 2, 0);
+    slab.userData.floor = pf;
+    scene.add(slab);
+    pickTargets.push(slab);
+    hoverBoost.push(0);
+  }
+  var hoverFloor = -1;
+  var hoverLabel = document.getElementById(config.hoverLabelId);
+  if (canHover) {
+    var ray = new THREE.Raycaster();
+    var ndc = new THREE.Vector2();
+    canvas.addEventListener("mousemove", function (e) {
+      var rect = canvas.getBoundingClientRect();
+      ndc.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      ndc.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      ray.setFromCamera(ndc, camera);
+      var hits = ray.intersectObjects(pickTargets, false);
+      var next = hits.length ? hits[0].object.userData.floor : -1;
+      if (currentStage !== 0) next = -1;   // only meaningful from outside
+      if (next !== hoverFloor) {
+        hoverFloor = next;
+        if (hoverLabel) {
+          if (next >= 0) {
+            hoverLabel.querySelector(".venue-hover-num").textContent = FLOORS[next].num;
+            hoverLabel.querySelector(".venue-hover-name").textContent = FLOORS[next].name;
+            hoverLabel.classList.add("is-visible");
+          } else {
+            hoverLabel.classList.remove("is-visible");
+          }
+        }
+      }
+      if (hoverLabel && next >= 0) {
+        hoverLabel.style.transform =
+          "translate(" + (e.clientX - rect.left) + "px," + (e.clientY - rect.top) + "px)";
+      }
+    });
+    canvas.addEventListener("mouseleave", function () {
+      hoverFloor = -1;
+      if (hoverLabel) hoverLabel.classList.remove("is-visible");
+    });
+  }
+
+  // ------------------------------------------------------------------ sizing
+  function resize() {
+    var w = stage.clientWidth;
+    var h = stage.clientHeight;
+    if (w <= 0 || h <= 0) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  var resizeTicking = false;
+  window.addEventListener("resize", function () {
+    if (!resizeTicking) {
+      window.requestAnimationFrame(function () { resize(); resizeTicking = false; });
+      resizeTicking = true;
+    }
+  }, { passive: true });
+
+  /* rootMargin keeps the loop alive a little past the scroller's edges: at
+     exactly the end of the pin a zero-margin observer can report "not
+     intersecting" and freeze the camera mid-move. */
+  var visible = true;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+    }, { threshold: 0, rootMargin: "300px 0px" }).observe(scroller);
+  }
+
+  // ------------------------------------------------------------- the loop
+  var clock = new THREE.Clock();
+  var elapsed = 0;
+
+  function frame() {
+    requestAnimationFrame(frame);
+    if (!visible) return;
+    /* one delta per frame, accumulated by hand — Clock.getElapsedTime()
+       internally calls getDelta() again, so mixing the two is fragile */
+    var dt = Math.min(clock.getDelta(), 0.1);
+    elapsed += dt;
+    var t = elapsed;
+
+    /* Damping is exponential in real time rather than per-frame, otherwise
+       the camera falls behind the scrollbar on anything below 60fps. */
+    var damp = 1 - Math.pow(0.0045, dt);
+    progress += (targetProgress - progress) * damp;
+    if (Math.abs(targetProgress - progress) < 0.0005) progress = targetProgress;
+    sampleCamera(progress);
+    setStage(stageFor(progress));
+
+    // a slow orbital drift outside, so the exterior is never static
+    if (progress < ENTER_AT) {
+      var drift = (ENTER_AT - progress) / ENTER_AT;
+      camera.position.x += Math.sin(t * 0.18) * 1.5 * drift;
+      camera.position.y += Math.cos(t * 0.14) * 0.5 * drift;
+    }
+    camera.lookAt(camTarget);
+
+    for (var i = 0; i < N; i++) {
+      hoverBoost[i] += ((hoverFloor === i ? 1 : 0) - hoverBoost[i]) * 0.12;
+    }
+
+    for (var l = 0; l < pulseLights.length; l++) {
+      var pl = pulseLights[l];
+      pl.light.intensity =
+        pl.base * (1 + Math.sin(t * pl.speed + l) * pl.amp) * (1 + hoverBoost[pl.floor] * 0.7);
+    }
+    for (var g = 0; g < windowGlows.length; g++) {
+      var wg = windowGlows[g];
+      wg.sprite.material.opacity = 0.3 + Math.sin(t * wg.speed + g) * 0.08 + hoverBoost[wg.floor] * 0.35;
+    }
+    for (var lw = 0; lw < litWindows.length; lw++) {
+      var w2 = litWindows[lw];
+      w2.mesh.material.emissiveIntensity =
+        2.2 + Math.sin(t * w2.speed + lw) * 0.5 + hoverBoost[w2.floor] * 1.4;
+    }
+    for (var b = 0; b < beams.length; b++) {
+      var bm = beams[b];
+      bm.beam.rotation.z = Math.sin(t * (bm.speed || 0.9) + bm.phase) * (bm.swing || 0.42);
+      if (bm.tilt) bm.beam.rotation.x = Math.cos(t * 0.7 + bm.phase) * bm.tilt;
+      bm.beam.material.opacity = bm.min + Math.abs(Math.sin(t * (bm.flicker || 2.4) + bm.phase)) * bm.range;
+    }
+
+    // the crowd moves: each figure bobs on its own phase
+    for (var ci = 0; ci < crowds.length; ci++) {
+      var cr = crowds[ci];
+      for (var pi = 0; pi < cr.people.length; pi++) {
+        var pr = cr.people[pi];
+        var bob = Math.sin(t * 3.1 + pr.phase) * pr.amp;
+        var hh = pr.h * (1 + bob * 0.35);
+        dummy.position.set(pr.x, cr.baseY + hh / 2, pr.z);
+        dummy.rotation.set(0, Math.sin(t * 0.8 + pr.phase) * 0.4, 0);
+        dummy.scale.set(pr.sc, hh, pr.sc);
+        dummy.updateMatrix();
+        cr.bodies.setMatrixAt(pi, dummy.matrix);
+
+        dummy.position.set(pr.x, cr.baseY + hh + 0.06 * pr.sc, pr.z);
+        dummy.scale.set(pr.sc, pr.sc, pr.sc);
+        dummy.updateMatrix();
+        cr.heads.setMatrixAt(pi, dummy.matrix);
+      }
+      cr.bodies.instanceMatrix.needsUpdate = true;
+      cr.heads.instanceMatrix.needsUpdate = true;
+    }
+
+    for (var hp = 0; hp < hazePuffs.length; hp++) {
+      var pf2 = hazePuffs[hp];
+      pf2.s.position.y = pf2.baseY + Math.sin(t * 0.14 + pf2.phase) * 0.5;
+      pf2.s.material.opacity = 0.035 + Math.sin(t * 0.3 + pf2.phase) * 0.02;
+    }
+    motes.rotation.y = t * 0.012;
+
+    if (config.onFrame) config.onFrame(ctx, t, progress);
+
+    renderer.render(scene, camera);
+  }
+  frame();
+}

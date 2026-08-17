@@ -62,6 +62,61 @@
     </div>
   </section>
 
+  <section class="venue" id="lab-floors" aria-labelledby="lab-floors-heading">
+    <div class="venue-intro reveal">
+      <p class="eyebrow">Two floors</p>
+      <h2 id="lab-floors-heading">Upstairs and down</h2>
+      <p class="venue-intro-line">The Main Bar on top with a live DJ, and Rewind below it for the 90s and 00s. Scroll to go inside.</p>
+    </div>
+
+    <div class="venue-scroller" id="lab-venue-scroller">
+      <div class="venue-stage" id="lab-venue-stage">
+        <canvas class="venue-canvas" id="lab-venue-canvas" aria-hidden="true"></canvas>
+
+        <div class="venue-copy is-active" data-stage="0">
+          <p class="venue-display">Two floors.<br><em>Two nights.</em></p>
+          <p class="venue-line">A live DJ upstairs, and everything you already know the words to downstairs.</p>
+        </div>
+        <div class="venue-copy" data-stage="2">
+          <span class="venue-num" aria-hidden="true">02</span>
+          <h3>Main Bar</h3>
+          <p class="venue-line">Upstairs, with a live DJ on the decks.</p>
+        </div>
+        <div class="venue-copy" data-stage="1">
+          <span class="venue-num" aria-hidden="true">01</span>
+          <h3>Rewind</h3>
+          <p class="venue-line">Downstairs: 90s and 00s classics, and you can sing along on your own or as a group.</p>
+        </div>
+
+        <div class="venue-hover-label" id="lab-venue-hover-label" aria-hidden="true">
+          <span class="venue-hover-num"></span><span class="venue-hover-name"></span>
+        </div>
+
+        <nav class="venue-picker" aria-label="Jump to a floor">
+          <button type="button" data-goto-floor="1"><span aria-hidden="true">02</span>Main Bar</button>
+          <button type="button" data-goto-floor="0"><span aria-hidden="true">01</span>Rewind</button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Shown whenever the 3D scene isn't running (no WebGL, reduced motion,
+         or JS off), so the two floors are still described either way. -->
+    <div class="venue-fallback">
+      <div class="lab-floorlist">
+        <article>
+          <span class="lab-floorlist-num" aria-hidden="true">02</span>
+          <h3>Main Bar</h3>
+          <p>Upstairs, with a live DJ on the decks.</p>
+        </article>
+        <article>
+          <span class="lab-floorlist-num" aria-hidden="true">01</span>
+          <h3>Rewind</h3>
+          <p>Downstairs: 90s and 00s classics, and you can sing along on your own or as a group.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="lab-panel" id="enquire" aria-labelledby="enquire-heading">
     <div class="lab-panel-inner">
       <p class="eyebrow">Getting in touch</p>
@@ -99,6 +154,7 @@
   </div>
 </footer>
 
+<script type="module" src="js/labrinth3d.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -1152,3 +1152,22 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .lab-lede{ font-size:15px; max-width:38ch; }
   .wordmark--footer-text{ font-size:32px; }
 }
+
+/* the two-floor list that stands in for Labrinth's 3D building */
+.lab-floorlist{
+  max-width:var(--container); margin:0 auto; padding:0 28px;
+  display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(24px, 4vw, 56px);
+}
+.lab-floorlist article{ border-top:1px solid var(--line-strong); padding-top:22px; }
+.lab-floorlist-num{
+  display:block; font-family:var(--font-display); font-size:15px; letter-spacing:.16em;
+  color:var(--silver-deep); margin-bottom:12px;
+}
+.lab-floorlist h3{
+  font-family:var(--font-accent); font-style:italic; font-weight:400;
+  font-size:clamp(26px, 3.4vw, 38px); line-height:1.1; margin-bottom:12px;
+}
+.lab-floorlist p{ color:var(--dim); line-height:1.75; max-width:38ch; }
+@media (max-width:700px){
+  .lab-floorlist{ grid-template-columns:1fr; gap:28px; }
+}
