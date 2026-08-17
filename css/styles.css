@@ -411,7 +411,84 @@ p{ margin:0; }
   mask-image:radial-gradient(circle, black, transparent 72%);
 }
 
-/* ============ floors: interactive building ============ */
+/* ============ the venue in 3D ============ */
+/* A tall scroller holds a sticky full-height stage; scroll distance through
+   the scroller is what drives the camera in js/building3d.js. The illustrated
+   facade below it is the fallback, and stays visible until the WebGL scene
+   reports that it is actually drawing. */
+.venue{ padding:var(--section-y) 0 0; }
+.venue-intro{ max-width:var(--container); margin:0 auto; padding:0 28px 28px; }
+.venue-intro-line{ color:var(--dim); max-width:52ch; margin-top:14px; }
+
+.venue-scroller{ display:none; position:relative; height:520vh; }
+.venue-stage{
+  position:sticky; top:0; height:100vh; overflow:hidden;
+  background:radial-gradient(ellipse 80% 70% at 50% 55%, #241620 0%, #140c11 70%);
+}
+.venue-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+
+.venue.is-3d-ready .venue-scroller{ display:block; }
+.venue.is-3d-ready .venue-fallback{ display:none; }
+.venue-fallback{ padding-top:8px; }
+
+/* --- overlay copy, one panel per stage of the journey --- */
+.venue-copy{
+  position:absolute; left:0; right:auto; bottom:16%; z-index:2; pointer-events:none;
+  width:min(46ch, 84vw); padding:0 clamp(28px, 6vw, 92px);
+  opacity:0; transform:translateY(24px);
+  transition:opacity .6s ease, transform .7s cubic-bezier(.16,1,.3,1);
+}
+.venue-copy.is-active{ opacity:1; transform:translateY(0); }
+.venue-display{
+  font-family:var(--font-display); text-transform:uppercase; letter-spacing:-.02em;
+  font-size:clamp(38px, 6vw, 84px); line-height:.9; margin-bottom:18px;
+}
+.venue-display em{ font-style:normal; color:var(--silver-bright); }
+.venue-num{
+  display:block; font-family:var(--font-display); font-size:clamp(30px, 4vw, 52px);
+  color:var(--silver-deep); line-height:1; margin-bottom:10px;
+}
+.venue-copy h3{
+  font-family:var(--font-accent); font-style:italic; font-weight:400;
+  font-size:clamp(30px, 4.4vw, 56px); line-height:1.05; margin-bottom:14px;
+}
+.venue-line{ color:var(--dim); font-size:16px; line-height:1.7; max-width:38ch; }
+
+/* --- hover readout, follows the cursor over the building --- */
+.venue-hover-label{
+  position:absolute; top:0; left:0; z-index:4; pointer-events:none;
+  display:flex; align-items:baseline; gap:10px; padding:8px 14px;
+  margin:14px 0 0 16px; border:1px solid var(--line-strong); border-radius:999px;
+  background:rgba(10,5,7,.72); backdrop-filter:blur(6px);
+  opacity:0; transition:opacity .22s ease;
+  white-space:nowrap;
+}
+.venue-hover-label.is-visible{ opacity:1; }
+.venue-hover-num{ font-family:var(--font-display); font-size:13px; color:var(--silver-bright); }
+.venue-hover-name{
+  font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--white);
+}
+
+/* --- floor picker --- */
+.venue-picker{
+  position:absolute; right:clamp(20px, 4vw, 56px); top:50%; transform:translateY(-50%);
+  z-index:3; display:flex; flex-direction:column; gap:10px; align-items:flex-end;
+}
+.venue-picker button{
+  display:flex; align-items:baseline; gap:12px; cursor:none;
+  background:transparent; border:0; border-right:1px solid var(--line-strong);
+  padding:8px 16px 8px 0; color:var(--dim); font-family:var(--font-body);
+  font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+  transition:color .25s ease, border-color .25s ease, padding-right .25s ease;
+}
+.venue-picker button span{
+  font-family:var(--font-display); font-size:15px; letter-spacing:.02em; color:var(--silver-deep);
+  transition:color .25s ease;
+}
+.venue-picker button:hover{ color:var(--white); border-color:var(--silver); padding-right:24px; }
+.venue-picker button:hover span{ color:var(--silver-bright); }
+
+/* ============ floors: illustrated building (3D fallback) ============ */
 .floors{ padding:var(--section-y) 0; }
 .floors-head{ max-width:var(--container); margin:0 auto; padding:0 28px 36px; position:relative; }
 .floors-head p:last-child{ color:var(--dim); max-width:56ch; margin-top:14px; }
@@ -986,6 +1063,29 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
   .hero-facts{ gap:26px; }
   .level-meta{ gap:24px; }
+
+  /* the journey is shorter on a phone: the same story, fewer screens of
+     scrolling to get through it */
+  .venue-scroller{ height:360vh; }
+  .venue-stage{ height:100svh; }
+  .venue-copy{ bottom:auto; top:12%; width:min(30ch, 88vw); padding:0 22px; }
+  .venue-display{ font-size:clamp(32px, 10vw, 54px); }
+  .venue-copy h3{ font-size:clamp(26px, 8vw, 40px); }
+  .venue-line{ font-size:14.5px; }
+  /* clears the fixed Enquire bar, which sits at the very bottom on mobile */
+  .venue-picker{
+    top:auto; bottom:88px; right:auto; left:0; transform:none;
+    flex-direction:row; width:100%; justify-content:center; gap:0;
+  }
+  .venue-picker button{
+    flex:1 1 0; justify-content:center; cursor:pointer;
+    border-right:0; border-top:1px solid var(--line-strong);
+    padding:12px 6px 0; gap:7px; font-size:9.5px; letter-spacing:.1em;
+  }
+  .venue-picker button span{ font-size:13px; }
+  .venue-picker button:hover{ padding-right:6px; }
+  /* the third label is long; keep the row from wrapping into two lines */
+  .venue-picker button:last-child{ font-size:8.5px; }
 }
 @media (max-width:560px){
   .contact-grid{ grid-template-columns:1fr; gap:32px; }

@@ -140,144 +140,190 @@
     </div>
   </section>
 
-  <section class="floors" id="floors" aria-labelledby="floors-heading">
-    <div class="floors-head reveal">
-      <div class="halftone" aria-hidden="true" style="width:220px;height:220px;top:-40px;right:0;"></div>
+  <section class="venue" id="floors" aria-labelledby="floors-heading">
+    <div class="venue-intro reveal">
+      <p class="eyebrow">Quay Street, Haverfordwest</p>
       <h2 id="floors-heading">One building, three floors</h2>
-      <p>Three floors on Quay Street: <span class="accent-text">The Forbidden Florist</span> on the ground, Eddie's Main Bar above it, and the RnB Bar on top. Tap a floor to step inside.</p>
+      <p class="venue-intro-line">The Forbidden Florist on the ground, Eddie's Main Bar above it, the RnB Bar on top. Scroll to go inside.</p>
     </div>
 
-    <div class="building reveal" id="building">
-      <div class="building-illustration">
-        <div class="building-cap" aria-hidden="true"></div>
+    <div class="venue-scroller" id="venue-scroller">
+      <div class="venue-stage" id="venue-stage">
+        <canvas class="venue-canvas" id="venue-canvas" aria-hidden="true"></canvas>
 
-        <div class="building-level" id="level-rnb">
-          <button type="button" class="building-floor building-floor--rnb" aria-expanded="false" aria-controls="panel-rnb" id="btn-rnb">
-            <span class="floor-windows" aria-hidden="true">
-              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
-              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
-            </span>
-            <span class="floor-disco" aria-hidden="true"></span>
-            <span class="floor-neon-sign" aria-hidden="true">
-              <svg viewBox="0 0 120 40">
-                <rect class="neon-sign-glow" x="4" y="4" width="112" height="32" rx="16" fill="none"></rect>
-                <text class="neon-sign-glow" x="60" y="26" text-anchor="middle">RnB</text>
-                <rect class="neon-sign-tube" x="4" y="4" width="112" height="32" rx="16" fill="none"></rect>
-                <text class="neon-sign-tube" x="60" y="26" text-anchor="middle">RnB</text>
-              </svg>
-            </span>
-            <span class="floor-plaque">
-              <span class="level-num">03</span>
-              <span class="level-titles">
-                <span class="level-name">RnB Bar</span>
-                <span class="level-hint">Top floor · Eddie's</span>
+        <div class="venue-copy is-active" data-stage="0">
+          <p class="venue-display">One building.<br><em>Three floors.</em></p>
+          <p class="venue-line">Three completely different ways to spend the night.</p>
+        </div>
+        <div class="venue-copy" data-stage="3">
+          <span class="venue-num" aria-hidden="true">03</span>
+          <h3>RnB Bar</h3>
+          <p class="venue-line">Late-night R&amp;B and hip-hop, low light and the slower end of the evening.</p>
+        </div>
+        <div class="venue-copy" data-stage="2">
+          <span class="venue-num" aria-hidden="true">02</span>
+          <h3>Main Bar</h3>
+          <p class="venue-line">Full rig, resident DJs and the room that started it all.</p>
+        </div>
+        <div class="venue-copy" data-stage="1">
+          <span class="venue-num" aria-hidden="true">01</span>
+          <h3>The Forbidden Florist</h3>
+          <p class="venue-line">Ground floor, under the flowers. Where the night starts.</p>
+        </div>
+
+        <div class="venue-hover-label" id="venue-hover-label" aria-hidden="true">
+          <span class="venue-hover-num"></span><span class="venue-hover-name"></span>
+        </div>
+
+        <nav class="venue-picker" aria-label="Jump to a floor">
+          <button type="button" data-goto-floor="2"><span aria-hidden="true">03</span>RnB Bar</button>
+          <button type="button" data-goto-floor="1"><span aria-hidden="true">02</span>Main Bar</button>
+          <button type="button" data-goto-floor="0"><span aria-hidden="true">01</span>The Forbidden Florist</button>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Shown whenever the 3D scene isn't running (no WebGL, reduced motion,
+         or JS off). Carries the same content, including the room photos. -->
+    <div class="venue-fallback">
+      <div class="floors-head reveal">
+        <div class="halftone" aria-hidden="true" style="width:220px;height:220px;top:-40px;right:0;"></div>
+        <h2>One building, three floors</h2>
+        <p>Three floors on Quay Street: <span class="accent-text">The Forbidden Florist</span> on the ground, Eddie's Main Bar above it, and the RnB Bar on top. Tap a floor to step inside.</p>
+      </div>
+
+      <div class="building reveal" id="building">
+        <div class="building-illustration">
+          <div class="building-cap" aria-hidden="true"></div>
+
+          <div class="building-level" id="level-rnb">
+            <button type="button" class="building-floor building-floor--rnb" aria-expanded="false" aria-controls="panel-rnb" id="btn-rnb">
+              <span class="floor-windows" aria-hidden="true">
+                <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
+                <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
               </span>
-              <span class="level-icon" aria-hidden="true"></span>
-            </span>
-          </button>
-          <div class="level-panel-wrap">
-            <div class="level-panel" id="panel-rnb" role="region" aria-labelledby="btn-rnb">
-              <div class="level-panel-inner">
-                <div class="level-media" data-spotlight data-tilt>
-                  <img src="assets/images/floor-rnb.jpg" alt="A packed RnB Bar dancefloor with the DJ on the decks, hands up under green lights" loading="lazy">
-                </div>
-                <div class="level-copy">
-                  <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours, and low light that's easy to stay lost in.</p>
-                  <dl class="level-meta">
-                    <div><dt>On the decks</dt><dd>RnB, hip-hop, slow-burners</dd></div>
-                    <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
-                  </dl>
-                  <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+              <span class="floor-disco" aria-hidden="true"></span>
+              <span class="floor-neon-sign" aria-hidden="true">
+                <svg viewBox="0 0 120 40">
+                  <rect class="neon-sign-glow" x="4" y="4" width="112" height="32" rx="16" fill="none"></rect>
+                  <text class="neon-sign-glow" x="60" y="26" text-anchor="middle">RnB</text>
+                  <rect class="neon-sign-tube" x="4" y="4" width="112" height="32" rx="16" fill="none"></rect>
+                  <text class="neon-sign-tube" x="60" y="26" text-anchor="middle">RnB</text>
+                </svg>
+              </span>
+              <span class="floor-plaque">
+                <span class="level-num">03</span>
+                <span class="level-titles">
+                  <span class="level-name">RnB Bar</span>
+                  <span class="level-hint">Top floor · Eddie's</span>
+                </span>
+                <span class="level-icon" aria-hidden="true"></span>
+              </span>
+            </button>
+            <div class="level-panel-wrap">
+              <div class="level-panel" id="panel-rnb" role="region" aria-labelledby="btn-rnb">
+                <div class="level-panel-inner">
+                  <div class="level-media" data-spotlight data-tilt>
+                    <img src="assets/images/floor-rnb.jpg" alt="A packed RnB Bar dancefloor with the DJ on the decks, hands up under green lights" loading="lazy">
+                  </div>
+                  <div class="level-copy">
+                    <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours, and low light that's easy to stay lost in.</p>
+                    <dl class="level-meta">
+                      <div><dt>On the decks</dt><dd>RnB, hip-hop, slow-burners</dd></div>
+                      <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
+                    </dl>
+                    <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="building-level" id="level-main">
-          <button type="button" class="building-floor building-floor--main" aria-expanded="false" aria-controls="panel-main" id="btn-main">
-            <span class="floor-windows" aria-hidden="true">
-              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
-              <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
-            </span>
-            <span class="floor-disco" aria-hidden="true"></span>
-            <span class="floor-plaque">
-              <span class="level-num">02</span>
-              <span class="level-titles">
-                <span class="level-name">Main Bar</span>
-                <span class="level-hint">First floor · Eddie's</span>
+          <div class="building-level" id="level-main">
+            <button type="button" class="building-floor building-floor--main" aria-expanded="false" aria-controls="panel-main" id="btn-main">
+              <span class="floor-windows" aria-hidden="true">
+                <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
+                <span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span><span class="win"></span>
               </span>
-              <span class="level-icon" aria-hidden="true"></span>
-            </span>
-          </button>
-          <div class="level-panel-wrap">
-            <div class="level-panel" id="panel-main" role="region" aria-labelledby="btn-main">
-              <div class="level-panel-inner">
-                <div class="level-media" data-spotlight data-tilt>
-                  <img src="assets/images/floor-main.jpg" alt="A packed Main Bar dancefloor under lights" loading="lazy">
-                </div>
-                <div class="level-copy">
-                  <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday, first up the stairs from Quay Street.</p>
-                  <dl class="level-meta">
-                    <div><dt>On the decks</dt><dd>House &amp; dance, guest line-ups</dd></div>
-                    <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
-                  </dl>
-                  <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+              <span class="floor-disco" aria-hidden="true"></span>
+              <span class="floor-plaque">
+                <span class="level-num">02</span>
+                <span class="level-titles">
+                  <span class="level-name">Main Bar</span>
+                  <span class="level-hint">First floor · Eddie's</span>
+                </span>
+                <span class="level-icon" aria-hidden="true"></span>
+              </span>
+            </button>
+            <div class="level-panel-wrap">
+              <div class="level-panel" id="panel-main" role="region" aria-labelledby="btn-main">
+                <div class="level-panel-inner">
+                  <div class="level-media" data-spotlight data-tilt>
+                    <img src="assets/images/floor-main.jpg" alt="A packed Main Bar dancefloor under lights" loading="lazy">
+                  </div>
+                  <div class="level-copy">
+                    <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday, first up the stairs from Quay Street.</p>
+                    <dl class="level-meta">
+                      <div><dt>On the decks</dt><dd>House &amp; dance, guest line-ups</dd></div>
+                      <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
+                    </dl>
+                    <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="building-level" id="level-florist">
-          <button type="button" class="building-floor building-floor--florist" aria-expanded="false" aria-controls="panel-florist" id="btn-florist">
-            <span class="floor-awning" aria-hidden="true"></span>
-            <span class="floor-arch" aria-hidden="true"></span>
-            <span class="floor-shop-windows" aria-hidden="true">
-              <span class="win"></span><span class="win"></span>
-            </span>
-            <span class="floor-birdcage" aria-hidden="true">
-              <svg viewBox="0 0 64 96">
-                <line class="cage-chain" x1="32" y1="0" x2="32" y2="15"></line>
-                <circle class="cage-metal" cx="32" cy="15" r="2.2"></circle>
-                <path class="cage-metal" d="M15 31 Q32 9 49 31" fill="none"></path>
-                <ellipse class="cage-metal" cx="32" cy="31" rx="17" ry="4" fill="none"></ellipse>
-                <ellipse class="cage-metal" cx="32" cy="73" rx="17" ry="4" fill="none"></ellipse>
-                <line class="cage-metal" x1="18" y1="31" x2="18" y2="73"></line>
-                <line class="cage-metal" x1="25" y1="31" x2="25" y2="73"></line>
-                <line class="cage-metal" x1="39" y1="31" x2="39" y2="73"></line>
-                <line class="cage-metal" x1="46" y1="31" x2="46" y2="73"></line>
-                <ellipse class="cage-base" cx="32" cy="79" rx="21" ry="4.5"></ellipse>
-                <line class="cage-door cage-metal" x1="32" y1="31" x2="32" y2="73"></line>
-                <path class="cage-bird" d="M27 58 Q30 54 33 58 Q36 54 39 58" fill="none"></path>
-              </svg>
-            </span>
-            <span class="floor-plaque">
-              <span class="level-num">01</span>
-              <span class="level-titles">
-                <span class="level-name">The Forbidden Florist</span>
-                <span class="level-hint">Ground floor · Eddie's</span>
+          <div class="building-level" id="level-florist">
+            <button type="button" class="building-floor building-floor--florist" aria-expanded="false" aria-controls="panel-florist" id="btn-florist">
+              <span class="floor-awning" aria-hidden="true"></span>
+              <span class="floor-arch" aria-hidden="true"></span>
+              <span class="floor-shop-windows" aria-hidden="true">
+                <span class="win"></span><span class="win"></span>
               </span>
-              <span class="level-icon" aria-hidden="true"></span>
-            </span>
-          </button>
-          <div class="level-panel-wrap">
-            <div class="level-panel" id="panel-florist" role="region" aria-labelledby="btn-florist">
-              <div class="level-panel-inner">
-                <div class="level-media" data-spotlight data-tilt>
-                  <img src="assets/images/floor-florist.jpg" alt="Inside The Forbidden Florist: a floral-draped bar under string lights" loading="lazy">
-                </div>
-                <div class="level-copy">
-                  <img class="florist-logo" src="assets/images/florist-logo.jpg" alt="The Forbidden Florist logo" loading="lazy">
-                  <p>Ground floor, same roof, same crew. The Forbidden Florist sets the tone before you head up the staircase for the Main Bar and RnB Bar.</p>
-                  <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+              <span class="floor-birdcage" aria-hidden="true">
+                <svg viewBox="0 0 64 96">
+                  <line class="cage-chain" x1="32" y1="0" x2="32" y2="15"></line>
+                  <circle class="cage-metal" cx="32" cy="15" r="2.2"></circle>
+                  <path class="cage-metal" d="M15 31 Q32 9 49 31" fill="none"></path>
+                  <ellipse class="cage-metal" cx="32" cy="31" rx="17" ry="4" fill="none"></ellipse>
+                  <ellipse class="cage-metal" cx="32" cy="73" rx="17" ry="4" fill="none"></ellipse>
+                  <line class="cage-metal" x1="18" y1="31" x2="18" y2="73"></line>
+                  <line class="cage-metal" x1="25" y1="31" x2="25" y2="73"></line>
+                  <line class="cage-metal" x1="39" y1="31" x2="39" y2="73"></line>
+                  <line class="cage-metal" x1="46" y1="31" x2="46" y2="73"></line>
+                  <ellipse class="cage-base" cx="32" cy="79" rx="21" ry="4.5"></ellipse>
+                  <line class="cage-door cage-metal" x1="32" y1="31" x2="32" y2="73"></line>
+                  <path class="cage-bird" d="M27 58 Q30 54 33 58 Q36 54 39 58" fill="none"></path>
+                </svg>
+              </span>
+              <span class="floor-plaque">
+                <span class="level-num">01</span>
+                <span class="level-titles">
+                  <span class="level-name">The Forbidden Florist</span>
+                  <span class="level-hint">Ground floor · Eddie's</span>
+                </span>
+                <span class="level-icon" aria-hidden="true"></span>
+              </span>
+            </button>
+            <div class="level-panel-wrap">
+              <div class="level-panel" id="panel-florist" role="region" aria-labelledby="btn-florist">
+                <div class="level-panel-inner">
+                  <div class="level-media" data-spotlight data-tilt>
+                    <img src="assets/images/floor-florist.jpg" alt="Inside The Forbidden Florist: a floral-draped bar under string lights" loading="lazy">
+                  </div>
+                  <div class="level-copy">
+                    <img class="florist-logo" src="assets/images/florist-logo.jpg" alt="The Forbidden Florist logo" loading="lazy">
+                    <p>Ground floor, same roof, same crew. The Forbidden Florist sets the tone before you head up the staircase for the Main Bar and RnB Bar.</p>
+                    <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="building-foundation" aria-hidden="true"></div>
+          <div class="building-foundation" aria-hidden="true"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -526,6 +572,7 @@
   <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next photo">›</button>
 </div>
 
+<script type="module" src="js/building3d.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

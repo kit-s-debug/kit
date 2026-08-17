@@ -123,6 +123,51 @@ Beyond the original hero/floors/gallery/contact, this pass adds:
   consistently and scales properly on small screens. Anchor targets also
   got `scroll-margin-top` — section headings were previously being
   clipped underneath the sticky header on every in-page nav click.
+- **The building is a real 3D scene now.** "One building, three floors" was
+  the strongest idea on the site and the weakest execution — a flat facade
+  built out of divs that read as clip art. It's now a stylised miniature of
+  the venue modelled in Three.js (`js/building3d.js`), with a scroll-driven
+  camera that flies in through a window and travels down through the floors.
+  - **Structure.** The section is a tall `.venue-scroller` holding a sticky
+    full-height `.venue-stage`; scroll distance through the scroller is the
+    only input to the camera. Copy panels swap per stage, so the writing and
+    the camera never disagree.
+  - **The journey.** Exterior three-quarter orbit → in through the top-floor
+    centre window → RnB Bar → down to the Main Bar → down to the Florist →
+    back out onto the street. Thirteen keyframes interpolated with a
+    smoothstep. The centre window on each upper storey is left genuinely
+    unglazed rather than faded out, because that is the opening the camera
+    actually passes through.
+  - **Three different rooms, not three tinted boxes.** The Florist has warm
+    festoon lights, a hanging canopy of blooms, planting and café tables; the
+    Main Bar has a DJ booth, speaker stacks with visible drivers, a lit
+    dancefloor and four sweeping spotlights; the RnB Bar is darker and
+    magenta, built around a back-lit bar and booth seating.
+  - **Interaction.** On a pointer-fine device, raycasting against three
+    invisible slabs lights the hovered floor and names it in a readout that
+    follows the cursor. The floor picker works by scrolling the page to the
+    right point in the sequence rather than moving the camera directly, so
+    the camera and the scrollbar can never disagree.
+- **What that 3D cost, and what was done about it.** The scene ships with no
+  shadow maps and no post-processing — both are the expensive parts of a
+  Three.js page, and the glow is faked with additive sprites instead.
+  Measured draw calls came in at 160/frame on the first pass; instancing the
+  crowd (35 figures across three floors, previously two meshes each) brought
+  that to 114. Pixel ratio is capped, antialiasing is off on mobile, particle
+  and haze counts are halved there, the render loop is gated by an
+  `IntersectionObserver`, and scroll damping is exponential in real time
+  rather than per-frame so the camera doesn't lag behind the scrollbar on a
+  slow device.
+  **Dependency**: Three.js r160, self-hosted at
+  `assets/vendor/three.module.min.js` (MIT, licence kept alongside it),
+  fetched with `npm pack` — no CDN, no bundler, no `node_modules`.
+- **The illustrated facade is now the fallback, not the main event.** It is
+  still in the page, unchanged, inside `.venue-fallback`, and it is what gets
+  shown when WebGL is unavailable, when `prefers-reduced-motion` is set, or
+  when JS is off. In those cases `building3d.js` returns before it creates a
+  renderer, so nothing is downloaded or initialised. It keeps its accordion,
+  its real room photos and its floor-by-floor detail, so no content is lost
+  on that path.
 - **A literal illustrated building** — the old side-by-side floor panels
   are now an actual building facade, drawn in CSS: a cornice cap, three
   storeys, and a foundation strip labelled "Quay Street." Each storey is
