@@ -218,6 +218,19 @@ Beyond the original hero/floors/contact, this pass adds:
   `IntersectionObserver`, and scroll damping is exponential in real time
   rather than per-frame so the camera doesn't lag behind the scrollbar on a
   slow device.
+- **Two venues, one WebGL context at a time.** Now that the switcher can put
+  Eddie's and Labrinth's buildings on screen in the same session, the scene
+  is not built at load any more: a second `IntersectionObserver` with a
+  `150% 0px` margin holds off construction until its section is genuinely
+  near the viewport, so the venue you are not looking at costs nothing. That
+  matters because a phone under memory pressure will quietly kill a WebGL
+  context, and a killed context does not throw — it just leaves a black
+  canvas. For the same reason the canvas now listens for
+  `webglcontextlost` (calling `preventDefault()`, which is what lets the
+  browser hand the context back at all) and `webglcontextrestored`, pausing
+  the loop in between and re-sizing on the way out; Three.js re-uploads what
+  it needs on the next frame, so rendering simply resumes instead of
+  stopping for good.
   **Dependency**: Three.js r160, self-hosted at
   `assets/vendor/three.module.min.js` (MIT, licence kept alongside it),
   fetched with `npm pack` — no CDN, no bundler, no `node_modules`.
