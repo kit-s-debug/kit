@@ -4,18 +4,25 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  /* This file is shared by both venues' pages, so anything page-specific
+     is guarded — Labrinth has a header and a footer but no drawer, hero
+     video, building or countdown. */
+
   /* ---------- sticky header shrink/blur ---------- */
   var header = document.getElementById("site-header");
-  function onScroll() {
-    header.classList.toggle("is-scrolled", window.scrollY > 12);
+  if (header) {
+    var onScroll = function () {
+      header.classList.toggle("is-scrolled", window.scrollY > 12);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
-  onScroll();
-  window.addEventListener("scroll", onScroll, { passive: true });
 
   /* ---------- mobile nav: slide-in drawer ---------- */
   var navToggle = document.getElementById("nav-toggle");
   var mobileNav = document.getElementById("mobile-nav");
   var mobileNavBackdrop = document.getElementById("mobile-nav-backdrop");
+  if (navToggle && mobileNav && mobileNavBackdrop) {
   mobileNav.inert = true;
   function openMobileNav() {
     navToggle.setAttribute("aria-expanded", "true");
@@ -45,6 +52,7 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") closeMobileNav();
   });
+  }
 
   /* ---------- reveal on scroll ---------- */
   var revealEls = document.querySelectorAll(".reveal");

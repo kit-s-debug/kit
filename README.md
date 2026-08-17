@@ -67,6 +67,24 @@ Beyond the original hero/floors/contact, this pass adds:
   at several points inside that window (50ms/300ms/400ms/800ms/1100ms
   after load) all now stick, while the hash-load fix still lands at the
   top every time across repeated tests.
+- **Two venues, one switcher, two sites.** Labrinth used to be a passive
+  "Also by Eddie's: Labrinth" badge — on desktop beside the logo, and again
+  down in the mobile drawer's footer, linked to `#`. It's now an actual
+  venue switch sitting next to the wordmark at every width (the drawer copy
+  is gone), with the current venue lit and underlined in that venue's own
+  accent. Labrinth is a **separate page** (`labrinth.html`), not a section
+  of this one, because the two are different places that happen to share an
+  owner.
+  `labrinth.html` reuses the same stylesheet, type system and craft (grain,
+  dot cursor, magnetic buttons) but overrides the palette tokens under
+  `:root.theme-labrinth` — Eddie's warm copper/aubergine swaps for a cold
+  ink-and-jade register, so arriving there reads as a different room rather
+  than another page. Only the tokens change, so every existing component
+  follows automatically. Its one owned motif is a maze path that draws
+  itself on arrival, which is the name made visual rather than decoration.
+  `js/main.js` is shared by both pages, so the header and drawer blocks are
+  now null-guarded — Labrinth has a header and footer but no drawer, hero
+  video, building or countdown.
 - **No separate "About" section.** There used to be a stat-strip section
   right after the hero ("Two/Three floors. One reputation." plus a
   reputation/layout/address stat list) that mostly repeated what the
@@ -223,7 +241,7 @@ Beyond the original hero/floors/contact, this pass adds:
   (was "Reserve a Table" — dropped that wording sitewide).
 - **Mobile menu** is a full-height slide-in drawer (not a dropdown) with a
   blurred backdrop, numbered links that cascade in on open, and a footer
-  with the sister-venue badge and contact details. Closes on a link click,
+  with the venue's contact details. Closes on a link click,
   backdrop click, or Escape; marked `inert` while closed so it can't be
   tabbed into, and locks background scroll while open.
 - **A light 3D tilt on scroll-reveal** — sections settle in with a small
@@ -235,8 +253,6 @@ Beyond the original hero/floors/contact, this pass adds:
   TripAdvisor reviews (linked back to the source), plus a factual note
   on TripAdvisor ranking. See "Reviews research" below for what I could
   and couldn't verify.
-- **Labrinth sister-venue badge** next to the logo (header on desktop,
-  bottom of the menu on mobile) — links to `#` until there's a real URL.
 - **No gallery section.** There was one ("Inside / The rooms, on a night
   that ran") — four real venue photographs in an asymmetric picture edit.
   It has been removed at the client's request, along with its four derived
@@ -368,6 +384,16 @@ find and replace.
 Everything below reads confidently on the page but is an assumption or
 industry-standard placeholder, not confirmed fact — check and edit before
 this goes live:
+
+- **Everything about Labrinth.** The page deliberately asserts almost
+  nothing: no address, no opening nights, no door policy, no photography,
+  no reviews. All that is known from this project is that it shares an
+  owner with Eddie Rocks, so that is all the page claims. The wordmark is
+  set in Anton as a stand-in — there is no Labrinth logo asset. The phone
+  number and email on it are Eddie's own, presented as the office handling
+  enquiries for both venues; if Labrinth has its own line, swap them.
+  If Labrinth already has a live website, the switcher should point at that
+  URL instead and `labrinth.html` can be deleted.
 
 - **Opening days, hours and entry fee** — confirmed directly: open
   Wednesday, Friday and Saturday; Wednesday and Friday are free entry,

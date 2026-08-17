@@ -57,7 +57,16 @@
   <div class="header-inner">
     <div class="header-brand">
       <a href="#top" class="wordmark"><img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark"></a>
-      <a href="#" class="sister-badge" data-magnetic>Also by Eddie's: <strong>Labrinth</strong></a>
+      <!-- Two venues under one owner, so the switch sits beside the mark
+           rather than buried in a menu. Labrinth is a separate site, not a
+           section of this one. -->
+      <nav class="venue-switch" aria-label="Choose venue">
+        <span class="venue-switch-label">Eddie's</span>
+        <span class="venue-switch-set">
+          <a href="index.html" class="venue-switch-item is-current" aria-current="page">Eddie Rocks</a>
+          <a href="labrinth.html" class="venue-switch-item">Labrinth</a>
+        </span>
+      </nav>
     </div>
 
     <nav class="primary-nav" aria-label="Primary">
@@ -91,7 +100,6 @@
     </ul>
   </nav>
   <div class="mobile-nav-foot">
-    <a href="#" class="mobile-nav-sister">Also by Eddie's: <strong>Labrinth</strong></a>
     <div class="mobile-nav-contact">
       <a href="tel:01437779595">01437 779595</a>
       <a href="mailto:contact@eddies.co">contact@eddies.co</a>
