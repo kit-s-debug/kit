@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest</title>
-<meta name="description" content="Eddie Rocks, Haverfordwest. Three floors on Quay Street: The Forbidden Florist, the Main Bar and the RnB Bar. Private hire, VIP nights and showcase events.">
+<meta name="description" content="Eddie Rocks, Haverfordwest. Three floors on Quay Street: The Forbidden Florist, the Main Bar and the RnB Bar. Private hire and showcase events.">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
 <script>
@@ -56,16 +56,16 @@
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <div class="header-brand">
-      <a href="#top" class="wordmark"><img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark"></a>
-      <!-- Two venues under one owner, so the switch sits beside the mark
-           rather than buried in a menu. Labrinth is a separate site, not a
-           section of this one. -->
+      <!-- One owner, three connected rooms, so they read as a single lockup:
+           the mark is the way back to Eddie's, and the two names beside it
+           are set in the mark's own Anton rather than as a separate nav.
+           Labrinth is its own site; Rewind is the floor under it. -->
       <nav class="venue-switch" aria-label="Choose venue">
-        <span class="venue-switch-label">Eddie's</span>
-        <span class="venue-switch-set">
-          <a href="index.html" class="venue-switch-item is-current" aria-current="page">Eddie Rocks</a>
-          <a href="labrinth.html" class="venue-switch-item">Labrinth</a>
-        </span>
+        <a href="#top" class="venue-switch-mark is-current" aria-current="page">
+          <img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark">
+        </a>
+        <a href="labrinth.html" class="venue-switch-item">Labrinth</a>
+        <a href="labrinth.html#rewind" class="venue-switch-item">Rewind</a>
       </nav>
     </div>
 
@@ -337,7 +337,7 @@
   <section class="experience" id="experience" aria-labelledby="experience-heading">
     <div class="experience-head reveal">
       <p class="eyebrow">Book it</p>
-      <h2 id="experience-heading">Three ways to spend the night</h2>
+      <h2 id="experience-heading">Two ways to spend the night</h2>
     </div>
 
     <ol class="experience-list">
@@ -354,21 +354,10 @@
       </li>
       <li class="experience-row reveal">
         <div class="experience-media" data-tilt>
-          <img src="assets/images/exp-vip.jpg" alt="The Forbidden Florist bar, bottles and glassware under a floral canopy" loading="lazy">
-        </div>
-        <div class="experience-body">
-          <span class="experience-index" aria-hidden="true">02</span>
-          <h3>VIP Nights</h3>
-          <p>Booth and table reservations, with a drinks package built for comfort over chaos.</p>
-          <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
-        </div>
-      </li>
-      <li class="experience-row reveal">
-        <div class="experience-media" data-tilt>
           <img src="assets/images/exp-private.jpg" alt="The Forbidden Florist floor laid out with tables and booth seating before service" loading="lazy">
         </div>
         <div class="experience-body">
-          <span class="experience-index" aria-hidden="true">03</span>
+          <span class="experience-index" aria-hidden="true">02</span>
           <h3>Private Hire</h3>
           <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
           <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
@@ -429,7 +418,7 @@
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">03</span><span class="faq-q">Do I need to book a table in advance?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Walk-ins are welcome on both floors, but tables and VIP booths are limited. Booking ahead through Private Hire or a VIP Night enquiry guarantees your spot.</p>
+          <p>Walk-ins are welcome on both floors, but tables and booths are limited. Get in touch ahead of time and we'll hold one for you.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">04</span><span class="faq-q">What's the age policy?</span><span class="plus" aria-hidden="true"></span></summary>

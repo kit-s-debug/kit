@@ -166,6 +166,12 @@ p{ margin:0; }
 .btn--text{
   padding:0 0 3px; border-radius:0; letter-spacing:.04em; gap:10px;
   color:var(--silver-bright); border-bottom:1px solid var(--silver-deep); font-size:13px;
+  position:relative;
+}
+/* the rule under the label is the design, so the touch area is grown
+   around it rather than by padding the box and moving the rule */
+.btn--text::before{
+  content:""; position:absolute; left:0; right:0; top:-11px; bottom:-11px;
 }
 .btn--text:hover{ color:var(--white); border-color:var(--white); }
 .btn--text span[aria-hidden]{
@@ -226,33 +232,38 @@ p{ margin:0; }
 .wordmark:hover .logo-mark{ filter:drop-shadow(0 0 12px rgba(243,185,140,.5)); }
 .wordmark--footer .logo-mark{ height:74px; }
 
-/* ---- venue switch: two sister venues, side by side next to the mark ----
-   The current venue is the lit one; the other is a link out to its own
-   site. Kept visible at every width, because it's a wayfinding control
-   rather than navigation within this page. */
-.venue-switch{
-  display:flex; flex-direction:column; gap:5px;
-  padding-left:16px; border-left:1px solid var(--line-strong);
-}
-.venue-switch-label{
-  font-size:8.5px; font-weight:600; letter-spacing:.24em; text-transform:uppercase;
-  color:var(--silver-deep); line-height:1;
-}
-.venue-switch-set{ display:flex; align-items:center; gap:15px; }
+/* ---- venue switch: one owner's rooms, set as a single lockup ----
+   Eddie's mark is the way back to its site; Labrinth and Rewind sit beside
+   it in the mark's own Anton so the three read as connected rather than as
+   a nav. The one you're on is the lit one. Kept visible at every width,
+   because it's wayfinding between sites, not navigation within a page. */
+.venue-switch{ display:flex; align-items:center; gap:14px; }
+/* Anton sits on a short box, so the names measured ~14px tall to aim at.
+   Padding grows the touch area and a matching negative margin takes it
+   back out of the layout, so the lockup itself doesn't move. */
+.venue-switch-item,
+.venue-switch-mark{ padding-block:15px; margin-block:-15px; }
+.venue-switch-mark{ display:inline-flex; text-decoration:none; }
+.venue-switch-mark .logo-mark{ height:38px; }
+.venue-switch-mark:hover .logo-mark{ filter:drop-shadow(0 0 12px rgba(243,185,140,.5)); }
+/* The names sit in the mark's own Anton so the three read as one lockup.
+   A rule, not a bullet or a slash, keeps them joined without adding a
+   second voice to the type. */
 .venue-switch-item{
   position:relative; text-decoration:none; white-space:nowrap;
-  font-family:var(--font-accent); font-style:italic; font-size:15px; line-height:1.1;
+  font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+  font-size:17px; letter-spacing:.01em; line-height:1;
   color:var(--dim); transition:color .22s ease;
 }
-.venue-switch-item + .venue-switch-item::before{
+.venue-switch-item::before{
   content:""; position:absolute; left:-8px; top:50%;
-  width:1px; height:13px; transform:translateY(-50%); background:var(--line-strong);
+  width:1px; height:15px; transform:translateY(-50%); background:var(--line-strong);
 }
 .venue-switch-item:hover{ color:var(--white); }
 .venue-switch-item.is-current{ color:var(--silver-bright); }
 /* a hairline under the venue you're currently on */
 .venue-switch-item.is-current::after{
-  content:""; position:absolute; left:0; right:0; bottom:-3px; height:1px;
+  content:""; position:absolute; left:0; right:0; bottom:10px; height:1px;
   background:var(--silver-bright); opacity:.8;
 }
 
@@ -260,6 +271,11 @@ p{ margin:0; }
 .primary-nav a{
   position:relative; text-decoration:none; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
   color:var(--dim); transition:color .2s ease; padding-bottom:4px;
+}
+/* The underline sits on the padding edge, so the touch area is grown with a
+   pseudo-element rather than more padding, which would drag the rule down. */
+.primary-nav a::before{
+  content:""; position:absolute; left:-4px; right:-4px; top:-13px; bottom:-13px;
 }
 .primary-nav a::after{
   content:""; position:absolute; left:0; right:100%; bottom:0; height:1px; background:var(--silver-bright);
@@ -417,6 +433,11 @@ p{ margin:0; }
 .hero-scrollcue{
   flex:0 0 auto; position:relative; width:1px; height:44px; text-decoration:none;
   background:linear-gradient(180deg, var(--line-strong), transparent);
+}
+/* The cue is drawn as a hairline, which left a literally 1px-wide link to
+   aim at. Widen the target without widening the mark. */
+.hero-scrollcue::before{
+  content:""; position:absolute; top:-6px; bottom:-6px; left:-22px; right:-22px;
 }
 .hero-scrollcue span{
   position:absolute; left:50%; top:0; width:5px; height:5px; margin-left:-2.5px; border-radius:50%;
@@ -867,7 +888,10 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 .contact-details address{ font-style:normal; color:var(--white); font-family:var(--font-accent); font-size:20px; line-height:1.7; }
 .contact-links{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
-.contact-links a{ text-decoration:none; color:var(--silver-bright); font-size:16px; }
+.contact-links a{
+  text-decoration:none; color:var(--silver-bright); font-size:16px;
+  display:inline-block; padding:9px 4px; margin:-9px -4px;
+}
 .contact-links a:hover{ color:var(--white); }
 
 .map-card{
@@ -915,13 +939,25 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 
 .footer-inner{ max-width:var(--container); margin:0 auto; display:grid; grid-template-columns:auto 1fr auto; gap:60px; align-items:start; }
 .site-footer nav ul{ list-style:none; margin:0; padding:0; display:flex; gap:26px; flex-wrap:wrap; }
-.site-footer nav a{ text-decoration:none; color:var(--dim); font-size:13px; letter-spacing:.06em; text-transform:uppercase; }
+/* Small uppercase type makes a ~15px-tall thing to hit. Padding grows the
+   target and the negative margin keeps the row sitting where it was. */
+.site-footer nav a{
+  text-decoration:none; color:var(--dim); font-size:13px; letter-spacing:.06em;
+  text-transform:uppercase; display:inline-block; padding:14px 6px; margin:-14px -6px;
+}
 .site-footer nav a:hover{ color:var(--white); }
 .footer-meta{ text-align:right; color:var(--dim); font-size:13.5px; line-height:1.8; }
-.footer-meta a{ text-decoration:none; color:var(--dim); }
+.footer-meta a{
+  text-decoration:none; color:var(--dim);
+  display:inline-block; padding:13px 4px; margin:-13px -4px;
+}
 .footer-meta a:hover{ color:var(--silver-bright); }
 .social-links{ list-style:none; display:flex; gap:14px; justify-content:flex-end; padding:0; margin:14px 0 0; }
-.social-links a{ color:var(--dim); display:inline-flex; transition:color .2s ease; }
+/* the glyphs are 18px; the thing you tap is 44 */
+.social-links a{
+  color:var(--dim); display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:44px; margin:-13px; transition:color .2s ease;
+}
 .social-links a:hover{ color:var(--silver-bright); }
 .footer-legal{
   max-width:var(--container); margin:32px auto 0; padding-top:20px; border-top:1px solid var(--line);
@@ -1043,11 +1079,10 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .utility-countdown{ margin-right:16px; padding-left:14px; gap:6px; }
   /* the switch stays, just tighter — it's how you reach the other venue */
   .header-brand{ gap:12px; }
-  .venue-switch{ padding-left:12px; gap:4px; }
-  .venue-switch-label{ font-size:8px; letter-spacing:.18em; }
-  .venue-switch-item{ font-size:13px; }
-  .venue-switch-set{ gap:12px; }
-  .venue-switch-item + .venue-switch-item::before{ left:-6px; height:11px; }
+  .venue-switch{ gap:10px; }
+  .venue-switch-mark .logo-mark{ height:30px; }
+  .venue-switch-item{ font-size:14px; }
+  .venue-switch-item::before{ left:-6px; height:12px; }
 
   /* tighten the vertical type so a phone screen isn't a wall of copy */
   .hero{ min-height:min(88vh, 720px); }
@@ -1150,7 +1185,8 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .lab-contact .contact-links{ margin-top:0; }
 
 .footer-inner--lab{ grid-template-columns:auto 1fr auto; align-items:center; }
-.venue-switch--footer{ border-left:0; padding-left:0; justify-self:center; }
+.venue-switch--footer{ justify-self:center; }
+.venue-switch--footer .logo-mark{ height:52px; }
 
 @media (max-width:900px){
   .lab-hero{ padding-top:calc(var(--header-h) + 24px); }

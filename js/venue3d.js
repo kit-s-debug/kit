@@ -491,16 +491,42 @@ export function mountVenue(config) {
     /* Scroll position stays the source of truth: picking a floor scrolls the
        page to the point in the sequence where that floor is on screen, so the
        camera and the scrollbar can never disagree. */
+    function gotoFloor(idx, behavior) {
+      var k = N - 1 - idx;
+      var anchor = ENTER_AT + k * SLICE + SLICE * 0.5;
+      var travel = scroller.offsetHeight - window.innerHeight;
+      var top = scroller.getBoundingClientRect().top + window.scrollY + travel * anchor;
+      window.scrollTo({ top: top, behavior: behavior || "smooth" });
+    }
     section.querySelectorAll("[data-goto-floor]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        var idx = Number(btn.dataset.gotoFloor);
-        var k = N - 1 - idx;
-        var anchor = ENTER_AT + k * SLICE + SLICE * 0.5;
-        var travel = scroller.offsetHeight - window.innerHeight;
-        var top = scroller.getBoundingClientRect().top + window.scrollY + travel * anchor;
-        window.scrollTo({ top: top, behavior: "smooth" });
+        gotoFloor(Number(btn.dataset.gotoFloor));
       });
     });
+
+    /* Each floor is addressable by its own name — #rewind, #main-bar — so a
+       link from the other venue's header can land on the room it names
+       rather than the top of the building. The scroll position is still the
+       only source of truth; this just picks the right one. */
+    function slug(s) {
+      return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+    function floorFromHash() {
+      var h = window.location.hash.slice(1);
+      if (!h) return -1;
+      for (var i = 0; i < config.floors.length; i++) {
+        if (slug(config.floors[i].name) === h) return i;
+      }
+      return -1;
+    }
+    function jumpToHash(behavior) {
+      var idx = floorFromHash();
+      if (idx >= 0) gotoFloor(idx, behavior);
+    }
+    window.addEventListener("hashchange", function () { jumpToHash(); });
+    /* On a cold load the scroller has only just been shown, so let layout
+       settle before measuring it. */
+    if (floorFromHash() >= 0) requestAnimationFrame(function () { jumpToHash("auto"); });
 
     // ------------------------------------------------------------ hover focus
     /* Raycast invisible slabs, one per floor, so hovering the building lights

@@ -4,9 +4,9 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  /* This file is shared by both venues' pages, so anything page-specific
-     is guarded — Labrinth has a header and a footer but no drawer, hero
-     video, building or countdown. */
+  /* This file is shared by both venues' pages, so anything page-specific is
+     guarded. Both now have a header, footer, drawer, hero video and 3D
+     building; Labrinth has no countdown, events, gallery or experience rows. */
 
   /* ---------- sticky header shrink/blur ---------- */
   var header = document.getElementById("site-header");
@@ -19,40 +19,44 @@
   }
 
   /* ---------- mobile nav: slide-in drawer ---------- */
-  var navToggle = document.getElementById("nav-toggle");
-  var mobileNav = document.getElementById("mobile-nav");
-  var mobileNavBackdrop = document.getElementById("mobile-nav-backdrop");
-  if (navToggle && mobileNav && mobileNavBackdrop) {
-  mobileNav.inert = true;
-  function openMobileNav() {
-    navToggle.setAttribute("aria-expanded", "true");
-    mobileNav.classList.add("is-open");
-    mobileNavBackdrop.classList.add("is-open");
-    mobileNav.inert = false;
-    document.body.style.overflow = "hidden";
-    var firstLink = mobileNav.querySelector("a");
-    if (firstLink) firstLink.focus();
-  }
-  function closeMobileNav() {
-    navToggle.setAttribute("aria-expanded", "false");
-    mobileNav.classList.remove("is-open");
-    mobileNavBackdrop.classList.remove("is-open");
+  /* Wired per toggle rather than by a single id: both venues have their own
+     drawer, and the combined single-file preview puts both in one document. */
+  Array.prototype.forEach.call(document.querySelectorAll(".nav-toggle"), function (navToggle) {
+    var mobileNav = document.getElementById(navToggle.getAttribute("aria-controls"));
+    if (!mobileNav) return;
+    var mobileNavBackdrop = mobileNav.previousElementSibling;
+    if (!mobileNavBackdrop || !mobileNavBackdrop.classList.contains("mobile-nav-backdrop")) return;
+
     mobileNav.inert = true;
-    document.body.style.overflow = "";
-    navToggle.focus();
-  }
-  navToggle.addEventListener("click", function () {
-    var open = navToggle.getAttribute("aria-expanded") === "true";
-    if (open) closeMobileNav(); else openMobileNav();
+    function openMobileNav() {
+      navToggle.setAttribute("aria-expanded", "true");
+      mobileNav.classList.add("is-open");
+      mobileNavBackdrop.classList.add("is-open");
+      mobileNav.inert = false;
+      document.body.style.overflow = "hidden";
+      var firstLink = mobileNav.querySelector("a");
+      if (firstLink) firstLink.focus();
+    }
+    function closeMobileNav() {
+      navToggle.setAttribute("aria-expanded", "false");
+      mobileNav.classList.remove("is-open");
+      mobileNavBackdrop.classList.remove("is-open");
+      mobileNav.inert = true;
+      document.body.style.overflow = "";
+      navToggle.focus();
+    }
+    navToggle.addEventListener("click", function () {
+      var open = navToggle.getAttribute("aria-expanded") === "true";
+      if (open) closeMobileNav(); else openMobileNav();
+    });
+    mobileNav.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") closeMobileNav();
+    });
+    mobileNavBackdrop.addEventListener("click", closeMobileNav);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") closeMobileNav();
+    });
   });
-  mobileNav.addEventListener("click", function (e) {
-    if (e.target.tagName === "A") closeMobileNav();
-  });
-  mobileNavBackdrop.addEventListener("click", closeMobileNav);
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") closeMobileNav();
-  });
-  }
 
   /* ---------- reveal on scroll ---------- */
   var revealEls = document.querySelectorAll(".reveal");

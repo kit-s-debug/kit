@@ -17,21 +17,58 @@
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <div class="header-brand">
-      <a href="labrinth.html" class="wordmark wordmark--text">Labrinth</a>
+      <!-- Same lockup as Eddie's, so the group reads identically whichever
+           site you land on: the mark takes you back to Eddie's, the names
+           beside it are the rooms it's connected to. -->
       <nav class="venue-switch" aria-label="Choose venue">
-        <span class="venue-switch-label">Eddie's</span>
-        <span class="venue-switch-set">
-          <a href="index.html" class="venue-switch-item">Eddie Rocks</a>
-          <a href="labrinth.html" class="venue-switch-item is-current" aria-current="page">Labrinth</a>
-        </span>
+        <a href="index.html" class="venue-switch-mark">
+          <img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark">
+        </a>
+        <span class="venue-switch-item is-current" aria-current="page">Labrinth</span>
+        <a href="#rewind" class="venue-switch-item">Rewind</a>
       </nav>
     </div>
 
+    <!-- Labrinth needs somewhere of its own to go. Without this the only
+         controls on the page were three different ways back to Eddie's. -->
+    <!-- The floors are named in the lockup, in the picker inside the
+         building and in the drawer, so repeating them here just put REWIND
+         on screen twice. This nav is the page's own sections. -->
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#lab-floors">The Building</a></li>
+        <li><a href="#enquire">Enquire</a></li>
+      </ul>
+    </nav>
+
     <div class="header-actions">
       <a href="#enquire" class="btn btn--outline" data-magnetic>Enquire</a>
+      <button type="button" class="nav-toggle" id="lab-nav-toggle" aria-expanded="false" aria-controls="lab-mobile-nav">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
     </div>
   </div>
 </header>
+
+<div class="mobile-nav-backdrop" id="lab-mobile-nav-backdrop"></div>
+<div class="mobile-nav" id="lab-mobile-nav">
+  <nav aria-label="Mobile">
+    <ul>
+      <li style="--i:0"><a href="#lab-floors"><span class="mobile-nav-num">01</span>The Building</a></li>
+      <li style="--i:1"><a href="#main-bar"><span class="mobile-nav-num">02</span>Main Bar</a></li>
+      <li style="--i:2"><a href="#rewind"><span class="mobile-nav-num">03</span>Rewind</a></li>
+      <li style="--i:3"><a href="#enquire"><span class="mobile-nav-num">04</span>Enquire</a></li>
+      <li style="--i:4"><a href="index.html"><span class="mobile-nav-num">05</span>Eddie Rocks</a></li>
+    </ul>
+  </nav>
+  <div class="mobile-nav-foot">
+    <div class="mobile-nav-contact">
+      <a href="tel:01437779595">01437 779595</a>
+      <a href="mailto:contact@eddies.co">contact@eddies.co</a>
+    </div>
+  </div>
+</div>
 
 <main id="main">
 
@@ -57,7 +94,7 @@
       <p class="lab-lede">The other room. Same people behind the bar, a different night entirely — and its own site, rather than a page tucked inside Eddie Rocks.</p>
       <div class="lab-actions">
         <a href="#enquire" class="btn btn--solid" data-magnetic>Enquire</a>
-        <a href="index.html" class="btn btn--text" data-magnetic>Back to Eddie Rocks <span aria-hidden="true">→</span></a>
+        <a href="#lab-floors" class="btn btn--text" data-magnetic>Go Inside <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -103,12 +140,12 @@
          or JS off), so the two floors are still described either way. -->
     <div class="venue-fallback">
       <div class="lab-floorlist">
-        <article>
+        <article id="main-bar">
           <span class="lab-floorlist-num" aria-hidden="true">02</span>
           <h3>Main Bar</h3>
           <p>Upstairs, with a live DJ on the decks.</p>
         </article>
-        <article>
+        <article id="rewind">
           <span class="lab-floorlist-num" aria-hidden="true">01</span>
           <h3>Rewind</h3>
           <p>Downstairs: 90s and 00s classics, and you can sing along on your own or as a group.</p>
@@ -138,11 +175,11 @@
   <div class="footer-inner footer-inner--lab">
     <a href="labrinth.html" class="wordmark wordmark--text wordmark--footer-text">Labrinth</a>
     <nav class="venue-switch venue-switch--footer" aria-label="Choose venue">
-      <span class="venue-switch-label">Eddie's</span>
-      <span class="venue-switch-set">
-        <a href="index.html" class="venue-switch-item">Eddie Rocks</a>
-        <a href="labrinth.html" class="venue-switch-item is-current" aria-current="page">Labrinth</a>
-      </span>
+      <a href="index.html" class="venue-switch-mark">
+        <img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark">
+      </a>
+      <span class="venue-switch-item is-current" aria-current="page">Labrinth</span>
+      <a href="#rewind" class="venue-switch-item">Rewind</a>
     </nav>
     <div class="footer-meta">
       <p><a href="tel:01437779595">01437 779595</a> · <a href="mailto:contact@eddies.co">contact@eddies.co</a></p>
