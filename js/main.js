@@ -127,6 +127,40 @@
     heroVideo.addEventListener("playing", function () { listen(false); });
     listen(true);
     tryPlay();
+
+    /* Coming back to a tab that has been in the background for a while is
+       the most reliable way to find the hero frozen, so ask again on the
+       way in. */
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) tryPlay();
+    });
+
+    /* Watch the clock rather than trust the events. A background video can
+       stop painting without firing anything useful — a decoder the phone
+       evicted under memory pressure looks exactly like a video that is
+       still "playing" — so if currentTime hasn't moved while we believe it
+       is running, ask again, and re-fetch if asking doesn't take. */
+    var lastTime = -1;
+    var stuck = 0;
+    setInterval(function () {
+      if (heroVideo.paused || document.hidden) {
+        lastTime = -1;
+        stuck = 0;
+        return;
+      }
+      if (heroVideo.currentTime === lastTime) {
+        stuck++;
+        if (stuck === 3) tryPlay();
+        if (stuck >= 6) {
+          stuck = 0;
+          heroVideo.load();
+          tryPlay();
+        }
+      } else {
+        stuck = 0;
+      }
+      lastTime = heroVideo.currentTime;
+    }, 1000);
   }
 
   /* ---------- hero scroll parallax ---------- */

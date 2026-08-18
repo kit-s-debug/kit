@@ -337,6 +337,20 @@ p{ margin:0; }
   padding:calc(var(--header-h) + 24px) 0 0;
 }
 .hero-media{ position:absolute; inset:0; overflow:hidden; }
+/* The graded still sits under the footage permanently, not just as the
+   poster. Every way a background video stops painting is silent — the seek
+   at the loop point, a decoder the phone has evicted under memory pressure,
+   autoplay refused, low-power mode — and with nothing behind it the hero
+   falls through to the near-black page ground and reads as broken. With the
+   still there, a video that drops out just looks like a photograph. */
+.hero-media{ background:url("../assets/images/hero-room.jpg") center/cover no-repeat; }
+.theme-labrinth .hero-media{ background-image:url("../assets/images/labrinth-room.jpg"); }
+/* matches the 700px point where main.js swaps to the portrait cut, so the
+   still and the footage are always the same framing */
+@media (max-width:700px){
+  .hero-media{ background-image:url("../assets/images/hero-room-portrait.jpg"); }
+  .theme-labrinth .hero-media{ background-image:url("../assets/images/labrinth-room-portrait.jpg"); }
+}
 .hero-video{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
   /* a very slow push-in stops an 8s loop from reading as a repeating GIF */
@@ -1063,8 +1077,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   /* the hero footage strobes hard. Anyone who has asked for reduced motion
      gets the graded still instead — the video is never played at all. */
   .hero-video{ display:none; }
-  .hero-media{ background:url("../assets/images/hero-room.jpg") center/cover no-repeat; }
-  .theme-labrinth .hero-media{ background-image:url("../assets/images/labrinth-room.jpg"); }
 }
 
 /* ==========================================================================

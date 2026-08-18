@@ -371,8 +371,36 @@ find and replace.
     natural fit; the landscape one cover-fits into a tall hero so
     aggressively that the room disappears.
   - `assets/images/hero-room.jpg` + `hero-room-portrait.jpg` — graded
-    stills used as the `poster`, and as the whole hero for anyone with
-    reduced motion or JS off.
+    stills used as the `poster`, as the whole hero for anyone with
+    reduced motion or JS off, and as a permanent background layer under
+    the footage (see below).
+  **When the footage stops painting, the hero shows the room, not a hole.**
+  A background video can stop for reasons that raise no error you can catch:
+  the seek the `loop` attribute performs at the end of every pass, a decoder
+  the phone has evicted under memory pressure, autoplay refused in an
+  embedded context, iOS low-power mode. With nothing behind it the hero fell
+  through to the page ground — `--charcoal`, `#1B1116` — which reads as the
+  video having gone black. The graded still is now painted on `.hero-media`
+  permanently rather than only as the `poster`, with the portrait cut under
+  the same 700px breakpoint `main.js` uses to pick the portrait footage, so
+  the still and the video are always framed alike and a dropout just looks
+  like a photograph. Measured with the video forced hidden: hero luminance
+  45–85 across both venues at both sizes, against a near-black `#1B1116`
+  before.
+  `main.js` also watches the clock rather than trusting media events — if
+  `currentTime` stops advancing while the element still claims to be
+  playing, it re-asks for playback after three seconds and re-fetches after
+  six — and re-asks on `visibilitychange`, since coming back to a
+  long-backgrounded tab is the most reliable way to find the hero frozen.
+  **Encoding.** All four loops are 30fps with a one-second GOP
+  (`-g 30`, plus `-auto-alt-ref 0 -lag-in-frames 0` on VP9 and
+  `-bf 0 -sc_threshold 0` on H.264), which halves the VP9 files and cuts
+  decode cost — the thing that actually makes a phone drop the decoder.
+  Total footage went 5.6MB to 4.5MB and the single-file preview 6.8MB to
+  5.6MB, at identical colour: mean Y/U/V matches the previous encodes to
+  within 0.1 on every clip. The loop seam still costs a short stall (it is
+  a real seek, and re-encoding does not remove it) — the still underneath
+  is what makes it invisible.
   Sources are attached by `main.js` (not hard-coded `<source>` children)
   so the right cut is chosen per viewport and **nothing downloads at all**
   under `prefers-reduced-motion` — that path gets the still and never
