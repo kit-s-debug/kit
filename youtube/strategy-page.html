@@ -1,0 +1,1282 @@
+<title>Last Known Position</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+
+<style>
+/* ============ TOKENS — dark-first. Bare :root is the dark set. ============ */
+:root{
+  --ground:#0A0C0D;
+  --surface:#12171A;
+  --surface-2:#171E22;
+  --line:#2C363B;
+  --line-soft:#1D2529;
+  --ink:#E6E1D6;
+  --dim:#8E979C;
+  --faint:#616B70;
+  --signal:#C8681E;
+  --signal-ink:#F0A464;
+  --signal-wash:rgba(200,104,30,.12);
+  --grain:.030;
+
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+
+  --rail:250px;
+  --measure:68ch;
+  --s1:.5rem; --s2:.85rem; --s3:1.35rem; --s4:2.1rem; --s5:3.4rem; --s6:5.2rem;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --ground:#E9E4D8;
+    --surface:#F2EEE4;
+    --surface-2:#EAE4D6;
+    --line:#C2BAA7;
+    --line-soft:#D8D1C1;
+    --ink:#14181A;
+    --dim:#565D61;
+    --faint:#7B827F;
+    --signal:#9E4B0C;
+    --signal-ink:#8A400A;
+    --signal-wash:rgba(158,75,12,.10);
+    --grain:.045;
+  }
+}
+:root[data-theme="light"]{
+  --ground:#E9E4D8;
+  --surface:#F2EEE4;
+  --surface-2:#EAE4D6;
+  --line:#C2BAA7;
+  --line-soft:#D8D1C1;
+  --ink:#14181A;
+  --dim:#565D61;
+  --faint:#7B827F;
+  --signal:#9E4B0C;
+  --signal-ink:#8A400A;
+  --signal-wash:rgba(158,75,12,.10);
+  --grain:.045;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:1.0625rem;
+  line-height:1.68;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+/* fine static film grain — the look bible, applied to its own document */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9;
+  opacity:var(--grain);
+  background-image:repeating-linear-gradient(0deg,var(--ink) 0 1px,transparent 1px 3px),
+                   repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 4px);
+  mix-blend-mode:overlay;
+}
+
+/* ============ LAYOUT ============ */
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:0;}
+main{min-width:0;padding:0 clamp(1.25rem,4vw,4.5rem) var(--s6);}
+.wrap{max-width:1020px;}
+.prose{max-width:var(--measure);}
+
+/* ============ INDEX RAIL ============ */
+.rail{
+  position:sticky;top:0;align-self:start;height:100vh;
+  border-right:1px solid var(--line);
+  padding:var(--s4) var(--s3) var(--s3) clamp(1rem,2vw,1.9rem);
+  display:flex;flex-direction:column;gap:var(--s3);overflow-y:auto;
+}
+.mark{display:flex;align-items:center;gap:.6rem;}
+.mark svg{flex:none;}
+.mark b{
+  font-family:var(--f-display);font-weight:800;font-size:.82rem;
+  letter-spacing:.14em;text-transform:uppercase;line-height:1.25;display:block;
+}
+.rail nav{display:flex;flex-direction:column;gap:1px;margin-top:.4rem;}
+.rail a{
+  display:grid;grid-template-columns:2.6rem 1fr;gap:.4rem;align-items:baseline;
+  padding:.42rem .5rem .42rem 0;text-decoration:none;color:var(--dim);
+  border-top:1px solid var(--line-soft);transition:color .15s;
+}
+.rail a:first-child{border-top:0;}
+.rail a span:first-child{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);letter-spacing:.04em;}
+.rail a span:last-child{font-family:var(--f-display);font-size:.79rem;font-weight:600;letter-spacing:.01em;line-height:1.3;}
+.rail a:hover{color:var(--ink);}
+.rail a.on{color:var(--ink);}
+.rail a.on span:first-child{color:var(--signal);}
+.rail a:focus-visible,.tgl:focus-visible,.skip:focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
+.railfoot{margin-top:auto;padding-top:var(--s3);border-top:1px solid var(--line-soft);}
+.tgl{
+  font-family:var(--f-mono);font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
+  background:none;border:1px solid var(--line);color:var(--dim);
+  padding:.42rem .6rem;cursor:pointer;width:100%;text-align:left;
+}
+.tgl:hover{color:var(--ink);border-color:var(--signal);}
+.skip{position:absolute;left:-9999px;}
+.skip:focus{position:static;display:inline-block;margin:.5rem;color:var(--signal);}
+
+/* ============ MASTHEAD ============ */
+.masthead{padding:clamp(3rem,8vh,6rem) 0 var(--s5);border-bottom:1px solid var(--line);}
+.eyebrow{
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--signal);margin:0 0 var(--s3);
+}
+h1{
+  font-family:var(--f-display);font-weight:800;
+  font-size:clamp(2.6rem,7.5vw,5.1rem);line-height:.95;letter-spacing:-.028em;
+  margin:0 0 var(--s3);text-wrap:balance;
+}
+h1 em{font-style:normal;color:var(--signal);}
+.standfirst{
+  font-size:clamp(1.1rem,2vw,1.32rem);line-height:1.55;color:var(--dim);
+  max-width:56ch;margin:0 0 var(--s4);font-weight:300;
+}
+.recordcard{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  border:1px solid var(--line);background:var(--surface);
+}
+.recordcard div{padding:.85rem 1rem;border-right:1px solid var(--line);}
+.recordcard div:last-child{border-right:0;}
+.recordcard dt{
+  font-family:var(--f-mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 .35rem;
+}
+.recordcard dd{margin:0;font-family:var(--f-display);font-weight:600;font-size:.94rem;line-height:1.3;}
+
+/* ============ SECTIONS ============ */
+section{padding-top:var(--s6);scroll-margin-top:1rem;}
+.sechead{border-top:2px solid var(--ink);padding-top:.7rem;margin-bottom:var(--s4);}
+.seccode{
+  font-family:var(--f-mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--signal);display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem;
+}
+.seccode span:last-child{color:var(--faint);}
+h2{
+  font-family:var(--f-display);font-weight:700;font-size:clamp(1.85rem,4vw,2.9rem);
+  line-height:1.02;letter-spacing:-.022em;margin:0;text-wrap:balance;
+}
+h3{
+  font-family:var(--f-display);font-weight:700;font-size:1.28rem;line-height:1.22;
+  letter-spacing:-.01em;margin:var(--s5) 0 var(--s2);text-wrap:balance;
+}
+h4{
+  font-family:var(--f-mono);font-weight:500;font-size:.7rem;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--signal);margin:var(--s4) 0 var(--s2);
+}
+p{margin:0 0 var(--s3);}
+.prose p,.prose ul,.prose ol{max-width:var(--measure);}
+a{color:var(--signal-ink);text-underline-offset:3px;}
+strong{font-weight:500;color:var(--ink);}
+em{font-style:italic;}
+ul,ol{margin:0 0 var(--s3);padding-left:1.15rem;}
+li{margin-bottom:.42rem;}
+li::marker{color:var(--faint);}
+hr{border:0;border-top:1px solid var(--line);margin:var(--s5) 0;}
+
+/* ============ TABLES ============ */
+.tbl{overflow-x:auto;margin:0 0 var(--s3);border:1px solid var(--line);}
+table{border-collapse:collapse;width:100%;min-width:520px;font-family:var(--f-display);font-size:.855rem;}
+th,td{text-align:left;padding:.62rem .85rem;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.45;}
+thead th{
+  font-family:var(--f-mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);background:var(--surface);border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover{background:var(--surface);}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.amber{color:var(--signal);}
+
+/* ============ CALLOUT / NOTE ============ */
+.note{
+  border:1px solid var(--line);border-left:3px solid var(--signal);
+  background:var(--surface);padding:var(--s3);margin:0 0 var(--s3);max-width:var(--measure);
+}
+.note p:last-child{margin-bottom:0;}
+.note .lbl{
+  font-family:var(--f-mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--signal);display:block;margin-bottom:.5rem;
+}
+
+/* ============ SWATCHES ============ */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:var(--s3);}
+.sw{background:var(--surface);padding:0;}
+.sw i{display:block;height:66px;}
+.sw p{margin:0;padding:.55rem .6rem;font-family:var(--f-mono);font-size:.63rem;line-height:1.5;color:var(--dim);}
+.sw b{display:block;color:var(--ink);font-weight:500;letter-spacing:.06em;text-transform:uppercase;font-size:.6rem;}
+
+/* ============ NAME LIST ============ */
+.names{list-style:none;padding:0;margin:0 0 var(--s4);border-top:1px solid var(--line);}
+.names li{
+  display:grid;grid-template-columns:2.4rem 1fr;gap:.9rem;margin:0;
+  padding:.65rem 0;border-bottom:1px solid var(--line-soft);align-items:baseline;
+}
+.names .n{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);}
+.names .t{font-family:var(--f-display);font-weight:700;font-size:1.02rem;letter-spacing:-.01em;}
+.names .d{display:block;font-family:var(--f-body);font-weight:300;font-size:.94rem;color:var(--dim);margin-top:.1rem;}
+.names li.pick .t{color:var(--signal);}
+
+/* ============ BEAT SHEET ============ */
+.beats{border-top:1px solid var(--line);margin-bottom:var(--s3);}
+.beat{
+  display:grid;grid-template-columns:2.2rem 6.6rem 1fr 4.4rem;gap:1rem;
+  padding:.78rem 0;border-bottom:1px solid var(--line-soft);align-items:baseline;
+}
+.beat .bn{font-family:var(--f-mono);font-size:.68rem;color:var(--signal);}
+.beat .bt{font-family:var(--f-mono);font-size:.72rem;color:var(--faint);font-variant-numeric:tabular-nums;}
+.beat .bd b{font-family:var(--f-display);font-weight:700;font-size:.98rem;display:block;}
+.beat .bd span{font-size:.94rem;color:var(--dim);font-weight:300;}
+.beat .bw{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);text-align:right;font-variant-numeric:tabular-nums;}
+@media (max-width:640px){
+  .beat{grid-template-columns:2rem 1fr;gap:.6rem;}
+  .beat .bt,.beat .bw{grid-column:2;text-align:left;}
+}
+
+/* ============ PIPELINE ============ */
+.pipe{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:var(--s3);}
+.stage{background:var(--ground);padding:.9rem 1.1rem;display:grid;grid-template-columns:2.3rem 1fr 5.2rem;gap:1rem;align-items:baseline;}
+.stage .sn{font-family:var(--f-mono);font-size:.68rem;color:var(--signal);}
+.stage b{font-family:var(--f-display);font-weight:700;font-size:.98rem;}
+.stage p{margin:.2rem 0 0;font-size:.93rem;color:var(--dim);font-weight:300;line-height:1.5;}
+.stage .hrs{font-family:var(--f-mono);font-size:.68rem;color:var(--faint);text-align:right;white-space:nowrap;}
+@media (max-width:640px){ .stage{grid-template-columns:2rem 1fr;} .stage .hrs{grid-column:2;text-align:left;} }
+
+/* ============ SLATE ============ */
+.slate{display:grid;gap:var(--s3);margin-bottom:var(--s4);}
+.ep{border:1px solid var(--line);background:var(--surface);}
+.ep.top{border-color:var(--signal);}
+.ephead{padding:1.05rem 1.25rem;border-bottom:1px solid var(--line);}
+.eprank{
+  font-family:var(--f-mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:.5rem;
+}
+.ep.top .eprank .r{color:var(--signal);}
+.ep h3{font-size:1.32rem;margin:0;}
+.epbody{padding:1.1rem 1.25rem;display:grid;gap:1.15rem;}
+.field{display:grid;gap:.4rem;}
+.field .k{
+  font-family:var(--f-mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+}
+.field p{margin:0;font-size:.98rem;line-height:1.6;}
+.field ol{margin:0;padding-left:1.2rem;font-family:var(--f-display);font-size:.9rem;}
+.field ol li{margin-bottom:.28rem;color:var(--dim);}
+.field ol li.rec{color:var(--signal);font-weight:600;}
+.hook{
+  border-left:2px solid var(--signal);padding:.15rem 0 .15rem 1rem;
+  font-size:1.0rem;line-height:1.62;font-style:italic;color:var(--ink);margin:0;
+}
+.thumbtext{
+  display:inline-block;font-family:var(--f-display);font-weight:800;font-size:.86rem;
+  letter-spacing:.06em;text-transform:uppercase;background:var(--ground);color:var(--ink);
+  border:1px solid var(--line);padding:.4rem .7rem;
+}
+.epmeta{
+  border-top:1px solid var(--line-soft);padding:.65rem 1.25rem;
+  font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);display:flex;gap:1.2rem;flex-wrap:wrap;
+}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:var(--s3);}
+
+/* compact entries */
+.ep.mini .epbody{gap:.85rem;}
+.ep.mini h3{font-size:1.1rem;}
+
+/* ============ BEFORE / AFTER ============ */
+.ba{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:var(--s3);}
+.ba > div{background:var(--surface);padding:1.05rem 1.15rem;}
+.ba .k{font-family:var(--f-mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:.7rem;}
+.ba .bad .k{color:var(--dim);}
+.ba .good .k{color:var(--signal);}
+.ba p{font-size:.97rem;line-height:1.62;margin:0 0 .7rem;}
+.ba p:last-child{margin-bottom:0;}
+.ba .bad p{color:var(--dim);}
+
+/* ============ FORBIDDEN ============ */
+.banned{
+  border:1px solid var(--line);background:var(--surface);padding:1.05rem 1.15rem;
+  font-family:var(--f-mono);font-size:.79rem;line-height:2.1;color:var(--dim);
+  max-width:var(--measure);margin-bottom:var(--s3);
+}
+.banned s{text-decoration-color:var(--signal);text-decoration-thickness:1px;}
+
+/* ============ FOOTER ============ */
+footer{
+  margin-top:var(--s6);border-top:2px solid var(--ink);padding-top:var(--s3);
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+
+/* ============ MOBILE ============ */
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;}
+  .rail{
+    position:sticky;top:0;height:auto;z-index:10;background:var(--ground);
+    border-right:0;border-bottom:1px solid var(--line);
+    flex-direction:row;align-items:center;justify-content:space-between;
+    padding:.7rem clamp(1.25rem,4vw,2rem);gap:1rem;
+  }
+  .rail nav{display:none;}
+  .railfoot{margin:0;padding:0;border:0;}
+  .tgl{width:auto;}
+  main{padding-top:0;}
+  section{padding-top:var(--s5);}
+}
+</style>
+
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+<aside class="rail">
+  <div class="mark">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+      <path d="M13 3 L21.5 20 L13 15.5 L4.5 20 Z" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".55"/>
+      <circle cx="13" cy="15.5" r="2.1" fill="#C8681E"/>
+    </svg>
+    <b>Last Known<br>Position</b>
+  </div>
+  <nav id="nav" aria-label="Sections">
+    <a href="#identity"><span>§01</span><span>Identity</span></a>
+    <a href="#formula"><span>§02</span><span>The Formula</span></a>
+    <a href="#scripting"><span>§03</span><span>Scripting</span></a>
+    <a href="#visual"><span>§04</span><span>Visual System</span></a>
+    <a href="#workflow"><span>§05</span><span>Workflow</span></a>
+    <a href="#slate"><span>§06</span><span>The Slate</span></a>
+    <a href="#growth"><span>§07</span><span>First 1,000</span></a>
+  </nav>
+  <div class="railfoot">
+    <button class="tgl" id="tgl" type="button">Paper / Film</button>
+  </div>
+</aside>
+
+<main id="main"><div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Channel strategy &amp; production system</p>
+  <h1>Last Known<br>Position<em>.</em></h1>
+  <p class="standfirst">A cinematic faceless documentary channel about strange real events — built to be made with AI, and built so it never reads like it.</p>
+  <dl class="recordcard">
+    <div><dt>Format</dt><dd>11–14 min</dd></div>
+    <div><dt>Cadence</dt><dd>Weekly, Friday</dd></div>
+    <div><dt>Build time</dt><dd>6–8 hrs / video</dd></div>
+    <div><dt>Target</dt><dd>50,000 views</dd></div>
+    <div><dt>Horizon</dt><dd>4–9 months</dd></div>
+  </dl>
+</header>
+
+<!-- ═══════════════ 01 IDENTITY ═══════════════ -->
+<section id="identity">
+  <div class="sechead">
+    <p class="seccode"><span>§01</span><span>Names · Audience · Look · Voice · Cadence</span></p>
+    <h2>Identity</h2>
+  </div>
+
+  <h4>Ten candidate names</h4>
+  <ol class="names">
+    <li class="pick"><span class="n">01</span><span><span class="t">Last Known Position</span><span class="d">Search-and-rescue term for the final verified point before contact was lost</span></span></li>
+    <li class="pick"><span class="n">02</span><span><span class="t">Grid North</span><span class="d">The direction map lines point — not true north. Every map is quietly a few degrees wrong</span></span></li>
+    <li class="pick"><span class="n">03</span><span><span class="t">The Quiet Record</span><span class="d">Documents, not screaming</span></span></li>
+    <li><span class="n">04</span><span><span class="t">The Unlit Map</span><span class="d">Places and events outside the light</span></span></li>
+    <li><span class="n">05</span><span><span class="t">Pale Archive</span><span class="d">A collection of things nobody filed properly</span></span></li>
+    <li><span class="n">06</span><span><span class="t">Cold Latitude</span><span class="d">Isolation, distance, hostile places</span></span></li>
+    <li><span class="n">07</span><span><span class="t">Nightjar</span><span class="d">One strange word. Ownable, atmospheric, says nothing — deliberately</span></span></li>
+    <li><span class="n">08</span><span><span class="t">Unaccounted For</span><span class="d">Missing people, missing hours, missing answers</span></span></li>
+    <li><span class="n">09</span><span><span class="t">Blackwater Atlas</span><span class="d">Deep, dark, mapped but unknown</span></span></li>
+    <li><span class="n">10</span><span><span class="t">The Long Silence</span><span class="d">What happens after the search is called off</span></span></li>
+  </ol>
+  <div class="prose">
+    <p>Two of these are deliberately narrow, two deliberately abstract. Narrow names sell the first video harder. Abstract names survive year three, when you want to make an episode about a cave painting and a name about missing people no longer fits.</p>
+  </div>
+
+  <h3>The strongest three</h3>
+
+  <h4>Recommended — Last Known Position</h4>
+  <div class="prose">
+    <p>It <strong>states the format, not the topic</strong>. Every episode is the reconstruction of a record up to the point the record stops — which covers disappearances, abandoned places, unexplained signals and objects with no origin, without locking you into missing persons.</p>
+    <p>It carries dread <strong>without a single adjective</strong>. No "dark," no "mysterious." Restraint in the name is a promise about the narration. It gives you a sign-off and a franchise: episodes close on a card reading <span class="amber">LAST KNOWN POSITION</span> over coordinates, and series names fall out of it — <em>Sea Files</em>, <em>Cold Rooms</em>, <em>Signal Logs</em>. It stacks as three short lines in a thumbnail corner, and <span class="amber">LKP</span> works as a small mark on every frame.</p>
+    <p><em>Risk:</em> three words is long for a handle. Secure the handle everywhere on day one.</p>
+  </div>
+
+  <h4>Runner-up — Grid North</h4>
+  <div class="prose">
+    <p>Grid north is the direction the vertical lines on a map point. It is not true north and not magnetic north — every map you have used is quietly a few degrees off, and navigators correct for it. As a name it says: <em>the accepted version is slightly wrong, and this channel measures the difference.</em></p>
+    <p>The better ten-year name and the weaker cold-start name. It tells a scrolling stranger nothing, so packaging carries 100% of the work. Take it only if you are confident there.</p>
+  </div>
+
+  <h4>Third — The Quiet Record</h4>
+  <div class="prose">
+    <p>The strongest <em>positioning</em> name of the ten. The competitive gap in this niche is that AI-assisted mystery channels are loud, padded and unsourced. A name opening with "quiet" is a thesis statement. Its weakness is selling that quietness to a hype-trained feed.</p>
+  </div>
+
+  <h3>Target audience</h3>
+  <div class="prose">
+    <p>A 25–44 year old in the US, UK, Canada or Australia who watches long-form video the way their parents watched documentaries — on a TV or a propped-up phone, in the evening, alone, usually between 8pm and 1am. Roughly 65/35 male, with the female share rising on human-story episodes and falling on hardware episodes.</p>
+    <p>They already watch LEMMiNO, Fascinating Horror, Barely Sociable, Scary Interesting, Plainly Difficult, Wendigoon. They also watch <strong>actual documentaries</strong>, and they will compare you to those, not to other faceless channels.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="note">
+      <span class="lbl">What they want</span>
+      <p><strong>To learn something true.</strong> The dopamine is <em>"I now know a real thing most people don't."</em> They forward it to one friend with the words "how have we never heard of this."</p>
+      <p><strong>To be treated as an adult.</strong> No repeated explanations, no throat-clearing.</p>
+      <p><strong>To be told what isn't known.</strong> The most under-served desire in the niche.</p>
+    </div>
+    <div class="note">
+      <span class="lbl">What makes them leave</span>
+      <p><strong>Padding.</strong> They can smell a story stretched to hit ten minutes.</p>
+      <p><strong>Performed emotion</strong> the material hasn't earned.</p>
+      <p><strong>AI tells:</strong> melting hands, six-fingered crowds, breaths in the wrong places.</p>
+      <p><strong>Being lied to.</strong> One fabricated detail loses that viewer permanently — and they say so in the comments, where everyone can see.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p><strong>The anti-audience.</strong> You are not making content for the "scary top 10" teen audience, the paranormal-believer audience who want confirmation rather than evidence, or the conspiracy audience. Serving any of them changes your comment section within a month and you do not get it back.</p>
+  </div>
+
+  <h3>Visual identity</h3>
+  <h4>Palette — four colours and a black</h4>
+  <div class="swatches">
+    <div class="sw"><i style="background:#0A0C0D"></i><p><b>Base</b>#0A0C0D<br>Grounds, bars</p></div>
+    <div class="sw"><i style="background:#161B1E"></i><p><b>Shadow</b>#161B1E<br>Panels, basemap</p></div>
+    <div class="sw"><i style="background:#3A464C"></i><p><b>Cold mid</b>#3A464C<br>Rules, contours</p></div>
+    <div class="sw"><i style="background:#E6E1D6"></i><p><b>Bone</b>#E6E1D6<br>All primary text</p></div>
+    <div class="sw"><i style="background:#C8681E"></i><p><b>Signal</b>#C8681E<br>The one accent</p></div>
+  </div>
+  <div class="note">
+    <span class="lbl">The rule that matters</span>
+    <p>The accent appears <strong>once per frame</strong>, on the thing you want looked at. A pin on a map. A circle round the anomalous detail. One word in a document. If amber is on two things at once, it points at nothing.</p>
+  </div>
+  <div class="prose">
+    <p>Blacks are lifted slightly, never crushed to pure black — that reads as film rather than as a PNG, and it stops OLED phone screens swallowing your shadow detail. <em>This page is set in the palette, so you can see it working.</em></p>
+  </div>
+
+  <h4>Typography — three faces, no fourth</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Role</th><th>Face</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Display / titles</td><td><strong>Archivo</strong> Bold, tight</td><td>Neo-grotesque, authoritative, condenses well into thumbnails</td></tr>
+      <tr><td>Data / cards</td><td><strong>JetBrains Mono</strong></td><td>Dates, coordinates, case numbers. Monospace <em>is</em> the record aesthetic</td></tr>
+      <tr><td>Quotes / documents</td><td><strong>Newsreader</strong> Italic</td><td>Reads as printed page, not as UI</td></tr>
+      <tr><td>Subtitles</td><td><strong>Inter</strong> Medium</td><td>Legibility first</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p>The monospace does more identity work than the display face. Resist adding a fourth "atmospheric" font.</p></div>
+
+  <h4>The grade — and the anti-slop tool</h4>
+  <div class="prose">
+    <p>Desaturate to 70–80%, then let amber sit at full strength: the eye reads it as <em>colour has been removed from the world except where it matters</em>. Lift the black point, roll off highlights with a soft halation bloom, hold a constant 35mm grain.</p>
+  </div>
+  <div class="note">
+    <span class="lbl">Single most effective technique</span>
+    <p>Run <strong>one grain-and-grade layer over everything</strong> — generated shots, archival film and graphics alike. A shared grain makes three incompatible source types feel like one piece of film. It does more for believability than any prompt.</p>
+  </div>
+
+  <h4>Motion, devices, sound</h4>
+  <div class="prose">
+    <p>Push-ins of 2–4% over 8–10 seconds, nothing faster. Average shot length <strong>4–7 seconds</strong> — roughly double the faceless norm; slow cutting reads as confidence. No whip pans, no zoom punches, no glitch transitions. Cuts land on the <em>end</em> of a thought.</p>
+    <p>Five recurring devices make the channel recognisable in three seconds: the <strong>record card</strong> (mono: place, date, time, coordinates) opening each act; the <strong>map system</strong> on one fixed template; the <strong>document plate</strong> with one line circled in amber; the <strong>timeline strip</strong>; and the <strong>closing frame</strong> — mark, coordinates, one unanswered question, held four seconds in silence.</p>
+    <p>Sound is a three-layer bed — a low drone, a texture layer, and a pulse that only enters during escalation — with one sub-bass hit per act card. Narration at −16 LUFS, bed ducked 10–12 dB beneath. Master to −14 LUFS integrated. <strong>If you recognise a music track from another channel in this niche, do not use it.</strong></p>
+  </div>
+
+  <h3>Tone of narration</h3>
+  <div class="note">
+    <span class="lbl">The persona</span>
+    <p>Not a storyteller. Not a host. <strong>A researcher who found something in the record and cannot stop thinking about it.</strong> Calm, precise, occasionally dry, genuinely uncertain about the parts that are uncertain — interested in the story rather than in your reaction to it. They never sound like they are trying to keep you watching, which is why you keep watching.</p>
+  </div>
+  <div class="prose">
+    <p>Short sentences, averaging 10–15 words. <strong>150–160 words per minute</strong> — slower than the platform norm of 175–190; slow reads as authority and gives visuals room. Concrete over abstract always: not "conditions were harsh" but "−11°C, and the nearest road was fourteen miles away." One adjective per idea. Past tense for the record, present tense for reconstruction — switching into present for a 30-second run is your strongest tension device, so use it three times a video, never more.</p>
+  </div>
+
+  <h4>The epistemic ladder — the signature</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Register</th><th>Phrasing</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td class="amber">RECORD</td><td>"The record shows…" / "According to the inquiry…"</td><td>"The inquiry recorded that the radio was tuned to the international distress frequency."</td></tr>
+      <tr><td class="amber">REPORTED</td><td>"It was reported at the time…" / "…appears in the press but not in the file."</td><td>"Later accounts describe a briefcase. The inventory does not mention one."</td></tr>
+      <tr><td class="amber">THEORY</td><td>"The most common explanation is… It explains X, but not Y."</td><td>"A rogue wave accounts for the list. It does not account for the missing cargo."</td></tr>
+      <tr><td class="amber">UNKNOWN</td><td>"Nobody knows." / "There is no record of…"</td><td>"Nobody knows why he stopped."</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p>Say <strong>"nobody knows"</strong> out loud at least once in every video. Carry the register as a small mono tag in the corner of the frame. It costs nothing, viewers screenshot it, and it becomes the brand.</p></div>
+
+  <h4>Never write</h4>
+  <div class="banned">
+    <s>Welcome back to the channel</s> · <s>In this video we'll be exploring</s> · <s>But first</s> · <s>Little did they know</s> · <s>What happened next will</s> · <s>You won't believe</s> · <s>Buckle up</s> · <s>Let that sink in</s> · <s>Truth is stranger than fiction</s> · <s>Chilling</s> · <s>Bone-chilling</s> · <s>Spine-tingling</s> · <s>Shrouded in mystery</s> · <s>Little is known about</s> · <s>To this day</s> · <s>Some say</s> · <s>Many believe</s> · <s>One thing is certain</s> · <s>The plot thickens</s> · <s>Delve</s> · <s>Testament to</s> · <s>In the annals of</s>
+  </div>
+
+  <h3>Length and cadence</h3>
+  <div class="grid2">
+    <div class="note">
+      <span class="lbl">Runtime — 11 to 14 minutes</span>
+      <p>Over 8 minutes unlocks multiple mid-rolls. 11–14 is long enough for a real three-act reconstruction and short enough that a new channel can hold 45–55% average viewing — a 25-minute film from a channel with no trust bleeds through the middle third, and low AVD is a worse signal than a shorter film watched well.</p>
+      <p><strong>Never pad to hit a runtime.</strong> A tight nine beats a bloated thirteen, and this audience can tell instantly.</p>
+      <p>Every 10–13 videos, make one <strong>25–35 minute flagship</strong>. Those get compared to real documentaries and are what people link when recommending the channel.</p>
+    </div>
+    <div class="note">
+      <span class="lbl">Schedule — weekly, Friday 16:00 UK</span>
+      <p>Friday afternoon publishes into US East lunchtime, UK evening, and the whole weekend for the recommendation system to work with. Mystery viewing peaks Friday to Sunday night. <strong>The slot must be identical every week</strong> — returning viewers matter more here than in most niches and need a habit to form around.</p>
+      <p><strong>Do not publish until four finished videos exist.</strong> Non-negotiable. The buffer is what protects the schedule the first time you get ill or a story collapses under research.</p>
+      <p>No Shorts until eight long-forms are live, then two a week maximum, as standalone strange facts — never clips.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 02 FORMULA ═══════════════ -->
+<section id="formula">
+  <div class="sechead">
+    <p class="seccode"><span>§02</span><span>One structure, every video</span></p>
+    <h2>The Formula</h2>
+  </div>
+  <div class="prose">
+    <p>A fixed structure isn't creative laziness. It removes the blank page, makes research targeted, and turns retention graphs into diagnostics — <em>"we lose people in Act III"</em> is actionable; <em>"the video underperformed"</em> is not.</p>
+    <p>Timings assume 12 minutes at ~155 wpm.</p>
+  </div>
+
+  <div class="beats">
+    <div class="beat"><span class="bn">01</span><span class="bt">0:00–0:25</span><span class="bd"><b>Cold open</b><span>One image, one impossible detail, one question you refuse to answer</span></span><span class="bw">60–70w</span></div>
+    <div class="beat"><span class="bn">02</span><span class="bt">0:25–0:33</span><span class="bd"><b>Title card</b><span>Brand beat. Sub-bass hit and the record card</span></span><span class="bw">0–12w</span></div>
+    <div class="beat"><span class="bn">03</span><span class="bt">0:33–2:30</span><span class="bd"><b>Setup</b><span>Place, time, people, and the normal state of the world</span></span><span class="bw">~295w</span></div>
+    <div class="beat"><span class="bn">04</span><span class="bt">2:30–5:00</span><span class="bd"><b>The rupture</b><span>The thing that breaks, delivered in discovery order</span></span><span class="bw">~385w</span></div>
+    <div class="beat"><span class="bn">05</span><span class="bt">5:00–8:15</span><span class="bd"><b>Escalation ×3</b><span>Each beat closes one explanation and opens two questions</span></span><span class="bw">~490w</span></div>
+    <div class="beat"><span class="bn">06</span><span class="bt">8:15–10:30</span><span class="bd"><b>Revelation</b><span>The strongest honest answer — and precisely what it fails to cover</span></span><span class="bw">~355w</span></div>
+    <div class="beat"><span class="bn">07</span><span class="bt">10:30–11:50</span><span class="bd"><b>Ending</b><span>The unanswered question. Return to the hook image. Stop</span></span><span class="bw">~215w</span></div>
+    <div class="beat"><span class="bn">08</span><span class="bt">11:50–12:00</span><span class="bd"><b>End card</b><span>Coordinates, mark, next video. Four seconds of silence</span></span><span class="bw">—</span></div>
+  </div>
+
+  <h3>The 25 seconds that decide the video</h3>
+  <div class="prose">
+    <p>Target: <strong>hold 75% or more of viewers to 0:30</strong>. Start inside a moment — a specific person, at a specific place, at a specific time, doing a specific thing. Not context. Not a summary. Not the theme.</p>
+    <p>The shape: <strong>the anchor</strong> (a time, a place, a person, delivered flat) → <strong>the ordinary</strong> (what was normal about this moment — that's what makes the break land) → <strong>the rupture, stated plainly</strong> (the flatter you say it, the louder it is) → <strong>the withheld question</strong> (state what's missing; don't promise to answer it).</p>
+  </div>
+  <div class="note">
+    <span class="lbl">Worked example — the Ghost Blimp</span>
+    <p class="hook">At 6:03 on the morning of the sixteenth of August, 1942, a US Navy airship lifted off from Treasure Island in San Francisco Bay. Two men were aboard. It was an anti-submarine patrol — a slow circuit over the water, the kind they had flown dozens of times.<br><br>Four hours later the airship came down in a residential street in Daly City. A fire crew climbed into the gondola.<br><br>The radio worked. The life raft was still stowed. The parachutes had not been touched.<br><br>Both men were gone.</p>
+    <p style="margin-top:1rem">No adjective does the work. The strange fact arrives as <em>inventory</em>. A four-word sentence lands in silence.</p>
+  </div>
+
+  <h3>The two rules that separate this from a listicle</h3>
+  <div class="grid2">
+    <div class="note">
+      <span class="lbl">Rupture — discovery order, not understanding order</span>
+      <p>The people who found the scene did not know what they were looking at. Put the viewer in their position and the strangeness arrives naturally, without a narrator having to announce that it is strange. Lead with physical facts. Inventory is your best friend — a list of ordinary objects in an impossible arrangement beats any adjective.</p>
+    </div>
+    <div class="note">
+      <span class="lbl">Revelation — steelman the boring answer</span>
+      <p>Give the strongest available explanation honestly, <strong>including when it's mundane</strong>. Channels that refuse to engage with the boring answer get destroyed in the comments and never build authority. State it as its best advocate would, show what it explains well, <em>then</em> name the one specific thing it doesn't. Residual mystery is far more powerful for having survived scrutiny.</p>
+    </div>
+  </div>
+
+  <h3>The retention toolkit</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Device</th><th>What it is</th><th>Frequency</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Open loop</strong></td><td>Name something you'll return to, then move on</td><td class="num">Every 90s</td></tr>
+      <tr><td><strong>The pivot</strong></td><td>"But there's a problem with that."</td><td class="num">Once, at ~40%</td></tr>
+      <tr><td><strong>Withheld detail</strong></td><td>Planted in Setup, paid off in Revelation</td><td class="num">Once</td></tr>
+      <tr><td><strong>Concrete object</strong></td><td>Anchor any abstract stretch to a physical thing on screen</td><td class="num">As needed</td></tr>
+      <tr><td><strong>Timestamp reset</strong></td><td>A mono card that re-orients and re-focuses attention</td><td class="num">3–4 per video</td></tr>
+      <tr><td><strong>Direct address</strong></td><td>Break the fourth wall to acknowledge the obvious question</td><td class="num">Exactly once, ~60%</td></tr>
+      <tr><td><strong>Hard reset</strong></td><td>Total change of register — map, documents, or two seconds of silence</td><td class="num">Every 2–3 min</td></tr>
+      <tr><td><strong>Present-tense run</strong></td><td>Switch tense for a 30-second reconstruction</td><td class="num">2–3 per video</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Reading the retention graph</h3>
+  <div class="prose"><p>Because every video has the same skeleton, the graphs are comparable across the whole channel.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Where the drop is</th><th>What it means</th><th>The fix</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Before 0:30</td><td>Hook doesn't match the thumbnail promise, or opens with context</td><td>Start inside a moment; re-check title/thumbnail/hook alignment</td></tr>
+      <tr><td class="num">0:33–1:00</td><td>Title card too long, or Setup opens with background</td><td>Cut the card to 6s; open Setup on a person, not a place</td></tr>
+      <tr><td class="num">1:00–2:30 bleed</td><td>Setup delivers information, not stakes</td><td>Add human detail; add a loop line at 1:30</td></tr>
+      <tr><td class="num">Cliff at 5:00</td><td>Escalation restates rather than escalates</td><td>Each sub-beat must <em>remove</em> an explanation</td></tr>
+      <tr><td class="num">8:15</td><td>Revelation landed as an anticlimax</td><td>Move the twist later; steelman the mundane answer harder</td></tr>
+      <tr><td class="num">10:30</td><td>Ending reads as an outro</td><td>Cut the summary; go straight to the unanswered question</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p><strong>Visual pacing:</strong> something on screen changes at least every 8 seconds. The inverse is also a rule — when you want a line to land, stop everything. Static frame, no music, one second either side. Once per video, at the ending.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ 03 SCRIPTING ═══════════════ -->
+<section id="scripting">
+  <div class="sechead">
+    <p class="seccode"><span>§03</span><span>House style · Fact discipline</span></p>
+    <h2>Scripting</h2>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Runtime</th><th class="num">Words at 155 wpm</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>9 min</td><td class="num">~1,400</td><td>A tight single-thread story</td></tr>
+      <tr><td><strong>12 min</strong></td><td class="num"><strong>~1,860</strong></td><td><strong>The default</strong></td></tr>
+      <tr><td>14 min</td><td class="num">~2,170</td><td>Two locations, or a real twist</td></tr>
+      <tr><td>30 min</td><td class="num">~4,650</td><td>Quarterly flagship only</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p>Write to the <em>per-beat</em> budgets, not the total. A 1,860-word script with a 600-word Setup is a broken script even though the total is right.</p></div>
+
+  <h3>The de-AI pass</h3>
+  <div class="prose"><p>A separate, explicit editing pass on every draft. These are the patterns to hunt:</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Tell</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Tricolon everywhere — "no motive, no witness, no answer"</td><td>Allowed once per script. Delete the rest</td></tr>
+      <tr><td>"Not just X, but Y"</td><td>Delete. Say Y</td></tr>
+      <tr><td>"It's important to note that"</td><td>Delete the clause, keep the fact</td></tr>
+      <tr><td>Every paragraph running exactly three sentences</td><td>Vary to 1, 5, 2, 4</td></tr>
+      <tr><td>Every paragraph ending on a mini-cliffhanger</td><td>Two per script maximum</td></tr>
+      <tr><td>Symmetrical pairs — "He never came back. She never stopped looking."</td><td>One per script</td></tr>
+      <tr><td>A summary sentence closing each section</td><td>Delete all of them</td></tr>
+      <tr><td>Average sentence length above 20 words</td><td>The loudest tell of all. Split everything</td></tr>
+      <tr><td>Uniformly confident tone across facts and speculation</td><td>Apply the epistemic ladder</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>Before and after</h4>
+  <div class="ba">
+    <div class="bad">
+      <span class="k">AI draft</span>
+      <p>The discovery of the abandoned vessel sent shockwaves through the maritime community. What investigators found aboard the Joyita was nothing short of baffling — a ship that should have been impossible to abandon, yet its entire complement of twenty-five souls had seemingly vanished into thin air. It's important to note that the vessel was equipped with a cork-lined hull, making it virtually unsinkable. And yet, chillingly, not a single person was ever found.</p>
+    </div>
+    <div class="good">
+      <span class="k">Rewritten</span>
+      <p>The Joyita was found on the tenth of November, drifting six hundred miles from where she should have been. She was listing heavily to port. The deck was awash.</p>
+      <p>Twenty-five people had been aboard. None of them were.</p>
+      <p>This mattered because of how the ship was built. Her hull was lined with cork — a conversion from her days as a research vessel. Waterlogged, she would sit low and uncomfortable. She would not go down. The crew had every reason to stay with her.</p>
+      <p>Nobody has ever been found.</p>
+    </div>
+  </div>
+  <div class="prose">
+    <p>92 words became 96 — this is not about brevity. It's about replacing commentary with facts, replacing "baffling" with <em>the actual reason it is baffling</em>, and letting a four-word sentence do the emotional work.</p>
+  </div>
+
+  <h3>Source tiers</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Tier</th><th>What it is</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td class="amber">T1</td><td>Inquiry reports, court records, ship logs, declassified files, contemporary newspaper scans, peer-reviewed papers</td><td>Always preferred. Cite on screen</td></tr>
+      <tr><td class="amber">T2</td><td>Books with citations, national-broadcaster investigations, museum and archive publications</td><td>Usable. Trace back to T1 where possible</td></tr>
+      <tr><td class="amber">T3</td><td>Unsourced mainstream articles, encyclopaedia entries, other YouTube videos</td><td><strong>Never a sole source.</strong> Leads only</td></tr>
+      <tr><td class="amber">T4</td><td>Forums, wikis, blogs, social posts</td><td>Leads only. Never cited, never repeated</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="lbl">The thing that gets you caught</span>
+    <p>A detail that exists only downstream of one 2011 blog post. This niche is riddled with them. <strong>When every source repeats the same sentence with the same phrasing, they are all copying one another.</strong> Find the original or drop the detail. The same applies to numbers — casualty figures, distances and durations inflate as stories are retold. Go to the inquiry.</p>
+  </div>
+
+  <h3>Handling death, crime and tragedy</h3>
+  <div class="grid2">
+    <div class="note">
+      <span class="lbl">Editorial</span>
+      <p>Name victims — use their names, not "the victim." Never describe injuries in forensic detail. No crime-scene photographs of identifiable remains, ever — use the exterior, the road, the empty room. Don't speculate about a real person's last moments beyond what the record supports. Where families are living, assume they may watch.</p>
+    </div>
+    <div class="note">
+      <span class="lbl">Staying fully monetised</span>
+      <p>State the manner of death once, clinically, and don't return to it. Keep the most sensitive terms out of the first thirty seconds, the title and the thumbnail. Frame the video as an investigation of a record — which is what it is. Self-certify honestly; a carefully written video generally comes through fine, and one that hides its subject and gets caught does worse.</p>
+    </div>
+  </div>
+
+  <h3>Originality</h3>
+  <div class="note">
+    <span class="lbl">Non-negotiable</span>
+    <p><strong>Never work from another YouTube video.</strong> Not as a source, not as a structure, not as a starting point. Watch competitors only <em>after</em> the script is locked, and only to check you haven't accidentally converged. Build every episode from the documents up — if your dossier contains only secondary retellings, you don't yet have an episode. Your structure, your sequencing and your prose are the product. The facts are everybody's.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ 04 VISUAL ═══════════════ -->
+<section id="visual">
+  <div class="sechead">
+    <p class="seccode"><span>§04</span><span>Sourcing · Generation · Maps · Sound</span></p>
+    <h2>Visual System</h2>
+  </div>
+  <div class="prose">
+    <p>The goal is a film that happens to have been assembled from generated, archival and graphic material — not a slideshow of AI images. Two principles do most of the work: <strong>mixed sourcing</strong>, and <strong>one grade over everything</strong>.</p>
+  </div>
+
+  <h4>Shot mix — target proportions per 12-minute video</h4>
+  <div class="tbl"><table>
+    <thead><tr><th>Type</th><th class="num">Share</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td>AI cinematic</td><td class="num">25%</td><td>Atmospheric establishing shots, interiors, weather, period texture</td></tr>
+      <tr><td>Archival / public domain</td><td class="num">25%</td><td>Real film, real photographs, newsreel, official imagery</td></tr>
+      <tr><td>Documents &amp; photographs</td><td class="num">15%</td><td>Reports, letters, logs, newspaper pages, ID photos</td></tr>
+      <tr><td>Maps &amp; diagrams</td><td class="num">15%</td><td>Location, route, timeline, cutaway, scale comparison</td></tr>
+      <tr><td>Typographic cards</td><td class="num">10%</td><td>Record cards, act cards, quotations, timestamps</td></tr>
+      <tr><td>Texture &amp; abstract</td><td class="num">10%</td><td>Water, smoke, grain, static, macro detail</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="lbl">Three rules on top of the mix</span>
+    <p><strong>Two AI shots maximum in a row.</strong> Break with a document, a map, a card or a texture.</p>
+    <p><strong>The three most important moments must not be AI shots.</strong> The rupture, the key evidence and the revelation should each be carried by a real document, photograph, map or card. Real material at the emotional peaks makes the whole film feel real.</p>
+    <p><strong>Every claim on screen has a visual that supports it.</strong> If narration says "tuned to 2182 kilohertz," show the frequency.</p>
+  </div>
+
+  <h3>Archival sourcing — search these before generating anything</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Source</th><th>Best for</th></tr></thead>
+    <tbody>
+      <tr><td>Library of Congress</td><td>US photographs, newspapers (Chronicling America), maps, film</td></tr>
+      <tr><td>US National Archives</td><td>Government records, military film, declassified documents</td></tr>
+      <tr><td>Internet Archive + Prelinger</td><td>Public-domain film, ephemera, scanned books</td></tr>
+      <tr><td>Wikimedia Commons</td><td>Everything, with licence metadata — check each file</td></tr>
+      <tr><td>NASA / USGS / NOAA</td><td>Satellite imagery, terrain, aerial photography, ocean data</td></tr>
+      <tr><td>Trove · Papers Past · Gallica · Europeana · Delpher</td><td>National newspaper and archive scans, AU / NZ / FR / EU / NL</td></tr>
+      <tr><td>David Rumsey · Old Maps Online</td><td>Historical maps at high resolution</td></tr>
+      <tr><td>The national archive of the country in question</td><td>Always check. Inquiry reports are often online and free</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p><strong>Rights discipline:</strong> "old" does not mean public domain, and rules differ by country. Log the licence and source URL for every asset. If you can't establish rights, generate an equivalent and label it.</p>
+  </div>
+  <div class="note">
+    <span class="lbl">Ethical labelling — non-negotiable</span>
+    <p>If you recreate a document, a photograph or a scene with AI, put a small mono <span class="amber">RECREATION</span> tag in the corner of that shot. It costs nothing, and it is the difference between a documentary and a forgery.</p>
+  </div>
+
+  <h3>The AI method — stills first, motion second</h3>
+  <div class="prose">
+    <p>Don't generate video from text. Generate a <strong>still you fully control</strong>, then animate it. You can iterate on a still for pennies, you avoid temporal artefacts, and you keep a consistent look across a hundred shots.</p>
+    <p>Animate by <strong>2.5D parallax</strong> (cut the still into 3–4 depth layers moving at different rates — the workhorse, and it looks better than most generated video), slow drift, or 3–5 second image-to-video for shots that genuinely need it. Then composite <strong>real</strong> grain, dust, light leaks and rain plates over the top. That single trick does more for believability than a better prompt.</p>
+  </div>
+
+  <h4>The look-bible suffix — appended to every prompt</h4>
+  <div class="banned" style="font-size:.78rem;line-height:1.85;color:var(--dim)">
+    Shot on 35mm film, anamorphic, shallow depth of field, natural available light only, heavily desaturated cold palette, single warm amber practical light source, lifted shadows, soft halation on highlights, fine film grain, slight lens vignette, documentary photography, no text, no watermark, no people looking at camera.
+  </div>
+
+  <div class="note">
+    <span class="lbl">The AI-human problem</span>
+    <p><strong>No AI-generated close-ups of faces. Ever.</strong> People appear as backs of heads, silhouettes, figures at distance, hands only, obscured by weather or glass, or out of focus in the foreground. Crowds only in silhouette — count the fingers before you use the shot.</p>
+    <p>When you need a real person's face, use their real photograph. If none exists, use an empty chair, their signature, their file card, or their name on a card. <em>Absence is more powerful than a fabricated face anyway.</em></p>
+  </div>
+
+  <h3>Maps — the most under-priced asset you have</h3>
+  <div class="prose">
+    <p>Cheap, unmistakably real, information-carrying, and no AI artefact can appear in them. Build one template and reuse it forever: dark basemap, bone contours, mono labels, <em>one</em> amber marker, a route that draws on over 2–3 seconds. A scale bar and a north arrow on every map, always — it reads as rigour.</p>
+  </div>
+  <div class="note">
+    <span class="lbl">Highest-value tool on the entire list</span>
+    <p><strong>Google Earth Studio.</strong> Free, browser-based, keyframes real satellite terrain into cinematic flyovers and exports straight to After Effects. For any story with a location, learn it in an afternoon and you'll use it in every episode after.</p>
+  </div>
+
+  <h3>Sound design</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Content</th><th class="num">Level</th></tr></thead>
+    <tbody>
+      <tr><td>Narration</td><td>The voice</td><td class="num">−16 LUFS</td></tr>
+      <tr><td>Drone</td><td>One sustained low tone, changing once per act</td><td class="num">−28 to −26</td></tr>
+      <tr><td>Texture</td><td>Room tone, wind, water, tape hiss, matched to location</td><td class="num">−34</td></tr>
+      <tr><td>Pulse</td><td>Slow rhythmic element — <em>only</em> during Escalation</td><td class="num">−30</td></tr>
+      <tr><td>Hits</td><td>Sub-bass on act cards, one per act</td><td class="num">−8 dBTP peak</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose">
+    <p>Real room tone under interiors, real wind under exteriors — even at −34 LUFS the brain registers it and the shot stops feeling like a picture. <strong>Two seconds of total silence, once per video, at the final line.</strong> Master to −14 LUFS integrated, true peak below −1 dBTP.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ 05 WORKFLOW ═══════════════ -->
+<section id="workflow">
+  <div class="sechead">
+    <p class="seccode"><span>§05</span><span>Idea → Upload in 6–8 hours</span></p>
+    <h2>Workflow</h2>
+  </div>
+  <div class="prose">
+    <p>The first three videos will take 14–18 hours each. That is expected and not wasted — you are building the template library, and the library buys the speed back. By video six you should be at 8 hours; by video ten, 6.</p>
+  </div>
+  <div class="grid2">
+    <div class="note">
+      <span class="lbl">Principle one</span>
+      <p><strong>AI drafts, human decides.</strong> Every AI output is an input to a human judgement, never a finished artefact. The two places this is inviolable: the fact-check, and the final script pass.</p>
+    </div>
+    <div class="note">
+      <span class="lbl">Principle two</span>
+      <p><strong>Templates over effort.</strong> Anything you do twice becomes a template. Speed comes from never solving a solved problem again.</p>
+    </div>
+  </div>
+
+  <div class="pipe">
+    <div class="stage"><span class="sn">00</span><div><b>Idea bank</b><p>Weekly 30-minute sweep of archives, newspaper databases and recent scientific papers. Score every idea /25 on curiosity gap, source depth, visual availability, competition and ad safety. <strong>Only 18+ gets commissioned</strong> — a 16 you love will underperform and you'll blame the algorithm.</p></div><span class="hrs">30m / wk</span></div>
+    <div class="stage"><span class="sn">01</span><div><b>Research</b><p>AI sweep for chronology, cast, investigations and — crucially — <em>the claims that can't be traced to a primary source</em>. Then hunt the actual documents. Then load only those documents into a grounded retrieval tool and interrogate <em>those</em>. That last step is what eliminates hallucinated detail.</p></div><span class="hrs">90 min</span></div>
+    <div class="stage"><span class="sn">02</span><div><b>Script</b><p>Beat sheet first — if you can't fill the Revelation line, you don't have an episode. AI drafts beat by beat against the word budgets. Then <strong>45 minutes of human line-level rewriting</strong>, which is where everything the audience responds to comes from. Read aloud with a timer.</p></div><span class="hrs">90 min</span></div>
+    <div class="stage"><span class="sn">03</span><div><b>Fact check</b><p>Fresh session, different model. Extract every claim as a list. Rate confidence adversarially. Then <strong>a human checks every claim rated 3 or below against the primary documents</strong>. Each claim gets a source, an epistemic marker, or the cut.</p></div><span class="hrs">45 min</span></div>
+    <div class="stage"><span class="sn">04</span><div><b>Shot list</b><p>Split the locked script into 90–110 shots, tag each by type, check the mix percentages, and write the archive query or the full prompt <em>now</em>. This turns the edit into assembly rather than invention — where most of the saving lives.</p></div><span class="hrs">30 min</span></div>
+    <div class="stage"><span class="sn">05</span><div><b>Assets</b><p>Batch by type, not chronology. All stills in one run, all archive downloads in one run, all maps in one session. Name files by shot number so the edit self-assembles.</p></div><span class="hrs">60–90 min</span></div>
+    <div class="stage"><span class="sn">06</span><div><b>Voiceover</b><p>Pronunciation list first. Render paragraph by paragraph so a bad line can be re-rolled without flattening the whole file. <strong>Then edit the audio</strong> — extend act-break pauses, remove wrong-place breaths. Twenty minutes here is the difference between "AI narration" and "narration."</p></div><span class="hrs">30 min</span></div>
+    <div class="stage"><span class="sn">07</span><div><b>Edit</b><p>Eight passes in fixed order: lay VO → assembly → timing → graphics → sound → grade → captions → one uninterrupted watch. Working out of order is what makes edits take a day.</p></div><span class="hrs">120–180 min</span></div>
+    <div class="stage"><span class="sn">08</span><div><b>Packaging</b><p>Three <em>genuinely different</em> thumbnails — image-led, artefact-led, text-led — judged at 210×118 pixels. Five titles down to one. A description whose first two lines carry the search terms, real chapter names, and a visible source list.</p></div><span class="hrs">45 min</span></div>
+    <div class="stage"><span class="sn">09</span><div><b>Publish + 48h loop</b><p>Reply to every comment for four hours. Pin a real extra fact with its source. At 48 hours read the retention graph and commit to <strong>one</strong> change. At 7 and 30 days, swap the thumbnail if CTR is under 4%.</p></div><span class="hrs">30 min +</span></div>
+  </div>
+
+  <h3>The tool stack</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Job</th><th>Primary</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Research sweep</td><td>A search-enabled frontier model</td><td>Always demand source URLs</td></tr>
+      <tr><td>Grounded synthesis</td><td>NotebookLM</td><td>The anti-hallucination step. Your PDFs only</td></tr>
+      <tr><td>Scripting</td><td>Claude</td><td>Long context, restrained prose. Feed it the standards doc every time</td></tr>
+      <tr><td>Fact-check</td><td>A <em>different</em> model, fresh context</td><td>Adversarial prompt, not a review request</td></tr>
+      <tr><td>Voice</td><td>ElevenLabs</td><td>A human narrator is the <strong>first paid upgrade</strong> to buy</td></tr>
+      <tr><td>Stills</td><td>Midjourney</td><td>Style references are what give you consistency across episodes</td></tr>
+      <tr><td>Text in image</td><td>Ideogram</td><td>Signage only, then re-typeset by hand — misspelled headlines destroy credibility</td></tr>
+      <tr><td>Image → video</td><td>Runway · Kling · Luma · Veo</td><td>3–5 second clips only</td></tr>
+      <tr><td>Maps</td><td><strong>Google Earth Studio</strong> · QGIS</td><td>Free. Highest value tool on this list</td></tr>
+      <tr><td>Edit + grade</td><td>DaVinci Resolve</td><td>Free tier is enough; Fusion handles motion graphics too</td></tr>
+      <tr><td>Music</td><td>Epidemic Sound · Artlist</td><td>Avoid tracks the niche has saturated</td></tr>
+      <tr><td>Production DB</td><td>Notion or Airtable</td><td>Videos · Idea bank · Sources · Assets · Retention log</td></tr>
+    </tbody>
+  </table></div>
+  <div class="prose"><p>Roughly £40–70 per month at the low end.</p></div>
+
+  <h3>The four-day week</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Day</th><th>Stages</th><th class="num">Hours</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td>Idea sweep · Research · Beat sheet</td><td class="num">2.5</td></tr>
+      <tr><td>Tuesday</td><td>Script draft · Human pass · Fact check</td><td class="num">2.5</td></tr>
+      <tr><td>Wednesday</td><td>Shot list · Batch assets · Voiceover</td><td class="num">2.0</td></tr>
+      <tr><td>Thursday</td><td>Edit — all eight passes</td><td class="num">3.0</td></tr>
+      <tr><td>Friday</td><td>Package · Publish · Comments</td><td class="num">1.5</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="lbl">The upgrade, once you're comfortable</span>
+    <p>Batch across videos: research and script <em>two</em> episodes on one Monday and Tuesday, then alternate a writing week with an edit week. Context switching is the hidden cost in this pipeline, and batching removes most of it. Same output, noticeably less fatigue.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ 06 SLATE ═══════════════ -->
+<section id="slate">
+  <div class="sechead">
+    <p class="seccode"><span>§06</span><span>Twenty commissioned stories, packaged</span></p>
+    <h2>The Slate</h2>
+  </div>
+  <div class="prose">
+    <p>All real, documented events with traceable primary sources. Every one still needs the full research and fact-check process before scripting — these are commissioning briefs, not verified copy.</p>
+  </div>
+  <div class="note">
+    <span class="lbl">Every title must pass six tests</span>
+    <p><strong>1.</strong> Curiosity, not concealment — state a real strange fact and stop. <strong>2.</strong> It must still feel true after watching. <strong>3.</strong> Under 60 characters where possible. <strong>4.</strong> A concrete noun in the first three words. <strong>5.</strong> No question mark unless the video answers it. <strong>6.</strong> Say it out loud — if it sounds like a YouTube title, rewrite it; if it sounds like something a person would say to a friend, keep it.</p>
+  </div>
+
+  <h3>The five strongest — publish in this order</h3>
+
+  <article class="ep top">
+    <div class="ephead">
+      <p class="eprank"><span class="r">★ 01</span><span>Disappearance</span><span>Browse play</span></p>
+      <h3>The Ghost Blimp — L-8, 1942</h3>
+    </div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>A US Navy airship on a routine wartime patrol drifted back over San Francisco and landed in a suburban street with everything aboard intact and both crewmen gone, and the Navy's inquiry never established how they left.</p></div>
+      <div class="field"><span class="k">Why it opens the channel</span><p>One unforgettable image with real photographs behind it. A scene that is strange purely as an <em>inventory</em> — nothing gruesome, nothing to soften. A formal board of inquiry means genuine primary documents. Abundant WWII archival film. Completely ad-safe. And almost nobody has told it well.</p></div>
+      <div class="field"><span class="k">Five titles</span><ol>
+        <li>The Navy Airship That Landed With Nobody Aboard</li>
+        <li class="rec">In 1942, a US Navy Blimp Came Home Empty ◂ recommended</li>
+        <li>The Ghost Blimp of Daly City</li>
+        <li>Two Men Vanished From a Sealed Airship. It Flew Home Without Them.</li>
+        <li>The L-8 Landed in a Suburban Street. The Crew Were Gone.</li>
+      </ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Fifty characters. A date to anchor it as real history, a concrete object in the first four words, and "came home empty" implies everything without a dramatic adjective. Title 4 tests well but "vanished" is the most exhausted word in the niche.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>The real photograph of L-8 collapsed between two houses on Bellevue Avenue — the enormous grey envelope draped over a residential street, absurdly out of scale with the parked cars. Desaturated hard. An amber circle around the open, empty gondola door.</p></div>
+      <div class="field"><span class="k">Thumbnail text</span><p><span class="thumbtext">The crew were gone</span></p></div>
+      <div class="field"><span class="k">Opening hook</span><p class="hook">At 6:03 on the morning of the sixteenth of August, 1942, a US Navy airship lifted off from Treasure Island in San Francisco Bay. Two men were aboard. It was an anti-submarine patrol — a slow circuit over the water, the kind they had flown dozens of times. Four hours later the airship came down in a residential street in Daly City. A fire crew climbed into the gondola. The radio worked. The life raft was still stowed. The parachutes had not been touched. Both men were gone.</p></div>
+    </div>
+    <div class="epmeta"><span>12 minutes</span><span>Sources: Navy board of inquiry · SF press · service records</span><span>Ad-safe</span></div>
+  </article>
+
+  <article class="ep top">
+    <div class="ephead">
+      <p class="eprank"><span class="r">★ 02</span><span>Strange discovery</span><span>Search demand</span></p>
+      <h3>Roopkund — The Lake of Bones</h3>
+    </div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>Hundreds of human skeletons lie in a glacial lake five kilometres up in the Indian Himalaya, and when geneticists finally sequenced them in 2019 the answer was far stranger than a single disaster.</p></div>
+      <div class="field"><span class="k">Why it's high</span><p>One of the best reveals in the genre — for seventy years everyone assumed one catastrophe, and the DNA showed something nobody had considered. The site photographs are extraordinary and instantly thumbnail-able. Anchored in peer-reviewed science, which makes it unimpeachable. And it ends with a question the science made <em>bigger</em>.</p></div>
+      <div class="field"><span class="k">Five titles</span><ol>
+        <li>A Lake of Human Bones, 5,000 Metres Up</li>
+        <li>The Skeleton Lake, and the DNA Result Nobody Expected</li>
+        <li>Roopkund: 500 Skeletons and Three Different Answers</li>
+        <li>They Sequenced the Bones in the Himalayan Lake. It Made No Sense.</li>
+        <li class="rec">The Bodies in the Frozen Lake Weren't From the Same Century ◂ recommended</li>
+      </ol></div>
+      <div class="field"><span class="k">Why that one</span><p>It gives away the shape of the twist without giving away the twist — exactly the right amount. It reframes something the viewer thought they understood in the first six words, and it's a true statement the film delivers on precisely.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>The real photograph of scattered remains at the lake edge, shot from above — ice and grey scree, no close human detail. An amber survey circle around one cluster. Cold, wide, high-altitude light.</p></div>
+      <div class="field"><span class="k">Thumbnail text</span><p><span class="thumbtext">Same lake. Different centuries.</span></p></div>
+      <div class="field"><span class="k">Opening hook</span><p class="hook">Roopkund is a small lake in the Indian Himalaya, about five thousand metres above sea level. For most of the year it is frozen solid. For a few weeks in summer, the ice retreats, and you can see the bottom. There are hundreds of people down there. Not bodies — bones. For seventy years the question was what killed them all at once. In 2019 a genetics team answered it. And the answer was that nothing did.</p></div>
+    </div>
+    <div class="epmeta"><span>13 minutes</span><span>Sources: Harney et al. 2019, Nature Communications</span><span>Read the paper, not the coverage</span></div>
+  </article>
+
+  <article class="ep top">
+    <div class="ephead">
+      <p class="eprank"><span class="r">★ 03</span><span>Unusual place</span><span>Browse play</span></p>
+      <h3>Vozrozhdeniya — The Island That Stopped Being an Island</h3>
+    </div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>The Soviet Union built its main biological weapons test site on an island in the middle of the Aral Sea, buried its anthrax stockpile there in 1988, and then the sea dried up and the island joined the mainland.</p></div>
+      <div class="field"><span class="k">Why it's high</span><p>An enormous "how have I never heard of this" quotient with real sourcing behind it. And it has the best visual sequence available to this channel: forty years of satellite imagery showing a sea disappearing and an island becoming a peninsula, animated as one continuous shot. That sequence alone is worth the episode.</p></div>
+      <div class="field"><span class="k">Five titles</span><ol>
+        <li>The Island That Stopped Being an Island</li>
+        <li>The Soviet Bioweapons Island the Aral Sea Uncovered</li>
+        <li class="rec">They Buried It on an Island. Then the Sea Dried Up. ◂ recommended</li>
+        <li>Kantubek: The Town That Was Never on Any Map</li>
+        <li>The Aral Sea Vanished, and Something Was Waiting Underneath</li>
+      </ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Two short sentences carrying the entire premise and the entire dread in eleven words. It withholds the subject noun and the thumbnail supplies it — title and image working as a pair, which is how packaging should be built.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A satellite composite: the 1985 coastline as a bone outline over the dried 2020 seabed, the island now clearly connected to land. Amber marker and grid coordinates on the island.</p></div>
+      <div class="field"><span class="k">Thumbnail text</span><p><span class="thumbtext">The sea was the only barrier</span></p></div>
+      <div class="field"><span class="k">Opening hook</span><p class="hook">In 1988, a convoy of trucks drove out onto a remote island in the middle of the Aral Sea, carrying several hundred tonnes of a bacterial slurry in steel drums. The drums were lowered into pits. The pits were filled in. The island had been chosen decades earlier for one reason. It was surrounded, on every side, by seventy kilometres of open water. Nothing could walk off it. Fourteen years later, you could.</p></div>
+    </div>
+    <div class="epmeta"><span>14 minutes</span><span>Heavy use of THEORY and UNKNOWN tags — which is the point</span></div>
+  </article>
+
+  <article class="ep top">
+    <div class="ephead">
+      <p class="eprank"><span class="r">★ 04</span><span>Strange discovery</span><span>Browse play</span></p>
+      <h3>The Hollow Nickel</h3>
+    </div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>In 1953 a Brooklyn newspaper boy dropped a nickel on the pavement and it split open, and the microfilm inside took the FBI four years, a Soviet defector and a spy swap on a Berlin bridge to explain.</p></div>
+      <div class="field"><span class="k">Why it's high</span><p>A perfect story engine — a tiny domestic object opening into the largest possible frame, with escalation built into the events themselves. Extensively documented, entirely ad-safe, visually rich. And it <em>resolves</em>, proving to a new audience that this channel can deliver an answer, not just an atmosphere.</p></div>
+      <div class="field"><span class="k">Five titles</span><ol>
+        <li class="rec">A Paperboy Dropped a Nickel. It Split in Half. ◂ recommended</li>
+        <li>The Coin That Fell Apart on a Brooklyn Pavement</li>
+        <li>The Hollow Nickel: A Coded Message the FBI Couldn't Read for Four Years</li>
+        <li>It Took Four Years and a Defector to Read What Was Inside This Coin</li>
+        <li>The Nickel, the Microfilm, and the Man on the Bridge</li>
+      </ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The most ordinary opening imaginable, ending on a physical impossibility. Forty-five characters, two short sentences. It also doesn't sound like a spy story — which is exactly why the story lands so hard.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A macro of a 1948 nickel opened into two hollow halves against black, one half tilted, a square of microfilm beside it. Amber rim-light on the cut edge. Almost a product shot — which is what makes it stop the scroll in a feed full of grey landscapes.</p></div>
+      <div class="field"><span class="k">Thumbnail text</span><p><span class="thumbtext">Inside the coin</span></p></div>
+      <div class="field"><span class="k">Opening hook</span><p class="hook">In the summer of 1953, a fourteen-year-old boy was collecting subscription money on a street in Brooklyn. Two customers paid him in change. He dropped some of it on the pavement. One of the coins didn't sound right. He picked it up. It was too light. Then it came apart in his hand. Inside the nickel, folded into the hollow, was a square of microfilm. On the microfilm were two hundred and seven numbers, in groups of five. Nobody would be able to read them for four years.</p></div>
+    </div>
+    <div class="epmeta"><span>12 minutes</span><span>Sources: the FBI's own public case file</span><span>Ad-safe</span></div>
+  </article>
+
+  <article class="ep top">
+    <div class="ephead">
+      <p class="eprank"><span class="r">★ 05</span><span>Bizarre real event</span><span>Browse play</span></p>
+      <h3>The Circleville Letters</h3>
+    </div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>From 1976, thousands of anonymous letters full of accurate private information arrived in one small Ohio town, and they did not stop when the man convicted of writing them went to prison — one arrived addressed to him, inside.</p></div>
+      <div class="field"><span class="k">Why it's high</span><p>The strongest pure mystery in the slate, with an almost structurally perfect escalation: letters, then a death, then a booby-trapped roadside sign built by somebody who knew engineering, then a conviction, then the letters continuing. Genuinely unsolved, extensively documented.</p></div>
+      <div class="field"><span class="k">Five titles</span><ol>
+        <li>The Letters Kept Coming After He Went to Prison</li>
+        <li>Someone in Circleville Knew Everything</li>
+        <li>Thousands of Letters. One Small Town. No Answer.</li>
+        <li>The Circleville Letters: Ohio's Longest Unsolved Correspondence</li>
+        <li class="rec">He Was Convicted of Writing the Letters. Then He Received One. ◂ recommended</li>
+      </ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The single best curiosity gap in the slate. Two sentences, a complete reversal, and every word factually accurate. It also frames the video as a question about <em>evidence</em> rather than about horror — which is the tone this channel wants.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A plain handwritten envelope on a dark surface, addressed in block capitals, postmark visible. Amber circle around the postmark date. That's the whole image — and in a feed of grey landscapes a single white envelope is the most eye-catching thing on the page.</p></div>
+      <div class="field"><span class="k">Thumbnail text</span><p><span class="thumbtext">He was in prison</span></p></div>
+      <div class="field"><span class="k">Opening hook</span><p class="hook">The letters started arriving in Circleville, Ohio, in March 1976. Block capitals. Ohio postmarks. No signature. They went to a school bus driver, and to her husband, and then to her employer, and then to people who had nothing to do with either of them. They contained accurate private details about people's lives — the kind of thing you would only know if you lived close enough to watch. Over the next fifteen years, the writer sent thousands of them. One of the last was delivered to a state prison, to the man who had already been convicted of writing them.</p></div>
+      <div class="field"><span class="k">Caution</span><p>Involves a death and an attempted shooting. Clinical handling, no speculation about living named individuals, sensitive terms kept out of the title, thumbnail and first thirty seconds. This episode lives or dies on epistemic discipline.</p></div>
+    </div>
+    <div class="epmeta"><span>13 minutes</span><span>Sources: Ohio press 1977–1990s · 1983 trial record</span><span>Moderate ad risk</span></div>
+  </article>
+
+  <h3>The remaining fifteen</h3>
+  <div class="prose"><p>Ordered for slate variety rather than strength — mix categories week to week so the channel doesn't read as single-topic. Roughly one in three should target existing search demand, giving you a floor of steady views while you wait for a browse hit.</p></div>
+
+  <div class="slate">
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>06</span><span>Disappearance</span></p><h3>The Joyita</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>A ship that was almost impossible to sink was found adrift in the Pacific in 1955, listing and half-flooded, with all twenty-five people aboard gone and no distress call ever received.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li class="rec">Twenty-Five People Left a Ship That Couldn't Sink ◂ recommended</li><li>The Joyita Was Found Six Hundred Miles Off Course</li><li>The Ship Stayed Afloat. Everyone Aboard Did Not.</li><li>A Cork-Lined Hull, a Broken Radio, and Twenty-Five Missing People</li><li>Nobody Ever Found the Joyita's Crew</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>States the paradox in nine words and makes the viewer supply the question themselves.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>The real 1955 photograph of Joyita listing heavily, shot from a boat. Amber outline tracing the waterline. Empty grey Pacific behind. <span class="thumbtext">She stayed afloat</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">The Joyita was found on the tenth of November, drifting six hundred miles from where she should have been, listing so far to port that the deck was awash. Twenty-five people had boarded her. None of them were aboard. And the one thing everyone agreed on afterwards was that this was a ship you had no reason to leave.</p></div>
+    </div><div class="epmeta"><span>12 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>07</span><span>Signal</span></p><h3>The Buzzer — UVB-76</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>A Russian shortwave frequency has broadcast a monotonous buzzing tone almost continuously since the early 1980s, interrupted only by occasional voices reading lists of words, and nobody outside Russia knows what it is for.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>The Radio Station That Has Been Buzzing Since 1982</li><li>4625 kHz: Forty Years of the Same Sound</li><li class="rec">Somebody Is Still Maintaining This Signal ◂ recommended</li><li>The Buzzer Has Never Stopped</li><li>A Frequency That Says Almost Nothing, Forever</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Shifts the mystery from the sound to the people — the more unsettling frame, and the more honest one.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>An analogue radio dial in near-darkness, needle on 4625, amber backlight bleeding through the glass. Waveform strip along the bottom. <span class="thumbtext">Still broadcasting</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">If you tune a shortwave receiver to 4,625 kilohertz right now, you will hear a buzz. A short, flat, mechanical tone, repeating about twenty-five times a minute. It has been doing that, more or less without pause, since the early 1980s. Every so often — and there is no pattern to it — the buzzing stops, and a voice reads a list of Russian words and numbers, and then the buzzing starts again.</p></div>
+    </div><div class="epmeta"><span>11 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>08</span><span>Unexplained event</span><span>Search demand</span></p><h3>The Lake That Exhaled — Lake Nyos, 1986</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>On one night in August 1986 a Cameroonian crater lake released an invisible cloud of carbon dioxide that flowed downhill and killed more than seventeen hundred people in their sleep, and for days nobody could work out what had happened.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>The Lake That Killed 1,700 People in One Night</li><li class="rec">Everyone in the Valley Died and Nothing Was Damaged ◂ recommended</li><li>The Night Lake Nyos Exhaled</li><li>There Was No Blast. No Fire. No Survivors in the Valley.</li><li>Cameroon, 1986: The Disaster With No Visible Cause</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The intact buildings are what make this incomprehensible. Putting that in the title does the whole job.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>Lake Nyos from above, the water an unnatural rust-brown after the event, crater walls desaturated around it. Amber arrow tracing the downhill path of the cloud. <span class="thumbtext">Nothing was damaged</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">On the morning of the twenty-second of August, 1986, the first people to reach the villages below Lake Nyos found the houses standing, the crops upright, the doors closed. And almost everyone inside dead. There was no fire, no blast damage, no sign of violence. Livestock lay in the fields where they had been standing. Whatever had come through the valley had left the buildings entirely alone.</p></div>
+    </div><div class="epmeta"><span>12 minutes</span><span>Clinical handling · real scientific resolution · ongoing risk story</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>09</span><span>Strange real event</span></p><h3>The Lead Masks Case</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>In 1966, two Brazilian electronics technicians were found dead on a hillside above Niterói wearing lead masks over their eyes, beside a notebook instructing them to swallow capsules and wait for a signal.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>Two Men, Two Lead Masks, One Note</li><li class="rec">"Wait for the Agreed Signal" ◂ recommended</li><li>The Note Told Them Exactly What to Do</li><li>Vintém Hill, 1966: The Lead Masks Case</li><li>They Built the Masks Themselves</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>A real quotation from the notebook. Short, strange, and it lodges in the memory — and quotation marks signal a primary document, which is on-brand.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A close, hard-lit still life of a crude hand-cut lead eye mask on dark cloth beside a folded notebook page. Amber light raking across the metal. No people. <span class="thumbtext">Wait for the signal</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">On the twentieth of August, 1966, a boy flying a kite on a hill above Niterói, in Brazil, found two men lying on the ground in formal suits and raincoats. They had been dead for several days. Each was wearing a mask cut from sheet lead, covering the eyes. Beside them was a notebook, with a short list of instructions and times attached. The last line said to swallow the capsules and wait for the agreed signal.</p></div>
+    </div><div class="epmeta"><span>11 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>10</span><span>Unusual place</span></p><h3>Wittenoom — The Town Removed From the Map</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>Australia mined blue asbestos at Wittenoom for twenty years, then spent fifty years dismantling the town — disconnecting its power, removing it from road signs and official maps, and finally legislating its last residents out.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>Australia Erased This Town From Its Own Maps</li><li class="rec">Wittenoom Is Still There. It Is Just Not on Anything. ◂ recommended</li><li>The Town They Had to Delete</li><li>Three Million Tonnes of It Are Still on the Ground</li><li>The Most Contaminated Site in the Southern Hemisphere</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The second sentence reframes the first, and "not on anything" is stranger and more accurate than "erased."</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A road sign with the place name plated over, the blank patch clearly newer than the metal around it. Red Pilbara dust, hard sun, near-monochrome with the amber on the blank plate. <span class="thumbtext">Removed from the map</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">If you drive north-east through the Pilbara in Western Australia and follow the signs, at some point the signs stop mentioning the place you are driving towards. The turn-off is unmarked. The road is still there. So are the streets, and the foundations, and roughly three million tonnes of blue asbestos tailings, spread across the valley floor as loose gravel.</p></div>
+    </div><div class="epmeta"><span>13 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>11</span><span>Strange discovery</span></p><h3>The Toynbee Tiles</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>Since the 1980s, hundreds of hand-made tiles bearing the same cryptic message about resurrecting the dead on Jupiter have appeared embedded in the asphalt of city streets across the United States and South America, and nobody has ever been charged with laying one.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>The Same Message Is Set Into Roads in Twenty Cities</li><li class="rec">Somebody Has Been Laying These Tiles for Forty Years ◂ recommended</li><li>How Do You Put a Tile Into a Road Nobody Saw You Open?</li><li>The Toynbee Tiles</li><li>The Message Reached Santiago. Nobody Knows How.</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The duration is the mystery. It makes the viewer picture a person, which is where the unease lives.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A tile photographed straight down in worn asphalt, block letters visible, tyre-polished. Amber ring around it, faint amber city-grid overlay in the corner showing the spread. <span class="thumbtext">Set into the road</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">There is a tile set into the asphalt at an intersection in Philadelphia. It is about the size of a licence plate, made of layered linoleum, worn almost smooth by traffic. The text on it says that a man named Toynbee had an idea, that the idea appears in the film 2001, and that the dead can be resurrected on the planet Jupiter. There are hundreds of these. They are in more than twenty cities. Some of them are in South America.</p></div>
+    </div><div class="epmeta"><span>12 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>12</span><span>Unexplained event</span></p><h3>The Vela Incident</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>On 22 September 1979 an American satellite over the South Atlantic recorded the characteristic double flash of a nuclear detonation, and forty-five years later the United States has still never officially said whose it was.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li class="rec">A Satellite Saw a Nuclear Flash. No Country Claimed It. ◂ recommended</li><li>September 1979: The Double Flash Over the South Atlantic</li><li>The Test That Officially Never Happened</li><li>Somebody Set Off a Bomb in 1979 and Nobody Admitted It</li><li>Vela 6911 Recorded Something It Was Built to Recognise</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Plain and factual, and the second sentence carries a genuinely enormous implication in five words.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A dark South Atlantic satellite view with a hard amber double-peak waveform overlaid, timestamped. Austere and technical — this thumbnail sells rigour, and rigour is a differentiator. <span class="thumbtext">Nobody claimed it</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">At around one in the morning on the twenty-second of September, 1979, an American satellite called Vela 6911 recorded a very specific thing over the southern Indian Ocean: a bright flash, then a dimming, then a second, longer flash. That double pulse is not something that occurs naturally in that pattern. The satellite existed for the sole purpose of recognising it. Vela 6911 had seen it forty-one times before, and every one of those had been a nuclear detonation.</p></div>
+    </div><div class="epmeta"><span>13 minutes</span><span>Stay on the evidence and the panel disagreement — no geopolitical advocacy</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>13</span><span>Unusual place</span></p><h3>The Hanging Coffins of the Bo</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>Wooden coffins are wedged into cliff faces up to a hundred metres above the ground in Sichuan, placed there by a people who were largely destroyed in the sixteenth century and who left no explanation of how they did it.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>Coffins a Hundred Metres Up a Cliff, and No Explanation</li><li>The People Who Put Their Dead in the Sky</li><li>Nobody Left a Record of How These Got Up There</li><li class="rec">The Bo Disappeared. Their Coffins Didn't. ◂ recommended</li><li>Sichuan's Cliff Coffins</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Two four-word sentences carrying a whole civilisation and a physical impossibility — and it puts the human loss first.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A vertical limestone cliff shot from below with dark coffin boxes on timber pegs high up. Amber scale bar down the left marking the height. Mist below. <span class="thumbtext">100 metres up</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">On a limestone cliff in Gongxian County, in Sichuan, there are wooden boxes wedged into the rock face. Some are on timber pegs driven into the stone. The highest are around a hundred metres above the valley floor, on vertical rock, with nothing beneath them. They are coffins. There are hundreds along this stretch of cliff, and the people who put them there stopped existing as a distinct people around four hundred years ago.</p></div>
+    </div><div class="epmeta"><span>12 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>14</span><span>Unexplained event</span><span>Search demand</span></p><h3>The Max Headroom Intrusion</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>On the evening of 22 November 1987 somebody with broadcast-grade transmitting equipment hijacked two Chicago television stations within two hours, transmitted ninety seconds of incoherent video, and was never identified.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>Two TV Stations Were Hijacked in One Night. Nobody Was Caught.</li><li>Chicago, 1987: Ninety Seconds That Nobody Can Explain</li><li class="rec">Whoever Did This Had Broadcast Equipment ◂ recommended</li><li>The Signal Intrusion of November 22nd</li><li>It Happened Twice, Two Hours Apart</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Sidesteps the meme the story usually gets reduced to and reframes it as a technical crime — the fresher angle and the accurate one.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A CRT photographed off-axis in a dark room, heavy analogue distortion and scan lines, no recognisable figure. Amber timestamp overlay. <span class="thumbtext">Two stations. One night.</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">At about nine in the evening on the twenty-second of November, 1987, the sports report on Chicago's Channel Nine cut out. For roughly half a minute the screen showed something else, with no sound the station could hear. The engineers switched to a different transmission link and got the signal back. Two hours later, on a different station, on a different frequency, it happened again — and that time it lasted a minute and a half.</p></div>
+    </div><div class="epmeta"><span>11 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>15</span><span>Bizarre history</span><span>Flagship candidate</span></p><h3>Tromelin — Fifteen Years on a Sandbank</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>In 1761 a French ship wrecked on a half-mile sandbank in the Indian Ocean; the crew built a boat and left, promising to send help for the sixty enslaved Malagasy people they left behind. When a ship finally came fifteen years later, seven women and a baby walked out to meet it.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>They Were Left on a Sandbank for Fifteen Years</li><li>Tromelin: The Island Half a Mile Across</li><li class="rec">Eight People Were Still Alive When the Ship Came Back ◂ recommended</li><li>The Rescue That Took Fifteen Years to Arrive</li><li>Archaeologists Found What They Built</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The survival is the story, the number does the emotional work, and it centres the people who were abandoned rather than the people who abandoned them.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>An aerial of Tromelin — a pale sliver of sand ringed by reef in enormous open ocean, almost lost in the frame. Amber scale bar showing 1,700 metres across. Nothing else. <span class="thumbtext">Fifteen years here</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">Tromelin is a sandbank in the Indian Ocean, about a mile and a half long and half a mile across. There is no fresh water and there are no trees. In July 1761 a French merchant ship ran onto its reef in the dark. The crew got ashore, built a boat from the wreckage, and sailed away, leaving behind roughly sixty enslaved Malagasy people they had been transporting illegally. They said they would send a ship. The first one arrived in 1776.</p></div>
+    </div><div class="epmeta"><span>14 minutes</span><span>The 2006 French excavation of the survivors' stone structures gives it a real third act</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>16</span><span>Strange discovery</span></p><h3>Unknown Man E and the Harem Conspiracy</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>A body found in a royal Egyptian cache in 1881 was wrapped in ritually impure sheepskin, left unnamed, and mummified with its mouth open — and a three-thousand-year-old trial transcript may explain exactly who he was and what he did.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li class="rec">He Was Buried in a Way Designed to Punish Him ◂ recommended</li><li>The Unnamed Mummy and the 3,000-Year-Old Trial Record</li><li>Somebody Made Sure This Man Had No Afterlife</li><li>Unknown Man E</li><li>The Assassination of Ramesses III, and the Body Nobody Would Name</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>It establishes intent, which is far more interesting than the physical strangeness, and makes the viewer ask what he had done.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A museum photograph of the wrapped mummy in low raking light, framed so the face is turned away and only the sheepskin and the shape are legible. Amber underline on hieroglyphic text composited beside it. <span class="thumbtext">No name. No afterlife.</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">When the royal cache at Deir el-Bahari was opened in 1881, it contained the bodies of pharaohs — carefully prepared, named, wrapped in fine linen. One of them was none of those things. He had been wrapped in a sheepskin, which in ancient Egyptian practice was ritually unclean. His organs had not been removed. No name was written anywhere on or near him. And his mouth was wide open.</p></div>
+    </div><div class="epmeta"><span>12 minutes</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>17</span><span>Disappearance</span></p><h3>The Waratah</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>A 500-foot passenger liner with 211 people aboard sailed from Durban in July 1909, was seen once the following morning, and then vanished so completely that a century of searching has not produced a single confirmed fragment of her.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li class="rec">A 500-Foot Liner With 211 People Aboard, and Not One Piece Has Been Found ◂ recommended</li><li>The Waratah Sailed From Durban and Was Never Seen Again</li><li>The Largest Ship Ever to Simply Disappear</li><li>They Have Been Looking for This Wreck for a Hundred Years</li><li>One Passenger Got Off Early Because of a Dream</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Long, but the accumulation of specifics is what makes it land, and the last clause is the impossible part.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A period photograph of Waratah at anchor, high contrast, with an amber search grid overlaid across the sea in front of her — decades of survey boxes, all empty. <span class="thumbtext">Not one fragment</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">The Waratah left Durban on the twenty-sixth of July, 1909, bound for Cape Town. She was five hundred feet long, less than two years old, and carried two hundred and eleven people. At dawn the next morning another ship passed her off the Transkei coast and exchanged signals. That was the last time anybody saw her. In the hundred and fifteen years since, the searches have found several wrecks off that coastline. None of them has been the Waratah.</p></div>
+    </div><div class="epmeta"><span>12 minutes</span><span>The passenger who disembarked after a dream is a contemporary account — tag it REPORTED</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>18</span><span>Disappearance</span><span>Search demand</span></p><h3>The Yuba County Five</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>In February 1978 five men left a basketball game in northern California and drove into the mountains for no reason anyone has ever established, abandoning a working car on a snowbound forest road.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li class="rec">The Car Was Fine. The Road Went Nowhere. ◂ recommended</li><li>Five Men Drove Into the Mountains for No Reason</li><li>He Survived for Weeks in a Trailer Full of Food He Never Opened</li><li>Yuba County, 1978</li><li>Nothing About the Route Makes Sense</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Two short factual sentences that eliminate the obvious explanation before the video even starts. Thirty-eight characters.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A snowbound forest service road at dusk, tyre tracks ending, dense pine either side. Amber marker where the car was found. No vehicle in shot — the absence is the image. <span class="thumbtext">Sixty miles the wrong way</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">On the night of the twenty-fourth of February, 1978, five men drove home from a college basketball game in Chico, California. Home was south. Four days later their car was found seventy miles east, high in the Plumas National Forest, on a snow-covered mountain road it had no business being on. The car was undamaged. It started first time. There was enough fuel in the tank to get back down.</p></div>
+    </div><div class="epmeta"><span>13 minutes</span><span>Four of the five had developmental disabilities or mental illness — write with care and without condescension</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>19</span><span>Bizarre history</span></p><h3>The Devil's Footprints</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>On a February morning in 1855, people across a hundred miles of Devon woke to a single line of hoof-shaped prints in fresh snow, running over roofs, walls, haystacks and a frozen estuary.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>One Line of Prints, a Hundred Miles Across Devon</li><li class="rec">They Went Over the Rooftops ◂ recommended</li><li>February 1855: The Morning Devon Woke Up to This</li><li>The Prints Crossed a Two-Mile Estuary</li><li>Nothing Walks in a Perfectly Straight Line</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>Five words, no context, physically impossible. The thumbnail supplies the rest — packaging working as a pair.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A snow-covered Victorian rooftop at dawn, a single line of dark hoof-shaped prints crossing the ridge tiles and continuing. Amber-lit windows below. Labelled RECREATION per the visual rules. <span class="thumbtext">Over the rooftops</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">It snowed across south Devon on the night of the eighth of February, 1855. In the morning, people in more than thirty parishes found the same thing in the fresh snow outside their houses: a single line of small hoof-shaped prints, about four inches long, spaced evenly, in single file. Not a wandering track. A line. It went across gardens and fields, and then over walls, and then across rooftops, and continued on the other side.</p></div>
+    </div><div class="epmeta"><span>11 minutes</span><span>The Times and Illustrated London News coverage is the primary record — REPORTED tag almost throughout</span></div></article>
+
+    <article class="ep mini"><div class="ephead"><p class="eprank"><span>20</span><span>Unexplained event</span></p><h3>The Bell Island Boom</h3></div>
+    <div class="epbody">
+      <div class="field"><span class="k">Premise</span><p>On 2 April 1978 an enormous explosion tore holes in the ground on an island in Newfoundland, damaged a house and killed chickens in a coop, and within days two scientists from Los Alamos had arrived to look at it.</p></div>
+      <div class="field"><span class="k">Titles</span><ol><li>Something Exploded Over a Newfoundland Island in 1978</li><li>It Blew Holes in the Ground and Nobody Agrees Why</li><li class="rec">Two Los Alamos Scientists Arrived Within Days ◂ recommended</li><li>Bell Island, April 1978</li><li>The Boom That Was Heard Across the Bay</li></ol></div>
+      <div class="field"><span class="k">Why that one</span><p>The response is more interesting than the event, and it's a documented fact rather than an insinuation — which lets you handle the story straight.</p></div>
+      <div class="field"><span class="k">Thumbnail</span><p>A shallow blast crater in frozen Newfoundland ground, torn earth, a hand-scale object for reference. Grey sea and cliff behind. Amber ring around the hole. <span class="thumbtext">What made this hole?</span></p></div>
+      <div class="field"><span class="k">Hook</span><p class="hook">At around eleven in the morning on the second of April, 1978, people across Conception Bay in Newfoundland heard an explosion. On Bell Island, in the middle of the bay, it did real damage — it blew out the front of a house, tore two holes in the frozen ground, and killed a coop of chickens. There was no aircraft overhead, no industrial site nearby, and no storm in the immediate area. Within a few days, two researchers from Los Alamos National Laboratory were on the island.</p></div>
+    </div><div class="epmeta"><span>11 minutes</span><span>The leading explanation is itself barely understood — that's the interest</span></div></article>
+
+  </div>
+
+  <h3>Bench and exclusions</h3>
+  <div class="grid2">
+    <div class="note">
+      <span class="lbl">Three reserves</span>
+      <p><strong>Frederick Valentich, 1978.</strong> Strong, but the transcript does most of the work and the audience skews toward the community you're not targeting. Use it once you can afford the tone control.</p>
+      <p><strong>The 52-Hertz Whale.</strong> Melancholy rather than dark — an excellent palate-cleanser between two heavy episodes, and a strong Short.</p>
+      <p><strong>Kayaköy and the erased villages.</strong> A category rather than a story; useful when you need a place-driven episode at short notice.</p>
+    </div>
+    <div class="note">
+      <span class="lbl">Do not commission</span>
+      <p><strong>The SS Ourang Medan</strong> and <strong>"the man from Taured."</strong> The entire evidentiary chain runs back to a handful of mid-century publications with no supporting record. Not unexplained events. They <em>are</em> good episodes about how untraceable stories propagate — that framing only.</p>
+      <p><strong>The Anjikuni "vanished village."</strong> Documented as a fabrication.</p>
+      <p>Anything whose central claim lives only in blog posts and other YouTube videos. Anything requiring speculation about a living named private individual's guilt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 07 GROWTH ═══════════════ -->
+<section id="growth">
+  <div class="sechead">
+    <p class="seccode"><span>§07</span><span>An honest plan</span></p>
+    <h2>The First 1,000</h2>
+  </div>
+
+  <h3>The maths that makes this tractable</h3>
+  <div class="prose">
+    <p>Monetisation needs 1,000 subscribers plus 4,000 valid public watch hours in twelve months. There's also a lower tier at <strong>500 subscribers and 3,000 watch hours</strong> that unlocks memberships and Super Thanks — hit that first and treat it as the real halfway marker, because it's the first point the channel can earn anything.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Step</th><th class="num">Figure</th></tr></thead>
+    <tbody>
+      <tr><td>Watch hours required</td><td class="num">4,000 hrs = 240,000 min</td></tr>
+      <tr><td>A 12-minute video at 50% AVD</td><td class="num">6 min per view</td></tr>
+      <tr><td>Views needed for watch time</td><td class="num">40,000</td></tr>
+      <tr><td>Subscriber conversion in this niche</td><td class="num">1.5–3% of views</td></tr>
+      <tr><td>50,000 views × 2%</td><td class="num">1,000 subscribers</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="lbl">The consequence — and it simplifies everything</span>
+    <p><strong>In this niche, watch hours and subscribers arrive at roughly the same moment.</strong> You don't need two strategies. Optimise for one number — total minutes watched — and both thresholds fall together. Anything that raises views but not watch time actively makes the target <em>harder</em>.</p>
+    <p style="margin-top:.8rem"><strong>The single target: 50,000 long-form views.</strong></p>
+  </div>
+
+  <h3>The realistic shape of it</h3>
+  <div class="prose">
+    <p>Most channels that get there do it the same way: eight to fifteen videos of modest performance while the recommendation system works out who the audience is, and then one video that breaks out and drags everything behind it.</p>
+    <p>You can't schedule the breakout. You can only make sure there are enough well-packaged episodes for the algorithm to test, and that when one <em>does</em> break, the next-best video is right there in the end screen. A plausible distribution across your first twenty: eleven or twelve at 300–1,500 views, five or six at 2,000–6,000, one or two at 15,000–60,000.</p>
+    <p><strong>Expect four to nine months.</strong> Anyone promising faster is selling something.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Point</th><th>On track</th><th>Struggling</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Video 5</td><td>150–400 subs · one video over 1,000 views · CTR 3.5%+</td><td>Under 60 subs · nothing over 400 views</td><td><strong>Packaging.</strong> Rewrite all five titles and thumbnails before making video 6</td></tr>
+      <tr><td class="num">Video 10</td><td>400–900 subs · 8,000+ total views · AVD 45%+</td><td>Under 200 subs · AVD under 35%</td><td><strong>Retention.</strong> The hooks or the Setup beat are wrong</td></tr>
+      <tr><td class="num">Video 13</td><td>700–1,500 subs · at or near monetisation</td><td>Under 350 subs</td><td><strong>Topic selection.</strong> Your scoring is too generous. Only 20+ for the next five</td></tr>
+      <tr><td class="num">Video 20</td><td>Monetised · one clear breakout · returning viewers climbing</td><td>Still under 600</td><td>Re-examine the niche framing and repackage the best three</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The four things that actually move the number</h3>
+  <div class="pipe">
+    <div class="stage"><span class="sn">01</span><div><b>Repackage relentlessly</b><p>Highest return, lowest effort. Check CTR at 48 hours, 7 days and 30 days; below ~4% from browse means packaging is the bottleneck, not the film. Swap in one of the two thumbnails you already made. <strong>A video from month one, retitled in month six with everything you've learned, is the cheapest new video you will ever make.</strong></p></div><span class="hrs">15m / wk</span></div>
+    <div class="stage"><span class="sn">02</span><div><b>Fix retention, one variable at a time</b><p>CTR gets people in; retention decides whether anyone else is shown the video. Target 75%+ at 0:30 and 45–55% AVD. <strong>Change exactly one thing per video and write it down.</strong> Ten videos of tracked single-variable changes teaches you more about your specific audience than any amount of general advice.</p></div><span class="hrs">20m / video</span></div>
+    <div class="stage"><span class="sn">03</span><div><b>Build sessions, not views</b><p>A viewer who watches two videos back-to-back is worth far more than two viewers watching one each. Choose the end-screen video deliberately — the one whose thumbnail pairs best with the mood the viewer is in at the <em>end</em> of this film, not the newest one. Named series playlists on autoplay. A "start here" playlist once you have eight.</p></div><span class="hrs">10m / video</span></div>
+    <div class="stage"><span class="sn">04</span><div><b>Reply to every comment for 48 hours</b><p>Not about the algorithm. A hundred-view video with fifteen real replies from you builds a group of people who come back for video two — and video two is where channels either start or die. <strong>Those first two hundred people are the entire asset.</strong></p></div><span class="hrs">30m / video</span></div>
+  </div>
+
+  <h3>Cold-start distribution, done honestly</h3>
+  <div class="note">
+    <span class="lbl">Post the artefact, not the link</span>
+    <p>Most communities where this content lands ban self-promotion, and they're right to. For every video, produce one asset that stands alone — the map you built, a comparison of two photographs, a scan of the key document with the relevant line highlighted. Post <em>that</em> natively, with the story told properly in the post itself and your sources in a comment.</p>
+    <p>People who want more will find the channel. People who wanted a video link were never going to watch twelve minutes anyway.</p>
+  </div>
+  <div class="prose">
+    <p><strong>What not to do:</strong> buy anything, join engagement pods, sub-for-sub, or post links where they aren't wanted. Beyond breaking platform policy, inflated views from uninterested people wreck your retention and CTR signals — and those signals are the only thing deciding whether YouTube shows the video to the people who would have loved it.</p>
+  </div>
+
+  <h3>The first thirteen weeks</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>When</th><th>What</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Weeks −4 to 0</td><td>Template library, brand assets, videos 1–4 finished, channel page complete</td></tr>
+      <tr><td class="num">Week 1</td><td>Publish the Ghost Blimp. <strong>No launch announcement</strong> — the video either works or it doesn't. Reply to every comment</td></tr>
+      <tr><td class="num">Weeks 2–4</td><td>Videos 2–4, maintaining the buffer. First repackaging pass on video 1</td></tr>
+      <tr><td class="num">Week 5</td><td><strong>First review.</strong> Identify the single beat losing the most people. Change that one thing</td></tr>
+      <tr><td class="num">Weeks 6–9</td><td>Videos 5–8. Start posting artefacts. Build the "start here" playlist</td></tr>
+      <tr><td class="num">Week 9</td><td><strong>Second review.</strong> You should now be able to name your best-performing <em>category</em>, not just video. Weight the next block toward it</td></tr>
+      <tr><td class="num">Weeks 10–13</td><td>Videos 9–12. Introduce Shorts if long-form is healthy. First flagship into research</td></tr>
+      <tr><td class="num">Week 13</td><td><strong>The honest assessment.</strong> Thirteen videos is the minimum sample for a real judgement</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="lbl">The contract with yourself</span>
+    <p><strong>Thirteen videos before you are allowed to conclude anything.</strong> The most common way channels like this fail is changing direction at video five, then again at video nine, so the recommendation system never learns who to show them to.</p>
+  </div>
+
+  <h3>Beyond 1,000</h3>
+  <div class="prose">
+    <p>Ad revenue is the floor, not the plan. The <strong>first paid upgrade is a human narrator</strong> — the biggest single quality jump available, and it removes the last obvious AI tell. The second is a researcher: research is the most delegable stage and the one most responsible for episode quality, so buy hours there before buying editing hours.</p>
+    <p>Sponsorship arrives around 10–20k subscribers and pays substantially better than ads; place reads <em>after</em> the Revelation, never before, and never take a sponsor whose product contradicts the channel's epistemic promise. Memberships work for this audience specifically if what they buy is <strong>the research</strong> — the source documents, the claims sheet, the cut material. That's a real product for exactly this kind of person, and it costs you nothing because you already made all of it.</p>
+    <p>And the flagship documentaries are the long game. A 35-minute film every quarter is what turns a YouTube channel into something people describe as a studio.</p>
+  </div>
+</section>
+
+<footer>
+  <span>Last Known Position — strategy &amp; production system</span>
+  <span>Approve the direction, then video one</span>
+</footer>
+
+</div></main>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement, tgl=document.getElementById('tgl');
+  var stored=null; try{stored=localStorage.getItem('lkp-theme');}catch(e){}
+  if(stored){root.setAttribute('data-theme',stored);}
+  function current(){
+    var t=root.getAttribute('data-theme');
+    if(t) return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  }
+  function label(){ tgl.textContent = current()==='dark' ? 'Film · switch to paper' : 'Paper · switch to film'; }
+  label();
+  tgl.addEventListener('click',function(){
+    var next = current()==='dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('lkp-theme',next);}catch(e){}
+    label();
+  });
+
+  var links=[].slice.call(document.querySelectorAll('#nav a'));
+  var map={}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  var secs=[].slice.call(document.querySelectorAll('main section'));
+  if('IntersectionObserver' in window){
+    var seen={};
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ seen[e.target.id]=e.isIntersecting?e.intersectionRatio:0; });
+      var best=null,bv=0;
+      secs.forEach(function(s){ var v=seen[s.id]||0; if(v>bv){bv=v;best=s.id;} });
+      links.forEach(function(a){a.classList.remove('on');});
+      if(best&&map[best]) map[best].classList.add('on');
+    },{rootMargin:'-10% 0px -55% 0px',threshold:[0,.15,.4,.75,1]});
+    secs.forEach(function(s){io.observe(s);});
+  }
+})();
+</script>
