@@ -1,0 +1,93 @@
+"use client";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Plus } from "@phosphor-icons/react";
+import { useState } from "react";
+import { SERVICES } from "../content";
+import { EASE } from "../lib/motion";
+import { WordReveal } from "./primitives/WordReveal";
+
+/* Big type rows that open in place. The first is open on arrival so the section
+   never reads as a closed filing cabinet. */
+export function Services() {
+  const [open, setOpen] = useState(0);
+  const reduce = useReducedMotion();
+
+  return (
+    <section id="services" className="u-container py-[clamp(4rem,10vh,7rem)]">
+      <WordReveal text="What I do" className="u-h2 text-chalk" />
+
+      <div className="mt-14 border-t border-[var(--color-slate-line)]">
+        {SERVICES.map((s, i) => {
+          const isOpen = open === i;
+          return (
+            <div key={s.title} className="border-b border-[var(--color-slate-line)]">
+              <h3>
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`service-${i}`}
+                  onClick={() => setOpen(isOpen ? -1 : i)}
+                  onPointerEnter={() => !reduce && setOpen(i)}
+                  className="group grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-6 py-7 text-left md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)_auto] md:py-8"
+                >
+                  <span
+                    className={`u-display text-[clamp(1.5rem,3.2vw,2.5rem)] transition-all duration-500 ease-[var(--ease-out-expo)] ${
+                      isOpen ? "translate-x-2 text-chalk md:translate-x-3" : "text-chalk/55 group-hover:text-chalk"
+                    }`}
+                  >
+                    {s.title}
+                  </span>
+                  <span className="col-span-2 hidden max-w-[36ch] text-[0.92rem] leading-[1.55] text-mist md:col-span-1 md:block">
+                    {s.lead}
+                  </span>
+                  <Plus
+                    size={20}
+                    weight="regular"
+                    aria-hidden
+                    className={`shrink-0 text-mist transition-transform duration-500 ease-[var(--ease-out-expo)] ${
+                      isOpen ? "rotate-45 text-ember" : "group-hover:rotate-90"
+                    }`}
+                  />
+                </button>
+              </h3>
+
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    id={`service-${i}`}
+                    key="panel"
+                    initial={reduce ? false : { height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={reduce ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: EASE }}
+                    className="overflow-hidden"
+                  >
+                    <div className="grid gap-8 pb-10 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:pb-12">
+                      <p className="max-w-[46ch] text-[1rem] leading-[1.7] text-chalk/85 md:pl-3">
+                        {s.detail}
+                        <span className="mt-4 block text-[0.92rem] text-mist md:hidden">{s.lead}</span>
+                      </p>
+                      <ul>
+                        {s.points.map((p, j) => (
+                          <motion.li
+                            key={p}
+                            className="border-t border-[var(--color-slate-line)] py-3 text-[0.92rem] text-mist first:border-t-0 first:pt-0"
+                            initial={reduce ? false : { opacity: 0, x: 10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.45, delay: 0.08 + j * 0.06, ease: EASE }}
+                          >
+                            {p}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

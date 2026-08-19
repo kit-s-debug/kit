@@ -1,0 +1,117 @@
+@font-face { font-family: Anton; src: url("../../assets/fonts/anton-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: Cormorant; src: url("../../assets/fonts/cormorant-garamond-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: Cormorant; src: url("../../assets/fonts/cormorant-garamond-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
+@font-face { font-family: PublicSans; src: url("../../assets/fonts/publicsans-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: PublicSans; src: url("../../assets/fonts/publicsans-500.woff2") format("woff2"); font-weight: 500; }
+@font-face { font-family: PublicSans; src: url("../../assets/fonts/publicsans-600.woff2") format("woff2"); font-weight: 600; }
+@font-face { font-family: PublicSans; src: url("../../assets/fonts/publicsans-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: Archivo; src: url("../public/fonts/archivo-var-latin.woff2") format("woff2-variations"); font-weight: 400 700; font-stretch: 62% 125%; }
+@font-face { font-family: Geist; src: url("../public/fonts/geist-var-latin.woff2") format("woff2-variations"); font-weight: 300 700; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #222; font-family: PublicSans, sans-serif; }
+.shot { position: relative; overflow: hidden; margin: 0 auto 40px; }
+.w16 { width: 1600px; height: 900px; }
+.w32 { width: 1500px; height: 1000px; }
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+}
+
+/* 1. Ninth Wave ------------------------------------------------------------ */
+.nw { background: #05070c; color: #eef3f7; }
+.nw img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.75) contrast(1.05) brightness(.72) hue-rotate(-8deg); }
+.nw .veil { position: absolute; inset: 0; background:
+  linear-gradient(180deg, rgba(5,7,12,.86) 0%, rgba(5,7,12,.25) 38%, rgba(5,7,12,.94) 88%),
+  radial-gradient(80% 60% at 12% 70%, rgba(5,7,12,.8), transparent 70%); }
+.nw .in { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 44px 60px 46px; }
+.nw .top { display: flex; align-items: center; justify-content: space-between; }
+.nw .mark { font-family: Anton; font-size: 22px; letter-spacing: .34em; }
+.nw nav { display: flex; gap: 38px; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: #b9c6d2; }
+.nw h1 { font-family: Anton; font-size: 132px; line-height: .86; letter-spacing: -.01em; max-width: 12ch; text-transform: uppercase; }
+.nw h1 em { font-style: normal; color: #86c6f2; }
+.nw .sub { margin-top: 26px; font-size: 17px; letter-spacing: .04em; color: #c3cfda; }
+.nw .btm { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+.nw .nights { display: flex; gap: 54px; }
+.nw .night .d { font-family: Anton; font-size: 15px; letter-spacing: .2em; color: #86c6f2; }
+.nw .night .t { margin-top: 8px; font-size: 19px; font-weight: 600; }
+.nw .night .h { margin-top: 4px; font-size: 13px; color: #93a3b1; }
+.nw .book { border: 1px solid rgba(238,243,247,.9); border-radius: 999px; padding: 15px 30px; font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+
+/* 2. Penrhos --------------------------------------------------------------- */
+.pn { background: #10241d; color: #f0ebe0; display: grid; grid-template-columns: 1fr 560px; }
+.pn .l { padding: 56px 56px 52px; display: flex; flex-direction: column; justify-content: space-between; }
+.pn .mark { font-family: Cormorant; font-size: 30px; letter-spacing: .06em; }
+.pn nav { margin-top: 40px; display: flex; gap: 30px; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: #a9bdb2; }
+.pn h1 { font-family: Cormorant; font-size: 76px; line-height: 1.03; letter-spacing: -.01em; margin-top: 44px; max-width: 12ch; }
+.pn h1 i { color: #cbb27a; }
+.pn .menu { margin-top: 38px; max-width: 470px; }
+.pn .menu .row { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(240,235,224,.16); padding: 13px 0; font-size: 15px; color: #ddd6c7; }
+.pn .menu .row span:last-child { font-variant-numeric: tabular-nums; color: #f0ebe0; }
+.pn .r { position: relative; background: #f0ebe0; }
+.pn .r { display: flex; flex-direction: column; justify-content: space-between; padding: 56px 48px; color: #16241d; }
+.pn .r .where { font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: #5d6f64; }
+.pn .r .rule { margin-top: 18px; height: 1px; background: #b39a5f; width: 64px; }
+.pn .r .q { font-family: Cormorant; font-style: italic; font-size: 40px; line-height: 1.24; margin-top: auto; }
+.pn .r .who { margin-top: 22px; font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: #5d6f64; }
+.pn .r .hours { margin-top: 40px; border-top: 1px solid rgba(22,36,29,.14); padding-top: 18px; font-size: 14px; color: #3d4b43; line-height: 1.7; }
+.pn .book { align-self: flex-start; margin-top: 40px; background: #f0ebe0; color: #10241d; border-radius: 999px; padding: 14px 28px; font-size: 14.5px; font-weight: 600; }
+
+/* 3. Ivor & Sons ----------------------------------------------------------- */
+.iv { background: #ece5d6; color: #16150f; }
+.iv { display: grid; grid-template-columns: 1fr 470px; }
+.iv .in { position: relative; padding: 50px 52px; display: flex; flex-direction: column; justify-content: space-between; }
+.iv .panel { position: relative; background: #16150f; color: #ece5d6; padding: 50px 44px; display: flex; flex-direction: column; overflow: hidden; }
+.iv .panel .dots { position: absolute; right: -160px; bottom: -160px; width: 560px; height: 560px; border-radius: 50%;
+  background-image: radial-gradient(#ece5d6 1.7px, transparent 1.8px); background-size: 14px 14px; opacity: .17; }
+.iv .panel .lbl { position: relative; font-family: Anton; font-size: 14px; letter-spacing: .24em; color: #b9ae94; }
+.iv .panel .hours { position: relative; margin-top: 30px; font-size: 15.5px; line-height: 2.1; color: #ece5d6; }
+.iv .panel .hours b { font-weight: 600; }
+.iv .top { display: flex; justify-content: space-between; align-items: baseline; gap: 30px; }
+.iv .mark { font-family: Anton; font-size: 20px; letter-spacing: .22em; }
+.iv nav { display: flex; gap: 30px; font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: #5c574a; }
+.iv h1 { font-family: Anton; font-size: 96px; line-height: .95; text-transform: uppercase; letter-spacing: -.005em; }
+.iv .lead { margin-top: 22px; font-size: 17px; max-width: 34ch; color: #46423a; line-height: 1.5; }
+.iv .btm { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+.iv .prices { min-width: 340px; flex: 1; }
+.iv .prices .row { display: flex; justify-content: space-between; border-top: 1px solid rgba(22,21,15,.18); padding: 11px 0; font-size: 15px; }
+.iv .prices .row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.iv .book { background: #16150f; color: #ece5d6; border-radius: 999px; padding: 17px 34px; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+
+/* 4. Carreg ---------------------------------------------------------------- */
+.cg { background: #101317; color: #e7eaec; }
+.cg .grid { position: absolute; inset: 0; background-image:
+  linear-gradient(rgba(231,234,236,.055) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(231,234,236,.055) 1px, transparent 1px); background-size: 74px 74px; }
+.cg .glow { position: absolute; right: -180px; bottom: -220px; width: 760px; height: 760px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(214,224,74,.16), transparent 66%); }
+.cg { display: grid; grid-template-columns: 1fr 440px; }
+.cg .in { position: relative; padding: 50px 52px; display: flex; flex-direction: column; justify-content: space-between; }
+.cg .panel { position: relative; background: #d6e04a; color: #14170f; padding: 50px 40px; display: flex; flex-direction: column; gap: 30px; }
+.cg .panel .lbl { font-family: Archivo; font-weight: 700; font-stretch: 112%; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #3f4718; }
+.cg .panel .row { display: flex; justify-content: space-between; gap: 14px; border-top: 1px solid rgba(20,23,15,.22); padding: 13px 0; font-size: 15px; font-weight: 500; }
+.cg .panel .row span:last-child { color: #4a5320; }
+.cg .panel .foot { margin-top: auto; }
+.cg .panel .foot .big { font-family: Archivo; font-weight: 700; font-stretch: 108%; font-size: 34px; line-height: 1.05; letter-spacing: -.02em; }
+.cg .panel .foot .small { margin-top: 12px; font-size: 14px; line-height: 1.55; color: #414a1a; max-width: 26ch; }
+.cg .top { display: flex; justify-content: space-between; align-items: center; }
+.cg .mark { font-family: Archivo; font-weight: 700; font-stretch: 118%; font-size: 19px; letter-spacing: .2em; text-transform: uppercase; }
+.cg nav { display: flex; gap: 30px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: #98a0a6; }
+.cg h1 { font-family: Archivo; font-weight: 700; font-stretch: 106%; font-size: 66px; line-height: 1.0; letter-spacing: -.028em; text-transform: uppercase; max-width: 14ch; }
+.cg h1 span { color: #d6e04a; }
+.cg .btm { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+.cg .stat { font-family: Archivo; font-weight: 600; font-stretch: 105%; font-size: 15px; letter-spacing: .04em; color: #98a0a6; max-width: 30ch; line-height: 1.6; }
+.cg .quote { background: #d6e04a; color: #14170f; padding: 20px 34px; font-size: 15.5px; font-weight: 700; letter-spacing: .01em; border-radius: 999px; }
+
+/* 5. Elin Vaughan ---------------------------------------------------------- */
+.ev { background: #f3f2f0; color: #16181a; }
+.ev .in { height: 100%; padding: 48px 52px; display: flex; flex-direction: column; }
+.ev .top { display: flex; justify-content: space-between; align-items: baseline; }
+.ev .mark { font-family: Archivo; font-weight: 600; font-stretch: 112%; font-size: 21px; letter-spacing: -.01em; }
+.ev nav { display: flex; gap: 26px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #6d7278; }
+.ev h1 { font-family: Archivo; font-weight: 500; font-stretch: 105%; font-size: 44px; line-height: 1.08; letter-spacing: -.03em; margin-top: 38px; max-width: 26ch; }
+.ev .row { margin-top: 44px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; }
+.ev figure { }
+.ev figure img { width: 100%; height: 505px; object-fit: cover; filter: grayscale(1) contrast(1.12) brightness(.92); display: block; }
+.ev figcaption { margin-top: 12px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #6d7278; }
+.ev .foot { margin-top: auto; padding-top: 24px; display: flex; justify-content: space-between; font-size: 12.5px; color: #6d7278; }
