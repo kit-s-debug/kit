@@ -70,11 +70,16 @@ export function mountVenue(config) {
     var FH = config.dims.FH;
     var FRONT = D / 2;
     var BACK = -D / 2;
+    /* Floors are listed bottom-up. BASEMENTS says how many of them are below
+       the pavement, so street level is the top of floor index BASE - Eddie's
+       Forbidden Florist is underground, reached by the stairs beside the
+       entrance, not a room behind the shopfront. */
+    var BASE = config.dims.BASEMENTS || 0;
     var FLOORS = config.floors.map(function (f, i) {
-      return { num: f.num, name: f.name, y: FH * i };
+      return { num: f.num, name: f.name, y: FH * (i - BASE) };
     });
     var N = FLOORS.length;
-    var ROOF = FH * N;
+    var ROOF = FH * (N - BASE);
 
     // ---------------------------------------------------------------- renderer
     var renderer = new THREE.WebGLRenderer({
@@ -262,7 +267,7 @@ export function mountVenue(config) {
       }
       box(mat.stone, W + 0.16, 0.14, 0.42, 0, baseY + 0.05, FRONT, building);
 
-      var floorIndex = Math.round(baseY / FH);
+      var floorIndex = Math.round(baseY / FH) + BASE;
       for (var w = 0; w < winCentres.length; w++) {
         if (w === 1) continue;                       // the way in
         var wy = baseY + WIN_SILL + WIN_H / 2;
@@ -281,8 +286,12 @@ export function mountVenue(config) {
     }
 
     // upper storeys get windows; the ground floor is the venue's own frontage
-    for (var f = 1; f < N; f++) {
+    for (var f = BASE + 1; f < N; f++) {
       frontWallWithWindows(FLOORS[f].y, config.floors[f].windowTone);
+    }
+    // anything below the pavement is walled in on the street side
+    for (var b = 0; b < BASE; b++) {
+      box(mat.brickDark, W, FH, 0.3, 0, FLOORS[b].y + FH / 2, FRONT, building);
     }
 
     // side walls, back wall, slabs, roof deck and cornice
@@ -298,8 +307,14 @@ export function mountVenue(config) {
     box(mat.brickDark, 1.1, 0.75, 1.1, -W * 0.26, ROOF + 0.6, -1.0, building);
     box(mat.metal, 0.36, 1.0, 0.36, W * 0.24, ROOF + 0.7, -0.7, building);
 
-    // street and pavement
-    box(new THREE.MeshStandardMaterial({ color: C.street, roughness: 0.95 }), 46, 0.2, 46, 0, -0.1, 0);
+    // street and pavement. Laid as a frame around the building's footprint
+    // rather than one slab, so a basement isn't sliced in half by the ground.
+    var ground = new THREE.MeshStandardMaterial({ color: C.street, roughness: 0.95 });
+    var HW = W / 2, HD = D / 2, REACH = 23;
+    box(ground, 46, 0.2, REACH - HD, 0, -0.1, HD + (REACH - HD) / 2);
+    box(ground, 46, 0.2, REACH - HD, 0, -0.1, -HD - (REACH - HD) / 2);
+    box(ground, REACH - HW, 0.2, D, -HW - (REACH - HW) / 2, -0.1, 0);
+    box(ground, REACH - HW, 0.2, D, HW + (REACH - HW) / 2, -0.1, 0);
     box(mat.stone, W + 5.5, 0.06, 2.6, 0, 0.02, FRONT + 1.4);
 
     /* Neighbouring terrace, so the venue reads as mid-terrace rather than a
@@ -307,8 +322,8 @@ export function mountVenue(config) {
        just read as two black walls. */
     (function neighbours() {
       var sides = [
-        { x: -W / 2 - 2.9, w: 5.4, h: FH * (N - 0.7) },
-        { x: W / 2 + 3.1, w: 5.8, h: FH * (N - 0.85) },
+        { x: -W / 2 - 2.9, w: 5.4, h: ROOF - FH * 0.7 },
+        { x: W / 2 + 3.1, w: 5.8, h: ROOF - FH * 0.85 },
       ];
       var dimWin = emissive(C.neighbourWindow, 0.55);
       for (var n = 0; n < sides.length; n++) {
@@ -334,6 +349,15 @@ export function mountVenue(config) {
     var lamp = new THREE.PointLight(C.lamp, 90, 34, 2);
     lamp.position.set(-6.5, ROOF * 0.72, 9.5);
     scene.add(lamp);
+    /* Uplighters, if the venue asks for them. Sprites fake a glow but light
+       nothing; the facade only reads like the photograph if something is
+       actually throwing colour up the wall. */
+    (config.uplights || []).forEach(function (u) {
+      var up = new THREE.PointLight(u.color, u.intensity, u.distance || 16, 2);
+      up.position.set(u.x, u.y === undefined ? 0.4 : u.y, FRONT + (u.z === undefined ? 1.0 : u.z));
+      scene.add(up);
+    });
+
     var skyFill = new THREE.DirectionalLight(C.skyFill, 0.85);
     skyFill.position.set(7, 12, 8);
     scene.add(skyFill);
@@ -405,8 +429,11 @@ export function mountVenue(config) {
     var SLICE = (EXIT_AT - ENTER_AT) / N;
 
     var KEYS = [
-      { t: 0.00, pos: [W * 1.5, ROOF * 0.65, D * 2.4], look: [0, ROOF * 0.5, 0] },
-      { t: 0.10, pos: [W * 0.97, ROOF * 0.78, D * 2.1], look: [0, ROOF * 0.52, 0] },
+      /* Both venues are two storeys, so the approach is frontal and slightly
+         low — the way you actually see the building from the pavement
+         opposite — rather than the high oblique a taller block wanted. */
+      { t: 0.00, pos: [W * 0.92, ROOF * 0.38, D * 2.3], look: [0, ROOF * 0.46, 0] },
+      { t: 0.10, pos: [W * 0.5, ROOF * 0.5, D * 1.8], look: [0, ROOF * 0.5, 0] },
       { t: ENTER_AT * 0.95, pos: [W * 0.44, ROOF + 0.5, D * 1.45], look: [0, FLOORS[N - 1].y + 1.5, 0] },
     ];
     for (var k = 0; k < N; k++) {
@@ -425,7 +452,7 @@ export function mountVenue(config) {
       KEYS.push({ t: t0 + SLICE * 0.86, pos: [-side * 1.9, y + EYE, FRONT - 2.6], look: [side * 1.8, y + 1.15, BACK + 0.6] });
     }
     KEYS.push({ t: 0.93, pos: [1.2, 1.8, FRONT + 5.0], look: [0, ROOF * 0.3, 0] });
-    KEYS.push({ t: 1.00, pos: [-W * 1.3, ROOF * 0.7, D * 2.1], look: [0, ROOF * 0.5, 0] });
+    KEYS.push({ t: 1.00, pos: [-W * 0.9, ROOF * 0.45, D * 2.0], look: [0, ROOF * 0.48, 0] });
 
     function smoothstep(x) { return x * x * (3 - 2 * x); }
 
@@ -536,8 +563,16 @@ export function mountVenue(config) {
     var pickTargets = [];
     var hoverBoost = [];
     for (var pf = 0; pf < N; pf++) {
-      var slab = new THREE.Mesh(new THREE.BoxGeometry(W, FH, D), new THREE.MeshBasicMaterial({ visible: false }));
-      slab.position.set(0, FLOORS[pf].y + FH / 2, 0);
+      /* A basement can't be hovered on the facade — it isn't on the facade.
+         A floor can name its own target instead, so the Forbidden Florist
+         answers to the steps you'd actually go down to reach it. */
+      var h = config.floors[pf].hover;
+      var slab = new THREE.Mesh(
+        new THREE.BoxGeometry(h ? h.w : W, h ? h.h : FH, h ? h.d : D),
+        new THREE.MeshBasicMaterial({ visible: false })
+      );
+      if (h) slab.position.set(h.x, h.y, FRONT + h.z);
+      else slab.position.set(0, FLOORS[pf].y + FH / 2, 0);
       slab.userData.floor = pf;
       scene.add(slab);
       pickTargets.push(slab);

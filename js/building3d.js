@@ -31,6 +31,15 @@ var C = {
   pink: 0xff4fa3,
   leaf: 0x4a7a52,
   blush: 0xe8a0b4,
+  // taken off the photograph of the frontage: the uplighters are magenta
+  // and violet, the entrance recess is lit cold, and the parapet LED bar
+  // cycles blue/red/white
+  upMagenta: 0xd63f9e,
+  violet: 0x8f5cd6,
+  entryBlue: 0x4fd8ff,
+  ledBlue: 0x2f6cff,
+  ledRed: 0xff2d4a,
+  ledWhite: 0xdfe8ff,
 };
 
 /* ---------------------------------------------------- 01 Forbidden Florist
@@ -197,38 +206,161 @@ function buildRnbBar(ctx, room, y) {
 }
 
 /* ---- the street elevation: a shopfront under two storeys of windows ---- */
+/* ------------------------------------------------------- the real frontage
+   Modelled from a photograph of the building on Quay Street rather than
+   invented: two storeys of pale render under a segmented LED bar, EDDIE
+   ROCKS in raised letters across the upper facade, a deep entrance recess
+   lit cold blue, red double doors to one side and, to the other, the steps
+   down to the Forbidden Florist. The whole face is washed magenta and
+   violet from uplighters at pavement level, which is what actually gives
+   the building its colour at night. */
+
+var ledSegments = [];
+
+/* The name is drawn to a canvas rather than built from geometry — it is the
+   one element that has to be read as type, and Anton is already loaded for
+   the page. Fonts may not be ready on the first frame, so it redraws once
+   they are. */
+function wordmarkTexture(T) {
+  var c = document.createElement("canvas");
+  c.width = 1024;
+  c.height = 256;
+  var g = c.getContext("2d");
+  function draw() {
+    g.clearRect(0, 0, c.width, c.height);
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+    g.font = "190px Anton, Impact, sans-serif";
+    // a pale edge above a dark face, so the letters read as raised even
+    // though this is one flat plane
+    g.fillStyle = "#efe2ea";
+    g.fillText("EDDIE ROCKS", c.width / 2, c.height / 2 + 4);
+    g.fillStyle = "#2a1620";
+    g.fillText("EDDIE ROCKS", c.width / 2, c.height / 2 + 10);
+    tex.needsUpdate = true;
+  }
+  var tex = new T.CanvasTexture(c);
+  tex.anisotropy = 4;
+  draw();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  return tex;
+}
+
 function buildEddiesFrontage(ctx) {
   var T = ctx.THREE;
-  var W = ctx.W, FH = ctx.FH, FRONT = ctx.FRONT;
-  var pillarW = 0.5;
-  ctx.box(ctx.mat.stone, pillarW, FH, 0.36, -W / 2 + pillarW / 2, FH / 2, FRONT, ctx.building);
-  ctx.box(ctx.mat.stone, pillarW, FH, 0.36, W / 2 - pillarW / 2, FH / 2, FRONT, ctx.building);
-  ctx.box(ctx.mat.brickDark, W, 0.66, 0.4, 0, FH - 0.33, FRONT, ctx.building);
-  ctx.box(new T.MeshStandardMaterial({
-    color: 0x0d0810, roughness: 0.1, metalness: 0.55, transparent: true, opacity: 0.42,
-  }), W - pillarW * 2, FH - 0.66, 0.05, 0, (FH - 0.66) / 2, FRONT - 0.04, ctx.building);
-  for (var i = -1; i <= 1; i += 2) {
-    ctx.box(ctx.mat.metal, 0.07, FH - 0.7, 0.1, i * 1.55, (FH - 0.66) / 2, FRONT - 0.02, ctx.building);
-  }
-  ctx.box(ctx.mat.dark, 1.15, 2.05, 0.12, 0, 1.02, FRONT - 0.12, ctx.building);
-  ctx.box(ctx.mat.metal, 0.06, 2.05, 0.14, -0.57, 1.02, FRONT - 0.06, ctx.building);
-  ctx.box(ctx.mat.metal, 0.06, 2.05, 0.14, 0.57, 1.02, FRONT - 0.06, ctx.building);
-  var awning = ctx.box(ctx.mat.brickDark, W - 0.4, 0.09, 1.15, 0, FH - 0.72, FRONT + 0.5, ctx.building);
-  awning.rotation.x = -0.13;
+  var W = ctx.W, FH = ctx.FH, FRONT = ctx.FRONT, ROOF = ctx.ROOF;
+  var B = ctx.building;
 
-  /* an illuminated fascia panel rather than a bare strip light, so it reads
-     as signage over the door */
-  ctx.box(ctx.mat.dark, 3.3, 0.62, 0.1, 0, FH - 0.36, FRONT + 0.2);
-  ctx.box(ctx.emissive(C.copper, 0.85), 3.06, 0.42, 0.04, 0, FH - 0.36, FRONT + 0.27);
-  for (var l = 0; l < 6; l++) {
-    ctx.box(ctx.emissive(C.copperLit, 1.5), 0.2, 0.24, 0.03, -1.1 + l * 0.44, FH - 0.36, FRONT + 0.3);
-  }
-  ctx.glow(C.copperLit, 2.8, 0, FH - 0.36, FRONT + 0.5, 0.34);
+  // ---- render face, in the pale stone the uplighters wash magenta
+  var render = new T.MeshStandardMaterial({ color: 0x6d5566, roughness: 0.86 });
+  var doorRed = new T.MeshStandardMaterial({ color: 0x7c2029, roughness: 0.55 });
 
-  // the blade sign, the classic nightclub frontage detail
-  ctx.box(ctx.mat.dark, 0.16, 2.1, 0.5, W / 2 - 0.1, FH + 1.1, FRONT + 0.3);
-  ctx.box(ctx.emissive(C.pink, 2.6), 0.1, 1.85, 0.34, W / 2 - 0.02, FH + 1.1, FRONT + 0.3);
-  ctx.glow(C.pink, 2.2, W / 2 - 0.02, FH + 1.1, FRONT + 0.55, 0.42);
+  var DOOR_X = 2.3, DOOR_W = 1.5;          // red doors, right of the entrance
+  var STAIR_X = -2.5, STAIR_W = 1.9;       // steps down, left of the entrance
+  var OPEN_W = 1.9;                        // the entrance the camera flies through
+
+  // piers either side of the opening, and the wall above it
+  ctx.box(render, (W - OPEN_W) / 2, FH, 0.34, -(OPEN_W + (W - OPEN_W) / 2) / 2, FH / 2, FRONT, B);
+  ctx.box(render, (W - OPEN_W) / 2, FH, 0.34, (OPEN_W + (W - OPEN_W) / 2) / 2, FH / 2, FRONT, B);
+
+  // ---- the entrance recess: a deep dark reveal, ceiling lit cold blue
+  var RECESS = 1.5;
+  ctx.box(ctx.mat.interiorDark, OPEN_W, FH, 0.05, 0, FH / 2, FRONT - RECESS, B);
+  ctx.box(ctx.mat.brickDark, 0.12, FH, RECESS, -OPEN_W / 2, FH / 2, FRONT - RECESS / 2, B);
+  ctx.box(ctx.mat.brickDark, 0.12, FH, RECESS, OPEN_W / 2, FH / 2, FRONT - RECESS / 2, B);
+  ctx.box(ctx.mat.brickDark, OPEN_W, 0.14, RECESS, 0, FH - 0.07, FRONT - RECESS / 2, B);
+  for (var d = 0; d < 6; d++) {
+    var dx = -0.6 + (d % 3) * 0.6;
+    var dz = FRONT - 0.45 - Math.floor(d / 3) * 0.7;
+    ctx.box(ctx.emissive(C.entryBlue, 2.2), 0.16, 0.03, 0.16, dx, FH - 0.16, dz, B);
+    ctx.glow(C.entryBlue, 0.85, dx, FH - 0.22, dz, 0.5, B);
+  }
+  ctx.glow(C.entryBlue, 3.0, 0, FH * 0.55, FRONT - RECESS + 0.1, 0.34, B);
+
+  // ---- red double doors
+  ctx.box(doorRed, DOOR_W, FH - 0.5, 0.12, DOOR_X, (FH - 0.5) / 2, FRONT + 0.1, B);
+  ctx.box(ctx.mat.brickDark, 0.06, FH - 0.5, 0.14, DOOR_X, (FH - 0.5) / 2, FRONT + 0.17, B);
+  ctx.box(render, DOOR_W + 0.3, 0.18, 0.3, DOOR_X, FH - 0.4, FRONT + 0.12, B);
+
+  // ---- the steps down to the Forbidden Florist, behind a rail
+  ctx.box(ctx.mat.interiorDark, STAIR_W, 0.9, 0.9, STAIR_X, -0.45, FRONT + 0.55, B);
+  for (var s = 0; s < 5; s++) {
+    ctx.box(ctx.mat.stone, STAIR_W, 0.08, 0.26, STAIR_X, -0.12 - s * 0.17, FRONT + 0.92 - s * 0.16, B);
+  }
+  ctx.box(ctx.mat.metal, 0.05, 0.05, 1.5, STAIR_X + STAIR_W / 2, 0.55, FRONT + 0.6, B);
+  ctx.cyl(ctx.mat.metal, 0.04, 1.1, STAIR_X + STAIR_W / 2, 0.0, FRONT + 1.2, B);
+  ctx.cyl(ctx.mat.metal, 0.04, 1.1, STAIR_X + STAIR_W / 2, 0.35, FRONT + 0.1, B);
+  // the lit poster board on the wall beside the steps
+  ctx.box(ctx.mat.dark, 0.7, 1.0, 0.08, STAIR_X - 0.5, 1.35, FRONT + 0.18, B);
+  ctx.box(ctx.emissive(C.copperLit, 1.1), 0.6, 0.88, 0.03, STAIR_X - 0.5, 1.35, FRONT + 0.23, B);
+  ctx.glow(C.copperLit, 1.3, STAIR_X - 0.5, 1.35, FRONT + 0.4, 0.3, B);
+
+  // ---- EDDIE ROCKS, raised across the upper facade
+  var signH = 0.86;
+  var sign = new T.Mesh(
+    new T.PlaneGeometry(W * 0.92, signH),
+    new T.MeshStandardMaterial({
+      map: wordmarkTexture(T), transparent: true, roughness: 0.7,
+      color: 0xffffff, emissive: 0x3b2130, emissiveIntensity: 0.9,
+    })
+  );
+  // clear of the sill band the storey above draws at this height, which is
+  // 0.3 deep — at +0.06 the letters were inside the wall
+  sign.position.set(0, FH + 0.62, FRONT + 0.24);
+  B.add(sign);
+
+  // ---- the LED bar along the parapet: the signature of the real building
+  ctx.box(ctx.mat.brickDark, W + 0.5, 0.34, 0.75, 0, ROOF - 0.05, FRONT + 0.3, B);
+  var LED_N = 15;
+  for (var i = 0; i < LED_N; i++) {
+    var lx = -W / 2 + 0.25 + (i / (LED_N - 1)) * (W - 0.5);
+    var mat = ctx.emissive(C.ledWhite, 2.4);
+    ctx.box(mat, 0.34, 0.12, 0.06, lx, ROOF - 0.16, FRONT + 0.66, B);
+    ledSegments.push({
+      mat: mat,
+      sprite: ctx.glow(C.ledWhite, 1.0, lx, ROOF - 0.16, FRONT + 0.78, 0.5, B),
+      i: i,
+    });
+  }
+  ctx.glow(C.entryBlue, 6.5, 0, ROOF - 0.1, FRONT + 1.0, 0.16, B);
+
+  // ---- hanging baskets, one each side, at first-floor level
+  [-1, 1].forEach(function (side) {
+    var bx = side * (W / 2 - 0.55);
+    ctx.box(ctx.mat.metal, 0.06, 0.5, 0.06, bx, FH + 1.5, FRONT + 0.2, B);
+    ctx.box(ctx.mat.metal, 0.06, 0.06, 0.5, bx, FH + 1.72, FRONT + 0.4, B);
+    var leaves = new T.Mesh(
+      new T.SphereGeometry(0.34, 10, 8),
+      new T.MeshStandardMaterial({ color: C.leaf, roughness: 1 })
+    );
+    leaves.position.set(bx, FH + 1.16, FRONT + 0.42);
+    leaves.scale.set(1, 0.8, 1);
+    B.add(leaves);
+    ctx.glow(C.blush, 0.7, bx, FH + 1.1, FRONT + 0.5, 0.4, B);
+  });
+
+  // ---- pavement uplighters: what actually colours the building at night
+  [-2.6, 0, 2.6].forEach(function (ux, n) {
+    ctx.box(ctx.mat.metal, 0.22, 0.06, 0.22, ux, 0.03, FRONT + 1.05, B);
+    ctx.glow(n === 1 ? C.violet : C.upMagenta, 3.4, ux, 0.5, FRONT + 1.0, 0.28, B);
+    ctx.glow(n === 1 ? C.violet : C.upMagenta, 5.0, ux, FH * 0.9, FRONT + 0.8, 0.13, B);
+  });
+}
+
+/* The LED bar chases along the parapet the way the real one does — one
+   moving band of colour rather than every segment blinking at once. */
+function frontageFrame(ctx, t) {
+  var TONE = [C.ledBlue, C.ledRed, C.ledWhite];
+  for (var i = 0; i < ledSegments.length; i++) {
+    var seg = ledSegments[i];
+    var phase = t * 1.6 - seg.i * 0.35;
+    var tone = TONE[Math.floor(Math.abs(phase / 2.2)) % 3];
+    var lit = 0.55 + Math.sin(phase) * 0.45;
+    seg.mat.emissive.setHex(tone);
+    seg.mat.emissiveIntensity = 0.8 + lit * 2.6;
+    seg.sprite.material.color.setHex(tone);
+    seg.sprite.material.opacity = 0.25 + lit * 0.45;
+  }
 }
 
 mountVenue({
@@ -238,12 +370,25 @@ mountVenue({
   stageId: "venue-stage",
   hoverLabelId: "venue-hover-label",
   palette: C,
-  dims: { W: 7.2, D: 7.6, FH: 3.1 },
+  // two storeys over a basement, as the building actually stands: the
+  // Forbidden Florist is underground, down the steps beside the entrance
+  dims: { W: 7.2, D: 7.6, FH: 3.1, BASEMENTS: 1 },
   fogDensity: 0.035,
   exposure: 1.05,
   buildExterior: buildEddiesFrontage,
+  onFrame: frontageFrame,
+  /* The building is only that colour at night because of these. Sprites
+     alone left the render nearly black — these actually throw light up it. */
+  uplights: [
+    { x: -2.7, color: C.upMagenta, intensity: 26, distance: 15 },
+    { x: 0, color: C.violet, intensity: 20, distance: 14 },
+    { x: 2.7, color: C.upMagenta, intensity: 26, distance: 15 },
+    { x: 0, y: 2.9, z: -0.9, color: C.entryBlue, intensity: 10, distance: 7 },
+  ],
   floors: [
-    { num: "01", name: "The Forbidden Florist", build: buildFlorist, windowTone: C.copper },
+    // underground, so its hover target is the stairwell on the pavement
+    { num: "01", name: "The Forbidden Florist", build: buildFlorist, windowTone: C.copper,
+      hover: { x: -2.5, y: 0.7, z: 0.7, w: 2.4, h: 2.0, d: 1.8 } },
     { num: "02", name: "Main Bar", build: buildMainBar, windowTone: C.copper },
     { num: "03", name: "RnB Bar", build: buildRnbBar, windowTone: C.magenta },
   ],

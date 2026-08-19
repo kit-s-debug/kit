@@ -213,6 +213,26 @@ Beyond the original hero/floors/contact, this pass adds:
   consistently and scales properly on small screens. Anchor targets also
   got `scroll-margin-top` — section headings were previously being
   clipped underneath the sticky header on every in-page nav click.
+- **The building matches the real one.** Eddie's sent a photograph of the
+  frontage on Quay Street, and it corrected a fact the model had wrong: the
+  Forbidden Florist is **underground**, down the steps beside the entrance,
+  not the ground floor. So the building is two storeys over a basement, not
+  three storeys up. `venue3d.js` gained a `dims.BASEMENTS` count — floors
+  are still listed bottom-up, but the first `BASEMENTS` of them sit below
+  the pavement, get a solid street wall instead of windows, and the pavement
+  is laid as a frame around the footprint rather than one slab, which would
+  otherwise slice a basement in half. The floor copy was corrected with it
+  ("Downstairs, under the flowers", Main Bar at street level).
+  The frontage itself is now modelled from the photograph rather than
+  invented: pale render under a segmented LED bar that chases blue/red/white
+  along the parapet, EDDIE ROCKS in raised Anton across the upper facade
+  (drawn to a canvas texture, redrawn once `document.fonts.ready` resolves),
+  a deep entrance recess lit cold blue, red double doors, hanging baskets,
+  and the steps down to the Florist. The magenta and violet uplighters are
+  real `PointLight`s via a `uplights` config, not sprites — sprites fake a
+  glow but light nothing, and that wash is the whole character of the
+  building at night. The approach was re-keyed frontal and low to suit two
+  storeys instead of three.
 - **The building is a real 3D scene now.** "One building, three floors" was
   the strongest idea on the site and the weakest execution — a flat facade
   built out of divs that read as clip art. It's now a stylised miniature of
