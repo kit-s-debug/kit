@@ -395,9 +395,33 @@
 
   <section class="events" id="events" aria-labelledby="events-heading">
     <div class="events-inner reveal">
-      <h2 id="events-heading">Upcoming Events</h2>
+      <div class="events-head">
+        <h2 id="events-heading">Showcase Events</h2>
+        <!-- The rail runs in time order: drag left for nights that have been,
+             right for the ones coming. It lands on tonight. -->
+        <div class="lineup-nav">
+          <button type="button" class="lineup-btn" data-lineup-dir="-1" aria-label="Earlier nights">
+            <span aria-hidden="true">←</span>
+          </button>
+          <button type="button" class="lineup-btn" data-lineup-dir="1" aria-label="Later nights">
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="lineup" id="lineup">
+        <div class="lineup-rail" id="lineup-rail" tabindex="0" role="region"
+             aria-label="Line-ups, earliest to latest">
+          <!-- Built by main.js from the venue's real opening nights so it can
+               never go stale. The no-JS fallback below is what stands in. -->
+          <noscript>
+            <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights are announced regularly on both floors — get in touch for what's coming up.</p>
+          </noscript>
+        </div>
+      </div>
+
       <div class="events-empty">
-        <p>New nights are announced regularly on the Main and RnB floors. Check back here, or follow along on social for the next one.</p>
+        <p>Line-ups for the showcase nights are announced as they're confirmed. Get in touch if you want to know what's on before it goes up.</p>
         <a href="#contact" class="btn btn--outline" data-magnetic>Enquire</a>
       </div>
     </div>

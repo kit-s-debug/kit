@@ -154,6 +154,23 @@ Beyond the original hero/floors/contact, this pass adds:
   now lives where people actually look for it: a `.level-meta` list
   inside each floor panel ("On the decks" / "Nights"). The `#residents`
   entries were removed from the mobile drawer and footer nav with it.
+- **Showcase Events is a rail in time order.** Drag or arrow left and you
+  move back through nights that have been; right and you move forward
+  through the ones coming. It lands on the next night open, so what's next
+  reads first and the past is a deliberate move leftwards.
+  It is **generated from the venue's real opening nights** (Wednesday,
+  Friday, Saturday, with the entry policy each carries) rather than a
+  hand-written list, which means it cannot go stale and nobody has to
+  remember to prune last month off the page — the "Been / Tonight / Coming
+  up" tags are computed against the date each time it loads. Native scroll
+  does the work (an overflow container plus scroll snapping), with the two
+  buttons and the arrow keys as an alternative to dragging rather than a
+  replacement for it; the rail is focusable and the buttons disable at each
+  end. No-JS gets a plain sentence naming the nights.
+  **Still needed:** actual line-ups. Every card currently says "Line-up
+  announced closer to the night", because inventing DJ names for a real
+  venue would be worse than saying nothing. Send a list of dates and acts
+  and they drop straight in.
 - **The Experience section is an editorial run, not three cards.**
   "Three ways to spend the night" was three equal-width cards, each
   wearing a category badge *and* a numbered index *and* an eyebrow —
@@ -233,6 +250,10 @@ Beyond the original hero/floors/contact, this pass adds:
   glow but light nothing, and that wash is the whole character of the
   building at night. The approach was re-keyed frontal and low to suit two
   storeys instead of three.
+- **Labrinth's opening hours are real now.** Friday and Saturday, 9pm till
+  midnight, confirmed by the venue. They replace the holding line that said
+  the nights weren't known yet, and the hero lede carries them too. Address,
+  photography and booking details are still outstanding.
 - **Labrinth's building is the real one too.** A photograph of it settled
   both the shape and the plan: a narrow three-storey terrace in white render
   with heavy cobalt trim, Rewind at the bottom and the Main Bar on the top

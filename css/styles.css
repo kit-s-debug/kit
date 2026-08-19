@@ -877,6 +877,60 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 .events-empty p{ color:var(--dim); max-width:46ch; line-height:1.7; }
 
+/* ---- line-up rail: time runs left to right, so scrolling left is the past
+   and right is what's coming. Native scroll does the work — snap points and
+   an overflow container — with the buttons and arrow keys as an alternative
+   to dragging rather than a replacement for it. */
+.events-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
+.lineup-nav{ display:flex; gap:8px; margin-bottom:24px; flex:0 0 auto; }
+.lineup-btn{
+  width:44px; height:44px; border-radius:50%; cursor:pointer;
+  border:1px solid var(--line-strong); background:transparent; color:var(--silver-bright);
+  font-size:16px; line-height:1; transition:border-color .2s ease, color .2s ease, opacity .2s ease;
+}
+.lineup-btn:hover:not(:disabled){ border-color:var(--silver-bright); color:var(--white); }
+.lineup-btn:disabled{ opacity:.3; cursor:default; }
+
+.lineup{ position:relative; margin-bottom:28px; }
+/* the rail bleeds to the section edge so cards look like they continue past
+   it, which is the affordance that says "there is more this way" */
+.lineup-rail{
+  display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
+  padding:4px 4px 18px; margin:0 -4px;
+  scrollbar-width:none; -ms-overflow-style:none;
+}
+.lineup-rail::-webkit-scrollbar{ display:none; }
+.lineup-rail:focus-visible{ outline:2px solid var(--silver-bright); outline-offset:4px; }
+.lineup-fallback{ color:var(--dim); line-height:1.7; max-width:52ch; }
+
+.lineup-card{
+  flex:0 0 236px; scroll-snap-align:start;
+  border:1px solid var(--line); border-radius:8px; padding:20px 20px 22px;
+  background:var(--panel-2); display:flex; flex-direction:column; gap:7px;
+  transition:border-color .25s ease, transform .25s ease;
+}
+.lineup-card:hover{ border-color:var(--line-strong); transform:translateY(-2px); }
+.lineup-tag{
+  font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--silver-deep);
+}
+.lineup-date{ font-size:14px; color:var(--dim); letter-spacing:.03em; }
+.lineup-date b{ color:var(--silver-bright); font-weight:600; }
+.lineup-card h3{
+  font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+  font-size:23px; line-height:1; letter-spacing:.01em; margin:3px 0 0;
+}
+.lineup-floors{ font-size:12.5px; color:var(--silver-deep); letter-spacing:.04em; }
+.lineup-bill{ font-size:13.5px; color:var(--dim); line-height:1.5; margin-top:2px; }
+.lineup-note{
+  margin-top:auto; padding-top:12px; font-size:11px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--silver-deep);
+}
+/* nights that have been are still there to scroll back to, just quieter */
+.lineup-card.is-past{ opacity:.5; }
+.lineup-card.is-past:hover{ opacity:.8; }
+.lineup-card.is-tonight{ border-color:var(--silver-bright); }
+.lineup-card.is-tonight .lineup-tag{ color:var(--silver-bright); }
+
 /* ============ contact ============ */
 .contact{ padding:0 28px var(--section-y); }
 .contact-inner{ max-width:var(--container); margin:0 auto; border-top:1px solid var(--line); padding-top:40px; }
@@ -1024,6 +1078,9 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .footer-meta{ text-align:left; }
   .social-links{ justify-content:flex-start; }
   .events-empty{ flex-direction:column; align-items:flex-start; }
+  .events-head{ flex-direction:column; align-items:flex-start; gap:8px; }
+  .lineup-nav{ margin-bottom:18px; }
+  .lineup-card{ flex-basis:212px; padding:18px 18px 20px; }
   .footer-newsletter{ align-items:flex-start; }
   .newsletter-form{ width:100%; }
   .newsletter-form input{ flex:1; width:auto; }
@@ -1183,6 +1240,16 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 .lab-contact-label{ color:var(--dim); max-width:44ch; line-height:1.7; }
 .lab-contact .contact-links{ margin-top:0; }
+
+.lab-hours{ display:flex; gap:44px; margin:0 0 26px; flex-wrap:wrap; }
+.lab-hours div{ display:flex; flex-direction:column; gap:5px; }
+.lab-hours dt{
+  font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--silver-deep);
+}
+.lab-hours dd{
+  margin:0; font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+  font-size:26px; line-height:1; color:var(--silver-bright);
+}
 
 .footer-inner--lab{ grid-template-columns:auto 1fr auto; align-items:center; }
 .venue-switch--footer{ justify-self:center; }

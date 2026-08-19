@@ -58,6 +58,97 @@
     });
   });
 
+  /* ---------- showcase line-ups ---------- */
+  /* A rail in time order: earlier nights to the left, coming ones to the
+     right, landing on the next one open. Generated from the venue's real
+     opening nights rather than a hand-written list, so it can't go stale and
+     nobody has to remember to prune last month off the page. */
+  var rail = document.getElementById("lineup-rail");
+  if (rail) {
+    var NIGHTS = [
+      { day: 3, name: "Midweek", floors: "Main Bar", note: "Free entry" },
+      { day: 5, name: "Friday", floors: "Main Bar · RnB Bar", note: "Free entry" },
+      { day: 6, name: "Saturday", floors: "Main Bar · RnB Bar", note: "Entry varies" },
+    ];
+    var WEEKS_BACK = 6, WEEKS_ON = 8;
+    var DAY_MS = 86400000;
+    var DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var cards = [];
+    for (var wk = -WEEKS_BACK; wk <= WEEKS_ON; wk++) {
+      NIGHTS.forEach(function (night) {
+        var d = new Date(today.getTime());
+        d.setDate(d.getDate() + (night.day - d.getDay()) + wk * 7);
+        cards.push({ date: d, night: night });
+      });
+    }
+    cards.sort(function (a, b) { return a.date - b.date; });
+
+    var firstUpcoming = null;
+    var frag = document.createDocumentFragment();
+    cards.forEach(function (c) {
+      var past = c.date.getTime() < today.getTime();
+      var isToday = c.date.getTime() === today.getTime();
+      var el = document.createElement("article");
+      el.className = "lineup-card" + (past ? " is-past" : "") + (isToday ? " is-tonight" : "");
+      el.innerHTML =
+        '<span class="lineup-tag">' + (isToday ? "Tonight" : past ? "Been" : "Coming up") + "</span>" +
+        '<span class="lineup-date"><b>' + DAYS[c.date.getDay()] + "</b> " +
+        c.date.getDate() + " " + MONTHS[c.date.getMonth()] + "</span>" +
+        "<h3>" + c.night.name + "</h3>" +
+        '<p class="lineup-floors">' + c.night.floors + "</p>" +
+        '<p class="lineup-bill">' + (past ? "Residents on both floors" : "Line-up announced closer to the night") + "</p>" +
+        '<span class="lineup-note">' + c.night.note + "</span>";
+      frag.appendChild(el);
+      if (!past && !firstUpcoming) firstUpcoming = el;
+    });
+    rail.appendChild(frag);
+
+    /* Land on the next night open, so what's coming reads first and the past
+       is a deliberate move leftwards rather than the default view. */
+    var land = function () {
+      if (!firstUpcoming) return;
+      rail.scrollLeft = firstUpcoming.offsetLeft - rail.offsetLeft;
+    };
+    land();
+    window.addEventListener("load", land);
+
+    var step = function () {
+      var card = rail.querySelector(".lineup-card");
+      return card ? card.offsetWidth + 18 : 300;
+    };
+    var buttons = document.querySelectorAll("[data-lineup-dir]");
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener("click", function () {
+        rail.scrollBy({
+          left: Number(btn.dataset.lineupDir) * step(),
+          behavior: reducedMotion ? "auto" : "smooth",
+        });
+      });
+    });
+    var syncEnds = function () {
+      var atStart = rail.scrollLeft <= 2;
+      var atEnd = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 2;
+      Array.prototype.forEach.call(buttons, function (btn) {
+        btn.disabled = Number(btn.dataset.lineupDir) < 0 ? atStart : atEnd;
+      });
+    };
+    rail.addEventListener("scroll", syncEnds, { passive: true });
+    syncEnds();
+    rail.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      rail.scrollBy({
+        left: (e.key === "ArrowLeft" ? -1 : 1) * step(),
+        behavior: reducedMotion ? "auto" : "smooth",
+      });
+    });
+  }
+
   /* ---------- reveal on scroll ---------- */
   var revealEls = document.querySelectorAll(".reveal");
   if (reducedMotion || !("IntersectionObserver" in window)) {
