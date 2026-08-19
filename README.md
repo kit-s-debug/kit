@@ -233,6 +233,25 @@ Beyond the original hero/floors/contact, this pass adds:
   glow but light nothing, and that wash is the whole character of the
   building at night. The approach was re-keyed frontal and low to suit two
   storeys instead of three.
+- **Labrinth's building is the real one too.** A photograph of it settled
+  both the shape and the plan: a narrow three-storey terrace in white render
+  with heavy cobalt trim, Rewind at the bottom and the Main Bar on the top
+  floor. Only two of the three storeys are the venue, so `venue3d.js` gained
+  `dims.ATTIC` — storeys drawn with an elevation and a shell but no room
+  inside, because a building that stops at its top bar reads as a model
+  rather than a street. The frontage carries the stepped quoins up the party
+  wall, chunky surrounds and glazing bars on every sash, the blue shopfront
+  with its papered window and panelled door, and the tiled logo on both the
+  fascia and a projecting banner — the banner hangs off a bracket, so it is
+  thin across X with the artwork on its two faces, not a slab facing the
+  street. `ctx` now exposes the window centres and dimensions so a frontage
+  can dress the openings the shell already cut. Labrinth is narrower than
+  Eddie's (W 5.6 against 7.2), which is the difference between the two
+  buildings in life.
+  **Note on the name:** the sign on the building reads *LABYRINTH*; the site
+  says *Labrinth* throughout. The 3D sign follows the site, so the page is
+  at least consistent with itself — worth confirming which spelling is
+  correct.
 - **The building is a real 3D scene now.** "One building, three floors" was
   the strongest idea on the site and the weakest execution — a flat facade
   built out of divs that read as clip art. It's now a stylised miniature of

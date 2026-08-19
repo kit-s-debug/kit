@@ -32,6 +32,9 @@ var C = {
   violet: 0x8a5cc8,
   amber: 0xe0a45c,
   hotPink: 0xff4fa3,
+  // off the photograph of the frontage: cobalt trim on white render
+  trimBlue: 0x2f6fae,
+  trimDeep: 0x1b4a7a,
 };
 
 /* --------------------------------------------------------------- 01 Rewind
@@ -180,41 +183,152 @@ function buildLabMainBar(ctx, room, y) {
 }
 
 /* ---- the street elevation: a single glazed frontage under one storey ---- */
+/* ------------------------------------------------------- the real frontage
+   Modelled from a photograph of the building: a narrow three-storey terrace
+   in white render with heavy cobalt trim — stepped quoins running up the
+   party wall, chunky surrounds on every sash, a blue shopfront, and the
+   tiled LABYRINTH logo both on the fascia and on a projecting banner. Only
+   two of the three storeys are the venue; the top one is still drawn,
+   because a building that stops at its top bar reads as a model. */
+
+/* the logo's colour blocks, read off the sign */
+var TILES = [0xe8542a, 0xf3a52c, 0xf2d13c, 0x6fbf4a, 0x2f9bd4, 0x8e4fa8];
+
+/* The name, drawn to a canvas. Same approach as Eddie's mark: it has to be
+   read as type, and Anton is already loaded for the page. */
+function labelTexture(T, text, vertical) {
+  var c = document.createElement("canvas");
+  c.width = vertical ? 256 : 1024;
+  c.height = vertical ? 1024 : 256;
+  var g = c.getContext("2d");
+  function draw() {
+    g.clearRect(0, 0, c.width, c.height);
+    g.save();
+    g.translate(c.width / 2, c.height / 2);
+    if (vertical) g.rotate(Math.PI / 2);
+    g.fillStyle = "#16324a";
+    g.textAlign = "center";
+    g.textBaseline = "middle";
+    g.font = (vertical ? 150 : 168) + "px Anton, Impact, sans-serif";
+    g.fillText(text, 0, 0);
+    g.restore();
+    tex.needsUpdate = true;
+  }
+  var tex = new T.CanvasTexture(c);
+  tex.anisotropy = 4;
+  draw();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  return tex;
+}
+
 function buildLabrinthFrontage(ctx) {
   var T = ctx.THREE;
-  var W = ctx.W, FH = ctx.FH, FRONT = ctx.FRONT;
-  var pillarW = 0.52;
-  ctx.box(ctx.mat.stone, pillarW, FH, 0.36, -W / 2 + pillarW / 2, FH / 2, FRONT, ctx.building);
-  ctx.box(ctx.mat.stone, pillarW, FH, 0.36, W / 2 - pillarW / 2, FH / 2, FRONT, ctx.building);
-  ctx.box(ctx.mat.brickDark, W, 0.7, 0.4, 0, FH - 0.35, FRONT, ctx.building);
+  var W = ctx.W, FH = ctx.FH, FRONT = ctx.FRONT, ROOF = ctx.ROOF;
+  var B = ctx.building;
+
+  var render = new T.MeshStandardMaterial({ color: 0xcfd4d8, roughness: 0.9 });
+  var trim = new T.MeshStandardMaterial({ color: C.trimBlue, roughness: 0.6 });
+  var trimDark = new T.MeshStandardMaterial({ color: C.trimDeep, roughness: 0.5 });
+  var white = new T.MeshStandardMaterial({ color: 0xe8ecef, roughness: 0.85 });
+
+  // ---- ground floor: blue shopfront either side of the way in
+  var OPEN_W = 1.6;
+  var sideW = (W - OPEN_W) / 2;
+  var leftX = -(OPEN_W + sideW) / 2;
+  var rightX = (OPEN_W + sideW) / 2;
+
+  ctx.box(render, sideW, FH, 0.34, leftX, FH / 2, FRONT, B);
+  ctx.box(render, sideW, FH, 0.34, rightX, FH / 2, FRONT, B);
+
+  // the shop window, blue framed, papered with posters
+  ctx.box(trim, sideW, FH - 0.5, 0.4, rightX, (FH - 0.5) / 2, FRONT + 0.04, B);
   ctx.box(new T.MeshStandardMaterial({
-    color: 0x081215, roughness: 0.1, metalness: 0.55, transparent: true, opacity: 0.4,
-  }), W - pillarW * 2, FH - 0.7, 0.05, 0, (FH - 0.7) / 2, FRONT - 0.04, ctx.building);
-  for (var i = -1; i <= 1; i += 2) {
-    ctx.box(ctx.mat.metal, 0.07, FH - 0.74, 0.1, i * 1.62, (FH - 0.7) / 2, FRONT - 0.02, ctx.building);
+    color: 0x0a1418, roughness: 0.12, metalness: 0.55,
+  }), sideW - 0.4, FH - 1.25, 0.06, rightX, (FH - 0.5) / 2, FRONT + 0.26, B);
+  for (var pz = 0; pz < 4; pz++) {
+    ctx.box(ctx.emissive(0xd8e2e8, 0.5), 0.3, 0.42, 0.02,
+      rightX - 0.75 + pz * 0.5, 1.5 - (pz % 2) * 0.5, FRONT + 0.3, B);
   }
 
-  // doorway with a rope line outside it
-  ctx.box(ctx.mat.dark, 1.2, 2.1, 0.12, 0, 1.05, FRONT - 0.12, ctx.building);
-  ctx.box(ctx.mat.metal, 0.06, 2.1, 0.14, -0.6, 1.05, FRONT - 0.06, ctx.building);
-  ctx.box(ctx.mat.metal, 0.06, 2.1, 0.14, 0.6, 1.05, FRONT - 0.06, ctx.building);
-  for (var post = -1; post <= 1; post += 2) {
-    ctx.cyl(ctx.mat.metal, 0.055, 0.95, post * 1.25, 0.48, FRONT + 1.5);
-    ctx.cyl(ctx.emissive(C.jadeLit, 0.8), 0.07, 0.06, post * 1.25, 0.98, FRONT + 1.5);
+  // recessed dark entrance — the gap the camera flies through
+  ctx.box(ctx.mat.interiorDark, OPEN_W, FH, 0.05, 0, FH / 2, FRONT - 1.2, B);
+  ctx.box(trimDark, 0.16, FH, 1.2, -OPEN_W / 2, FH / 2, FRONT - 0.6, B);
+  ctx.box(trimDark, 0.16, FH, 1.2, OPEN_W / 2, FH / 2, FRONT - 0.6, B);
+  ctx.box(trimDark, OPEN_W, 0.16, 1.2, 0, FH - 0.08, FRONT - 0.6, B);
+  ctx.glow(C.jadeLit, 2.2, 0, FH * 0.45, FRONT - 1.0, 0.3, B);
+
+  // the blue door, with the pale oval panel it actually carries
+  ctx.box(trimDark, 0.95, FH - 0.85, 0.14, leftX + 0.35, (FH - 0.85) / 2, FRONT + 0.1, B);
+  ctx.box(white, 0.34, 0.5, 0.04, leftX + 0.35, FH * 0.52, FRONT + 0.19, B);
+  ctx.box(trimDark, 0.2, 0.3, 0.05, leftX + 0.35, FH * 0.52, FRONT + 0.22, B);
+
+  // ---- stepped quoins up the party wall, the building's signature
+  var qh = 0.42;
+  for (var q = 0; q * qh < ROOF; q++) {
+    var wide = q % 2 === 0;
+    ctx.box(trim, wide ? 0.62 : 0.4, qh - 0.05, 0.36,
+      -W / 2 + (wide ? 0.31 : 0.2), q * qh + qh / 2, FRONT, B);
   }
 
-  // fascia sign
-  ctx.box(ctx.mat.dark, 3.5, 0.66, 0.1, 0, FH - 0.35, FRONT + 0.2);
-  ctx.box(ctx.emissive(C.jade, 0.8), 3.24, 0.44, 0.04, 0, FH - 0.35, FRONT + 0.27);
-  for (var l = 0; l < 8; l++) {
-    ctx.box(ctx.emissive(C.jadeLit, 1.6), 0.19, 0.26, 0.03, -1.42 + l * 0.4, FH - 0.35, FRONT + 0.3);
-  }
-  ctx.glow(C.jadeLit, 3.0, 0, FH - 0.35, FRONT + 0.5, 0.34);
+  // ---- chunky blue surrounds on every opening the shell cut
+  var rows = [];
+  for (var f = 1; f < 2 + ctx.ATTIC; f++) rows.push(FH * f);
+  rows.forEach(function (baseY) {
+    ctx.winCentres.forEach(function (cx, i) {
+      if (i === 1) return;                       // the way in stays open
+      var wy = baseY + ctx.WIN_SILL + ctx.WIN_H / 2;
+      ctx.box(trim, ctx.WIN_W + 0.44, 0.2, 0.42, cx, wy + ctx.WIN_H / 2 + 0.1, FRONT + 0.06, B);
+      ctx.box(trim, ctx.WIN_W + 0.5, 0.16, 0.46, cx, wy - ctx.WIN_H / 2 - 0.08, FRONT + 0.08, B);
+      ctx.box(trim, 0.22, ctx.WIN_H, 0.4, cx - ctx.WIN_W / 2 - 0.11, wy, FRONT + 0.06, B);
+      ctx.box(trim, 0.22, ctx.WIN_H, 0.4, cx + ctx.WIN_W / 2 + 0.11, wy, FRONT + 0.06, B);
+      // glazing bars, so they read as sashes rather than holes
+      ctx.box(trim, ctx.WIN_W, 0.05, 0.06, cx, wy, FRONT + 0.02, B);
+      ctx.box(trim, 0.05, ctx.WIN_H, 0.06, cx, wy, FRONT + 0.02, B);
+    });
+  });
 
-  // blade sign, in the venue's magenta rather than Eddie's pink
-  ctx.box(ctx.mat.dark, 0.16, 2.0, 0.5, W / 2 - 0.1, FH + 1.0, FRONT + 0.3);
-  ctx.box(ctx.emissive(C.magenta, 2.6), 0.1, 1.76, 0.34, W / 2 - 0.02, FH + 1.0, FRONT + 0.3);
-  ctx.glow(C.magenta, 2.2, W / 2 - 0.02, FH + 1.0, FRONT + 0.55, 0.42);
+  // ---- fascia over the shopfront: the tiled logo, then the name
+  ctx.box(white, W - 0.2, 0.62, 0.14, 0, FH - 0.3, FRONT + 0.2, B);
+  TILES.forEach(function (tone, i) {
+    var col = i % 3, rowi = Math.floor(i / 3);
+    ctx.box(ctx.emissive(tone, 1.6), 0.15, 0.15, 0.05,
+      -W / 2 + 0.42 + col * 0.17, FH - 0.22 - rowi * 0.17, FRONT + 0.29, B);
+  });
+  var fascia = new T.Mesh(
+    new T.PlaneGeometry(W * 0.62, 0.44),
+    new T.MeshStandardMaterial({ map: labelTexture(T, "LABRINTH", false), transparent: true, roughness: 0.8 })
+  );
+  fascia.position.set(0.5, FH - 0.3, FRONT + 0.29);
+  B.add(fascia);
+  ctx.glow(0xffffff, 2.4, 0, FH - 0.3, FRONT + 0.5, 0.2, B);
+
+  /* The projecting banner. It hangs off the wall on a bracket, so the panel
+     is thin across X and reads edge-on from straight ahead — the faces that
+     carry the artwork are the two planes on either side of it. */
+  var armY = FH + 1.35;
+  var armX = -W / 2 + 0.45;
+  ctx.box(ctx.mat.metal, 0.05, 0.05, 1.0, armX, armY + 1.0, FRONT + 0.5, B);
+  ctx.box(ctx.mat.metal, 0.04, 1.0, 0.04, armX, armY + 0.5, FRONT + 0.95, B);
+  ctx.box(white, 0.07, 1.7, 1.0, armX, armY, FRONT + 0.95, B);
+  [-1, 1].forEach(function (face) {
+    var fx = armX + face * 0.045;
+    TILES.forEach(function (tone, i) {
+      var col = i % 2, rowi = Math.floor(i / 2);
+      ctx.box(ctx.emissive(tone, 1.9), 0.02, 0.26, 0.26,
+        fx, armY + 0.52 - rowi * 0.3, FRONT + 0.79 + col * 0.3, B);
+    });
+    var banner = new T.Mesh(
+      new T.PlaneGeometry(0.85, 0.34),
+      new T.MeshStandardMaterial({ map: labelTexture(T, "LABRINTH", true), transparent: true, roughness: 0.8 })
+    );
+    banner.position.set(fx + face * 0.005, armY - 0.55, FRONT + 0.95);
+    banner.rotation.y = face * Math.PI / 2;
+    B.add(banner);
+  });
+  ctx.glow(0xffffff, 1.8, armX, armY, FRONT + 0.95, 0.26, B);
+
+  // ---- eaves and a chimney, as the terrace has
+  ctx.box(white, W + 0.3, 0.22, 0.5, 0, ROOF - 0.1, FRONT + 0.16, B);
 }
 
 mountVenue({
@@ -224,10 +338,20 @@ mountVenue({
   stageId: "lab-venue-stage",
   hoverLabelId: "lab-venue-hover-label",
   palette: C,
-  dims: { W: 7.2, D: 7.6, FH: 3.1 },
+  // a narrow three-storey terrace, not a wide block: two storeys are the
+  // venue and the third is drawn but empty
+  dims: { W: 5.6, D: 7.2, FH: 3.0, ATTIC: 1 },
   fogDensity: 0.034,
   exposure: 1.18,
   buildExterior: buildLabrinthFrontage,
+  /* Pale render reads as a grey slab at night without something on it. A
+     cool wash plus the warmth spilling from the doorway, rather than the
+     venue's interior magenta, which isn't what the street sees. */
+  uplights: [
+    { x: -1.9, color: 0xbcd8f0, intensity: 12, distance: 14 },
+    { x: 1.9, color: 0xbcd8f0, intensity: 12, distance: 14 },
+    { x: 0, y: 2.4, z: -0.6, color: C.jadeLit, intensity: 9, distance: 7 },
+  ],
   floors: [
     { num: "01", name: "Rewind", build: buildRewind, windowTone: C.amber },
     { num: "02", name: "Main Bar", build: buildLabMainBar, windowTone: C.magenta },

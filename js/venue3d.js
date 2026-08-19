@@ -79,7 +79,11 @@ export function mountVenue(config) {
       return { num: f.num, name: f.name, y: FH * (i - BASE) };
     });
     var N = FLOORS.length;
-    var ROOF = FH * (N - BASE);
+    /* Storeys above the top room. Labrinth is a three-storey terrace but
+       only two of them are the venue, and a building that stops at its top
+       bar reads as a model rather than a street. */
+    var ATTIC = config.dims.ATTIC || 0;
+    var ROOF = FH * (N - BASE + ATTIC);
 
     // ---------------------------------------------------------------- renderer
     var renderer = new THREE.WebGLRenderer({
@@ -293,6 +297,15 @@ export function mountVenue(config) {
     for (var b = 0; b < BASE; b++) {
       box(mat.brickDark, W, FH, 0.3, 0, FLOORS[b].y + FH / 2, FRONT, building);
     }
+    // storeys above the top room: elevation and shell, but no room inside
+    for (var a = 0; a < ATTIC; a++) {
+      var ay = FLOORS[N - 1].y + FH * (a + 1);
+      frontWallWithWindows(ay, config.floors[N - 1].windowTone);
+      box(mat.brickDark, 0.3, FH, D, -W / 2, ay + FH / 2, 0, building);
+      box(mat.brickDark, 0.3, FH, D, W / 2, ay + FH / 2, 0, building);
+      box(mat.brickDark, W, FH, 0.3, 0, ay + FH / 2, BACK, building);
+      box(mat.dark, W, 0.18, D, 0, ay, 0, building);
+    }
 
     // side walls, back wall, slabs, roof deck and cornice
     for (var s = 0; s < N; s++) {
@@ -402,6 +415,8 @@ export function mountVenue(config) {
     // =====================================================================
     var ctx = {
       THREE: THREE, scene: scene, building: building,
+      // so a frontage can dress the openings the shell already cut
+      winCentres: winCentres, WIN_W: WIN_W, WIN_H: WIN_H, WIN_SILL: WIN_SILL, ATTIC: ATTIC,
       mat: mat, emissive: emissive, box: box, cyl: cyl, glow: glow, crowd: crowd,
       pulseLights: pulseLights, beams: beams,
       C: C, W: W, D: D, FH: FH, FRONT: FRONT, BACK: BACK, ROOF: ROOF,
