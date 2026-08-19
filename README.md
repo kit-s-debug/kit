@@ -259,18 +259,21 @@ Beyond the original hero/floors/contact, this pass adds:
   every drink is £3 before 10pm — the best offers in Haverfordwest. Rewind
   downstairs is free entry too. The outdoor stage is written as a third
   space rather than a third floor, because it isn't in the building's stack.
-- **A gallery on the Labyrinth page.** Five frames, all pulled from the
-  venue's own footage and the frontage photograph, graded to the same
-  split-tone as everything else — nothing stock. Laid out as an asymmetric
-  grid rather than a row of equal thumbnails, so the wide room shots get to
-  be wide and the crowd shot gets height.
-  Rewind's photographs arrived and the gallery is now **split by room** —
-  02 Main Bar and 01 Rewind, each with its own grid, so the two floors read
-  as two different nights rather than one undifferentiated pile. The Rewind
-  set is proper photography rather than video stills: the lyrics up on the
-  screen mid-song, a group on the microphones in pink cowboy hats, the
-  vaulted ceiling and the mirror ball. Graded through the same chain as
-  everything else so the two rooms sit together.
+- **A gallery on the Labyrinth page.** Fifteen frames across three grids,
+  all the venue's own — nothing stock. Laid out asymmetrically rather than
+  as rows of equal thumbnails, so the wide room shots get to be wide and the
+  portraits get height.
+  Real photography arrived for all of it, so the gallery is **split three
+  ways** — 02 Main Bar, 01 Rewind, and the outdoor stage — each with its own
+  grid, so the spaces read as different nights rather than one pile of
+  photos. The video stills that were standing in have been dropped wherever
+  a photograph now covers the same thing; only the CDJ close-up survives
+  from the footage.
+  Each set was chosen to say what the space is without needing the copy:
+  Main Bar gets the bar mid-service and the booths, Rewind gets the lyrics
+  on screen and the next singers listed above the crowd, and the outdoor
+  stage gets the lit sign and the view out from behind the decks. Fifteen
+  frames, all through the same split-tone chain.
 - **Showcase Events moved up onto its photograph.** It used to be an
   editorial row that linked down to a separate events section; it is now the
   line-up rail itself, sitting on the picture of the room it happens in,
