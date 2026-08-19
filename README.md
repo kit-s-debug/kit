@@ -264,9 +264,13 @@ Beyond the original hero/floors/contact, this pass adds:
   split-tone as everything else — nothing stock. Laid out as an asymmetric
   grid rather than a row of equal thumbnails, so the wide room shots get to
   be wide and the crowd shot gets height.
-  **Still needed: photographs of Rewind.** Every frame in the footage is the
-  Main Bar floor, so the gallery says so rather than passing them off as the
-  downstairs room. Send Rewind shots and they slot into the same grid.
+  Rewind's photographs arrived and the gallery is now **split by room** —
+  02 Main Bar and 01 Rewind, each with its own grid, so the two floors read
+  as two different nights rather than one undifferentiated pile. The Rewind
+  set is proper photography rather than video stills: the lyrics up on the
+  screen mid-song, a group on the microphones in pink cowboy hats, the
+  vaulted ceiling and the mirror ball. Graded through the same chain as
+  everything else so the two rooms sit together.
 - **Showcase Events moved up onto its photograph.** It used to be an
   editorial row that linked down to a separate events section; it is now the
   line-up rail itself, sitting on the picture of the room it happens in,
