@@ -233,7 +233,7 @@ p{ margin:0; }
 .wordmark--footer .logo-mark{ height:74px; }
 
 /* ---- venue switch: one owner's rooms, set as a single lockup ----
-   Eddie's mark is the way back to its site; Labrinth and Rewind sit beside
+   Eddie's mark is the way back to its site; Labyrinth and Rewind sit beside
    it in the mark's own Anton so the three read as connected rather than as
    a nav. The one you're on is the lit one. Kept visible at every width,
    because it's wayfinding between sites, not navigation within a page. */
@@ -360,12 +360,12 @@ p{ margin:0; }
    falls through to the near-black page ground and reads as broken. With the
    still there, a video that drops out just looks like a photograph. */
 .hero-media{ background:url("../assets/images/hero-room.jpg") center/cover no-repeat; }
-.theme-labrinth .hero-media{ background-image:url("../assets/images/labrinth-room.jpg"); }
+.theme-labyrinth .hero-media{ background-image:url("../assets/images/labyrinth-room.jpg"); }
 /* matches the 700px point where main.js swaps to the portrait cut, so the
    still and the footage are always the same framing */
 @media (max-width:700px){
   .hero-media{ background-image:url("../assets/images/hero-room-portrait.jpg"); }
-  .theme-labrinth .hero-media{ background-image:url("../assets/images/labrinth-room-portrait.jpg"); }
+  .theme-labyrinth .hero-media{ background-image:url("../assets/images/labyrinth-room-portrait.jpg"); }
 }
 .hero-video{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
@@ -877,6 +877,39 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 .events-empty p{ color:var(--dim); max-width:46ch; line-height:1.7; }
 
+/* ---- Showcase Events: the rail sits on the photograph of the room, so the
+   line-up reads against the place it happens in rather than beside it. The
+   image is a real <img> under a scrim, not a background, so it still carries
+   alt text and lazy-loads. */
+.experience-row--lineup{
+  display:block; position:relative; overflow:hidden;
+  border-radius:10px; border:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:0; min-height:420px;
+}
+.experience-row--lineup .lineup-bg{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  filter:saturate(.85) contrast(1.05);
+}
+/* the scrim is doing legibility work, not decoration — the type sits on a
+   busy photograph of a crowd */
+.experience-row--lineup::after{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(15,8,12,.9) 0%, rgba(15,8,12,.62) 42%, rgba(15,8,12,.9) 100%),
+    linear-gradient(94deg, rgba(15,8,12,.86) 0%, rgba(15,8,12,.3) 62%, transparent 100%);
+}
+.lineup-panel{ position:relative; z-index:2; padding:34px 30px 30px; }
+.lineup-intro{
+  color:var(--dim); max-width:52ch; line-height:1.7; font-size:15px; margin:10px 0 26px;
+}
+.experience-row--lineup h3{
+  font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+  font-size:clamp(28px, 4vw, 44px); line-height:1; letter-spacing:.01em; margin:6px 0 0;
+}
+.experience-row--lineup .experience-index{ position:static; }
+/* on the photograph the cards need a solid ground of their own */
+.experience-row--lineup .lineup-card{ background:rgba(20,12,17,.82); backdrop-filter:blur(3px); }
+
 /* ---- line-up rail: time runs left to right, so scrolling left is the past
    and right is what's coming. Native scroll does the work — snap points and
    an overflow container — with the buttons and arrow keys as an alternative
@@ -1081,6 +1114,9 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .events-head{ flex-direction:column; align-items:flex-start; gap:8px; }
   .lineup-nav{ margin-bottom:18px; }
   .lineup-card{ flex-basis:212px; padding:18px 18px 20px; }
+  .lineup-panel{ padding:24px 20px 22px; }
+  .experience-row--lineup{ min-height:0; }
+  .lineup-intro{ font-size:14.5px; margin-bottom:20px; }
   .footer-newsletter{ align-items:flex-start; }
   .newsletter-form{ width:100%; }
   .newsletter-form input{ flex:1; width:auto; }
@@ -1172,7 +1208,7 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 }
 
 /* ==========================================================================
-   Labrinth — the sister venue
+   Labyrinth — the sister venue
 
    Same owner, same type system and same craft (grain, dot cursor, magnetic
    buttons), deliberately not the same room: the palette swings from Eddie's
@@ -1180,7 +1216,7 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
    reads as a different place rather than another page. Only the palette
    tokens are overridden, so every existing component follows automatically.
    ========================================================================== */
-:root.theme-labrinth{
+:root.theme-labyrinth{
   --charcoal:#0B1416;
   --panel:#122023;
   --panel-2:#16282C;
@@ -1194,7 +1230,7 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   --silver-gradient:linear-gradient(100deg, var(--silver-deep) 0%, var(--silver) 30%, var(--silver-bright) 52%, var(--silver) 74%, var(--silver-deep) 100%);
 }
 
-/* a text wordmark stands in until the real Labrinth logo exists */
+/* a text wordmark stands in until the real Labyrinth logo exists */
 .wordmark--text{
   font-family:var(--font-display); font-size:26px; letter-spacing:.01em;
   text-transform:uppercase; color:var(--white); line-height:1;
@@ -1209,14 +1245,14 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   padding:calc(var(--header-h) + 40px) 28px 64px;
   background:var(--charcoal);
 }
-/* the shared hero-media/grade/vignette stack is retuned to Labrinth's ink,
+/* the shared hero-media/grade/vignette stack is retuned to Labyrinth's ink,
    and the scrim runs the other way to Eddie's since the type sits lower */
-.theme-labrinth .hero-grade{
+.theme-labyrinth .hero-grade{
   background:
     linear-gradient(96deg, rgba(6,14,16,.9) 0%, rgba(6,14,16,.62) 34%, rgba(6,14,16,.14) 62%, transparent 86%),
     linear-gradient(180deg, rgba(6,14,16,.66) 0%, transparent 26%, transparent 54%, var(--charcoal) 100%);
 }
-.theme-labrinth .hero-vignette{
+.theme-labyrinth .hero-vignette{
   background:radial-gradient(ellipse 86% 84% at 52% 46%, transparent 44%, rgba(4,10,11,.46) 82%, rgba(4,10,11,.8) 100%);
 }
 .lab-hero-inner{ position:relative; z-index:2; max-width:var(--container); margin:0 auto; width:100%; }
@@ -1241,7 +1277,50 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .lab-contact-label{ color:var(--dim); max-width:44ch; line-height:1.7; }
 .lab-contact .contact-links{ margin-top:0; }
 
-.lab-hours{ display:flex; gap:44px; margin:0 0 26px; flex-wrap:wrap; }
+.lab-hours{ display:flex; gap:44px; margin:0 0 20px; flex-wrap:wrap; }
+.lab-offer{ color:var(--dim); line-height:1.7; max-width:48ch; margin:0 0 26px; }
+
+/* ---- Labyrinth gallery: an asymmetric grid rather than a row of equal
+   thumbnails, so the wide room shots get to be wide and the crowd shot gets
+   height. Every frame is the venue's own footage. */
+.lab-gallery{ padding:var(--section-y) 28px 0; }
+.lab-gallery-head{ max-width:var(--container); margin:0 auto 28px; }
+.lab-gallery-head h2{ margin:12px 0 10px; }
+.lab-gallery-note{ color:var(--dim); line-height:1.7; max-width:52ch; }
+.lab-gallery-grid{
+  max-width:var(--container); margin:0 auto;
+  display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+}
+.lab-shot{
+  position:relative; margin:0; overflow:hidden; border-radius:8px;
+  border:1px solid var(--line); background:var(--panel-2);
+}
+.lab-shot img{
+  display:block; width:100%; height:100%; object-fit:cover;
+  transition:transform .5s cubic-bezier(.32,.72,0,1);
+}
+.lab-shot:hover img{ transform:scale(1.04); }
+.lab-shot figcaption{
+  position:absolute; left:0; right:0; bottom:0; padding:26px 16px 13px;
+  font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--white);
+  background:linear-gradient(180deg, transparent, rgba(6,14,16,.85));
+}
+.lab-shot--wide{ grid-column:span 2; }
+.lab-shot--tall{ grid-row:span 2; }
+.lab-gallery-grid > .lab-shot{ min-height:190px; }
+.lab-shot--tall{ min-height:0; }
+
+/* the outdoor stage is a third space, not a third floor, so it sits after
+   the building rather than inside its stack */
+.lab-outdoor{
+  max-width:var(--container); margin:34px auto 0; padding:26px 28px;
+  border:1px solid var(--line-strong); border-radius:8px;
+}
+.lab-outdoor h3{
+  font-family:var(--font-display); font-weight:400; text-transform:uppercase;
+  font-size:clamp(22px, 3vw, 30px); line-height:1; margin:8px 0 10px;
+}
+.lab-outdoor p:last-child{ color:var(--dim); line-height:1.7; max-width:52ch; }
 .lab-hours div{ display:flex; flex-direction:column; gap:5px; }
 .lab-hours dt{
   font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--silver-deep);
@@ -1265,10 +1344,17 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   .lab-hero{ padding-left:20px; padding-right:20px; }
   .lab-panel{ padding-left:20px; padding-right:20px; }
   .lab-lede{ font-size:15px; max-width:38ch; }
+  .lab-outdoor{ padding:22px 20px; margin-left:20px; margin-right:20px; }
+  .lab-gallery{ padding-left:20px; padding-right:20px; }
+  .lab-gallery-grid{ grid-template-columns:repeat(2, 1fr); gap:10px; }
+  .lab-shot--wide{ grid-column:span 2; }
+  .lab-shot--tall{ grid-row:span 1; }
+  .lab-gallery-grid > .lab-shot{ min-height:150px; }
+  .lab-hours{ gap:26px; }
   .wordmark--footer-text{ font-size:32px; }
 }
 
-/* the two-floor list that stands in for Labrinth's 3D building */
+/* the two-floor list that stands in for Labyrinth's 3D building */
 .lab-floorlist{
   max-width:var(--container); margin:0 auto; padding:0 28px;
   display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(24px, 4vw, 56px);

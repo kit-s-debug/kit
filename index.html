@@ -59,13 +59,13 @@
       <!-- One owner, three connected rooms, so they read as a single lockup:
            the mark is the way back to Eddie's, and the two names beside it
            are set in the mark's own Anton rather than as a separate nav.
-           Labrinth is its own site; Rewind is the floor under it. -->
+           Labyrinth is its own site; Rewind is the floor under it. -->
       <nav class="venue-switch" aria-label="Choose venue">
         <a href="#top" class="venue-switch-mark is-current" aria-current="page">
           <img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark">
         </a>
-        <a href="labrinth.html" class="venue-switch-item">Labrinth</a>
-        <a href="labrinth.html#rewind" class="venue-switch-item">Rewind</a>
+        <a href="labyrinth.html" class="venue-switch-item">Labyrinth</a>
+        <a href="labyrinth.html#rewind" class="venue-switch-item">Rewind</a>
       </nav>
     </div>
 
@@ -341,15 +341,39 @@
     </div>
 
     <ol class="experience-list">
-      <li class="experience-row reveal">
-        <div class="experience-media" data-tilt>
-          <img src="assets/images/exp-showcase.jpg" alt="A DJ on the decks in the RnB Bar with the crowd's hands in the air" loading="lazy">
-        </div>
-        <div class="experience-body">
-          <span class="experience-index" aria-hidden="true">01</span>
-          <h3>Showcase Events</h3>
-          <p>Resident and guest line-ups on the Main Bar, for the nights the whole room turns up.</p>
-          <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+      <!-- Showcase Events isn't a row you read, it's the line-up itself:
+           the rail sits on the photograph of the room it happens in, and
+           runs left into the past, right into what's coming. -->
+      <li class="experience-row experience-row--lineup reveal" id="events">
+        <img class="lineup-bg" src="assets/images/exp-showcase.jpg"
+             alt="A DJ on the decks in the RnB Bar with the crowd's hands in the air" loading="lazy">
+        <div class="lineup-panel">
+          <div class="events-head">
+            <div>
+              <span class="experience-index" aria-hidden="true">01</span>
+              <h3 id="events-heading">Showcase Events</h3>
+            </div>
+            <div class="lineup-nav">
+              <button type="button" class="lineup-btn" data-lineup-dir="-1" aria-label="Earlier nights">
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" class="lineup-btn" data-lineup-dir="1" aria-label="Later nights">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+          <p class="lineup-intro">Resident and guest line-ups, for the nights the whole room turns up. Go left for the nights that have been, right for what's coming.</p>
+
+          <div class="lineup" id="lineup">
+            <div class="lineup-rail" id="lineup-rail" tabindex="0" role="region"
+                 aria-label="Line-ups, earliest to latest">
+              <!-- Built by main.js from the venue's real opening nights so it
+                   can never go stale. no-JS gets the sentence below. -->
+              <noscript>
+                <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights are announced regularly on both floors — get in touch for what's coming up.</p>
+              </noscript>
+            </div>
+          </div>
         </div>
       </li>
       <li class="experience-row reveal">
@@ -393,33 +417,9 @@
   </section>
 
 
-  <section class="events" id="events" aria-labelledby="events-heading">
+  <section class="events" aria-labelledby="events-ask-heading">
     <div class="events-inner reveal">
-      <div class="events-head">
-        <h2 id="events-heading">Showcase Events</h2>
-        <!-- The rail runs in time order: drag left for nights that have been,
-             right for the ones coming. It lands on tonight. -->
-        <div class="lineup-nav">
-          <button type="button" class="lineup-btn" data-lineup-dir="-1" aria-label="Earlier nights">
-            <span aria-hidden="true">←</span>
-          </button>
-          <button type="button" class="lineup-btn" data-lineup-dir="1" aria-label="Later nights">
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="lineup" id="lineup">
-        <div class="lineup-rail" id="lineup-rail" tabindex="0" role="region"
-             aria-label="Line-ups, earliest to latest">
-          <!-- Built by main.js from the venue's real opening nights so it can
-               never go stale. The no-JS fallback below is what stands in. -->
-          <noscript>
-            <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights are announced regularly on both floors — get in touch for what's coming up.</p>
-          </noscript>
-        </div>
-      </div>
-
+      <h2 id="events-ask-heading" class="visually-hidden">Line-up enquiries</h2>
       <div class="events-empty">
         <p>Line-ups for the showcase nights are announced as they're confirmed. Get in touch if you want to know what's on before it goes up.</p>
         <a href="#contact" class="btn btn--outline" data-magnetic>Enquire</a>

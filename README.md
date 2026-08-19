@@ -67,7 +67,7 @@ Beyond the original hero/floors/contact, this pass adds:
   at several points inside that window (50ms/300ms/400ms/800ms/1100ms
   after load) all now stick, while the hash-load fix still lands at the
   top every time across repeated tests.
-- **Labrinth has its own 3D building too, and it is two storeys.** Same
+- **Labyrinth has its own 3D building too, and it is two storeys.** Same
   scroll-driven treatment as Eddie Rocks, on the venue's actual layout:
   **02 Main Bar** upstairs with a live DJ, and **01 Rewind** downstairs for
   90s and 00s classics you can sing along to on your own or as a group.
@@ -83,7 +83,7 @@ Beyond the original hero/floors/contact, this pass adds:
   picking and the render loop, plus all the performance constraints (no
   shadow maps, no post-processing, instanced crowds, capped pixel ratio,
   mobile tier, `IntersectionObserver` gating). `js/building3d.js` and
-  `js/labrinth3d.js` are now thin: a palette, a floor list, a frontage and
+  `js/labyrinth3d.js` are now thin: a palette, a floor list, a frontage and
   the contents of each room.
   The camera journey is **generated from the floor count** rather than
   hand-keyed, so a two-storey venue gets the same approach → in through the
@@ -91,14 +91,14 @@ Beyond the original hero/floors/contact, this pass adds:
   slices sized to fit. Stage numbering follows the same rule (stage 0 is the
   exterior, a floor's stage is its index + 1), which is why the markup can
   label its copy panels by floor.
-- **Labrinth's hero is the venue's own footage**, same treatment as Eddie
+- **Labyrinth's hero is the venue's own footage**, same treatment as Eddie
   Rocks. Cut from a 7-second recording the client supplied, using the first
   4 seconds — the packed crowd under the arched ceiling — and stopping
   before the red DJ segment and the black tail the clip ends on.
-  Encoded to `assets/video/labrinth-loop.mp4|.webm` (1440x810 landscape band
-  cropped out of the portrait original) and `labrinth-loop-portrait.*`
+  Encoded to `assets/video/labyrinth-loop.mp4|.webm` (1440x810 landscape band
+  cropped out of the portrait original) and `labyrinth-loop-portrait.*`
   (636x848 for phones), both dropped from 60fps to 30 since it is a
-  background loop, with `labrinth-room.jpg` / `labrinth-room-portrait.jpg`
+  background loop, with `labyrinth-room.jpg` / `labyrinth-room-portrait.jpg`
   as posters and as the whole hero under `prefers-reduced-motion`.
   The grade cools the shadows toward the page's ink base while leaving the
   room's magenta and violet in the highlights — a teal/magenta split rather
@@ -109,23 +109,23 @@ Beyond the original hero/floors/contact, this pass adds:
   `data-webm-*`/`data-mp4-*` attributes, and its hero query now matches
   `.hero, .lab-hero` with the `#hero-content` parallax null-guarded, since
   only the footage layer is shared between the two venues.
-- **Two venues, one switcher, two sites.** Labrinth used to be a passive
-  "Also by Eddie's: Labrinth" badge — on desktop beside the logo, and again
+- **Two venues, one switcher, two sites.** Labyrinth used to be a passive
+  "Also by Eddie's: Labyrinth" badge — on desktop beside the logo, and again
   down in the mobile drawer's footer, linked to `#`. It's now an actual
   venue switch sitting next to the wordmark at every width (the drawer copy
   is gone), with the current venue lit and underlined in that venue's own
-  accent. Labrinth is a **separate page** (`labrinth.html`), not a section
+  accent. Labyrinth is a **separate page** (`labyrinth.html`), not a section
   of this one, because the two are different places that happen to share an
   owner.
-  `labrinth.html` reuses the same stylesheet, type system and craft (grain,
+  `labyrinth.html` reuses the same stylesheet, type system and craft (grain,
   dot cursor, magnetic buttons) but overrides the palette tokens under
-  `:root.theme-labrinth` — Eddie's warm copper/aubergine swaps for a cold
+  `:root.theme-labyrinth` — Eddie's warm copper/aubergine swaps for a cold
   ink-and-jade register, so arriving there reads as a different room rather
   than another page. Only the tokens change, so every existing component
   follows automatically. Its one owned motif is a maze path that draws
   itself on arrival, which is the name made visual rather than decoration.
   `js/main.js` is shared by both pages, so the header and drawer blocks are
-  now null-guarded — Labrinth has a header and footer but no drawer, hero
+  now null-guarded — Labyrinth has a header and footer but no drawer, hero
   video, building or countdown.
 - **No separate "About" section.** There used to be a stat-strip section
   right after the hero ("Two/Three floors. One reputation." plus a
@@ -186,14 +186,14 @@ Beyond the original hero/floors/contact, this pass adds:
   with it; it was a derived crop, and `floor-florist.jpg` it came from
   is still here.
 - **The header is one lockup for the whole group, and each site has its own
-  navigation.** Eddie's mark is the way back to its site, and Labrinth and
+  navigation.** Eddie's mark is the way back to its site, and Labyrinth and
   Rewind sit beside it in the mark's own Anton so the three read as
   connected rather than as a nav bar; the venue you're on is the lit one and
   is rendered as a `<span>`, not a link that reloads the page you're already
   looking at. Floors are addressable by name — `venue3d.js` slugifies each
-  floor's name, so `labrinth.html#rewind` and `#main-bar` scroll the camera
+  floor's name, so `labyrinth.html#rewind` and `#main-bar` scroll the camera
   to that room instead of the top of the building, and the no-3D fallback
-  carries matching ids so the same links work there. Labrinth previously had
+  carries matching ids so the same links work there. Labyrinth previously had
   no navigation of its own: its header, hero and footer all offered the same
   single action, back to Eddie's front page. It now has its own primary nav,
   its own drawer, and one way back rather than three. Drawer wiring in
@@ -250,11 +250,34 @@ Beyond the original hero/floors/contact, this pass adds:
   glow but light nothing, and that wash is the whole character of the
   building at night. The approach was re-keyed frontal and low to suit two
   storeys instead of three.
-- **Labrinth's opening hours are real now.** Friday and Saturday, 9pm till
+- **The venue is spelled Labyrinth.** The sign on the building was right and
+  the site was wrong, so it's renamed throughout: visible copy, the page
+  (`labyrinth.html`), the scene module (`labyrinth3d.js`), the theme class,
+  and every image and video asset.
+- **Labyrinth's real details.** The home of house music. Friday and Saturday,
+  9pm till midnight. Free entry on both floors and at the outdoor stage, and
+  every drink is £3 before 10pm — the best offers in Haverfordwest. Rewind
+  downstairs is free entry too. The outdoor stage is written as a third
+  space rather than a third floor, because it isn't in the building's stack.
+- **A gallery on the Labyrinth page.** Five frames, all pulled from the
+  venue's own footage and the frontage photograph, graded to the same
+  split-tone as everything else — nothing stock. Laid out as an asymmetric
+  grid rather than a row of equal thumbnails, so the wide room shots get to
+  be wide and the crowd shot gets height.
+  **Still needed: photographs of Rewind.** Every frame in the footage is the
+  Main Bar floor, so the gallery says so rather than passing them off as the
+  downstairs room. Send Rewind shots and they slot into the same grid.
+- **Showcase Events moved up onto its photograph.** It used to be an
+  editorial row that linked down to a separate events section; it is now the
+  line-up rail itself, sitting on the picture of the room it happens in,
+  under a scrim doing legibility work over a busy crowd shot. The image is a
+  real `<img>` rather than a CSS background so it keeps its alt text and
+  lazy-loads. `#events` moved with it, so every link still lands.
+- **Labyrinth's opening hours are real now.** Friday and Saturday, 9pm till
   midnight, confirmed by the venue. They replace the holding line that said
   the nights weren't known yet, and the hero lede carries them too. Address,
   photography and booking details are still outstanding.
-- **Labrinth's building is the real one too.** A photograph of it settled
+- **Labyrinth's building is the real one too.** A photograph of it settled
   both the shape and the plan: a narrow three-storey terrace in white render
   with heavy cobalt trim, Rewind at the bottom and the Main Bar on the top
   floor. Only two of the three storeys are the venue, so `venue3d.js` gained
@@ -266,11 +289,11 @@ Beyond the original hero/floors/contact, this pass adds:
   fascia and a projecting banner — the banner hangs off a bracket, so it is
   thin across X with the artwork on its two faces, not a slab facing the
   street. `ctx` now exposes the window centres and dimensions so a frontage
-  can dress the openings the shell already cut. Labrinth is narrower than
+  can dress the openings the shell already cut. Labyrinth is narrower than
   Eddie's (W 5.6 against 7.2), which is the difference between the two
   buildings in life.
   **Note on the name:** the sign on the building reads *LABYRINTH*; the site
-  says *Labrinth* throughout. The 3D sign follows the site, so the page is
+  says *Labyrinth* throughout. The 3D sign follows the site, so the page is
   at least consistent with itself — worth confirming which spelling is
   correct.
 - **The building is a real 3D scene now.** "One building, three floors" was
@@ -309,7 +332,7 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than per-frame so the camera doesn't lag behind the scrollbar on a
   slow device.
 - **Two venues, one WebGL context at a time.** Now that the switcher can put
-  Eddie's and Labrinth's buildings on screen in the same session, the scene
+  Eddie's and Labyrinth's buildings on screen in the same session, the scene
   is not built at load any more: a second `IntersectionObserver` with a
   `150% 0px` margin holds off construction until its section is genuinely
   near the viewport, so the venue you are not looking at costs nothing. That
@@ -558,15 +581,15 @@ Everything below reads confidently on the page but is an assumption or
 industry-standard placeholder, not confirmed fact — check and edit before
 this goes live:
 
-- **Everything about Labrinth.** The page deliberately asserts almost
+- **Everything about Labyrinth.** The page deliberately asserts almost
   nothing: no address, no opening nights, no door policy, no photography,
   no reviews. All that is known from this project is that it shares an
   owner with Eddie Rocks, so that is all the page claims. The wordmark is
-  set in Anton as a stand-in — there is no Labrinth logo asset. The phone
+  set in Anton as a stand-in — there is no Labyrinth logo asset. The phone
   number and email on it are Eddie's own, presented as the office handling
-  enquiries for both venues; if Labrinth has its own line, swap them.
-  If Labrinth already has a live website, the switcher should point at that
-  URL instead and `labrinth.html` can be deleted.
+  enquiries for both venues; if Labyrinth has its own line, swap them.
+  If Labyrinth already has a live website, the switcher should point at that
+  URL instead and `labyrinth.html` can be deleted.
 
 - **Opening days, hours and entry fee** — confirmed directly: open
   Wednesday, Friday and Saturday; Wednesday and Friday are free entry,

@@ -6,7 +6,7 @@
 
   /* This file is shared by both venues' pages, so anything page-specific is
      guarded. Both now have a header, footer, drawer, hero video and 3D
-     building; Labrinth has no countdown, events, gallery or experience rows. */
+     building; Labyrinth has no countdown, events, gallery or experience rows. */
 
   /* ---------- sticky header shrink/blur ---------- */
   var header = document.getElementById("site-header");
@@ -268,7 +268,7 @@
     function updateParallax() {
       var rect = hero.getBoundingClientRect();
       var progress = Math.min(Math.max(-rect.top / rect.height, 0), 1);
-      /* Labrinth's hero has no #hero-content wrapper — only the footage
+      /* Labyrinth's hero has no #hero-content wrapper — only the footage
          layer is shared between the two venues */
       if (heroContent) {
         heroContent.style.transform = "translate3d(0," + progress * 46 + "px,0)";

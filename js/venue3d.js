@@ -1,7 +1,7 @@
 /* ==========================================================================
    Shared engine for the venue buildings.
 
-   Both Eddie Rocks and Labrinth are stylised miniatures of a real building
+   Both Eddie Rocks and Labyrinth are stylised miniatures of a real building
    with a scroll-driven camera that flies in through a window and travels
    down through the floors. Everything that is the same for both — renderer
    setup, the modelling helpers, the shell, the camera journey, the scroll
@@ -79,7 +79,7 @@ export function mountVenue(config) {
       return { num: f.num, name: f.name, y: FH * (i - BASE) };
     });
     var N = FLOORS.length;
-    /* Storeys above the top room. Labrinth is a three-storey terrace but
+    /* Storeys above the top room. Labyrinth is a three-storey terrace but
        only two of them are the venue, and a building that stops at its top
        bar reads as a model rather than a street. */
     var ATTIC = config.dims.ATTIC || 0;
