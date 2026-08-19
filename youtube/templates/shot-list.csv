@@ -1,0 +1,4 @@
+shot_no,timecode,narration_line,shot_type,description,source_or_prompt,archive_or_model,rights,epistemic_tag,duration_s,retention_device,status
+1,0:00,"At 6:03 on the morning of...",ARCHIVAL,"Wide of San Francisco Bay at dawn 1940s","query: Treasure Island naval air station 1942",LOC,PD-USGov,RECORD,6,HOOK,todo
+2,0:06,"Two men were aboard.",DOCUMENT,"Crew service record cards","catalog.archives.gov ref TBD",NARA,PD-USGov,RECORD,4,,todo
+3,0:11,"It was an anti-submarine patrol.",AI,"Airship gondola interior, dawn light through window, empty seats, 35mm, [LOOK BIBLE]",midjourney,generated,RECREATION,5,,todo
