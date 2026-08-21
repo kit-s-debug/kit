@@ -154,6 +154,39 @@ Beyond the original hero/floors/contact, this pass adds:
   now lives where people actually look for it: a `.level-meta` list
   inside each floor panel ("On the decks" / "Nights"). The `#residents`
   entries were removed from the mobile drawer and footer nav with it.
+- **The drinks menu.** Nine categories as a real tab control rather than
+  nine stacked sections: picking Cocktails shows you cocktails, it doesn't
+  scroll you past six other lists to reach them. The rail is sticky and
+  scrolls horizontally, so nine categories cost one row on a phone, and the
+  active pill is a single element that moves rather than a border swapping
+  between tabs. Built to the ARIA tabs pattern — arrow keys, Home/End,
+  roving tabindex — and deep-linkable, so `#drinks-cocktails` opens on
+  cocktails.
+  **Half the menu deliberately has no photographs.** Cocktails, shooters,
+  wines, champagne and the promos are image-led; spirits, bottles, draught
+  and mixers are set as type and grouped the way the bar is. A stock
+  photograph of a Pepsi is filler, and seventy picture cards is a wall to
+  scroll rather than a list to scan.
+  **Prices appear on the promos and nowhere else**, because that is the only
+  place the venue has given any. Nothing is invented.
+  The card artwork is generated (`gen_drinks.py`): a lit colour field keyed
+  to what each drink actually looks like, with specular streaks and the same
+  grain as the rest of the site — deliberate art direction rather than a
+  missing image. Set `photo` on any drink in `drinks-data.js` and the card
+  uses that instead.
+  There is no framework here, so a "component" is a function returning
+  markup — `DrinkCard`, `PromoCard`, `DrinkGrid`, `DrinkList`, `MenuSection`,
+  `CategoryTabs`, `DrinkMenu` — with the menu itself in `js/drinks-data.js`
+  so it can be edited without opening the UI code.
+- **Deep links into Eddie's page were broken and now aren't.** A "start at
+  the top" guard in the head was calling `history.replaceState` on any
+  incoming fragment, which silently killed every deep link — `#contact`,
+  `#floors`, everything, not just the new menu. The guard now leaves the
+  hash alone and simply opts that load out of the scroll-to-top. It also
+  re-aims at the target while the page height is still settling, because the
+  3D scroller is built lazily and adds several screens of height *after* the
+  browser has already jumped; it stops after a few seconds so it can never
+  fight someone who has started scrolling.
 - **Showcase Events is a rail in time order.** Drag or arrow left and you
   move back through nights that have been; right and you move forward
   through the ones coming. It lands on the next night open, so what's next

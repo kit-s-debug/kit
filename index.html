@@ -8,9 +8,14 @@
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
 <script>
+  /* A fresh load should open on the hero rather than wherever the browser
+     last left you — but only a fresh load. This used to strip the fragment
+     outright, which silently broke every deep link into the page
+     (#contact, #floors, #drinks-cocktails and the rest), so now an incoming
+     hash is left alone and simply opts out of the scroll-to-top. */
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
-  var userScrolled = false;
+  var deepLinked = !!location.hash;
+  var userScrolled = deepLinked;
   function markUserScrolled() { userScrolled = true; }
   function forceScrollTop() { if (!userScrolled) window.scrollTo(0, 0); }
   document.addEventListener("DOMContentLoaded", forceScrollTop);
@@ -22,6 +27,41 @@
     if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"].indexOf(e.key) > -1) markUserScrolled();
   }, { once: true });
   [0, 60, 150, 300, 600, 1200].forEach(function (ms) { setTimeout(forceScrollTop, ms); });
+
+  /* A deep link lands before the building's scroller has been switched on,
+     and that adds several screens of height above the target — so the
+     browser's own jump ends up somewhere else entirely. The scene builds
+     lazily, so there's no single moment to re-aim at: instead, keep
+     re-aiming while the page height is still moving, and stop after a few
+     seconds so it never fights someone who has started scrolling. */
+  function deepLinkTarget() {
+    var id = location.hash.slice(1);
+    /* a drinks category should land on the menu itself, not halfway down
+       the panel it selected */
+    if (id.indexOf("drinks-") === 0) id = "drinks";
+    var el = document.getElementById(id);
+    return el && el.offsetParent ? el : null;
+  }
+  function settleDeepLink() {
+    if (!deepLinked || userScrolledForReal) return;
+    var el = deepLinkTarget();
+    if (el) el.scrollIntoView({ block: "start", behavior: "auto" });
+  }
+  var userScrolledForReal = false;
+  ["wheel", "touchmove", "keydown"].forEach(function (evt) {
+    window.addEventListener(evt, function () { userScrolledForReal = true; },
+      { once: true, passive: true });
+  });
+  window.addEventListener("load", settleDeepLink);
+  if (deepLinked) {
+    var until = Date.now() + 4000;
+    var lastH = 0;
+    (function watchHeight() {
+      var h = document.documentElement.scrollHeight;
+      if (h !== lastH) { lastH = h; settleDeepLink(); }
+      if (Date.now() < until) setTimeout(watchHeight, 120);
+    })();
+  }
 </script>
 </head>
 <body>
@@ -72,6 +112,7 @@
     <nav class="primary-nav" aria-label="Primary">
       <ul>
         <li><a href="#floors">The Building</a></li>
+        <li><a href="#drinks">Drinks</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -92,11 +133,12 @@
   <nav aria-label="Mobile">
     <ul>
       <li style="--i:0"><a href="#floors"><span class="mobile-nav-num">01</span>The Building</a></li>
-      <li style="--i:1"><a href="#experience"><span class="mobile-nav-num">02</span>Private Hire</a></li>
-      <li style="--i:2"><a href="#reviews"><span class="mobile-nav-num">03</span>Reviews</a></li>
-      <li style="--i:3"><a href="#faq"><span class="mobile-nav-num">04</span>FAQ</a></li>
-      <li style="--i:4"><a href="#events"><span class="mobile-nav-num">05</span>Events</a></li>
-      <li style="--i:5"><a href="#contact"><span class="mobile-nav-num">06</span>Contact</a></li>
+      <li style="--i:1"><a href="#drinks"><span class="mobile-nav-num">02</span>Drinks</a></li>
+      <li style="--i:2"><a href="#experience"><span class="mobile-nav-num">03</span>Private Hire</a></li>
+      <li style="--i:3"><a href="#reviews"><span class="mobile-nav-num">04</span>Reviews</a></li>
+      <li style="--i:4"><a href="#faq"><span class="mobile-nav-num">05</span>FAQ</a></li>
+      <li style="--i:5"><a href="#events"><span class="mobile-nav-num">06</span>Events</a></li>
+      <li style="--i:6"><a href="#contact"><span class="mobile-nav-num">07</span>Contact</a></li>
     </ul>
   </nav>
   <div class="mobile-nav-foot">
@@ -334,6 +376,27 @@
     </div>
   </section>
 
+  <section class="drinks" id="drinks" aria-labelledby="drinks-heading">
+    <!-- A photograph of the bar itself carries the header; the menu below is
+         a tab control, not a page of anchors, so a category is one tap away. -->
+    <div class="drinks-hero reveal">
+      <img class="drinks-hero-bg" src="assets/images/drinks-hero.jpg"
+           alt="The bar at Eddie Rocks mid-service" loading="lazy">
+      <div class="drinks-hero-inner">
+        <h2 id="drinks-heading">The Drinks</h2>
+        <p>Find your favourite. Discover something new.</p>
+      </div>
+    </div>
+
+    <div class="drink-menu reveal" id="drink-menu">
+      <!-- built by js/drinks.js from js/drinks-data.js; the list below is the
+           no-JS fallback and is replaced on mount -->
+      <noscript>
+        <p class="drink-fallback">Spirits, bottles, draught, cocktails, shooters, soft drinks, wines and champagne are all served on both floors. Wednesday and Friday carry the offers — ask at the bar.</p>
+      </noscript>
+    </div>
+  </section>
+
   <section class="experience" id="experience" aria-labelledby="experience-heading">
     <div class="experience-head reveal">
       <p class="eyebrow">Book it</p>
@@ -553,6 +616,7 @@
 
 
 <script type="module" src="js/building3d.js"></script>
+<script type="module" src="js/drinks.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
