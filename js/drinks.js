@@ -15,8 +15,12 @@
 
 import { DRINKS, TONES } from "./drinks-data.js";
 
+/* Accents are folded rather than dropped, so Moët and Jägerbomb become
+   moet.jpg and jagerbomb.jpg — filenames a person can be asked to produce,
+   instead of mo-t.jpg and j-gerbomb.jpg. */
 var slug = function (s) {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 };
 var esc = function (s) {
   return String(s).replace(/[&<>"]/g, function (c) {
