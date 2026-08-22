@@ -104,7 +104,10 @@ function DrinkList(groups) {
 /* -------------------------------------------------------------- MenuSection */
 function MenuSection(cat, index) {
   var body = cat.layout === "list"
-    ? DrinkList(cat.groups)
+    ? (cat.strip
+        ? '<div class="drink-strip"><h4 class="drink-strip-title">' + esc(cat.strip.name) +
+          "</h4>" + DrinkGrid(cat.strip.items) + "</div>" + DrinkList(cat.groups)
+        : DrinkList(cat.groups))
     : DrinkGrid(cat.items, cat.layout);
   return (
     '<section class="menu-section' + (cat.layout === "promo" ? " menu-section--promo" : "") + '"' +

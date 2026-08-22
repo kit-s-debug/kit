@@ -1094,6 +1094,16 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .drink-list li:last-child{ border-bottom:0; }
 .drink-fallback{ color:var(--dim); line-height:1.7; max-width:56ch; }
 
+/* a short image-led run above a typographic list — for the one range in
+   here people actually choose by colour */
+.drink-strip{ margin-bottom:30px; }
+.drink-strip-title{
+  margin:0 0 12px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--silver-deep); padding-bottom:9px; border-bottom:1px solid var(--line);
+}
+.drink-strip .drink-grid{ grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); }
+.drink-strip .drink-card h4{ font-size:14px; }
+
 /* ---- promos: louder, but the same palette. An offer is a different kind of
    thing from a drink, so the price leads and the tile burns brighter. */
 .menu-section--promo h3{ color:var(--silver-bright); }

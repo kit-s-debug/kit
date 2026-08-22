@@ -169,6 +169,17 @@ Beyond the original hero/floors/contact, this pass adds:
   scroll rather than a list to scan.
   **Prices appear on the promos and nowhere else**, because that is the only
   place the venue has given any. Nothing is invented.
+  **The VK range is the exception to the no-photographs rule.** The venue
+  supplied real bottle shots, and it is the one range people choose by
+  colour, so it runs as a short image strip above the typographic list
+  rather than being buried in it. The shots arrived on pure white, which
+  would sit on a dark card like a lightbox, so `gen_vk.py` keys the white
+  out, trims to the bottle and relights it on the same colour field the
+  generated tiles use. One of them carried a retailer's £2.89 price sticker
+  on the neck; that is cloned out.
+  The flavour names were wrong and are now right: Blue, Apple & Mango,
+  Orange & Passion Fruit, Ice and Black Cherry, rather than the
+  "VK Green"/"VK Orange" the list previously carried.
   The card artwork is generated (`gen_drinks.py`): a lit colour field keyed
   to what each drink actually looks like, with specular streaks and the same
   grain as the rest of the site — deliberate art direction rather than a

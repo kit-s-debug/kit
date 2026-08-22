@@ -41,6 +41,19 @@ export var DRINKS = [
     name: "Bottles",
     tabName: "Bottles",
     layout: "list",
+    /* The VKs get pictures because people pick them by colour, and because
+       the venue had real bottle shots for them. Everything else in here
+       stays as type — see the note on DrinkList. */
+    strip: {
+      name: "The VK range",
+      items: [
+        { name: "VK Blue", tone: "azure" },
+        { name: "VK Apple & Mango", tone: "lime" },
+        { name: "VK Orange & Passion Fruit", tone: "amber" },
+        { name: "VK Ice", tone: "ice" },
+        { name: "VK Black Cherry", tone: "claret" },
+      ],
+    },
     groups: [
       {
         name: "Bottles & Cans",
@@ -48,7 +61,6 @@ export var DRINKS = [
           { name: "Asahi" }, { name: "Budweiser" }, { name: "Corona" },
           { name: "Hooch", note: "Can" }, { name: "Reef" },
           { name: "Rekorderlig", note: "Bottle" },
-          { name: "VK Blue" }, { name: "VK Green" }, { name: "VK Ice" }, { name: "VK Orange" },
         ],
       },
     ],
