@@ -400,8 +400,28 @@ Beyond the original hero/floors/contact, this pass adds:
   lazy-loads. `#events` moved with it, so every link still lands.
 - **Labyrinth's opening hours are real now.** Friday and Saturday, 9pm till
   midnight, confirmed by the venue. They replace the holding line that said
-  the nights weren't known yet, and the hero lede carries them too. Address,
-  photography and booking details are still outstanding.
+  the nights weren't known yet, and the hero lede carries them too.
+- **Labyrinth has its own address and its own phone line.** 13 Quay Street,
+  a short walk up the same street from Eddie's at number 4, and 01437
+  760680 rather than the Eddie's office number the page had been borrowing
+  in three places. The dashed holding box is gone; the panel now carries
+  the same address card and map link Eddie's contact section uses.
+  **Reusing that card is what exposed a theme leak.** `.map-label` scrimmed
+  itself with `rgba(27,17,22,.92)` and the hover glow was `rgba(226,137,94,.35)`
+  — Eddie's charcoal and Eddie's ember, written as literals because until
+  now nothing but Eddie's ever drew them. On the mint page the Get
+  Directions strip came out plum. A custom property can hold a colour but
+  not a channel, so both themes now also publish `--ground-rgb` and
+  `--glow-rgb`, which is what an `rgba()` actually needs. The window glow on
+  the 3D-adjacent building keeps its literals deliberately: that component
+  only ever exists on Eddie's.
+- **Both venues carry `LocalBusiness` structured data.** `NightClub` for
+  Eddie's, `BarOrPub` for Labyrinth, each with the postal address, the
+  venue's own number and the opening hours it has actually confirmed.
+  Nothing is padded out: the £20–30 per head Google reports for Eddie's is
+  wrong according to the venue, so no `priceRange` is published, and
+  Saturday is left out of Eddie's machine-readable hours because "9pm till
+  late" is not a closing time. Partial hours beat invented ones.
 - **Labyrinth's building is the real one too.** A photograph of it settled
   both the shape and the plan: a narrow three-storey terrace in white render
   with heavy cobalt trim, Rewind at the bottom and the Main Bar on the top
