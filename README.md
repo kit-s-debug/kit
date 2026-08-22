@@ -171,10 +171,19 @@ Beyond the original hero/floors/contact, this pass adds:
   place the venue has given any. Nothing is invented.
   **Where the venue has real bottle shots, they replace the tile.** VKs run
   as a strip across the top of Bottles and the spirits the venue has
-  photographed run as one across the top of Spirits ("Behind the bar"),
-  with the rest of each category staying as type below. As more bottle
-  shots arrive they move up into the strip and the list shrinks; nothing
-  else changes.
+  photographed run as one across the top of Spirits ("Behind the bar" —
+  thirteen bottles and counting), with whatever isn't photographed yet
+  staying as type below. As more shots arrive they move up into the strip
+  and the list shrinks; nothing else changes.
+  `gen_bottles.py` does the compositing. The shots arrive on whatever the
+  shop photographed them against — white, a grey studio sweep, lilac — so
+  the backdrop is keyed by flooding in from the border against a *set* of
+  colours sampled all the way round, then the bottle is trimmed and relit
+  on the menu's colour field. Two things that look like better ideas and
+  are not: keying against the neighbouring pixel rather than those
+  references walks straight through semi-transparent glass and hollows the
+  bottle out, and a plain brightness threshold only ever works on pure
+  white.
   **Cocktails keep their generated tiles by design.** They're mixed in
   house, so a stock photograph of a Pornstar Martini isn't the venue's
   drink — the colour tile is honest about being artwork, and a real shot
