@@ -204,6 +204,14 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than being mixed, so a real one is the right picture.
   A card-led category needs no data change to take a photograph: dropping
   a file in under the drink's slug replaces the tile on its own.
+  **Clear glassware needs a different treatment from a bottle.** An opaque
+  bottle can be cut off its backdrop because the two are different colours;
+  a clear shot glass of white liqueur on white is the same colour as what's
+  behind it, so the flood walks through the glass and hollows the drink out
+  — which is exactly what happened to the Flatliner first time. `plate()`
+  keeps the whole frame instead, pulls it down into the card and vignettes
+  the square edge away. Anything shot on a dark ground can be keyed
+  normally; it is white backdrops behind glass that force the plate.
   Tequila Rose is the first drink photographed **as it is served** rather
   than as packaging — a shot glass with a strawberry on it, which is what
   the Shooters cards actually want. Bottles are right for the spirits
