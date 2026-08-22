@@ -47,8 +47,10 @@ export var DRINKS = [
            list is missing. */
         { name: "Jack Daniel's", tone: "amber",
           photo: "assets/images/drinks/jack-daniels.jpg" },
-        // also missing from the supplied menu — that is two now
+        // also missing from the supplied menu — that is three now, counting
+        // both Southern Comforts as the separate lines they are
         { name: "Southern Comfort", tone: "sunrise" },
+        { name: "Southern Comfort Black", tone: "espresso" },
         // "Tequila" is a shooter as well, so the bottle has its own file and
         // the shooter card keeps its glass
         { name: "Tequila", tone: "ice",

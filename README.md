@@ -178,8 +178,8 @@ Beyond the original hero/floors/contact, this pass adds:
   them at all, which the renderer handles by simply not drawing one.
   **Draught and Champagne are complete too.** Spirits is down to Grey
   Goose, Tequila, Tequila Rose and Tequila & Mixer.
-  **Jack Daniel's and Southern Comfort are on the site but were not on the
-  menu the venue supplied** — there was no whiskey on it at all. It was added because the
+  **Jack Daniel's, Southern Comfort and Southern Comfort Black are on the
+  site but were not on the menu the venue supplied** — there was no whiskey on it at all. It was added because the
   bottle turned up, and it is flagged in `drinks-data.js` as worth
   checking: if whiskey was missed, other lines may have been too. Rekorderlig appears in both Bottles and Draught and
   shares one file between them through the per-item `photo` field.
