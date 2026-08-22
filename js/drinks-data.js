@@ -54,6 +54,10 @@ export var DRINKS = [
       {
         name: "Liqueurs",
         items: [
+          /* Tequila Rose is photographed as a *served shot* in Shooters. If a
+             bottle of it turns up for this list, give it its own file — the
+             way Sambuca and Rekorderlig are handled — rather than letting a
+             glass appear in a strip of bottles. */
           { name: "Tequila Rose" }, { name: "Tequila" }, { name: "Tequila & Mixer" },
         ],
       },

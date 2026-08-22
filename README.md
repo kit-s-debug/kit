@@ -204,6 +204,11 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than being mixed, so a real one is the right picture.
   A card-led category needs no data change to take a photograph: dropping
   a file in under the drink's slug replaces the tile on its own.
+  Tequila Rose is the first drink photographed **as it is served** rather
+  than as packaging — a shot glass with a strawberry on it, which is what
+  the Shooters cards actually want. Bottles are right for the spirits
+  strip; glasses are right for shooters and cocktails, and a name that
+  appears in both wants one of each.
   **The VK range is also the reason the flavour names got fixed.** The venue
   supplied real bottle shots, and it is the one range people choose by
   colour, so it runs as a short image strip above the typographic list
