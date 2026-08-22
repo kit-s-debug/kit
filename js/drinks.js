@@ -106,7 +106,10 @@ function MenuSection(cat, index) {
   var body = cat.layout === "list"
     ? (cat.strip
         ? '<div class="drink-strip"><h4 class="drink-strip-title">' + esc(cat.strip.name) +
-          "</h4>" + DrinkGrid(cat.strip.items) + "</div>" + DrinkList(cat.groups)
+          "</h4>" + DrinkGrid(cat.strip.items) + "</div>" +
+          /* a category can end up fully photographed, and then there is no
+             list left to draw under the strip */
+          (cat.groups && cat.groups.length ? DrinkList(cat.groups) : "")
         : DrinkList(cat.groups))
     : DrinkGrid(cat.items, cat.layout);
   return (

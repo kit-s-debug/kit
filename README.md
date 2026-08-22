@@ -173,8 +173,11 @@ Beyond the original hero/floors/contact, this pass adds:
   as a strip across the top of Bottles and the spirits the venue has
   photographed run as one across the top of Spirits ("Behind the bar" —
   seventeen bottles), with whatever isn't photographed yet staying as type
-  below. Spirits is down to Grey Goose, Tequila, Tequila Rose and Tequila &
-  Mixer; Bottles to Budweiser, Corona, Hooch, Reef and Rekorderlig.
+  below. **Bottles is fully photographed** — eleven cards and no list under
+  them at all, which the renderer handles by simply not drawing one.
+  Spirits is down to Grey Goose, Tequila, Tequila Rose and Tequila & Mixer.
+  Bottles are scaled to a common height so a row lines up, with a width cap
+  that only bites on something squat like a can.
   Sambuca appears on the menu twice, as a spirit and as a shooter, so the
   bottle lives at `sambuca-bottle.jpg` and the shooter keeps its colour
   tile — that's what the per-item `photo` field is for. As more shots arrive they move up into the strip

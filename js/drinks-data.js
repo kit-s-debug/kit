@@ -71,18 +71,17 @@ export var DRINKS = [
         { name: "VK Ice", tone: "ice" },
         { name: "VK Black Cherry", tone: "claret" },
         { name: "Asahi", tone: "amber" },
+        { name: "Budweiser", tone: "amber" },
+        { name: "Corona", tone: "straw" },
+        { name: "Hooch", tone: "lime", note: "Can" },
+        { name: "Reef", tone: "sunrise" },
+        // also on draught, so the bottle keeps its own file
+        { name: "Rekorderlig", tone: "berry", note: "Bottle",
+          photo: "assets/images/drinks/rekorderlig-bottle.jpg" },
       ],
     },
-    groups: [
-      {
-        name: "Bottles & Cans",
-        items: [
-          { name: "Budweiser" }, { name: "Corona" },
-          { name: "Hooch", note: "Can" }, { name: "Reef" },
-          { name: "Rekorderlig", note: "Bottle" },
-        ],
-      },
-    ],
+    // every bottle in here is photographed, so there is no list left
+    groups: [],
   },
   {
     id: "draught",
