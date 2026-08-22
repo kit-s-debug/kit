@@ -214,8 +214,12 @@ Beyond the original hero/floors/contact, this pass adds:
   What decides it is the drink, not the glass: the Baby Guinness is in
   clear glass on white too and keys perfectly, because dark liqueur under
   a cream float is opaque and gives the flood a real edge to stop at.
-  Clear glass plus a pale drink is the case that needs the plate. Anything
-  shot on a dark ground can always be keyed.
+  Clear glass plus a pale drink is the case that needs the plate, and so is
+  a stemmed glass: the red wine's bowl keys fine but its stem and foot are
+  clear glass on white, and cutting them away leaves the bowl floating.
+  Plates fit rather than fill, because a wine glass is far taller than it is
+  wide and filling a square card takes the foot off. Anything shot on a dark
+  ground can always be keyed.
   Tequila Rose is the first drink photographed **as it is served** rather
   than as packaging — a shot glass with a strawberry on it, which is what
   the Shooters cards actually want. Bottles are right for the spirits
