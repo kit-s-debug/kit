@@ -173,7 +173,8 @@ Beyond the original hero/floors/contact, this pass adds:
   as a strip across the top of Bottles and the spirits the venue has
   photographed run as one across the top of Spirits ("Behind the bar" —
   seventeen bottles), with whatever isn't photographed yet staying as type
-  below. **Bottles is fully photographed** — eleven cards and no list under
+  below. **Bottles, Draught, Champagne and Wines are fully photographed** —
+  Bottles is eleven cards with no list under
   them at all, which the renderer handles by simply not drawing one.
   **Draught and Champagne are complete too.** Spirits is down to Grey
   Goose, Tequila, Tequila Rose and Tequila & Mixer.
