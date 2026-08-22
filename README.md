@@ -205,6 +205,11 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than being mixed, so a real one is the right picture.
   A card-led category needs no data change to take a photograph: dropping
   a file in under the drink's slug replaces the tile on its own.
+  **Grey Goose was the hardest key on the menu.** Frosted white glass on a
+  white sweep leaves about twenty-five levels between bottle and backdrop,
+  where the usual tolerance of 26 swallows the bottle whole; at 6 it cuts
+  cleanly. It was the entire contents of a "Vodka" group of one until it was
+  photographed, and stands in the strip with the other bottles now.
   **The nine mixed cocktails are set as type now**, the way the soft drinks
   always were, because a generated colour field standing in for a Woo Woo is
   filler at the size those cards run. The three Buzz Balls keep a strip above
@@ -416,6 +421,23 @@ Beyond the original hero/floors/contact, this pass adds:
 - **Labyrinth's opening hours are real now.** Friday and Saturday, 9pm till
   midnight, confirmed by the venue. They replace the holding line that said
   the nights weren't known yet, and the hero lede carries them too.
+- **The venue switcher carries the three real marks.** Eddie Rocks, Labyrinth
+  and Rewind were set as type in Anton with the Eddie's icon beside them;
+  they are the venues' own artwork now, cut out of the backgrounds they
+  arrived on. Three files, three different treatments, for a reason:
+  Eddie Rocks is white artwork on black, so alpha is simply the luminance —
+  the counters inside D, O and R and the speckled texture inside the letters
+  all come out right for free. Labyrinth is dark artwork on white, the same
+  trick inverted, and it is also reversed out to cream, because navy on a
+  near-black header is invisible and a reversed mark is what a brand book
+  would supply for exactly that. Rewind is the one that needs a flood fill,
+  because KARAOKE BAR is white type enclosed by the blue badge and keying by
+  luminance would delete it — a flood cannot reach an enclosed area, which
+  here is the whole point.
+  The lockup sizes them optically rather than to one shared height, since a
+  two-line wordmark, a three-line lockup and a badge do not balance at the
+  same number, and the state change is opacity, because a colour transition
+  has nothing to act on once a name is a picture.
 - **Both venues pour the same menu, from the same module.** Labyrinth mounts
   `drinks.js` exactly as Eddie's does; a drink added to `drinks-data.js`
   appears on both sites without either page being edited. What differs is

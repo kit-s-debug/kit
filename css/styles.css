@@ -247,26 +247,42 @@ p{ margin:0; }
 .venue-switch-item,
 .venue-switch-mark{ padding-block:15px; margin-block:-15px; }
 .venue-switch-mark{ display:inline-flex; text-decoration:none; }
-.venue-switch-mark .logo-mark{ height:38px; }
-.venue-switch-mark:hover .logo-mark{ filter:drop-shadow(0 0 12px rgba(243,185,140,.5)); }
+
+/* The three names are the venues' real marks now rather than type set in
+   Anton. That changes how the lockup has to work: the sizes are optical
+   rather than one shared height, because a two-line wordmark, a three-line
+   lockup and a badge do not balance at the same number; and the state
+   change is opacity, because a colour transition has nothing to act on
+   once the name is a picture. */
+.venue-logo{ display:block; width:auto; opacity:.6; transition:opacity .22s ease, filter .22s ease; }
+.venue-logo--eddies{ height:34px; }
+.venue-logo--labyrinth{ height:32px; }
+.venue-logo--rewind{ height:32px; }
+.venue-switch-mark:hover .venue-logo,
+.venue-switch-mark.is-current .venue-logo,
+.venue-switch-item:hover .venue-logo,
+.venue-switch-item.is-current .venue-logo{ opacity:1; }
+.venue-switch-mark:hover .venue-logo,
+.venue-switch-item:hover .venue-logo{ filter:drop-shadow(0 0 12px rgba(var(--glow-rgb),.5)); }
 /* The names sit in the mark's own Anton so the three read as one lockup.
    A rule, not a bullet or a slash, keeps them joined without adding a
    second voice to the type. */
 .venue-switch-item{
-  position:relative; text-decoration:none; white-space:nowrap;
+  position:relative; display:inline-flex; align-items:center;
+  text-decoration:none; white-space:nowrap;
   font-family:var(--font-display); font-weight:400; text-transform:uppercase;
   font-size:17px; letter-spacing:.01em; line-height:1;
   color:var(--dim); transition:color .22s ease;
 }
 .venue-switch-item::before{
-  content:""; position:absolute; left:-8px; top:50%;
-  width:1px; height:15px; transform:translateY(-50%); background:var(--line-strong);
+  content:""; position:absolute; left:-9px; top:50%;
+  width:1px; height:22px; transform:translateY(-50%); background:var(--line-strong);
 }
 .venue-switch-item:hover{ color:var(--white); }
 .venue-switch-item.is-current{ color:var(--silver-bright); }
 /* a hairline under the venue you're currently on */
 .venue-switch-item.is-current::after{
-  content:""; position:absolute; left:0; right:0; bottom:10px; height:1px;
+  content:""; position:absolute; left:0; right:0; bottom:9px; height:1px;
   background:var(--silver-bright); opacity:.8;
 }
 

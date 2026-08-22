@@ -24,6 +24,7 @@ export var DRINKS = [
       name: "Behind the bar",
       items: [
         { name: "Eristoff Vodka", tone: "ice" },
+        { name: "Grey Goose", tone: "ice" },
         { name: "Gin", tone: "lime" },
         { name: "Pink Gin", tone: "rose" },
         // photographed both as a bottle and as a shot, so the strip gets
@@ -66,7 +67,8 @@ export var DRINKS = [
       ],
     },
     groups: [
-      { name: "Vodka", items: [{ name: "Grey Goose" }] },
+      /* Grey Goose was the whole of a "Vodka" group of one until it was
+         photographed; it stands in the strip with the other bottles now. */
       {
         name: "Liqueurs",
         items: [
