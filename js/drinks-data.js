@@ -53,6 +53,11 @@ export var DRINKS = [
         // the shooter card keeps its glass
         { name: "Tequila", tone: "ice",
           photo: "assets/images/drinks/tequila-bottle.jpg" },
+        /* The bottle the bar pours for this is Lustre Strawberry Cream, not
+           Tequila Rose the brand. The menu name stays, as it does for "Gin"
+           and "Spiced Rum". Also a shooter, so the bottle has its own file. */
+        { name: "Tequila Rose", tone: "rose",
+          photo: "assets/images/drinks/tequila-rose-bottle.jpg" },
       ],
     },
     groups: [
@@ -60,11 +65,7 @@ export var DRINKS = [
       {
         name: "Liqueurs",
         items: [
-          /* Tequila Rose is photographed as a *served shot* in Shooters. If a
-             bottle of it turns up for this list, give it its own file — the
-             way Sambuca and Rekorderlig are handled — rather than letting a
-             glass appear in a strip of bottles. */
-          { name: "Tequila Rose" }, { name: "Tequila & Mixer" },
+          { name: "Tequila & Mixer" },
         ],
       },
     ],
