@@ -47,6 +47,12 @@ export var DRINKS = [
            list is missing. */
         { name: "Jack Daniel's", tone: "amber",
           photo: "assets/images/drinks/jack-daniels.jpg" },
+        // also missing from the supplied menu — that is two now
+        { name: "Southern Comfort", tone: "sunrise" },
+        // "Tequila" is a shooter as well, so the bottle has its own file and
+        // the shooter card keeps its glass
+        { name: "Tequila", tone: "ice",
+          photo: "assets/images/drinks/tequila-bottle.jpg" },
       ],
     },
     groups: [
@@ -58,7 +64,7 @@ export var DRINKS = [
              bottle of it turns up for this list, give it its own file — the
              way Sambuca and Rekorderlig are handled — rather than letting a
              glass appear in a strip of bottles. */
-          { name: "Tequila Rose" }, { name: "Tequila" }, { name: "Tequila & Mixer" },
+          { name: "Tequila Rose" }, { name: "Tequila & Mixer" },
         ],
       },
     ],
