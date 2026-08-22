@@ -221,7 +221,18 @@ Beyond the original hero/floors/contact, this pass adds:
   Plates fit rather than fill, because a wine glass is far taller than it is
   wide and filling a square card takes the foot off. Anything shot on a dark
   ground can always be keyed.
-  Tequila Rose is the first drink photographed **as it is served** rather
+  **A plate is trimmed to its subject first.** Keeping the whole frame is
+  right when the glass fills it and wrong when it doesn't: the Tequila
+  shooter arrived as one small glass in a wide field of white, and darkened
+  to card brightness that reads as a grey tile with something in the middle
+  of it. `trim_to_subject()` finds the glass against the backdrop, takes a
+  square around it with room to breathe, and leaves a frame the subject
+  already fills completely alone — so it improved the Sambuca and the
+  Jägerbomb and did nothing at all to the wines. `lift`, which sets how
+  brightly a bottle's glow burns, does the equivalent job on a plate and
+  sets how brightly the glass is lit; a lone clear shot of a clear spirit
+  needs more than a dark trio does.
+  Tequila Rose was the first drink photographed **as it is served** rather
   than as packaging — a shot glass with a strawberry on it, which is what
   the Shooters cards actually want. Bottles are right for the spirits
   strip; glasses are right for shooters and cocktails, and a name that

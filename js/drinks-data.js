@@ -147,7 +147,9 @@ export var DRINKS = [
     items: [
       { name: "Jägerbomb", tone: "amber" },
       { name: "Baby Guinness", tone: "espresso" },
-      { name: "Tequila", tone: "sunrise" },
+      // the shot is clear, whatever the bottle looks like, so it takes
+      // the same cold accent as the Sambuca beside it
+      { name: "Tequila", tone: "ice" },
       { name: "Tequila Rose", tone: "rose" },
       { name: "Sambuca", tone: "ice" },
       { name: "Flatliner", tone: "espresso" },
