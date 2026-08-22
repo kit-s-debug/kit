@@ -292,6 +292,10 @@ p{ margin:0; }
 
 .primary-nav ul{ list-style:none; display:flex; gap:36px; margin:0; padding:0; }
 .primary-nav a{
+  /* The label is 19px tall, which is a small thing to hit — especially on a
+     tablet, where this nav is still the desktop one. Padding grows the
+     target and a matching negative margin keeps the bar the same height. */
+  padding-block:13px; margin-block:-13px;
   position:relative; text-decoration:none; font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
   color:var(--dim); transition:color .2s ease; padding-bottom:4px;
 }
@@ -1607,6 +1611,12 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(24px, 4vw, 56px);
 }
 .lab-floorlist article{ border-top:1px solid var(--line-strong); padding-top:22px; }
+/* the room shot leads, framed like the gallery figures rather than as a
+   new treatment of its own */
+.lab-floorlist img{
+  display:block; width:100%; height:clamp(180px, 22vw, 260px); object-fit:cover;
+  border-radius:6px; margin-bottom:20px; border:1px solid var(--line);
+}
 .lab-floorlist-num{
   display:block; font-family:var(--font-display); font-size:15px; letter-spacing:.16em;
   color:var(--silver-deep); margin-bottom:12px;

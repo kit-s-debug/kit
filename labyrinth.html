@@ -6,6 +6,11 @@
 <title>Labyrinth | Also by Eddie's</title>
 <meta name="description" content="Labyrinth, the home of house music at 13 Quay Street, Haverfordwest. Friday and Saturday 9pm till midnight, free entry, every drink £3 before 10pm. Rewind downstairs for 90s and 00s classics, plus an outdoor stage.">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+<!-- The display face reflows the hero when it swaps in, which was the whole
+     of the page's layout shift. Two faces cover every heading and every line
+     of body copy above the fold; the rest can swap without moving anything. -->
+<link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/publicsans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
 <script src="js/deeplink.js"></script>
 <script type="application/ld+json">
@@ -126,7 +131,7 @@
       <p class="lab-eyebrow">Also by Eddie's</p>
       <!-- Two rooms, one building, so the hero names both rather than
            leaving Rewind to be discovered further down. -->
-      <h1 class="lab-title">Labyrinth<span class="lab-title-sub">&amp; Rewind</span></h1>
+      <h1 class="lab-title">Labyrinth <span class="lab-title-sub">&amp; Rewind</span></h1>
       <p class="lab-lede">The home of house music, and the best drink offers in Haverfordwest — every drink is £3 before 10pm. Friday and Saturday, 9pm till midnight, free entry on both floors and out on the stage.</p>
       <div class="lab-actions">
         <a href="#enquire" class="btn btn--solid" data-magnetic>Enquire</a>
@@ -177,12 +182,19 @@
          or JS off), so the two floors are still described either way. -->
     <div class="venue-fallback">
       <div class="lab-floorlist">
+        <!-- Whatever the 3D scene cannot run on — no WebGL, reduced motion,
+             or a machine too slow to hold a frame — lands here, and this was
+             two paragraphs of text where Eddie's fallback has a whole
+             illustrated building. The rooms have been photographed, so the
+             fallback shows them. -->
         <article id="main-bar">
+          <img src="assets/images/labyrinth-bar.jpg" alt="The Main Bar at Labyrinth mid-set" loading="lazy" width="1200" height="800">
           <span class="lab-floorlist-num" aria-hidden="true">02</span>
           <h3>Main Bar</h3>
           <p>Upstairs, and the home of house music — a live DJ on the decks every Friday and Saturday. Free entry.</p>
         </article>
         <article id="rewind">
+          <img src="assets/images/rewind-crowd.jpg" alt="A full room singing along in Rewind" loading="lazy" width="1200" height="800">
           <span class="lab-floorlist-num" aria-hidden="true">01</span>
           <h3>Rewind</h3>
           <p>Downstairs: 90s and 00s classics, and you can sing along on your own or as a group. Free entry.</p>

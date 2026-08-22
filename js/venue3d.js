@@ -15,7 +15,16 @@
    and a render loop gated by an IntersectionObserver.
    ========================================================================== */
 
-import * as THREE from "../assets/vendor/three.module.min.js";
+/* Three.js is 650KB and it draws a section well down the page that a
+   visitor may never reach — on a static import every phone that bounced off
+   the hero still paid to download and parse all of it. Fetching it when the
+   section comes near instead takes it off the critical path completely. The
+   scene was already built lazily; only the library was not. */
+var THREE;
+function loadThree() {
+  if (THREE) return Promise.resolve();
+  return import("../assets/vendor/three.module.min.js").then(function (m) { THREE = m; });
+}
 
 export function mountVenue(config) {
   var canvas = document.getElementById(config.canvasId);
@@ -52,7 +61,11 @@ export function mountVenue(config) {
     /* The scroller is display:none until this class lands, and a hidden
        element measures zero, so the renderer has to be sized afterwards. */
     section.classList.add("is-3d-ready");
-    build();
+    loadThree().then(build, function () {
+      /* the illustrated fallback never left the page, so a library that
+         fails to arrive simply leaves it showing */
+      section.classList.remove("is-3d-ready");
+    });
   }
   if ("IntersectionObserver" in window) {
     var boot = new IntersectionObserver(function (entries) {
@@ -520,7 +533,8 @@ export function mountVenue(config) {
     var progress = readScroll();
     var targetProgress = progress;
     var scrollTicking = false;
-    window.addEventListener("scroll", function () {
+    /* named so it can be unbound again if the scene stands down */
+    function onScroll() {
       if (!scrollTicking) {
         window.requestAnimationFrame(function () {
           targetProgress = readScroll();
@@ -528,7 +542,8 @@ export function mountVenue(config) {
         });
         scrollTicking = true;
       }
-    }, { passive: true });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     /* Scroll position stays the source of truth: picking a floor scrolls the
        page to the point in the sequence where that floor is on screen, so the
@@ -657,12 +672,52 @@ export function mountVenue(config) {
       }, { threshold: 0, rootMargin: "300px 0px" }).observe(scroller);
     }
 
+    /* A machine that cannot draw this fast enough is worse off with it than
+       without it: the scene keeps its shape but the whole page scrolls at
+       the speed of the slowest frame. WebGL support is not the same question
+       as WebGL speed, and nothing in the feature test catches a software
+       rasteriser, an old integrated chip or a laptop throttling on battery.
+
+       So the first rendered frames are timed, and if the median is far past
+       a frame's budget the scene is taken down and the illustrated fallback
+       — which never left the page — takes over. Measured on rendered frames
+       only, after a couple of warm-up frames, and it can only ever fire
+       once. On anything that can hold a frame this never runs.
+
+       What is timed is the gap between frames, not the work inside one:
+       render() only queues commands and returns, so the cost of a frame the
+       machine cannot afford lands in the wait before the next one. Timing
+       the call itself reads near zero on a machine that is drowning. */
+    var SLOW_FRAME_MS = 90;          // ~5x a 60fps budget: not marginal, broken
+    var probe = [];
+    var probed = false;
+    var lastFrameAt = 0;
+
+    function tooSlowToBeWorthIt() {
+      /* Six warm-up frames are thrown away — shader compilation, texture
+         upload and whatever else the page is still doing all land in the
+         first few — and the verdict is the median of the twelve after them,
+         so one busy moment cannot take the scene down. */
+      if (probed || probe.length < 18) return false;
+      var s = probe.slice(6).sort(function (a, b) { return a - b; });
+      probed = true;
+      return s[Math.floor(s.length / 2)] > SLOW_FRAME_MS;
+    }
+
+    function standDown() {
+      running = false;
+      section.classList.remove("is-3d-ready");
+      window.removeEventListener("scroll", onScroll);
+      try { renderer.dispose(); } catch (e) {}
+    }
+
     // ------------------------------------------------------------- the loop
     var clock = new THREE.Clock();
     var elapsed = 0;
+    var running = true;
 
     function frame() {
-      requestAnimationFrame(frame);
+      if (running) requestAnimationFrame(frame);
       if (!visible || contextLost) return;
       /* one delta per frame, accumulated by hand — Clock.getElapsedTime()
          internally calls getDelta() again, so mixing the two is fragile */
@@ -743,6 +798,13 @@ export function mountVenue(config) {
       if (config.onFrame) config.onFrame(ctx, t, progress);
 
       renderer.render(scene, camera);
+
+      if (!probed) {
+        var now = performance.now();
+        if (lastFrameAt) probe.push(now - lastFrameAt);
+        lastFrameAt = now;
+        if (tooSlowToBeWorthIt()) standDown();
+      }
     }
     frame();
   }

@@ -457,6 +457,46 @@ Beyond the original hero/floors/contact, this pass adds:
   which put one basement bar behind three different sections. Those two use
   the packed floor and the lit frontage instead — both already in the
   library and neither used anywhere else, so nothing is now shown twice.
+### The pre-presentation pass
+
+Everything below is fixing, not redesigning — the layout, palette, type and
+motion are untouched.
+
+- **Three.js was a static import, so 650KB downloaded and parsed on every
+  page load** for a scene that is built lazily and may never be reached.
+  It is fetched when the section comes near instead. Eddie's load event went
+  from 2712ms to 318ms and LCP from 2788ms to 476ms.
+- **The display font was the whole of the page's layout shift.** Anton
+  swapping in reflowed the hero, which moved everything under it. Preloading
+  the two faces that set the copy above the fold took CLS from 0.087 to
+  0.0005.
+- **A scene that cannot hold a frame now stands down.** WebGL *support* is
+  not WebGL *speed*, and nothing in a feature test catches a software
+  rasteriser or an old integrated chip — on one, this page scrolled at
+  650-930ms a frame while the same page with the scene off held 17ms. The
+  loop times the gap between its first rendered frames (the cost of a frame
+  a machine cannot afford lands in the wait before the next one, not inside
+  the render call) and if the median is past 90ms it disposes the context
+  and lets the illustrated fallback take over. Six warm-up frames are
+  discarded so one busy moment cannot trigger it, and on hardware that can
+  draw this it never runs.
+- **Labyrinth's fallback was two paragraphs of text** where Eddie's has a
+  whole illustrated building — which is what reduced-motion and no-WebGL
+  visitors have always seen there. It carries the two room photographs now.
+- **Drink cards are painted at 720 and shipped at 400**, which is a little
+  over twice their largest display size. 3.5MB of drinks became 1.2MB. Nine
+  tiles orphaned when the cocktails became a list went with them.
+- **`gen_drinks.py` now refuses to run without `--force`.** It writes a tile
+  for every drink in the data, and those slugs are now fifty-seven real
+  photographs; running it would have replaced all of them with colour
+  fields.
+- **The three social links pointed at `href="#"`.** Three icons that go
+  nowhere is worse than no icons, so the row is out until there are accounts
+  to point it at.
+- Smaller things: the primary nav's 19px labels grew a touch target without
+  moving the bar; the Labyrinth hero's accessible name read "Labyrinth&
+  Rewind"; the Forbidden Florist logo was a 1170px file shown at 80px.
+
 - **The venue switcher carries the three real marks.** Eddie Rocks, Labyrinth
   and Rewind were set as type in Anton with the Eddie's icon beside them;
   they are the venues' own artwork now, cut out of the backgrounds they
