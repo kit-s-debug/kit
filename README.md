@@ -490,9 +490,13 @@ motion are untouched.
   for every drink in the data, and those slugs are now fifty-seven real
   photographs; running it would have replaced all of them with colour
   fields.
-- **The three social links pointed at `href="#"`.** Three icons that go
-  nowhere is worse than no icons, so the row is out until there are accounts
-  to point it at.
+- **The social links are real now.** They had been `href="#"`, which is
+  worse than nothing — three icons an owner would click first. Eddie's
+  footer carries its own Facebook and Instagram; Labyrinth's carries two
+  labelled rows, because Rewind runs its own accounts and a second row of
+  bare icons would not have said so. All six open in a new tab with
+  `rel="noopener"`, and each is a 44px target around an 18px glyph. There is
+  no X account, so there is no X icon.
 - Smaller things: the primary nav's 19px labels grew a touch target without
   moving the bar; the Labyrinth hero's accessible name read "Labyrinth&
   Rewind"; the Forbidden Florist logo was a 1170px file shown at 80px.

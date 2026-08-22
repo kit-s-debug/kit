@@ -1270,6 +1270,20 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   width:44px; height:44px; margin:-13px; transition:color .2s ease;
 }
 .social-links a:hover{ color:var(--silver-bright); }
+/* Labyrinth carries two sets, so each is named — the icons alone would not
+   tell you the room downstairs runs its own accounts. Same row, one label. */
+.footer-socials{
+  display:flex; align-items:center; justify-content:flex-end; gap:16px; margin-top:16px;
+}
+.footer-socials-label{
+  font-size:10px; font-weight:600; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--silver-deep); margin:0;
+}
+.footer-socials .social-links{ margin:0; }
+@media (max-width:900px){
+  .footer-socials{ justify-content:flex-start; }
+  .social-links{ justify-content:flex-start; }
+}
 .footer-legal{
   max-width:var(--container); margin:32px auto 0; padding-top:20px; border-top:1px solid var(--line);
   color:var(--dim); font-size:12px;
