@@ -193,10 +193,13 @@ Beyond the original hero/floors/contact, this pass adds:
   references walks straight through semi-transparent glass and hollows the
   bottle out, and a plain brightness threshold only ever works on pure
   white.
-  **Cocktails keep their generated tiles by design.** They're mixed in
-  house, so a stock photograph of a Pornstar Martini isn't the venue's
-  drink — the colour tile is honest about being artwork, and a real shot
-  can replace it whenever one exists.
+  **Cocktails keep their generated tiles by design** — with three
+  exceptions. They're mixed in house, so a stock photograph of a Pornstar
+  Martini isn't the venue's drink; the colour tile is honest about being
+  artwork. The Buzz Balls are the exception because they arrive in a tin
+  rather than being mixed, so a real one is the right picture.
+  A card-led category needs no data change to take a photograph: dropping
+  a file in under the drink's slug replaces the tile on its own.
   **The VK range is also the reason the flavour names got fixed.** The venue
   supplied real bottle shots, and it is the one range people choose by
   colour, so it runs as a short image strip above the typographic list
