@@ -7,6 +7,7 @@
 <meta name="description" content="Labyrinth, the home of house music at 13 Quay Street, Haverfordwest. Friday and Saturday 9pm till midnight, free entry, every drink £3 before 10pm. Rewind downstairs for 90s and 00s classics, plus an outdoor stage.">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/styles.css">
+<script src="js/deeplink.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -66,6 +67,7 @@
     <nav class="primary-nav" aria-label="Primary">
       <ul>
         <li><a href="#lab-floors">The Building</a></li>
+        <li><a href="#drinks">Drinks</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#enquire">Enquire</a></li>
       </ul>
@@ -88,9 +90,10 @@
       <li style="--i:0"><a href="#lab-floors"><span class="mobile-nav-num">01</span>The Building</a></li>
       <li style="--i:1"><a href="#main-bar"><span class="mobile-nav-num">02</span>Main Bar</a></li>
       <li style="--i:2"><a href="#rewind"><span class="mobile-nav-num">03</span>Rewind</a></li>
-      <li style="--i:3"><a href="#gallery"><span class="mobile-nav-num">04</span>Gallery</a></li>
-      <li style="--i:4"><a href="#enquire"><span class="mobile-nav-num">05</span>Enquire</a></li>
-      <li style="--i:5"><a href="index.html"><span class="mobile-nav-num">06</span>Eddie Rocks</a></li>
+      <li style="--i:3"><a href="#drinks"><span class="mobile-nav-num">04</span>Drinks</a></li>
+      <li style="--i:4"><a href="#gallery"><span class="mobile-nav-num">05</span>Gallery</a></li>
+      <li style="--i:5"><a href="#enquire"><span class="mobile-nav-num">06</span>Enquire</a></li>
+      <li style="--i:6"><a href="index.html"><span class="mobile-nav-num">07</span>Eddie Rocks</a></li>
     </ul>
   </nav>
   <div class="mobile-nav-foot">
@@ -189,6 +192,26 @@
       <h3>The outdoor stage</h3>
       <p>House music out in the open, running alongside both floors. Same free entry, same £3 drinks before 10pm.</p>
     </aside>
+  </section>
+
+  <section class="drinks" id="drinks" aria-labelledby="drinks-heading">
+    <!-- The same menu Eddie's pours, from the same module and the same data,
+         so a new drink is added once and appears on both sites. Only the
+         offer differs, which is what data-venue picks. -->
+    <div class="drinks-hero reveal">
+      <img class="drinks-hero-bg" src="assets/images/labyrinth-bar.jpg"
+           alt="The bar at Labyrinth" loading="lazy">
+      <div class="drinks-hero-inner">
+        <h2 id="drinks-heading">The Drinks</h2>
+        <p>Find your favourite. Discover something new.</p>
+      </div>
+    </div>
+
+    <div class="drink-menu reveal" id="drink-menu" data-venue="labyrinth">
+      <noscript>
+        <p class="drink-fallback">Spirits, bottles, draught, cocktails, shooters, soft drinks, wines and champagne are all served on both floors and at the outdoor stage. Every drink is £3 before 10pm — ask at the bar.</p>
+      </noscript>
+    </div>
   </section>
 
   <section class="lab-gallery" id="gallery" aria-labelledby="gallery-heading">
@@ -351,6 +374,7 @@
 </footer>
 
 <script type="module" src="js/labyrinth3d.js"></script>
+<script type="module" src="js/drinks.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

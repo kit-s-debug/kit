@@ -13,7 +13,7 @@
    keys work and screen readers announce it as one.
    ========================================================================== */
 
-import { DRINKS, TONES } from "./drinks-data.js";
+import { menuFor, TONES } from "./drinks-data.js";
 
 /* Accents are folded rather than dropped, so Moët and Jägerbomb become
    moet.jpg and jagerbomb.jpg — filenames a person can be asked to produce,
@@ -102,7 +102,7 @@ function DrinkList(groups) {
 }
 
 /* -------------------------------------------------------------- MenuSection */
-function MenuSection(cat, index) {
+function MenuSection(cat, index, ns) {
   var body = cat.layout === "list"
     ? (cat.strip
         ? '<div class="drink-strip"><h4 class="drink-strip-title">' + esc(cat.strip.name) +
@@ -114,8 +114,9 @@ function MenuSection(cat, index) {
     : DrinkGrid(cat.items, cat.layout);
   return (
     '<section class="menu-section' + (cat.layout === "promo" ? " menu-section--promo" : "") + '"' +
-      ' id="drinks-' + cat.id + '" role="tabpanel" tabindex="0"' +
-      ' aria-labelledby="drinks-tab-' + cat.id + '"' + (index === 0 ? "" : " hidden") + ">" +
+      ' id="' + ns + 'drinks-' + cat.id + '" data-cat="' + cat.id + '"' +
+      ' role="tabpanel" tabindex="0"' +
+      ' aria-labelledby="' + ns + 'drinks-tab-' + cat.id + '"' + (index === 0 ? "" : " hidden") + ">" +
       (cat.eyebrow ? '<p class="eyebrow menu-section-eyebrow">' + esc(cat.eyebrow) + "</p>" : "") +
       "<h3>" + esc(cat.name) + "</h3>" +
       body +
@@ -127,15 +128,15 @@ function MenuSection(cat, index) {
    Horizontally scrollable, so nine categories cost one row on a phone
    instead of a screenful. The active pill is a single element that moves,
    rather than a border on each tab, so the change reads as one motion. */
-function CategoryTabs(cats) {
+function CategoryTabs(cats, ns) {
   return (
     '<div class="menu-tabs">' +
       '<div class="menu-tabs-rail" role="tablist" aria-label="Drinks categories">' +
         '<span class="menu-tabs-marker" aria-hidden="true"></span>' +
         cats.map(function (c, i) {
           return '<button type="button" class="menu-tab' + (i === 0 ? " is-active" : "") + '"' +
-            ' id="drinks-tab-' + c.id + '" role="tab" data-cat="' + c.id + '"' +
-            ' aria-controls="drinks-' + c.id + '" aria-selected="' + (i === 0) + '"' +
+            ' id="' + ns + 'drinks-tab-' + c.id + '" role="tab" data-cat="' + c.id + '"' +
+            ' aria-controls="' + ns + 'drinks-' + c.id + '" aria-selected="' + (i === 0) + '"' +
             ' tabindex="' + (i === 0 ? "0" : "-1") + '">' + esc(c.tabName || c.name) + "</button>";
         }).join("") +
       "</div>" +
@@ -147,16 +148,30 @@ function CategoryTabs(cats) {
 export function DrinkMenu(root) {
   if (!root) return;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Same menu at both venues, different offer — the mount point says which
+     one it is, so neither page carries a copy of the other's drinks. */
+  var CATS = menuFor(root.getAttribute("data-venue") || "eddies");
+  /* Panel ids stay bare on a normal page, so #drinks-cocktails keeps
+     working. A second menu mounted in the same document — which is what the
+     combined preview does — mounts under its own id and namespaces its
+     panels behind it, so the two menus cannot claim each other's tabs. */
+  var ns = root.id && root.id !== "drink-menu" ? root.id + "-" : "";
 
   root.innerHTML =
-    CategoryTabs(DRINKS) +
-    '<div class="menu-panels">' + DRINKS.map(MenuSection).join("") + "</div>";
+    CategoryTabs(CATS, ns) +
+    '<div class="menu-panels">' +
+      CATS.map(function (c, i) { return MenuSection(c, i, ns); }).join("") +
+    "</div>";
 
   var tabs = Array.prototype.slice.call(root.querySelectorAll(".menu-tab"));
   var rail = root.querySelector(".menu-tabs-rail");
   var marker = root.querySelector(".menu-tabs-marker");
 
   function moveMarker(tab) {
+    /* A menu can be built while its page is hidden — the combined preview
+       mounts both venues at once — and measuring then pins the pill at
+       nothing. Refuse the measurement rather than storing a bad one. */
+    if (!tab.offsetWidth) return;
     marker.style.width = tab.offsetWidth + "px";
     marker.style.transform = "translateX(" + tab.offsetLeft + "px)";
   }
@@ -169,7 +184,7 @@ export function DrinkMenu(root) {
       t.classList.toggle("is-active", on);
       t.setAttribute("aria-selected", String(on));
       t.tabIndex = on ? 0 : -1;
-      var panel = document.getElementById("drinks-" + t.dataset.cat);
+      var panel = root.querySelector('.menu-section[data-cat="' + t.dataset.cat + '"]');
       if (panel) panel.hidden = !on;
       if (on) {
         moveMarker(t);
@@ -213,6 +228,17 @@ export function DrinkMenu(root) {
     var on = root.querySelector(".menu-tab.is-active");
     if (on) moveMarker(on);
   });
+  /* ...and take the measurement again the first time it is actually on
+     screen, since that is when there is something to measure. */
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var on = root.querySelector(".menu-tab.is-active");
+        if (on && on.offsetWidth) { moveMarker(on); obs.disconnect(); }
+      });
+    }).observe(root);
+  }
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(function () {
       var on = root.querySelector(".menu-tab.is-active");

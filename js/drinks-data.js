@@ -127,20 +127,33 @@ export var DRINKS = [
   {
     id: "cocktails",
     name: "Cocktails",
-    layout: "cards",
-    items: [
-      { name: "Blue Lagoon", tone: "azure" },
-      { name: "Cheeky Vimto", tone: "berry" },
-      { name: "Pornstar", tone: "passion" },
-      { name: "Sex on the Beach", tone: "sunset" },
-      { name: "Slush", tone: "ice" },
-      { name: "Tequila Sunrise", tone: "sunrise" },
-      { name: "Woo Woo", tone: "cranberry" },
-      { name: "Jug", tone: "copper", note: "To share" },
-      { name: "Fishbowl", tone: "azure", note: "To share" },
-      { name: "Red Buzz Ball", tone: "cranberry" },
-      { name: "Blue Buzz Ball", tone: "azure" },
-      { name: "Green Buzz Ball", tone: "lime" },
+    /* Nine of these had a generated colour tile standing in for a
+       photograph, which is filler at the size the cards run. They are set
+       as type until the venue shoots them, the same way the soft drinks
+       are. The Buzz Balls are already photographed, so they keep a strip:
+       they are also the only ones that come in a tin rather than a glass. */
+    layout: "list",
+    strip: {
+      name: "Ready to drink",
+      items: [
+        { name: "Red Buzz Ball", tone: "cranberry" },
+        { name: "Blue Buzz Ball", tone: "azure" },
+        { name: "Green Buzz Ball", tone: "lime" },
+      ],
+    },
+    groups: [
+      {
+        name: "Mixed",
+        items: [
+          { name: "Blue Lagoon" }, { name: "Cheeky Vimto" }, { name: "Pornstar" },
+          { name: "Sex on the Beach" }, { name: "Slush" }, { name: "Tequila Sunrise" },
+          { name: "Woo Woo" },
+        ],
+      },
+      {
+        name: "To share",
+        items: [{ name: "Jug" }, { name: "Fishbowl" }],
+      },
     ],
   },
   {
@@ -196,7 +209,13 @@ export var DRINKS = [
       { name: "Prosecco", tone: "straw", note: "Bottle" },
     ],
   },
-  {
+];
+
+/* Both venues pour the same menu. What differs is the offer, and the nights
+   it runs on, so the promo category is kept out of DRINKS and chosen at
+   mount instead of the whole menu being duplicated for a single tab. */
+export var PROMOS = {
+  eddies: {
     id: "promos",
     name: "Promos",
     tabName: "Wed & Fri",
@@ -211,7 +230,27 @@ export var DRINKS = [
       { name: "4 × Refresher Bombs", price: "£10", tone: "rose" },
     ],
   },
-];
+  /* Labyrinth runs one offer rather than a list of them, and it is the
+     whole menu at one price. Nothing else is invented to pad the tab out. */
+  labyrinth: {
+    id: "promos",
+    name: "Promos",
+    tabName: "Before 10pm",
+    layout: "promo",
+    eyebrow: "Friday & Saturday",
+    items: [
+      { name: "Every drink, until 10pm", price: "£3", tone: "mint",
+        photo: "assets/images/drinks/lab-every-drink.jpg" },
+      { name: "Entry, all night", price: "Free", tone: "ice",
+        photo: "assets/images/drinks/lab-entry.jpg" },
+    ],
+  },
+};
+
+/* The menu one venue shows: the shared categories, then its own offer. */
+export function menuFor(venue) {
+  return DRINKS.concat([PROMOS[venue] || PROMOS.eddies]);
+}
 
 /* The colour each tile is keyed to. Kept here so the generated artwork and
    the card glow can never drift apart. */
@@ -231,4 +270,6 @@ export var TONES = {
   straw:     "#c8b06a",
   gold:      "#c9a24b",
   copper:    "#e2895e",
+  /* Labyrinth's own accent, for the cards that only appear on that page */
+  mint:      "#3fbfa4",
 };

@@ -205,7 +205,13 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than being mixed, so a real one is the right picture.
   A card-led category needs no data change to take a photograph: dropping
   a file in under the drink's slug replaces the tile on its own.
-  **Where the photography stands: 55 real, 10 still generated.** The ten
+  **The nine mixed cocktails are set as type now**, the way the soft drinks
+  always were, because a generated colour field standing in for a Woo Woo is
+  filler at the size those cards run. The three Buzz Balls keep a strip above
+  the list: they are photographed, and they are the only ones that come in a
+  tin rather than out of a shaker. That leaves one generated tile on the
+  whole menu, the Refresher Bomb.
+  **Where the photography stood before that: 55 real, 10 still generated.** The ten
   are the nine cocktails — Blue Lagoon, Cheeky Vimto, Pornstar, Sex on the
   Beach, Slush, Tequila Sunrise, Woo Woo, Jug, Fishbowl — and the Refresher
   Bomb. Everything else on an image-led card is a real photograph, and the
@@ -410,6 +416,35 @@ Beyond the original hero/floors/contact, this pass adds:
 - **Labyrinth's opening hours are real now.** Friday and Saturday, 9pm till
   midnight, confirmed by the venue. They replace the holding line that said
   the nights weren't known yet, and the hero lede carries them too.
+- **Both venues pour the same menu, from the same module.** Labyrinth mounts
+  `drinks.js` exactly as Eddie's does; a drink added to `drinks-data.js`
+  appears on both sites without either page being edited. What differs is
+  the offer, so the promo category came out of `DRINKS` into a `PROMOS` map
+  and `menuFor(venue)` puts the right one on the end. The mount says which
+  venue it is — `data-venue="labyrinth"` — rather than the page carrying a
+  copy of the other's drinks. Labyrinth's tab is one offer rather than six,
+  because it has one: every drink £3 until 10pm, and free entry.
+  **Panel ids are namespaced by the mount.** A page with one menu keeps bare
+  ids, so `#drinks-cocktails` still works. The combined preview puts both
+  venues in one document, and there the second menu mounts under its own id
+  and prefixes its panels with it, so the two tab controls cannot claim each
+  other's panels — which is exactly what they did the first time.
+- **The arrival-scroll guard is a file now, not an inline block.** Both pages
+  need it and Labyrinth did not have it: its deep links selected the right
+  tab and then sat at the top of the page, because nothing was re-aiming
+  after the lazy 3D scene changed the page height. `js/deeplink.js` is
+  loaded as a classic script in `<head>` by both — it has to run before the
+  body exists, which a module or a deferred script would not.
+- **Six drink cards were broken in the published preview and fine on the
+  site.** Anything with an explicit `photo:` — the bottles that appear twice
+  on the menu — never went through the substitution that turns card artwork
+  into `data:` URIs, so it stayed a relative URL that an artifact has no
+  server to resolve. Jack Daniel's and Rekorderlig were two of them, and
+  both were reported missing. The flattener now rewrites those paths too,
+  asserts on every substitution rather than failing silently, and lives in
+  one file that both preview builders import. Labyrinth's venue-switch logo
+  had the same shape of bug: the SVG inliner only ever ran over Eddie's
+  fragment.
 - **Labyrinth has its own address and its own phone line.** 13 Quay Street,
   a short walk up the same street from Eddie's at number 4, and 01437
   760680 rather than the Eddie's office number the page had been borrowing
