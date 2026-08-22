@@ -26,7 +26,10 @@ export var DRINKS = [
         { name: "Eristoff Vodka", tone: "ice" },
         { name: "Gin", tone: "lime" },
         { name: "Pink Gin", tone: "rose" },
-        { name: "Malibu", tone: "straw" },
+        // photographed both as a bottle and as a shot, so the strip gets
+        // the bottle and the Shooters card gets the glass
+        { name: "Malibu", tone: "straw",
+          photo: "assets/images/drinks/malibu-bottle.jpg" },
         { name: "Spiced Rum", tone: "sunrise" },
         { name: "Dark Rum", tone: "espresso" },
         { name: "Baileys", tone: "espresso" },
@@ -152,6 +155,7 @@ export var DRINKS = [
       { name: "Tequila", tone: "ice" },
       { name: "Tequila Rose", tone: "rose" },
       { name: "Sambuca", tone: "ice" },
+      { name: "Malibu", tone: "straw" },
       { name: "Flatliner", tone: "espresso" },
       { name: "Refresher Bomb", tone: "rose" },
     ],

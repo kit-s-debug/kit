@@ -232,6 +232,12 @@ Beyond the original hero/floors/contact, this pass adds:
   brightly a bottle's glow burns, does the equivalent job on a plate and
   sets how brightly the glass is lit; a lone clear shot of a clear spirit
   needs more than a dark trio does.
+  Malibu is the clearest case of a name wanting one of each: the venue
+  photographed the bottle and the shot, so the bottle carries the
+  `-bottle` suffix and holds its place in the spirits strip while the
+  shot takes the plain slug on a Shooters card. It is on the shooters row
+  because that is what the photograph is — if it is not poured as a shot
+  at Eddie's, deleting one line takes the card away again.
   Tequila Rose was the first drink photographed **as it is served** rather
   than as packaging — a shot glass with a strawberry on it, which is what
   the Shooters cards actually want. Bottles are right for the spirits
