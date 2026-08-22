@@ -205,6 +205,16 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than being mixed, so a real one is the right picture.
   A card-led category needs no data change to take a photograph: dropping
   a file in under the drink's slug replaces the tile on its own.
+  **Every image-led card is a real photograph now.** The Refresher Bomb was
+  the last generated tile: blue over yellow, so its plate takes a
+  near-neutral wash — a strongly tinted one turns the yellow green — and the
+  promo beside it stopped being pink, which was a guess made before the
+  photograph existed.
+  **One card size across the whole menu.** A strip above a typographic list
+  set its cards at 150px and a card-led category set them at 190, so
+  Shooters and Wines came out visibly larger than the bottles in Spirits.
+  The strip's size reads better, so it is the size everywhere and the strip
+  override is gone.
   **Grey Goose was the hardest key on the menu.** Frosted white glass on a
   white sweep leaves about twenty-five levels between bottle and backdrop,
   where the usual tolerance of 26 swallows the bottle whole; at 6 it cuts
@@ -421,6 +431,32 @@ Beyond the original hero/floors/contact, this pass adds:
 - **Labyrinth's opening hours are real now.** Friday and Saturday, 9pm till
   midnight, confirmed by the venue. They replace the holding line that said
   the nights weren't known yet, and the hero lede carries them too.
+- **Choosing a category returns you to the top of the menu.** Swapping the
+  panel under the tabs left you standing wherever the last one happened to
+  reach, which on a long category was halfway down one you had not chosen.
+  Only on a real choice, though: doing it on mount, or on the hash that is
+  already there at load, would fight the arrival scroll.
+- **Both heroes dissolve into the page instead of ending on a line.** The
+  footage used to stop dead on a straight edge, so the hero read as a
+  picture sitting on the page rather than the top of it. A tall band of the
+  page's own ground, over the media and under the copy, takes the seam out;
+  the section that follows a hero starts at half the usual rhythm, because
+  a screen of air is already there; and the scroll cue moved to the centre
+  of that edge, which is where a reader is looking when they run out of
+  hero — it used to sit at the end of the facts rail, off at the right,
+  reading as punctuation. Labyrinth had no cue at all and needed the band
+  more, having no rail to soften the cut.
+- **Labyrinth's hero names both rooms.** Rewind was left to be discovered
+  further down. It is set as a subordinate line in the same family, at just
+  over 40% of the title and on the accent, rather than two headlines
+  competing — and it is the reason Rewind came out of the venue switcher:
+  it is a floor of that page, not a third site, and it was the only control
+  in a switch between two places that did not switch place.
+- **The Forbidden Florist's room is only in the Florist's part of the page
+  now.** It was also carrying the drinks header and the private hire card,
+  which put one basement bar behind three different sections. Those two use
+  the packed floor and the lit frontage instead — both already in the
+  library and neither used anywhere else, so nothing is now shown twice.
 - **The venue switcher carries the three real marks.** Eddie Rocks, Labyrinth
   and Rewind were set as type in Anton with the Eddie's icon beside them;
   they are the venues' own artwork now, cut out of the backgrounds they
@@ -435,9 +471,12 @@ Beyond the original hero/floors/contact, this pass adds:
   luminance would delete it — a flood cannot reach an enclosed area, which
   here is the whole point.
   The lockup sizes them optically rather than to one shared height, since a
-  two-line wordmark, a three-line lockup and a badge do not balance at the
-  same number, and the state change is opacity, because a colour transition
-  has nothing to act on once a name is a picture.
+  two-line wordmark and a three-line lockup do not balance at the same
+  number, and the state change is opacity, because a colour transition has
+  nothing to act on once a name is a picture. The Eddie Rocks wordmark
+  fills 0.428 of its own height and the Labyrinth lockup gives its name
+  0.265, so at 28px and 44px both words land near 12px — which is what
+  "the same size" actually looks like.
 - **Both venues pour the same menu, from the same module.** Labyrinth mounts
   `drinks.js` exactly as Eddie's does; a drink added to `drinks-data.js`
   appears on both sites without either page being edited. What differs is

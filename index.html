@@ -70,16 +70,15 @@
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <div class="header-brand">
-      <!-- One owner, three connected rooms, so they read as a single lockup:
-           the mark is the way back to Eddie's, and the two names beside it
-           are set in the mark's own Anton rather than as a separate nav.
-           Labyrinth is its own site; Rewind is the floor under it. -->
+      <!-- Two sites, one owner, so the marks read as a single lockup and the
+           switch between them is one control rather than a nav. Rewind is a
+           floor of Labyrinth rather than a site of its own, so it is reached
+           from that page instead of sitting here as a third button. -->
       <nav class="venue-switch" aria-label="Choose venue">
         <a href="#top" class="venue-switch-mark is-current" aria-current="page">
           <img src="assets/images/logo-eddies.png" alt="Eddie Rocks" class="venue-logo venue-logo--eddies" width="420" height="215">
         </a>
         <a href="labyrinth.html" class="venue-switch-item"><img src="assets/images/logo-labyrinth-light.png" alt="Labyrinth" class="venue-logo venue-logo--labyrinth" width="420" height="151"></a>
-        <a href="labyrinth.html#rewind" class="venue-switch-item"><img src="assets/images/logo-rewind.png" alt="Rewind" class="venue-logo venue-logo--rewind" width="420" height="247"></a>
       </nav>
     </div>
 
@@ -158,8 +157,8 @@
         <div><dt>Doors</dt><dd>Wed · Fri · Sat</dd></div>
         <div><dt>Entry</dt><dd>18+ · ID required</dd></div>
       </dl>
-      <a class="hero-scrollcue" href="#floors" aria-label="Scroll to the building"><span aria-hidden="true"></span></a>
     </div>
+    <a class="hero-scrollcue" href="#floors" aria-label="Scroll to the building"><span aria-hidden="true"></span></a>
   </section>
 
   <section class="venue" id="floors" aria-labelledby="floors-heading">
@@ -354,8 +353,11 @@
     <!-- A photograph of the bar itself carries the header; the menu below is
          a tab control, not a page of anchors, so a category is one tap away. -->
     <div class="drinks-hero reveal">
-      <img class="drinks-hero-bg" src="assets/images/drinks-hero.jpg"
-           alt="The bar at Eddie Rocks mid-service" loading="lazy">
+      <!-- The Forbidden Florist's room belongs to the Forbidden Florist. It
+           was carrying this header and the private hire card as well, which
+           put one basement bar behind three different parts of the page. -->
+      <img class="drinks-hero-bg" src="assets/images/resident-rnb.jpg"
+           alt="A packed floor at Eddie Rocks with hands in the air" loading="lazy">
       <div class="drinks-hero-inner">
         <h2 id="drinks-heading">The Drinks</h2>
         <p>Find your favourite. Discover something new.</p>
@@ -415,7 +417,7 @@
       </li>
       <li class="experience-row reveal">
         <div class="experience-media" data-tilt>
-          <img src="assets/images/exp-private.jpg" alt="The Forbidden Florist floor laid out with tables and booth seating before service" loading="lazy">
+          <img src="assets/images/frontage.jpg" alt="Eddie Rocks lit up on Quay Street at night" loading="lazy">
         </div>
         <div class="experience-body">
           <span class="experience-index" aria-hidden="true">02</span>

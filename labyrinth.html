@@ -48,14 +48,14 @@
   <div class="header-inner">
     <div class="header-brand">
       <!-- Same lockup as Eddie's, so the group reads identically whichever
-           site you land on: the mark takes you back to Eddie's, the names
-           beside it are the rooms it's connected to. -->
+           site you land on: the mark takes you back to Eddie's, the name
+           beside it is where you are. Rewind is a floor of this page, so it
+           is in the nav rather than in the switch. -->
       <nav class="venue-switch" aria-label="Choose venue">
         <a href="index.html" class="venue-switch-mark">
           <img src="assets/images/logo-eddies.png" alt="Eddie Rocks" class="venue-logo venue-logo--eddies" width="420" height="215">
         </a>
         <span class="venue-switch-item is-current" aria-current="page"><img src="assets/images/logo-labyrinth-light.png" alt="Labyrinth" class="venue-logo venue-logo--labyrinth" width="420" height="151"></span>
-        <a href="#rewind" class="venue-switch-item"><img src="assets/images/logo-rewind.png" alt="Rewind" class="venue-logo venue-logo--rewind" width="420" height="247"></a>
       </nav>
     </div>
 
@@ -124,13 +124,16 @@
 
     <div class="lab-hero-inner">
       <p class="lab-eyebrow">Also by Eddie's</p>
-      <h1>Labyrinth</h1>
+      <!-- Two rooms, one building, so the hero names both rather than
+           leaving Rewind to be discovered further down. -->
+      <h1 class="lab-title">Labyrinth<span class="lab-title-sub">&amp; Rewind</span></h1>
       <p class="lab-lede">The home of house music, and the best drink offers in Haverfordwest — every drink is £3 before 10pm. Friday and Saturday, 9pm till midnight, free entry on both floors and out on the stage.</p>
       <div class="lab-actions">
         <a href="#enquire" class="btn btn--solid" data-magnetic>Enquire</a>
         <a href="#lab-floors" class="btn btn--text" data-magnetic>Go Inside <span aria-hidden="true">→</span></a>
       </div>
     </div>
+    <a class="hero-scrollcue" href="#lab-floors" aria-label="Scroll to the building"><span aria-hidden="true"></span></a>
   </section>
 
   <section class="venue" id="lab-floors" aria-labelledby="lab-floors-heading">
@@ -325,7 +328,6 @@
         </div>
       </dl>
       <p class="lab-offer">The best drink offers in Haverfordwest: every drink is £3 until 10pm, on both floors and at the outdoor stage.</p>
-      <p class="lab-note">Labyrinth shares an owner with Eddie Rocks but not a building, a line-up or a door policy, so nothing has been carried across from that site.</p>
       <h3 class="lab-where-heading">Where to find us</h3>
       <p class="contact-locator">Rewind at street level, <span class="accent-text">Labyrinth</span> on the top floor, a short walk up Quay Street from Eddie Rocks.</p>
       <div class="contact-grid">
@@ -361,7 +363,6 @@
         <img src="assets/images/logo-eddies.png" alt="Eddie Rocks" class="venue-logo venue-logo--eddies" width="420" height="215">
       </a>
       <span class="venue-switch-item is-current" aria-current="page"><img src="assets/images/logo-labyrinth-light.png" alt="Labyrinth" class="venue-logo venue-logo--labyrinth" width="420" height="151"></span>
-      <a href="#rewind" class="venue-switch-item"><img src="assets/images/logo-rewind.png" alt="Rewind" class="venue-logo venue-logo--rewind" width="420" height="247"></a>
     </nav>
     <div class="footer-meta">
       <p><a href="tel:01437760680">01437 760680</a> · <a href="mailto:contact@eddies.co">contact@eddies.co</a></p>

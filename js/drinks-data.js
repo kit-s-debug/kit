@@ -172,7 +172,9 @@ export var DRINKS = [
       { name: "Sambuca", tone: "ice" },
       { name: "Malibu", tone: "straw" },
       { name: "Flatliner", tone: "espresso" },
-      { name: "Refresher Bomb", tone: "rose" },
+      // blue over yellow, not pink — the tone was a guess until the
+      // photograph arrived
+      { name: "Refresher Bomb", tone: "azure" },
     ],
   },
   {
@@ -229,7 +231,7 @@ export var PROMOS = {
       { name: "Doubles", price: "£5.70", tone: "copper" },
       { name: "Pints", price: "£4", tone: "amber" },
       { name: "4 × Jäger Bombs", price: "£10", tone: "espresso" },
-      { name: "4 × Refresher Bombs", price: "£10", tone: "rose" },
+      { name: "4 × Refresher Bombs", price: "£10", tone: "azure" },
     ],
   },
   /* Labyrinth runs one offer rather than a list of them, and it is the

@@ -255,9 +255,13 @@ p{ margin:0; }
    change is opacity, because a colour transition has nothing to act on
    once the name is a picture. */
 .venue-logo{ display:block; width:auto; opacity:.6; transition:opacity .22s ease, filter .22s ease; }
-.venue-logo--eddies{ height:34px; }
-.venue-logo--labyrinth{ height:32px; }
-.venue-logo--rewind{ height:32px; }
+/* Matched on the type, not on the box. The Eddie Rocks wordmark fills
+   0.428 of its own height and the Labyrinth lockup gives its name 0.265 —
+   so equal heights would set one name visibly smaller than the other. At
+   28 and 44 both words land near 12px, which is what "the same size"
+   actually looks like — and both sit smaller than the mark did alone. */
+.venue-logo--eddies{ height:28px; }
+.venue-logo--labyrinth{ height:44px; }
 .venue-switch-mark:hover .venue-logo,
 .venue-switch-mark.is-current .venue-logo,
 .venue-switch-item:hover .venue-logo,
@@ -408,6 +412,17 @@ p{ margin:0; }
   position:absolute; inset:0;
   background:radial-gradient(ellipse 86% 84% at 54% 44%, transparent 46%, rgba(10,5,7,.4) 84%, rgba(10,5,7,.74) 100%);
 }
+/* The footage used to stop dead on a straight edge, so the hero read as a
+   picture sitting on the page rather than the top of it. A tall band of the
+   page's own ground, over the media and under the copy, dissolves the seam
+   — and the same band exists on Labyrinth, which needs it more, having no
+   bottom rail to soften the cut. */
+.hero::after,
+.lab-hero::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:36%;
+  background:linear-gradient(180deg, transparent, var(--charcoal) 76%);
+  z-index:1; pointer-events:none;
+}
 
 .hero-content{
   position:relative; z-index:2; width:100%; max-width:var(--container);
@@ -449,9 +464,13 @@ p{ margin:0; }
 .hero-facts dd{
   margin:0; font-family:var(--font-accent); font-style:italic; font-size:17px; color:var(--white);
 }
+/* Centred on the hero's bottom edge, which is the one place a reader is
+   already looking when they run out of hero. It used to sit at the end of
+   the facts rail, off at the right, where it read as punctuation. */
 .hero-scrollcue{
-  flex:0 0 auto; position:relative; width:1px; height:44px; text-decoration:none;
-  background:linear-gradient(180deg, var(--line-strong), transparent);
+  position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+  z-index:3; width:1px; height:54px; text-decoration:none;
+  background:linear-gradient(180deg, transparent, var(--line-strong) 26%, transparent);
 }
 /* The cue is drawn as a hairline, which left a literally 1px-wide link to
    aim at. Widen the target without widening the mark. */
@@ -488,6 +507,10 @@ p{ margin:0; }
    facade below it is the fallback, and stays visible until the WebGL scene
    reports that it is actually drawing. */
 .venue{ padding:var(--section-y) 0 0; }
+/* straight off a hero there is already a screen of air above this, so the
+   full section rhythm reads as a gap rather than a breath */
+.hero+.venue,
+.lab-hero+.venue{ padding-top:calc(var(--section-y) * .5); }
 .venue-intro{ max-width:var(--container); margin:0 auto; padding:0 28px 28px; }
 .venue-intro-line{ color:var(--dim); max-width:52ch; margin-top:14px; }
 
@@ -1058,8 +1081,12 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .menu-section-eyebrow{ margin-bottom:8px; }
 
 /* ---- image-led cards */
+/* One card size across the whole menu. The strip above a typographic list
+   set its cards smaller than a card-led category did, so Shooters and
+   Wines came out noticeably larger than the bottles in Spirits; the strip's
+   size is the one that reads better, so it is the size everywhere now. */
 .drink-grid{
-  display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:16px;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:16px;
 }
 .drink-card{
   --tone:var(--silver);
@@ -1073,12 +1100,12 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   transition:transform .55s cubic-bezier(.32,.72,0,1);
 }
 .drink-card-body{
-  position:absolute; left:0; right:0; bottom:0; padding:30px 14px 13px;
+  position:absolute; left:0; right:0; bottom:0; padding:26px 12px 11px;
   background:linear-gradient(180deg, transparent, rgba(12,7,10,.9) 62%);
 }
 .drink-card h4{
   margin:0; font-family:var(--font-display); font-weight:400; text-transform:uppercase;
-  font-size:17px; line-height:1.02; letter-spacing:.01em; color:var(--white);
+  font-size:14px; line-height:1.05; letter-spacing:.01em; color:var(--white);
 }
 .drink-note,.drink-serves{
   display:block; margin-top:5px; font-size:10.5px; letter-spacing:.14em;
@@ -1120,8 +1147,6 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   margin:0 0 12px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
   color:var(--silver-deep); padding-bottom:9px; border-bottom:1px solid var(--line);
 }
-.drink-strip .drink-grid{ grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); }
-.drink-strip .drink-card h4{ font-size:14px; }
 
 /* ---- promos: louder, but the same palette. An offer is a different kind of
    thing from a drink, so the price leads and the tile burns brighter. */
@@ -1393,8 +1418,8 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
   /* two up rather than one, so a category is a short scroll not a long one */
   .drink-grid{ grid-template-columns:repeat(2, 1fr); gap:11px; }
   .promo-grid{ grid-template-columns:repeat(2, 1fr); gap:11px; }
-  .drink-card h4{ font-size:15px; }
-  .drink-card-body{ padding:26px 11px 11px; }
+  .drink-card h4{ font-size:14px; }
+  .drink-card-body{ padding:24px 10px 10px; }
   .drink-lists{ grid-template-columns:1fr; gap:6px 0; }
   .drink-list li{ font-size:15.5px; padding:10px 0; }
   .menu-tab{ padding:11px 15px; font-size:12.5px; }
@@ -1472,13 +1497,19 @@ text.neon-sign-glow{ fill:var(--neon-pink); opacity:0; filter:blur(4px); transit
 .lab-hero h1{
   font-size:clamp(60px, 13vw, 168px); line-height:.84; letter-spacing:-.03em; margin-bottom:30px;
 }
+/* Rewind is the floor below, not a second headline, so it is set as a
+   subordinate line in the same family — the name at half the size, on the
+   accent, rather than two titles competing. */
+.lab-title-sub{
+  display:block; margin-top:.1em;
+  font-size:.42em; letter-spacing:-.01em; color:var(--silver-bright);
+}
 .lab-lede{ color:var(--dim); font-size:17px; line-height:1.75; max-width:46ch; margin-bottom:34px; }
 .lab-actions{ display:flex; gap:26px; align-items:center; flex-wrap:wrap; }
 
 .lab-panel{ padding:var(--section-y) 28px; border-top:1px solid var(--line); }
 .lab-panel-inner{ max-width:var(--container); margin:0 auto; }
 .lab-panel h2{ margin-bottom:20px; }
-.lab-note{ color:var(--dim); line-height:1.8; max-width:62ch; margin-bottom:38px; }
 .lab-where-heading{
   font-family:var(--font-display); font-size:clamp(22px,3vw,30px);
   letter-spacing:.01em; margin:0 0 12px;

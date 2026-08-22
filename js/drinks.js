@@ -176,7 +176,24 @@ export function DrinkMenu(root) {
     marker.style.transform = "translateX(" + tab.offsetLeft + "px)";
   }
 
-  function select(id, focus) {
+  /* Switching category swaps the panel under the tabs, and a long panel
+     leaves you standing wherever the last one happened to reach — often
+     halfway down a category you did not choose. Put the top of the menu
+     back under the header instead, so a new category starts at its first
+     card. Only on a real choice: doing it on mount, or on the deep link
+     that runs at load, would fight the arrival scroll. */
+  function scrollToMenu() {
+    var tabsBox = root.querySelector(".menu-tabs");
+    if (!tabsBox) return;
+    var header = document.querySelector(".site-header");
+    var top = tabsBox.getBoundingClientRect().top + window.pageYOffset
+            - (header ? header.offsetHeight : 0);
+    /* already at the top of the menu, so leave the page where it is */
+    if (Math.abs(window.pageYOffset - top) < 8) return;
+    window.scrollTo({ top: top, behavior: reduced ? "auto" : "smooth" });
+  }
+
+  function select(id, focus, move) {
     var found = false;
     tabs.forEach(function (t) {
       var on = t.dataset.cat === id;
@@ -194,12 +211,13 @@ export function DrinkMenu(root) {
         if (focus) t.focus();
       }
     });
+    if (found && move) scrollToMenu();
     return found;
   }
 
   rail.addEventListener("click", function (e) {
     var tab = e.target.closest(".menu-tab");
-    if (tab) select(tab.dataset.cat);
+    if (tab) select(tab.dataset.cat, false, true);
   });
 
   rail.addEventListener("keydown", function (e) {
@@ -212,16 +230,18 @@ export function DrinkMenu(root) {
       : -1;
     if (next < 0 && e.key !== "Home") return;
     e.preventDefault();
-    select(tabs[(next + tabs.length) % tabs.length].dataset.cat, true);
+    select(tabs[(next + tabs.length) % tabs.length].dataset.cat, true, true);
   });
 
   /* Deep links: /#drinks-cocktails opens on cocktails, same as the floors. */
-  function fromHash() {
+  function fromHash(move) {
     var h = window.location.hash.replace("#drinks-", "");
-    if (h && h !== window.location.hash) select(h);
+    if (h && h !== window.location.hash) select(h, false, move);
   }
-  window.addEventListener("hashchange", fromHash);
-  fromHash();
+  /* a hash arriving later is someone following a link, so carry them to the
+     menu; the one present at load is the arrival scroll's job, not ours */
+  window.addEventListener("hashchange", function () { fromHash(true); });
+  fromHash(false);
 
   /* the marker is measured, so it has to be remeasured when the type does */
   window.addEventListener("resize", function () {
