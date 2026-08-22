@@ -172,8 +172,12 @@ Beyond the original hero/floors/contact, this pass adds:
   **Where the venue has real bottle shots, they replace the tile.** VKs run
   as a strip across the top of Bottles and the spirits the venue has
   photographed run as one across the top of Spirits ("Behind the bar" —
-  thirteen bottles and counting), with whatever isn't photographed yet
-  staying as type below. As more shots arrive they move up into the strip
+  seventeen bottles), with whatever isn't photographed yet staying as type
+  below. Spirits is down to Grey Goose, Tequila, Tequila Rose and Tequila &
+  Mixer; Bottles to Budweiser, Corona, Hooch, Reef and Rekorderlig.
+  Sambuca appears on the menu twice, as a spirit and as a shooter, so the
+  bottle lives at `sambuca-bottle.jpg` and the shooter keeps its colour
+  tile — that's what the per-item `photo` field is for. As more shots arrive they move up into the strip
   and the list shrinks; nothing else changes.
   `gen_bottles.py` does the compositing. The shots arrive on whatever the
   shop photographed them against — white, a grey studio sweep, lilac — so

@@ -36,6 +36,12 @@ export var DRINKS = [
         { name: "Disaronno", tone: "amber" },
         { name: "Taboo", tone: "straw" },
         { name: "Passoa", tone: "passion" },
+        // on the menu as a spirit and again as a shooter, so this one points
+        // at its own file and the shooter keeps its colour tile
+        { name: "Sambuca", tone: "ice", photo: "assets/images/drinks/sambuca-bottle.jpg" },
+        { name: "Jägermeister", tone: "lime" },
+        { name: "Port", tone: "claret", note: "50ml" },
+        { name: "Martini", tone: "claret", note: "50ml" },
       ],
     },
     groups: [
@@ -43,13 +49,8 @@ export var DRINKS = [
       {
         name: "Liqueurs",
         items: [
-          { name: "Tequila Rose" }, { name: "Tequila" },
-          { name: "Sambuca" }, { name: "Tequila & Mixer" }, { name: "Jägermeister" },
+          { name: "Tequila Rose" }, { name: "Tequila" }, { name: "Tequila & Mixer" },
         ],
-      },
-      {
-        name: "Fortified Wine",
-        items: [{ name: "Port", note: "50ml" }, { name: "Martini", note: "50ml" }],
       },
     ],
   },
@@ -62,20 +63,21 @@ export var DRINKS = [
        the venue had real bottle shots for them. Everything else in here
        stays as type — see the note on DrinkList. */
     strip: {
-      name: "The VK range",
+      name: "In the fridge",
       items: [
         { name: "VK Blue", tone: "azure" },
         { name: "VK Apple & Mango", tone: "lime" },
         { name: "VK Orange & Passion Fruit", tone: "amber" },
         { name: "VK Ice", tone: "ice" },
         { name: "VK Black Cherry", tone: "claret" },
+        { name: "Asahi", tone: "amber" },
       ],
     },
     groups: [
       {
         name: "Bottles & Cans",
         items: [
-          { name: "Asahi" }, { name: "Budweiser" }, { name: "Corona" },
+          { name: "Budweiser" }, { name: "Corona" },
           { name: "Hooch", note: "Can" }, { name: "Reef" },
           { name: "Rekorderlig", note: "Bottle" },
         ],
