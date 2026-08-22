@@ -210,8 +210,12 @@ Beyond the original hero/floors/contact, this pass adds:
   behind it, so the flood walks through the glass and hollows the drink out
   — which is exactly what happened to the Flatliner first time. `plate()`
   keeps the whole frame instead, pulls it down into the card and vignettes
-  the square edge away. Anything shot on a dark ground can be keyed
-  normally; it is white backdrops behind glass that force the plate.
+  the square edge away.
+  What decides it is the drink, not the glass: the Baby Guinness is in
+  clear glass on white too and keys perfectly, because dark liqueur under
+  a cream float is opaque and gives the flood a real edge to stop at.
+  Clear glass plus a pale drink is the case that needs the plate. Anything
+  shot on a dark ground can always be keyed.
   Tequila Rose is the first drink photographed **as it is served** rather
   than as packaging — a shot glass with a strawberry on it, which is what
   the Shooters cards actually want. Bottles are right for the spirits
