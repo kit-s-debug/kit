@@ -10,6 +10,12 @@
    Loaded as a classic script in <head> on purpose: it has to run before the
    body exists, which a module or a deferred script would not.
 */
+/* Marks the document as scripted before any of it paints, so the CSS can
+   hide things it intends to animate in. Anything that hides itself and waits
+   for JavaScript to bring it back has to be gated on this, or a page whose
+   scripts never arrive is a blank one. */
+document.documentElement.classList.add("js");
+
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 var deepLinked = !!location.hash;
 var userScrolled = deepLinked;

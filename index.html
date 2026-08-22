@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest</title>
 <meta name="description" content="Eddie Rocks, Haverfordwest. Three floors on Quay Street: The Forbidden Florist, the Main Bar and the RnB Bar. Private hire and showcase events.">
+<!-- Share cards. A nightclub's marketing runs on Facebook and WhatsApp, and
+     a link with none of this pastes as a bare grey URL. og:image paths are
+     relative — every scraper resolves them against the page — and should
+     become absolute once the site has its real domain, along with og:url. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Eddie Rocks">
+<meta property="og:title" content="Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest">
+<meta property="og:description" content="Three floors on Quay Street, Haverfordwest. Open Wednesday, Friday and Saturday. Private hire and showcase nights.">
+<meta property="og:image" content="assets/images/og-eddies.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest">
+<meta name="twitter:description" content="Three floors on Quay Street, Haverfordwest. Open Wednesday, Friday and Saturday. Private hire and showcase nights.">
+<meta name="twitter:image" content="assets/images/og-eddies.jpg">
+<meta name="theme-color" content="#1B1116">
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
 <!-- The display face reflows the hero when it swaps in, which was the whole
      of the page's layout shift. Two faces cover every heading and every line
@@ -148,7 +165,7 @@
       <p class="hero-place reveal"><span>Haverfordwest</span><span>Quay Street</span></p>
       <h1 class="reveal">A Night Out,<br><em>Done Right.</em></h1>
       <div class="hero-lower reveal">
-        <p class="hero-sub">Eddie Rocks is West Wales' number one nightclub. Whether it's your regular weekend out or one of our show-stopping events, three floors under one roof mean we can cater to any night out.</p>
+        <p class="hero-sub">Eddie Rocks is West Wales' number one nightclub. Three floors under one roof, so whether it's your usual Friday or one of our big showcase nights, there's a room for it.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn--solid" data-magnetic>Enquire</a>
           <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
@@ -170,7 +187,7 @@
     <div class="venue-intro reveal">
       <p class="eyebrow">Quay Street, Haverfordwest</p>
       <h2 id="floors-heading">One building, three floors</h2>
-      <p class="venue-intro-line">The Forbidden Florist on the ground, Eddie's Main Bar above it, the RnB Bar on top. Scroll to go inside.</p>
+      <p class="venue-intro-line">The Forbidden Florist underground, Eddie's Main Bar at street level, the RnB Bar above it. Scroll to go inside.</p>
     </div>
 
     <div class="venue-scroller" id="venue-scroller">
@@ -253,7 +270,7 @@
                     <img src="assets/images/floor-rnb.jpg" alt="A packed RnB Bar dancefloor with the DJ on the decks, hands up under green lights" loading="lazy">
                   </div>
                   <div class="level-copy">
-                    <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours, and low light that's easy to stay lost in.</p>
+                    <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours and low light that's easy to stay lost in.</p>
                     <dl class="level-meta">
                       <div><dt>On the decks</dt><dd>RnB, hip-hop, slow-burners</dd></div>
                       <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
@@ -288,7 +305,7 @@
                     <img src="assets/images/floor-main.jpg" alt="A packed Main Bar dancefloor under lights" loading="lazy">
                   </div>
                   <div class="level-copy">
-                    <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday, first up the stairs from Quay Street.</p>
+                    <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday. Straight in off Quay Street.</p>
                     <dl class="level-meta">
                       <div><dt>On the decks</dt><dd>House &amp; dance, guest line-ups</dd></div>
                       <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
@@ -373,7 +390,7 @@
       <!-- built by js/drinks.js from js/drinks-data.js; the list below is the
            no-JS fallback and is replaced on mount -->
       <noscript>
-        <p class="drink-fallback">Spirits, bottles, draught, cocktails, shooters, soft drinks, wines and champagne are all served on both floors. Wednesday and Friday carry the offers — ask at the bar.</p>
+        <p class="drink-fallback">Spirits, bottles, draught, cocktails, shooters, soft drinks, wines and champagne are all served on all three floors. Wednesday and Friday carry the offers — ask at the bar.</p>
       </noscript>
     </div>
   </section>
@@ -406,7 +423,7 @@
               </button>
             </div>
           </div>
-          <p class="lineup-intro">Resident and guest line-ups, for the nights the whole room turns up. Go left for the nights that have been, right for what's coming.</p>
+          <p class="lineup-intro">Resident and guest line-ups for the nights the whole room turns up. Left for the nights that have been, right for what's coming.</p>
 
           <div class="lineup" id="lineup">
             <div class="lineup-rail" id="lineup-rail" tabindex="0" role="region"
@@ -414,7 +431,7 @@
               <!-- Built by main.js from the venue's real opening nights so it
                    can never go stale. no-JS gets the sentence below. -->
               <noscript>
-                <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights are announced regularly on both floors — get in touch for what's coming up.</p>
+                <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights go up as they're confirmed — get in touch for what's coming.</p>
               </noscript>
             </div>
           </div>
@@ -427,7 +444,7 @@
         <div class="experience-body">
           <span class="experience-index" aria-hidden="true">02</span>
           <h3>Private Hire</h3>
-          <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
+          <p>Close the doors to everyone but your guest list, on one floor or all three, and we'll style it to match the occasion.</p>
           <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
         </div>
       </li>
@@ -478,31 +495,31 @@
       <div class="faq-list">
         <details class="faq-item">
           <summary><span class="faq-num">01</span><span class="faq-q">What are your opening days and hours?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Wednesday, Friday and Saturday. Wednesday and Friday we're open 9pm till 2am, and Saturday we run 9pm till late.</p>
+          <p>Wednesday, Friday and Saturday. Wednesday and Friday, 9pm till 2am. Saturday, 9pm till late.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">02</span><span class="faq-q">Is there an entry fee?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Wednesday and Friday are free entry. Saturday's entry fee varies depending on the night, get in touch if you want the price ahead of time.</p>
+          <p>Wednesday and Friday are free. Saturday varies with the night — ask us and we'll tell you the price before you come down.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">03</span><span class="faq-q">Do I need to book a table in advance?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Walk-ins are welcome on both floors, but tables and booths are limited. Get in touch ahead of time and we'll hold one for you.</p>
+          <p>Walk-ins are welcome on every floor, but tables and booths are limited. Let us know ahead of time and we'll hold one for you.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">04</span><span class="faq-q">What's the age policy?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Eddie's is strictly 18+. Valid photo ID is required for entry: a passport, driving licence, or PASS card.</p>
+          <p>Eddie's is strictly 18+. Bring valid photo ID — a passport, driving licence or PASS card.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">05</span><span class="faq-q">Is there a dress code?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>No. There's no dress code on either floor, come as you are.</p>
+          <p>No. No dress code on any floor — come as you are.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">06</span><span class="faq-q">Can I hire the whole venue?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Yes, either floor or the whole building, for private parties, showcases and corporate bookings. Get in touch with your date and numbers to get a package together.</p>
+          <p>Yes — one floor or the whole building, for private parties, showcases and corporate bookings. Send us your date and numbers and we'll put a package together.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">07</span><span class="faq-q">Where do I park?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>There's public parking within a short walk of Quay Street. Get in touch if you'd like directions for the night.</p>
+          <p>There's public parking a short walk from Quay Street. Ask us if you'd like directions on the night.</p>
         </details>
       </div>
     </div>

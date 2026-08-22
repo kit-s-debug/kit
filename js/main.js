@@ -33,24 +33,48 @@
       mobileNav.classList.add("is-open");
       mobileNavBackdrop.classList.add("is-open");
       mobileNav.inert = false;
+      /* The scrolling element is <html>, not <body>, so locking body alone
+         left the page scrolling away behind the open drawer. Both, and the
+         scrollbar gutter is held so nothing shifts when it goes. */
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
       var firstLink = mobileNav.querySelector("a");
       if (firstLink) firstLink.focus();
     }
-    function closeMobileNav() {
+    function closeMobileNav(returnFocus) {
       navToggle.setAttribute("aria-expanded", "false");
       mobileNav.classList.remove("is-open");
       mobileNavBackdrop.classList.remove("is-open");
       mobileNav.inert = true;
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
-      navToggle.focus();
+      /* Closing by button, backdrop or Escape puts focus back where it came
+         from. Closing by tapping a link must not — focus belongs at the
+         destination, not back on the menu button behind it. */
+      if (returnFocus !== false) navToggle.focus({ preventScroll: true });
     }
     navToggle.addEventListener("click", function () {
       var open = navToggle.getAttribute("aria-expanded") === "true";
       if (open) closeMobileNav(); else openMobileNav();
     });
     mobileNav.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") closeMobileNav();
+      var link = e.target.closest ? e.target.closest("a") : null;
+      if (!link) return;
+      closeMobileNav(false);
+      /* The browser works out where a fragment lives at the moment the link
+         is followed — which is while the page is still locked for the open
+         drawer, so it finds nothing to scroll and stays at the top. Take the
+         jump again once the lock is off and the page has its height back. */
+      var href = link.getAttribute("href");
+      if (!href || href.charAt(0) !== "#" || href.length < 2) return;
+      var target = document.getElementById(href.slice(1));
+      if (!target) return;
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          target.scrollIntoView({ block: "start",
+            behavior: reducedMotion ? "auto" : "smooth" });
+        });
+      });
     });
     mobileNavBackdrop.addEventListener("click", closeMobileNav);
     document.addEventListener("keydown", function (e) {
@@ -101,7 +125,7 @@
         c.date.getDate() + " " + MONTHS[c.date.getMonth()] + "</span>" +
         "<h3>" + c.night.name + "</h3>" +
         '<p class="lineup-floors">' + c.night.floors + "</p>" +
-        '<p class="lineup-bill">' + (past ? "Residents on both floors" : "Line-up announced closer to the night") + "</p>" +
+        '<p class="lineup-bill">' + (past ? "Residents on all three floors" : "Line-up announced closer to the night") + "</p>" +
         '<span class="lineup-note">' + c.night.note + "</span>";
       frag.appendChild(el);
       if (!past && !firstUpcoming) firstUpcoming = el;
@@ -166,6 +190,37 @@
       { threshold: 0.15 }
     );
     revealEls.forEach(function (el) { io.observe(el); });
+
+    /* IntersectionObserver samples at frame boundaries, so anything the page
+       jumps past — a hash link, a fast flick, a section that shrinks when the
+       3D scene stands down — can be stepped over and left invisible for good.
+       A sweep catches whatever has already reached the fold and reveals it,
+       throttled to one frame and unbound once every element is accounted for.
+       Content that never appears is a worse failure than an animation that
+       does not play. */
+    var sweeping = false;
+    function sweepReveals() {
+      var left = 0;
+      revealEls.forEach(function (el) {
+        if (el.classList.contains("is-visible")) return;
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+          el.classList.add("is-visible");
+          io.unobserve(el);
+        } else left++;
+      });
+      if (!left) {
+        window.removeEventListener("scroll", onScrollSweep);
+        window.removeEventListener("resize", sweepReveals);
+      }
+    }
+    function onScrollSweep() {
+      if (sweeping) return;
+      sweeping = true;
+      window.requestAnimationFrame(function () { sweepReveals(); sweeping = false; });
+    }
+    window.addEventListener("scroll", onScrollSweep, { passive: true });
+    window.addEventListener("resize", sweepReveals, { passive: true });
+    window.addEventListener("load", sweepReveals);
   }
 
   /* ---------- hero video ---------- */

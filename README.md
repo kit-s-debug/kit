@@ -457,6 +457,45 @@ Beyond the original hero/floors/contact, this pass adds:
   which put one basement bar behind three different sections. Those two use
   the packed floor and the lit frontage instead — both already in the
   library and neither used anywhere else, so nothing is now shown twice.
+### The second QA pass
+
+- **The copy said two floors in eight places** and three in the headline — a
+  leftover from before the Forbidden Florist was a floor. It also put the
+  Florist "on the ground" two paragraphs above putting it underground, and
+  sent you "up the stairs" to a room at street level. Sixteen corrections in
+  all, including two comma splices, a "get in touch… to get a package
+  together", and the page's only two Oxford commas in a house style that
+  does not use them.
+- **A link to either page pasted as a bare grey URL.** No Open Graph, no
+  Twitter card, no `theme-color` — on a business whose marketing runs on
+  Facebook and WhatsApp. Both pages now carry share cards built from their
+  own room photography with the venue's mark over a scrim, at the 1200x630
+  every scraper crops to. The image paths are relative and should become
+  absolute, with `og:url` alongside them, once there is a domain.
+- **With JavaScript off, most of the page was invisible.** Twenty blocks sat
+  at `opacity:0` waiting for a reveal that never came — which is also what a
+  visitor would have seen any time `main.js` failed to arrive. The animation
+  is now gated behind a `.js` class set in `<head>`, so without scripts the
+  words are simply there.
+- **The reveal could skip content and never come back.** IntersectionObserver
+  samples at frame boundaries, so a hash jump or a fast flick could step
+  over an element and leave it invisible for good — reproducible on the
+  reviews, the FAQ and the events block. A throttled sweep now catches
+  anything that has reached the fold, and unbinds once every element is
+  accounted for. Zero hidden across three runs on both pages, where before it
+  varied between one and eleven.
+- **The page scrolled behind the open mobile drawer.** The scrolling element
+  is `<html>`, and only `<body>` was being locked. Locking both fixed it and
+  broke something else: the browser works out where a fragment lives at the
+  moment the link is followed, which was while the page was still locked, so
+  every drawer link landed at the top. The jump is taken again once the lock
+  is off. Six for six on both pages, landing under the header.
+- **The newsletter field was the one tab stop with nothing to see.** It set
+  `outline:none` and relied on a border warming up. It keeps the border and
+  gains a ring.
+- Also: the Labyrinth tab title named one room where the hero names two, and
+  the Forbidden Florist logo was still a 1170px file behind an 80px slot.
+
 ### The pre-presentation pass
 
 Everything below is fixing, not redesigning — the layout, palette, type and

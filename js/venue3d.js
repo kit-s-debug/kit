@@ -709,6 +709,14 @@ export function mountVenue(config) {
       section.classList.remove("is-3d-ready");
       window.removeEventListener("scroll", onScroll);
       try { renderer.dispose(); } catch (e) {}
+      /* The fallback was display:none while the scene was up, so anything in
+         it waiting to fade in on scroll has never had a box to intersect. If
+         it is on screen the moment it appears, there may be no further scroll
+         to trigger it — so it is simply shown. */
+      Array.prototype.forEach.call(
+        section.querySelectorAll(".reveal"),
+        function (el) { el.classList.add("is-visible"); }
+      );
     }
 
     // ------------------------------------------------------------- the loop
