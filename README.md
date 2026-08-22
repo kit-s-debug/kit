@@ -175,7 +175,9 @@ Beyond the original hero/floors/contact, this pass adds:
   seventeen bottles), with whatever isn't photographed yet staying as type
   below. **Bottles is fully photographed** — eleven cards and no list under
   them at all, which the renderer handles by simply not drawing one.
-  Spirits is down to Grey Goose, Tequila, Tequila Rose and Tequila & Mixer.
+  Spirits is down to Grey Goose, Tequila, Tequila Rose and Tequila & Mixer,
+  and Draught to Madri. Rekorderlig appears in both Bottles and Draught and
+  shares one file between them through the per-item `photo` field.
   Bottles are scaled to a common height so a row lines up, with a width cap
   that only bites on something squat like a can.
   Sambuca appears on the menu twice, as a spirit and as a shooter, so the

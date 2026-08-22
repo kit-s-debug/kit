@@ -87,14 +87,20 @@ export var DRINKS = [
     id: "draught",
     name: "Draught",
     layout: "list",
+    strip: {
+      name: "On tap",
+      items: [
+        { name: "Alpaca Lypse", tone: "straw" },
+        { name: "Aspall", tone: "amber" },
+        { name: "Guinness", tone: "espresso" },
+        { name: "Pravha", tone: "lime" },
+        // the same bottle as the one in the fridge
+        { name: "Rekorderlig", tone: "berry",
+          photo: "assets/images/drinks/rekorderlig-bottle.jpg" },
+      ],
+    },
     groups: [
-      {
-        name: "On tap",
-        items: [
-          { name: "Alpaca Lypse" }, { name: "Aspall" }, { name: "Guinness" },
-          { name: "Madri" }, { name: "Pravha" }, { name: "Rekorderlig" },
-        ],
-      },
+      { name: "Also on tap", items: [{ name: "Madri" }] },
     ],
   },
   {
