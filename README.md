@@ -205,6 +205,15 @@ Beyond the original hero/floors/contact, this pass adds:
   rather than being mixed, so a real one is the right picture.
   A card-led category needs no data change to take a photograph: dropping
   a file in under the drink's slug replaces the tile on its own.
+  **Where the photography stands: 55 real, 10 still generated.** The ten
+  are the nine cocktails — Blue Lagoon, Cheeky Vimto, Pornstar, Sex on the
+  Beach, Slush, Tequila Sunrise, Woo Woo, Jug, Fishbowl — and the Refresher
+  Bomb. Everything else on an image-led card is a real photograph, and the
+  twenty entries carrying no image at all (Grey Goose, Tequila & Mixer, the
+  soft drinks) are type by design, not gaps. Worth stating plainly because
+  the strips wrap into a grid rather than scrolling, so nothing is hidden
+  off the end of a row: if a drink is not on that list of ten, its
+  photograph is already on the site.
   **Clear glassware needs a different treatment from a bottle.** An opaque
   bottle can be cut off its backdrop because the two are different colours;
   a clear shot glass of white liqueur on white is the same colour as what's
