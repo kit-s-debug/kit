@@ -169,7 +169,17 @@ Beyond the original hero/floors/contact, this pass adds:
   scroll rather than a list to scan.
   **Prices appear on the promos and nowhere else**, because that is the only
   place the venue has given any. Nothing is invented.
-  **The VK range is the exception to the no-photographs rule.** The venue
+  **Where the venue has real bottle shots, they replace the tile.** VKs run
+  as a strip across the top of Bottles and the spirits the venue has
+  photographed run as one across the top of Spirits ("Behind the bar"),
+  with the rest of each category staying as type below. As more bottle
+  shots arrive they move up into the strip and the list shrinks; nothing
+  else changes.
+  **Cocktails keep their generated tiles by design.** They're mixed in
+  house, so a stock photograph of a Pornstar Martini isn't the venue's
+  drink — the colour tile is honest about being artwork, and a real shot
+  can replace it whenever one exists.
+  **The VK range is also the reason the flavour names got fixed.** The venue
   supplied real bottle shots, and it is the one range people choose by
   colour, so it runs as a short image strip above the typographic list
   rather than being buried in it. The shots arrived on pure white, which

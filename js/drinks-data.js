@@ -17,10 +17,22 @@ export var DRINKS = [
     id: "spirits",
     name: "Spirits",
     layout: "list",
+    /* The bottles the venue has photographs of come out of the list and go
+       up top. As more shots arrive they move up here too and the list below
+       shrinks — nothing else has to change. */
+    strip: {
+      name: "Behind the bar",
+      items: [
+        { name: "Eristoff Vodka", tone: "ice" },
+        { name: "Gin", tone: "lime" },
+        { name: "Pink Gin", tone: "rose" },
+        { name: "Malibu", tone: "straw" },
+        { name: "Spiced Rum", tone: "sunrise" },
+      ],
+    },
     groups: [
-      { name: "Vodka", items: [{ name: "Grey Goose" }, { name: "Eristoff Vodka" }] },
-      { name: "Gin", items: [{ name: "Gin" }, { name: "Pink Gin" }] },
-      { name: "Rum", items: [{ name: "Malibu" }, { name: "Spiced Rum" }, { name: "Dark Rum" }] },
+      { name: "Vodka", items: [{ name: "Grey Goose" }] },
+      { name: "Rum", items: [{ name: "Dark Rum" }] },
       {
         name: "Liqueurs",
         items: [
