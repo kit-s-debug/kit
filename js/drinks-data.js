@@ -28,15 +28,17 @@ export var DRINKS = [
         { name: "Pink Gin", tone: "rose" },
         { name: "Malibu", tone: "straw" },
         { name: "Spiced Rum", tone: "sunrise" },
+        { name: "Dark Rum", tone: "espresso" },
+        { name: "Baileys", tone: "espresso" },
+        { name: "Pimm's", tone: "claret" },
       ],
     },
     groups: [
       { name: "Vodka", items: [{ name: "Grey Goose" }] },
-      { name: "Rum", items: [{ name: "Dark Rum" }] },
       {
         name: "Liqueurs",
         items: [
-          { name: "Baileys" }, { name: "Pimm's" }, { name: "Tequila Rose" },
+          { name: "Tequila Rose" },
           { name: "Courvoisier" }, { name: "Archers" }, { name: "Disaronno" },
           { name: "Taboo" }, { name: "Passoa" }, { name: "Tequila" },
           { name: "Sambuca" }, { name: "Tequila & Mixer" }, { name: "Jägermeister" },
