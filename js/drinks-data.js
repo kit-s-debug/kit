@@ -42,6 +42,11 @@ export var DRINKS = [
         { name: "Jägermeister", tone: "lime" },
         { name: "Port", tone: "claret", note: "50ml" },
         { name: "Martini", tone: "claret", note: "50ml" },
+        /* Whiskey wasn't on the menu the venue supplied at all — this is
+           here because the bottle turned up. Worth checking what else the
+           list is missing. */
+        { name: "Jack Daniel's", tone: "amber",
+          photo: "assets/images/drinks/jack-daniels.jpg" },
       ],
     },
     groups: [
@@ -94,14 +99,14 @@ export var DRINKS = [
         { name: "Aspall", tone: "amber" },
         { name: "Guinness", tone: "espresso" },
         { name: "Pravha", tone: "lime" },
+        { name: "Madri", tone: "claret" },
         // the same bottle as the one in the fridge
         { name: "Rekorderlig", tone: "berry",
           photo: "assets/images/drinks/rekorderlig-bottle.jpg" },
       ],
     },
-    groups: [
-      { name: "Also on tap", items: [{ name: "Madri" }] },
-    ],
+    // every line is photographed, so there is no list under the strip
+    groups: [],
   },
   {
     id: "cocktails",

@@ -175,8 +175,12 @@ Beyond the original hero/floors/contact, this pass adds:
   seventeen bottles), with whatever isn't photographed yet staying as type
   below. **Bottles is fully photographed** — eleven cards and no list under
   them at all, which the renderer handles by simply not drawing one.
-  Spirits is down to Grey Goose, Tequila, Tequila Rose and Tequila & Mixer,
-  and Draught to Madri. Rekorderlig appears in both Bottles and Draught and
+  **Draught and Champagne are complete too.** Spirits is down to Grey
+  Goose, Tequila, Tequila Rose and Tequila & Mixer.
+  **Jack Daniel's is on the site but was not on the menu the venue
+  supplied** — there was no whiskey on it at all. It was added because the
+  bottle turned up, and it is flagged in `drinks-data.js` as worth
+  checking: if whiskey was missed, other lines may have been too. Rekorderlig appears in both Bottles and Draught and
   shares one file between them through the per-item `photo` field.
   Bottles are scaled to a common height so a row lines up, with a width cap
   that only bites on something squat like a can.
