@@ -22,7 +22,12 @@
 <meta name="twitter:description" content="The home of house music on Quay Street. Friday and Saturday, 9pm till midnight, free entry, every drink £3 before 10pm.">
 <meta name="twitter:image" content="assets/images/og-labyrinth.jpg">
 <meta name="theme-color" content="#0B1416">
-<link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+<!-- Both pages used to serve the same stand-in wordmark as their icon,
+     which put Eddie's mark in the tab for Labyrinth. A stacked wordmark
+     is a smudge at 16px anyway, so each is now its own mark's first
+     letter, cut from the real artwork. -->
+<link rel="icon" href="assets/images/favicon-labyrinth.png" type="image/png" sizes="180x180">
+<link rel="apple-touch-icon" href="assets/images/favicon-labyrinth.png">
 <!-- The display face reflows the hero when it swaps in, which was the whole
      of the page's layout shift. Two faces cover every heading and every line
      of body copy above the fold; the rest can swap without moving anything. -->
@@ -386,7 +391,9 @@
 
 <footer class="site-footer">
   <div class="footer-inner footer-inner--lab">
-    <a href="labyrinth.html" class="wordmark wordmark--text wordmark--footer-text">Labyrinth</a>
+    <!-- was the name set in Anton, which is not the typeface the real mark
+         uses — the footer showed a different wordmark from the header -->
+    <a href="labyrinth.html" class="wordmark wordmark--footer-lab"><img src="assets/images/logo-labyrinth-light.png" alt="Labyrinth" width="420" height="151"></a>
     <nav class="venue-switch venue-switch--footer" aria-label="Choose venue">
       <a href="index.html" class="venue-switch-mark">
         <img src="assets/images/logo-eddies.png" alt="Eddie Rocks" class="venue-logo venue-logo--eddies" width="420" height="215">

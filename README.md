@@ -457,6 +457,25 @@ Beyond the original hero/floors/contact, this pass adds:
   which put one basement bar behind three different sections. Those two use
   the packed floor and the lit frontage instead — both already in the
   library and neither used anywhere else, so nothing is now shown twice.
+### Marks, icons and one overdone hover
+
+- **The footers were still carrying the stand-in wordmark.** Eddie's showed
+  the placeholder `logo.svg` rather than its real mark, and Labyrinth's set
+  its name in Anton — a different typeface from the one its own mark uses,
+  so the footer and the header disagreed. Both carry the real artwork now,
+  and nothing on either page references the stand-in.
+- **Both pages served the same icon**, which put Eddie's mark in the tab for
+  Labyrinth. A stacked wordmark is a smudge at 16px in any case, so each
+  page's icon is now its own mark's first letter — the E with its speckled
+  texture, the L with the script crossing it — cut from the real artwork
+  rather than redrawn, on the page's own ground, and doubling as the
+  apple-touch icon.
+- **The tilt on the photographs was a swing, not a lean.** Sixteen degrees
+  each way on a 600px perspective, with a drop-shadow tracking it, and a 5%
+  zoom on top. Five degrees on a 900px lens, a shadow at half the throw and
+  a 2.5% zoom reads as the picture catching the light, which is what the
+  effect was for.
+
 ### The second QA pass
 
 - **The copy said two floors in eight places** and three in the headline — a

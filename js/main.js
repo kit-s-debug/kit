@@ -439,8 +439,8 @@
         rotX += (targetX - rotX) * 0.16;
         rotY += (targetY - rotY) * 0.16;
         scale += (targetScale - scale) * 0.16;
-        el.style.transform = "perspective(600px) rotateX(" + rotX.toFixed(2) + "deg) rotateY(" + rotY.toFixed(2) + "deg) scale3d(" + scale.toFixed(3) + "," + scale.toFixed(3) + ",1)";
-        el.style.filter = "drop-shadow(" + (-rotY * 1.6).toFixed(1) + "px " + (rotX * 1.6).toFixed(1) + "px 20px rgba(0,0,0,.5))";
+        el.style.transform = "perspective(900px) rotateX(" + rotX.toFixed(2) + "deg) rotateY(" + rotY.toFixed(2) + "deg) scale3d(" + scale.toFixed(3) + "," + scale.toFixed(3) + ",1)";
+        el.style.filter = "drop-shadow(" + (-rotY * 0.9).toFixed(1) + "px " + (rotX * 0.9).toFixed(1) + "px 24px rgba(0,0,0,.45))";
         var settled = Math.abs(targetX - rotX) < 0.02 && Math.abs(targetY - rotY) < 0.02 && Math.abs(targetScale - scale) < 0.001;
         if (!settled) {
           rafId = requestAnimationFrame(step);
@@ -453,9 +453,12 @@
         var rect = el.getBoundingClientRect();
         var px = (e.clientX - rect.left) / rect.width - 0.5;
         var py = (e.clientY - rect.top) / rect.height - 0.5;
-        targetX = -py * 16;
-        targetY = px * 16;
-        targetScale = 1.035;
+        /* This was 16 degrees each way on a deeper perspective, which swung
+           the photograph around under the cursor rather than leaning it. Five
+           on a longer lens reads as the picture catching the light. */
+        targetX = -py * 5;
+        targetY = px * 5;
+        targetScale = 1.012;
         ensureLoop();
       });
       el.addEventListener("mouseleave", function () {
