@@ -2409,6 +2409,22 @@ body {
   color: color-mix(in oklab, var(--accent) 85%, white);
 }
 
+/* Her real watercolour logo, on a warm paper card so the sage script and the
+   painted olives stay legible against the dark footer — like a card pinned up. */
+.site-footer-logo {
+  display: inline-block;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  background: var(--paper);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 color-mix(in oklab, black 25%, transparent);
+}
+
+.site-footer-logo :is(img) {
+  display: block;
+  width: min(13rem, 52vw);
+  height: auto;
+}
+
 .site-footer-blurb {
   margin-block-start: 1rem;
   font-size: var(--step--1);

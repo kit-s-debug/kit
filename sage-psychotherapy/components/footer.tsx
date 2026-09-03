@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { footer, practice, safety } from "@/content/site";
 import { Crisis } from "./crisis";
-import { Wordmark } from "./leaf";
 import { Placeholder } from "./placeholder";
 import { SocialLinks } from "./social-links";
 
@@ -11,7 +11,15 @@ export function Footer() {
       <div className="shell">
         <div className="site-footer-top">
           <div className="site-footer-brand">
-            <Wordmark />
+            <span className="site-footer-logo">
+              <Image
+                src="/images/logo.png"
+                alt="Sage Psychotherapy & Counselling — hand-painted olive-branch logo"
+                width={380}
+                height={425}
+                sizes="(max-width: 54rem) 60vw, 15rem"
+              />
+            </span>
             <p className="site-footer-blurb">{footer.blurb}</p>
           </div>
 
