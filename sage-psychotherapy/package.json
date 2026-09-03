@@ -1,0 +1,41 @@
+{
+  "name": "sage-psychotherapy",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:assets": "node scripts/check-assets.mjs",
+    "test:match": "tsx scripts/test-matcher.ts",
+    "test:enquiry": "tsx scripts/test-enquiry.ts",
+    "test": "npm run test:match && npm run test:enquiry && npm run check:contrast",
+    "images": "node scripts/make-placeholder-images.mjs",
+    "verify": "npm run test && npm run lint && npm run build && npm run check:assets"
+  },
+  "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
+    "@vercel/analytics": "^2.0.1",
+    "next": "15.5.25",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "resend": "^6.25.0",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.25",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.13",
+    "typescript": "^5"
+  }
+}
