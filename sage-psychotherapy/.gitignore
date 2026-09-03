@@ -30,3 +30,6 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# generated preview build (see the artifact link in chat)
+preview.html
