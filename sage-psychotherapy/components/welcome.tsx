@@ -3,9 +3,9 @@ import portraitImage from "@/public/images/portrait.jpg";
 import { welcome } from "@/content/site";
 
 /**
- * Her portrait, large and bleeding off the left edge of a full ink field —
- * not a small circular avatar beside a bio. Three lines, first person, and
- * nothing else. The temptation to add a fourth is the thing to resist.
+ * Her portrait, a generous framed photo beside the description on a full ink
+ * field — substantial, not a small circular avatar. Three lines, first person,
+ * and nothing else. The temptation to add a fourth is the thing to resist.
  */
 export function Welcome() {
   return (
@@ -14,7 +14,7 @@ export function Welcome() {
         <Image
           src={portraitImage}
           alt={welcome.portraitAlt}
-          sizes="(max-width: 900px) 100vw, 44vw"
+          sizes="(max-width: 60rem) 20rem, 24rem"
           placeholder="blur"
           quality={80}
           className="welcome-photo"

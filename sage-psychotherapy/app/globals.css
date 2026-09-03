@@ -988,36 +988,40 @@ select {
 }
 
 /* --- welcome ------------------------------------------------------------ */
+/* A full-bleed ink field; inside it, her portrait sits beside the description
+   as a contained, framed photo rather than an edge-to-edge crop. */
 .welcome {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  align-items: stretch;
-  gap: clamp(1.5rem, 6vw, 5rem);
-  padding-inline-end: var(--gutter);
-  min-height: min(46rem, 84svh);
+  grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.75rem, 5vw, 4.5rem);
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-block: var(--room);
 }
 
-/* Bleeds off the left edge and off both ends of the field, cropped tall. */
 .welcome-portrait {
   position: relative;
+  border-radius: 4px;
   overflow: clip;
+  box-shadow: 0 0 0 1px var(--line-on-dark);
+  aspect-ratio: 4 / 5;
 }
 
 .welcome-photo {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 30%;
+  object-position: 50% 26%;
 }
 
 .welcome-words {
   display: grid;
   align-content: center;
   gap: clamp(1.1rem, 2.6vw, 1.9rem);
-  max-width: 30rem;
-  padding-block: var(--room-tight);
+  max-width: 32rem;
 }
 
 .welcome-line {
@@ -1025,32 +1029,27 @@ select {
   font-size: var(--step-2);
   line-height: 1.32;
   color: var(--on-surface);
-  max-width: 24ch;
+  max-width: 26ch;
 }
 
 .welcome-line[data-i="1"] {
-  max-width: 22ch;
-  margin-inline-start: clamp(0rem, 3vw, 2.5rem);
+  max-width: 24ch;
 }
 
 .welcome-line[data-i="2"] {
   font-size: var(--step-1);
   color: var(--on-surface-muted);
-  max-width: 30ch;
+  max-width: 32ch;
 }
 
 @media (max-width: 60rem) {
   .welcome {
     grid-template-columns: 1fr;
-    padding-inline: var(--gutter);
-    min-height: 0;
+    justify-items: start;
   }
   .welcome-portrait {
-    margin-inline: calc(-1 * var(--gutter));
-    aspect-ratio: 5 / 4;
-  }
-  .welcome-line[data-i="1"] {
-    margin-inline-start: 0;
+    width: min(20rem, 72vw);
+    aspect-ratio: 4 / 5;
   }
 }
 
@@ -2598,4 +2597,220 @@ body {
 :root[data-calm="on"] .progress {
   grid-auto-flow: row;
   grid-auto-columns: auto;
+}
+
+/* ==========================================================================
+   Motion — "light behaving like light"
+   The brand is a warm lamp in a front room, so nothing slides in generically.
+   Things warm up as they arrive, surfaces catch the light on hover, and a
+   lamp-glow follows the cursor through the dark rooms. Every bit of it is gated
+   behind prefers-reduced-motion and calm mode (which zero out all animation and
+   transition globally), and behind a data-animate flag JS only sets when motion
+   is welcome — so with JS off, or calm on, everything sits at its resting,
+   fully-visible state.
+   ========================================================================== */
+
+/* --- scroll reveals: varied, never a uniform fade-up ---------------------- */
+:root[data-animate="on"] .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s var(--ease-lamp),
+    transform 0.7s var(--ease-lamp),
+    filter 0.7s var(--ease-lamp);
+  transition-delay: calc(var(--i, 0) * 45ms);
+  will-change: opacity, transform;
+}
+
+/* headings arrive as if a lamp warms them: a small rise, brightening up */
+:root[data-animate="on"] .reveal[data-reveal="rise"] {
+  filter: brightness(0.72);
+}
+
+/* images settle in from a hair closer, like focus pulling */
+:root[data-animate="on"] .reveal[data-reveal="scale"] {
+  transform: scale(1.05);
+}
+
+/* the sill hairlines draw themselves left-to-right, like a windowsill catching light */
+:root[data-animate="on"] .reveal[data-reveal="draw"] {
+  opacity: 1;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.9s var(--ease-lamp);
+}
+
+:root[data-animate="on"] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* --- the cursor lamp: a warm light that follows you through the dark rooms - */
+.lamp-field {
+  position: relative;
+}
+
+.lamp-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    22rem 22rem at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--lamp) 30%, transparent),
+    transparent 62%
+  );
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.5s var(--ease-lamp);
+}
+
+:root[data-animate="on"] .lamp-field:hover::after {
+  opacity: 0.55;
+}
+
+/* keep real content above the glow */
+.lamp-field > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- hover: surfaces catch the light -------------------------------------- */
+.action {
+  transition:
+    background var(--dur-quick) ease,
+    transform var(--dur-mid) var(--ease-lamp),
+    box-shadow var(--dur-mid) var(--ease-lamp);
+}
+
+.action:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px -8px color-mix(in oklab, var(--interactive) 70%, transparent),
+    0 0 22px -6px color-mix(in oklab, var(--lamp) 60%, transparent);
+}
+
+.action:active {
+  transform: translateY(0);
+}
+
+/* nav + footer links: an underline that draws from the left */
+.site-nav a,
+.site-footer-list a,
+.site-menu-panel a {
+  position: relative;
+}
+
+.site-nav a::after,
+.site-footer-list a.link-plain::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.15rem;
+  width: 100%;
+  height: 1.5px;
+  background: var(--interactive);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-mid) var(--ease-lamp);
+}
+
+.site-header[data-over-hero] .site-nav a::after {
+  background: var(--interactive-on-dark);
+}
+
+.site-nav a:hover::after,
+.site-footer-list a.link-plain:hover::after {
+  transform: scaleX(1);
+}
+
+.site-nav a:hover {
+  border-bottom-color: transparent;
+}
+
+/* rows and choosable cards warm and lift a touch when the cursor lands */
+.credentials-list li,
+.band > summary,
+.modalities li {
+  transition:
+    background var(--dur-mid) ease,
+    transform var(--dur-quick) var(--ease-lamp);
+  border-radius: 2px;
+}
+
+.credentials-list li:hover,
+.modalities li:hover {
+  background: color-mix(in oklab, var(--interactive) 8%, transparent);
+}
+
+.band > summary:hover .band-name {
+  color: var(--interactive-text);
+}
+
+.format-tab,
+.choice,
+.toggle-option,
+.checkbox {
+  transition:
+    border-color var(--dur-quick) ease,
+    background var(--dur-quick) ease,
+    transform var(--dur-quick) var(--ease-lamp);
+}
+
+.choice:hover,
+.format-tab:hover {
+  transform: translateX(3px);
+}
+
+/* the portraits and the logo lean gently toward the light on hover */
+.welcome-portrait .welcome-photo,
+.site-footer-logo :is(img),
+.about-portrait :is(img) {
+  transition:
+    transform 0.6s var(--ease-lamp),
+    filter 0.6s var(--ease-lamp);
+}
+
+.welcome-portrait:hover .welcome-photo,
+.about-portrait:hover :is(img) {
+  transform: scale(1.035);
+  filter: brightness(1.04);
+}
+
+.site-footer-logo:hover :is(img) {
+  transform: scale(1.03) rotate(-0.6deg);
+}
+
+/* the olive-leaf marks breathe toward the cursor */
+.wordmark:hover .wordmark-leaf,
+.finder-list-head:hover .finder-leaf {
+  animation: leaf-sway 1.6s var(--ease-lamp);
+}
+
+@keyframes leaf-sway {
+  30% {
+    transform: rotate(-6deg) translateY(-1px);
+  }
+  60% {
+    transform: rotate(3deg);
+  }
+}
+
+.social-link {
+  transition:
+    background var(--dur-quick) ease,
+    transform var(--dur-quick) var(--ease-lamp);
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+}
+
+/* the big fee figure lifts a little when the panel is under the cursor */
+.fees-shell:hover .fees-number {
+  text-shadow: 0 0 30px color-mix(in oklab, var(--lamp) 45%, transparent);
+  transition: text-shadow 0.5s var(--ease-lamp);
 }

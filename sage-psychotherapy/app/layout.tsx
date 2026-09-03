@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { Motion } from "@/components/motion";
 import { instrument, newsreader } from "./fonts";
 import { BOOT_SCRIPT } from "@/lib/boot-script";
 import { SITE_URL } from "@/lib/site-url";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to the main content
         </a>
         {children}
+        <Motion />
         {/* Cookieless and privacy-first, so the site needs no cookie banner.
             Only sends data from a Vercel deployment; a no-op elsewhere. */}
         <Analytics />
