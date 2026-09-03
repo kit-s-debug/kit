@@ -6,27 +6,27 @@ import { WordReveal } from "./primitives/WordReveal";
    borrowed logos are the first thing a local business owner checks. */
 export function Statement() {
   return (
-    <section className="u-container py-[clamp(5.5rem,13vh,9rem)]">
-      <div className="grid gap-14 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-7">
+    <section className="u-container py-[clamp(3.5rem,9vh,6rem)]">
+      <div className="grid gap-10 md:grid-cols-12 md:gap-10">
+        <div className="md:col-span-6">
           <WordReveal
             text={STATEMENT.line}
             stagger={0.022}
-            className="u-h2 text-[clamp(1.55rem,2.9vw,2.5rem)] leading-[1.18] text-mist"
+            className="u-h2 text-[clamp(1.4rem,2.5vw,2.1rem)] leading-[1.2] text-mist"
           />
           <Reveal delay={0.15}>
-            <p className="u-h2 mt-3 text-[clamp(1.55rem,2.9vw,2.5rem)] leading-[1.18] text-chalk">
+            <p className="u-h2 mt-2 text-[clamp(1.4rem,2.5vw,2.1rem)] leading-[1.2] text-chalk">
               {STATEMENT.emphasis}
             </p>
           </Reveal>
         </div>
 
-        <ul className="md:col-span-4 md:col-start-9">
+        <ul className="md:col-span-5 md:col-start-8">
           {STATEMENT.facts.map((f, i) => (
-            <li key={f.k} className="u-hairline-t py-6 last:pb-0">
+            <li key={f.k} className="u-hairline-t py-4 last:pb-0">
               <Reveal delay={0.08 * i}>
-                <h3 className="text-[0.95rem] font-medium text-chalk">{f.k}</h3>
-                <p className="mt-2 text-[0.92rem] leading-[1.6] text-mist">{f.v}</p>
+                <h3 className="text-[0.92rem] font-medium text-chalk">{f.k}</h3>
+                <p className="mt-1 text-[0.88rem] leading-[1.55] text-mist">{f.v}</p>
               </Reveal>
             </li>
           ))}

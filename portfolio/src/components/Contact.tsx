@@ -70,8 +70,8 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="u-container py-[clamp(5rem,12vh,8.5rem)]">
-      <div className="grid gap-16 md:grid-cols-12 md:gap-12">
+    <section id="contact" className="u-container py-[clamp(3.5rem,9vh,6rem)]">
+      <div className="grid gap-12 md:grid-cols-12 md:gap-12">
         <div className="flex flex-col md:col-span-5">
           <WordReveal text={CONTACT.heading} stagger={0.035} className="u-h2 max-w-[15ch] text-chalk" />
           <Reveal delay={0.15}>
@@ -79,7 +79,7 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={0.22} className="mt-auto">
-            <div className="pt-14">
+            <div className="pt-10">
               <a
                 href={`mailto:${SITE.email}`}
                 className="group inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)] text-chalk"
@@ -158,7 +158,7 @@ export function Contact() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
               >
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {([
                     ["name", "Name", "text", "name"],
                     ["email", "Email", "email", "email"],
@@ -185,13 +185,20 @@ export function Contact() {
                       )}
                     </div>
                   ))}
-                </div>
-
-                <div className="grid gap-2">
-                  <label htmlFor="business" className="text-[0.85rem] text-mist">
-                    Business <span className="text-mist">(optional)</span>
-                  </label>
-                  <input id="business" name="business" type="text" autoComplete="organization" value={values.business} onChange={set("business")} className={field} />
+                  <div className="grid gap-2">
+                    <label htmlFor="business" className="text-[0.85rem] text-mist">
+                      Business <span className="text-mist">(optional)</span>
+                    </label>
+                    <input
+                      id="business"
+                      name="business"
+                      type="text"
+                      autoComplete="organization"
+                      value={values.business}
+                      onChange={set("business")}
+                      className={field}
+                    />
+                  </div>
                 </div>
 
                 <fieldset className="grid gap-3">

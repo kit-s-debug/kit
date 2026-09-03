@@ -13,10 +13,10 @@ export function Services() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="services" className="u-container py-[clamp(4rem,10vh,7rem)]">
+    <section id="services" className="u-container py-[clamp(3.5rem,8vh,5.5rem)]">
       <WordReveal text="What I do" className="u-h2 text-chalk" />
 
-      <div className="mt-14 border-t border-[var(--color-slate-line)]">
+      <div className="mt-10 border-t border-[var(--color-slate-line)]">
         {SERVICES.map((s, i) => {
           const isOpen = open === i;
           return (
@@ -28,7 +28,7 @@ export function Services() {
                   aria-controls={`service-${i}`}
                   onClick={() => setOpen(isOpen ? -1 : i)}
                   onPointerEnter={() => !reduce && setOpen(i)}
-                  className="group grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-6 py-7 text-left md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)_auto] md:py-8"
+                  className="group grid w-full cursor-pointer grid-cols-[1fr_auto] items-center gap-6 py-6 text-left md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)_auto] md:py-7"
                 >
                   <span
                     className={`u-display text-[clamp(1.5rem,3.2vw,2.5rem)] transition-all duration-500 ease-[var(--ease-out-expo)] ${
@@ -62,7 +62,7 @@ export function Services() {
                     transition={{ duration: 0.5, ease: EASE }}
                     className="overflow-hidden"
                   >
-                    <div className="grid gap-8 pb-10 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:pb-12">
+                    <div className="grid gap-8 pb-8 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:pb-9">
                       <p className="max-w-[46ch] text-[1rem] leading-[1.7] text-chalk/85 md:pl-3">
                         {s.detail}
                         <span className="mt-4 block text-[0.92rem] text-mist md:hidden">{s.lead}</span>

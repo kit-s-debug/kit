@@ -35,20 +35,20 @@ function Featured({ project, onOpen }: { project: Project; onOpen: () => void })
   const spotlight = useMotionTemplate`radial-gradient(460px circle at ${mx}px ${my}px, rgba(210,85,43,0.18), transparent 72%)`;
 
   return (
-    <div ref={ref} className="mt-16">
+    <div ref={ref} className="mt-12 grid items-center gap-8 md:grid-cols-12 md:gap-10">
       <motion.button
         type="button"
         onClick={onOpen}
         aria-label={`Open the ${project.name} case study`}
         style={reduce ? undefined : { y: frameY }}
-        className="group relative block w-full cursor-pointer overflow-hidden text-left"
+        className="group relative block w-full cursor-pointer overflow-hidden text-left md:col-span-7"
         onPointerMove={(e) => {
           const r = e.currentTarget.getBoundingClientRect();
           mx.set(e.clientX - r.left);
           my.set(e.clientY - r.top);
         }}
       >
-        <div className="relative w-full overflow-hidden bg-ink-2" style={{ aspectRatio: project.aspect ?? "3 / 2" }}>
+        <div className="relative w-full overflow-hidden bg-ink-2" style={{ aspectRatio: project.aspect ?? "16 / 9" }}>
           <img
             src={project.image}
             alt={`The ${project.name} website`}
@@ -64,25 +64,21 @@ function Featured({ project, onOpen }: { project: Project; onOpen: () => void })
         </div>
       </motion.button>
 
-      <div className="grid gap-8 pt-10 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <h3 className="u-display text-[clamp(1.9rem,3.4vw,3rem)] text-chalk">{project.name}</h3>
-          <p className="mt-2 text-[0.92rem] text-mist">
-            {project.sector}, {project.town}
-          </p>
+      <div className="md:col-span-4 md:col-start-9">
+        <h3 className="u-display text-[clamp(1.8rem,2.8vw,2.4rem)] text-chalk">{project.name}</h3>
+        <p className="mt-1.5 text-[0.9rem] text-mist">
+          {project.sector}, {project.town}
+        </p>
+        <p className="mt-5 text-[0.97rem] leading-[1.6] text-chalk/85">{project.summary}</p>
+        <p className="mt-4 text-[0.92rem] leading-[1.55] text-mist">{project.outcome}</p>
+        <div className="mt-5">
+          <TechList items={project.tech} />
         </div>
-        <div className="md:col-span-4">
-          <p className="text-[1rem] leading-[1.68] text-chalk/85">{project.summary}</p>
-          <div className="mt-6">
-            <TechList items={project.tech} />
-          </div>
-        </div>
-        <div className="md:col-span-3">
-          <p className="text-[0.92rem] leading-[1.6] text-mist">{project.outcome}</p>
+        <div>
           <button
             type="button"
             onClick={onOpen}
-            className="group mt-6 inline-flex items-center gap-2 text-[0.95rem] text-chalk"
+            className="group mt-7 inline-flex items-center gap-2 text-[0.95rem] text-chalk"
           >
             <span className="relative">
               View project
@@ -98,7 +94,7 @@ function Featured({ project, onOpen }: { project: Project; onOpen: () => void })
 
 function Card({ project, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
   return (
-    <Reveal delay={(index % 2) * 0.08} className={index % 2 === 1 ? "md:mt-24" : ""}>
+    <Reveal delay={(index % 2) * 0.08} className={index % 2 === 1 ? "md:mt-16" : ""}>
       <Tilt className="w-full">
         <button
           type="button"
@@ -106,7 +102,7 @@ function Card({ project, index, onOpen }: { project: Project; index: number; onO
           aria-label={`Open the ${project.name} case study`}
           className="group block w-full cursor-pointer text-left"
         >
-          <div className="relative w-full overflow-hidden bg-ink-2" style={{ aspectRatio: project.aspect ?? "3 / 2" }}>
+          <div className="relative w-full overflow-hidden bg-ink-2" style={{ aspectRatio: project.aspect ?? "16 / 9" }}>
             <img
               src={project.image}
               alt={`The ${project.name} website`}
@@ -132,13 +128,10 @@ function Card({ project, index, onOpen }: { project: Project; index: number; onO
           <p className="mt-1.5 text-[0.88rem] text-mist">
             {project.sector}, {project.town}
           </p>
-          <p className="mt-4 max-w-[42ch] text-[0.95rem] leading-[1.65] text-chalk/80">{project.summary}</p>
-          <div className="mt-5">
+          <p className="mt-3.5 max-w-[40ch] text-[0.93rem] leading-[1.6] text-chalk/80">{project.outcome}</p>
+          <div className="mt-4">
             <TechList items={project.tech} />
           </div>
-          <p className="mt-5 border-t border-[var(--color-slate-line)] pt-4 text-[0.88rem] leading-[1.55] text-mist">
-            {project.outcome}
-          </p>
         </button>
       </Tilt>
     </Reveal>
@@ -151,11 +144,11 @@ export function Work() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="work" className="u-container py-[clamp(4rem,9vh,7rem)]">
+    <section id="work" className="u-container py-[clamp(3.5rem,8vh,5.5rem)]">
       <div>
         <WordReveal text="Selected work" className="u-h2 text-chalk" />
         <motion.p
-          className="mt-5 max-w-[44ch] text-[1rem] leading-[1.65] text-mist"
+          className="mt-4 max-w-[42ch] text-[0.98rem] leading-[1.6] text-mist"
           initial={reduce ? false : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.6 }}
@@ -167,7 +160,7 @@ export function Work() {
 
       <Featured project={featured} onOpen={() => setOpen(featured)} />
 
-      <div className="mt-24 grid gap-x-10 gap-y-20 md:mt-32 md:grid-cols-2 md:gap-x-14">
+      <div className="mt-16 grid gap-x-10 gap-y-12 md:mt-16 md:grid-cols-2 md:gap-x-12">
         {rest.map((p, i) => (
           <Card key={p.slug} project={p} index={i} onOpen={() => setOpen(p)} />
         ))}

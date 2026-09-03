@@ -20,7 +20,7 @@ export function Reasons() {
   };
 
   return (
-    <section className="py-[clamp(4rem,10vh,7rem)]">
+    <section className="py-[clamp(3.5rem,8vh,5.5rem)]">
       <div className="u-container flex flex-wrap items-end justify-between gap-6">
         <WordReveal text="Why work with me" className="u-h2 max-w-[14ch] text-chalk" />
         <div className="hidden gap-2 md:flex">
@@ -45,14 +45,14 @@ export function Reasons() {
         {REASONS.map((r) => (
           <li
             key={r.title}
-            className="group relative flex min-h-[15rem] w-[17.5rem] shrink-0 snap-start flex-col justify-between border border-[var(--color-slate-line)] bg-ink-2 p-7 transition-colors duration-500 hover:bg-ink-3 sm:w-[19rem]"
+            className="group relative flex min-h-[12.5rem] w-[17rem] shrink-0 snap-start flex-col justify-between border border-[var(--color-slate-line)] bg-ink-2/80 p-6 transition-colors duration-500 hover:bg-ink-3 sm:w-[19rem]"
           >
             <span
               aria-hidden
               className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-rust transition-transform duration-600 ease-[var(--ease-out-expo)] group-hover:scale-x-100"
             />
             <h3 className="u-display text-[1.3rem] leading-[1.15] text-chalk">{r.title}</h3>
-            <p className="mt-6 text-[0.92rem] leading-[1.65] text-mist">{r.body}</p>
+            <p className="mt-5 text-[0.9rem] leading-[1.6] text-mist">{r.body}</p>
           </li>
         ))}
       </ul>

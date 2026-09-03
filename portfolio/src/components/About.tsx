@@ -15,7 +15,7 @@ function Progression() {
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <ol ref={ref} className="relative mt-24 pl-7 md:mt-32 md:pl-10">
+    <ol ref={ref} className="relative mt-12 pl-7 md:mt-14 md:pl-10">
       <span aria-hidden className="absolute top-2 bottom-2 left-0 w-px bg-[var(--color-slate-line)]" />
       <motion.span
         aria-hidden
@@ -23,7 +23,7 @@ function Progression() {
         style={reduce ? { scaleY: 1 } : { scaleY }}
       />
       {ABOUT.progression.map((step, i) => (
-        <li key={step.title} className="relative grid gap-2 pb-11 last:pb-0 md:grid-cols-12 md:gap-10">
+        <li key={step.title} className="relative grid gap-1.5 pb-6 last:pb-0 md:grid-cols-12 md:gap-10">
           <motion.span
             aria-hidden
             className="absolute top-[0.6rem] -left-7 -ml-[2.5px] h-1.5 w-1.5 bg-chalk md:-left-10"
@@ -48,7 +48,7 @@ export function About() {
   const hasPortrait = Boolean(ABOUT.portrait);
 
   return (
-    <section id="about" className="u-container py-[clamp(5rem,12vh,8.5rem)]">
+    <section id="about" className="u-container py-[clamp(3.5rem,8vh,5.5rem)]">
       <div className="grid gap-12 md:grid-cols-12 md:gap-10">
         <div className="md:col-span-5">
           <WordReveal text={ABOUT.heading} stagger={0.03} className="u-h2 text-chalk" />
@@ -68,7 +68,7 @@ export function About() {
 
         <div className="md:col-span-6 md:col-start-7">
           {ABOUT.body.map((p, i) => (
-            <Reveal key={p.slice(0, 24)} delay={0.06 * i} className="mb-6 last:mb-0">
+            <Reveal key={p.slice(0, 24)} delay={0.06 * i} className="mb-5 last:mb-0">
               <p className="max-w-[56ch] text-[1.02rem] leading-[1.75] text-mist">{p}</p>
             </Reveal>
           ))}

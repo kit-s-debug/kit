@@ -41,8 +41,8 @@ export const STATEMENT = {
   line: "Most small business websites were built once, years ago, by someone who has since stopped answering the phone.",
   emphasis: "I build the other kind.",
   facts: [
-    { k: "Built, not templated", v: "Every site is designed for one business, from a blank page." },
-    { k: "Mobile first", v: "Most of your customers arrive on a phone. That is where I start." },
+    { k: "Built, not templated", v: "Designed for one business, from a blank page." },
+    { k: "Mobile first", v: "Your customers arrive on a phone. That is where I start." },
     { k: "Based here", v: "Pembrokeshire. You can meet me, and I answer my own messages." },
   ],
 };
@@ -59,7 +59,7 @@ export type Project = {
   tech: string[];
   image: string;
   /* Aspect ratio of the preview image. Match whatever you export and the
-     layout follows it, in the grid and in the case study. */
+     layout follows it, in the grid and in the case study. Defaults to 16:9. */
   aspect?: string;
   liveUrl?: string; // EDIT: add a real URL and a "Visit live site" link appears
 };
@@ -81,7 +81,6 @@ export const PROJECTS: Project[] = [
     outcome: "Table enquiries arrive as a form instead of a direct message at 1am.",
     tech: ["React", "TypeScript", "Sanity CMS", "Vercel"],
     image: "/work/ninth-wave.jpg",
-    aspect: "16 / 9",
   },
   {
     slug: "penrhos",
@@ -147,18 +146,17 @@ export const ABOUT = {
   portrait: "",
   heading: "I am Kit Ryder, and I build websites in Pembrokeshire.",
   body: [
-    "I design and build websites for businesses that know they look better in person than they do online. That gap is usually the website, and it is usually fixable.",
-    "My work sits at the point where design and code meet. I care about how a site feels in the first three seconds, how fast it loads on a phone with two bars of signal, and whether it actually brings the business more of the customers it wants.",
-    "I work with AI and automation too, which means I can take work off your hands that has nothing to do with the website: enquiries, follow ups, the admin that eats an evening every week.",
+    "I build websites for businesses that look better in person than they do online. That gap is the website, and it is fixable.",
+    "I care about how a site feels in the first three seconds, how fast it loads on a phone with two bars of signal, and whether it brings you more of the customers you want. I work with AI and automation too, so I can take the admin off your hands as well.",
   ],
   /* EDIT: your own progression. Kept deliberately free of dates so it stays
      true as you add to it. */
   progression: [
-    { title: "Design", note: "Layout, type and colour. Learning why some pages feel expensive and most do not." },
-    { title: "Code", note: "Moving from static pages to React and TypeScript, so the design survives contact with the browser." },
-    { title: "Performance", note: "Chasing load times on real phones, on real rural signal, not on a fast laptop." },
-    { title: "AI and automation", note: "Using AI where it removes work, and leaving it out where it would flatten the craft." },
-    { title: "Businesses", note: "Working directly with owners, translating what they do into something people can find and act on." },
+    { title: "Design", note: "Why some pages feel expensive and most do not." },
+    { title: "Code", note: "React and TypeScript, so the design survives contact with the browser." },
+    { title: "Performance", note: "Load times measured on real phones and rural signal, not a fast laptop." },
+    { title: "AI and automation", note: "Used where it removes work, left out where it would flatten the craft." },
+    { title: "Businesses", note: "Working with owners directly, turning what they do into something people can act on." },
   ],
 };
 
@@ -205,7 +203,7 @@ export const REASONS = [
 
 export const MAP_SECTION = {
   heading: "Built for businesses on this coast.",
-  body: "I work with businesses across Pembrokeshire and West Wales, from St Davids to Tenby, and remotely with everyone else. Being nearby means you can meet me, show me the place, and get an answer the same day.",
+  body: "From St Davids to Tenby, and remotely with everyone else. Being nearby means you can show me the place and get an answer the same day.",
 };
 
 export const CONTACT = {

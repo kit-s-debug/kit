@@ -85,7 +85,7 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
             <img
               src={project.image}
               alt={`The ${project.name} website`}
-              style={{ aspectRatio: project.aspect ?? "3 / 2" }}
+              style={{ aspectRatio: project.aspect ?? "16 / 9" }}
               className="mt-9 w-full object-cover"
             />
 

@@ -12,7 +12,7 @@
 body { background: #222; font-family: PublicSans, sans-serif; }
 .shot { position: relative; overflow: hidden; margin: 0 auto 40px; }
 .w16 { width: 1600px; height: 900px; }
-.w32 { width: 1500px; height: 1000px; }
+.w32 { width: 1600px; height: 900px; }
 .grain::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .05;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
@@ -43,7 +43,7 @@ body { background: #222; font-family: PublicSans, sans-serif; }
 .pn .l { padding: 56px 56px 52px; display: flex; flex-direction: column; justify-content: space-between; }
 .pn .mark { font-family: Cormorant; font-size: 30px; letter-spacing: .06em; }
 .pn nav { margin-top: 40px; display: flex; gap: 30px; font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: #a9bdb2; }
-.pn h1 { font-family: Cormorant; font-size: 76px; line-height: 1.03; letter-spacing: -.01em; margin-top: 44px; max-width: 12ch; }
+.pn h1 { font-family: Cormorant; font-size: 66px; line-height: 1.03; letter-spacing: -.01em; margin-top: 44px; max-width: 12ch; }
 .pn h1 i { color: #cbb27a; }
 .pn .menu { margin-top: 38px; max-width: 470px; }
 .pn .menu .row { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(240,235,224,.16); padding: 13px 0; font-size: 15px; color: #ddd6c7; }
@@ -70,7 +70,7 @@ body { background: #222; font-family: PublicSans, sans-serif; }
 .iv .top { display: flex; justify-content: space-between; align-items: baseline; gap: 30px; }
 .iv .mark { font-family: Anton; font-size: 20px; letter-spacing: .22em; }
 .iv nav { display: flex; gap: 30px; font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; color: #5c574a; }
-.iv h1 { font-family: Anton; font-size: 96px; line-height: .95; text-transform: uppercase; letter-spacing: -.005em; }
+.iv h1 { font-family: Anton; font-size: 84px; line-height: .95; text-transform: uppercase; letter-spacing: -.005em; }
 .iv .lead { margin-top: 22px; font-size: 17px; max-width: 34ch; color: #46423a; line-height: 1.5; }
 .iv .btm { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
 .iv .prices { min-width: 340px; flex: 1; }
@@ -112,6 +112,6 @@ body { background: #222; font-family: PublicSans, sans-serif; }
 .ev h1 { font-family: Archivo; font-weight: 500; font-stretch: 105%; font-size: 44px; line-height: 1.08; letter-spacing: -.03em; margin-top: 38px; max-width: 26ch; }
 .ev .row { margin-top: 44px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 16px; }
 .ev figure { }
-.ev figure img { width: 100%; height: 505px; object-fit: cover; filter: grayscale(1) contrast(1.12) brightness(.92); display: block; }
+.ev figure img { width: 100%; height: 430px; object-fit: cover; filter: grayscale(1) contrast(1.12) brightness(.92); display: block; }
 .ev figcaption { margin-top: 12px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #6d7278; }
 .ev .foot { margin-top: auto; padding-top: 24px; display: flex; justify-content: space-between; font-size: 12.5px; color: #6d7278; }
