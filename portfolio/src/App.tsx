@@ -1,6 +1,5 @@
 import { About } from "./components/About";
 import { Contact } from "./components/Contact";
-import { Featured } from "./components/Featured";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Nav } from "./components/Nav";
@@ -10,8 +9,8 @@ import { Strip } from "./components/Strip";
 import { Where } from "./components/Where";
 import { Work } from "./components/Work";
 
-/* The page alternates ground on purpose: ink, bone, ink, bone, tint, ink,
-   bone, ink, bone, ink. Nothing sits next to something that looks like it. */
+/* The page alternates ground on purpose: ink, bone, tint, bone, ink, bone,
+   ink, bone, ink. Nothing sits next to something that looks like it. */
 export default function App() {
   return (
     <div className="u-grain">
@@ -25,7 +24,6 @@ export default function App() {
       <main>
         <Hero />
         <Strip />
-        <Featured />
         <Work />
         <Services />
         <Process />

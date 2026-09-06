@@ -13,10 +13,10 @@ export function Services() {
   const reduce = useReducedMotion();
 
   return (
-    <section id="services" data-surface="light" className="s-tint py-[clamp(3.25rem,8vh,5.5rem)]">
+    <section id="services" data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide">
       <p className="u-label">What I do</p>
-      <WordReveal text="Four things, and I do all of them myself." className="u-h2 mt-4 max-w-[18ch]" />
+      <WordReveal text="Four things. Most projects need the first two." className="u-h2 mt-4 max-w-[18ch]" />
 
       <div className="mt-10 u-line-t">
         {SERVICES.map((s, i) => {

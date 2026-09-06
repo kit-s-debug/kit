@@ -6,14 +6,10 @@ import { Cta } from "./primitives/Cta";
 import { Reveal } from "./primitives/Reveal";
 import { WordReveal } from "./primitives/WordReveal";
 
-/* Four things I care about, set as a zigzag rather than four equal columns,
-   so the block reads as a composition instead of a spec sheet. */
-const SPANS = [
-  "md:col-span-6",
-  "md:col-span-5 md:col-start-8",
-  "md:col-span-5 md:col-start-2",
-  "md:col-span-6 md:col-start-7",
-];
+/* Three straight answers, set as a zigzag rather than three equal columns, so
+   the block reads as a composition instead of a spec sheet. This used to be a
+   list of disciplines, which was the services section again in other words. */
+const SPANS = ["md:col-span-6", "md:col-span-5 md:col-start-8", "md:col-span-6 md:col-start-2"];
 
 export function About() {
   const reduce = useReducedMotion();
@@ -24,7 +20,7 @@ export function About() {
       <div className="u-wide">
         <div className="grid gap-10 md:grid-cols-12 md:gap-10">
           <div className="md:col-span-7">
-            <p className="u-label">Who builds it</p>
+            <p className="u-label">Who you are hiring</p>
             <WordReveal text={ABOUT.heading} stagger={0.03} className="u-h2 mt-4 max-w-[13ch]" />
           </div>
 
@@ -69,7 +65,7 @@ export function About() {
         )}
 
         <ol className="mt-[clamp(3rem,7vh,4.5rem)] grid gap-x-10 gap-y-[clamp(2rem,4vh,3rem)] md:grid-cols-12">
-          {ABOUT.progression.map((step, i) => (
+          {ABOUT.straight.map((step, i) => (
             <motion.li
               key={step.title}
               className={SPANS[i % SPANS.length]}

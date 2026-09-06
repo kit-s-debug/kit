@@ -74,7 +74,7 @@ export function Process() {
         <Reveal delay={0.1}>
           <div className="u-line-t mt-[clamp(2.5rem,5vh,3.5rem)] flex flex-wrap items-center justify-between gap-6 pt-8">
             <p className="max-w-[42ch] text-[1.05rem] leading-[1.5]">
-              If that sounds like how you would want it done, the first conversation costs nothing.
+              Bring the thing you are unhappy with. That is enough to start from.
             </p>
             <Cta href={CTA.href}>{CTA.label}</Cta>
           </div>

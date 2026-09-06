@@ -3,7 +3,7 @@ import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTran
 import { useEffect, useRef, useState } from "react";
 import { FEATURED, HERO, SITE } from "../content";
 import { EASE } from "../lib/motion";
-import { BrowserFrame } from "./primitives/BrowserFrame";
+import { SitePreview } from "./primitives/SitePreview";
 import { Cta } from "./primitives/Cta";
 import { WordReveal } from "./primitives/WordReveal";
 import { Terrain } from "./Terrain";
@@ -116,19 +116,14 @@ export function Hero() {
               style={tilt && !reduce ? { rotateY: ry, rotateX: rx, transformStyle: "preserve-3d" } : undefined}
               className="origin-left"
             >
-              <BrowserFrame
+              <SitePreview
                 url="eddierocks.co.uk"
-                className="shadow-[0_50px_120px_-30px_rgba(0,0,0,0.85)]"
-              >
-                <img
-                  src={FEATURED.poster}
-                  alt={`The ${FEATURED.name} website`}
-                  width={1200}
-                  height={676}
-                  fetchPriority="high"
-                  className="block w-full"
-                />
-              </BrowserFrame>
+                src={FEATURED.video}
+                poster={FEATURED.poster}
+                alt={`A scroll through the ${FEATURED.name} website`}
+                priority
+                frameClassName="shadow-[0_50px_120px_-30px_rgba(0,0,0,0.85)]"
+              />
             </motion.div>
           </div>
         </motion.div>

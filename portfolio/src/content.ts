@@ -33,12 +33,11 @@ export const CTA = { label: "Start a project", href: "#contact" };
 export const HERO = {
   eyebrow: "Web design and build, Pembrokeshire",
   headline: ["Websites that", "make a business", "impossible to ignore."],
-  sub: "I design and build them myself, for businesses in Pembrokeshire and across West Wales.",
+  sub: "Pubs, restaurants, trades, shops and salons across West Wales.",
   primary: { label: "See the work", href: "#work" },
   secondary: CTA,
-  /* The little proof line under the hero. Nothing invented: this is what the
-     featured build below actually is. */
-  proof: "Featured: Eddie Rocks, a three floor nightclub rendered in the browser",
+  /* A caption for the frame beside it, not a second headline. */
+  proof: "On screen: Eddie Rocks, Haverfordwest",
 };
 
 export const STRIP = {
@@ -46,7 +45,7 @@ export const STRIP = {
   emphasis: "I build the other kind.",
   facts: [
     { k: "Built, not templated", v: "Designed for one business, from a blank page." },
-    { k: "Mobile first", v: "Your customers arrive on a phone. That is where I start." },
+    { k: "Yours to keep", v: "You own the site, the domain and the words in it." },
     { k: "You deal with me", v: "The person you brief is the person who builds it." },
   ],
 };
@@ -79,10 +78,10 @@ export const FEATURED = {
   kicker: "Featured build",
   headline: "Three floors, drawn in the browser.",
   summary:
-    "West Wales' biggest nightclub, three rooms under one roof, and a site that had to make you feel the place before you got to the door.",
+    "West Wales' biggest nightclub, and a site that had to make you feel the room before you reached the door.",
   body: [
     "A night out sells on atmosphere, and atmosphere does not survive a list of opening times. The site had to carry the feeling of the room, explain a building most people only half know, and take private hire without a phone call.",
-    "So the venue is not photographed, it is modelled. The building and all three floors are drawn live in WebGL and lit the way the rooms are actually lit. Around that sit the things a Saturday night needs: door times, a countdown to opening, the line up, and an enquiry form.",
+    "So the venue is not photographed, it is modelled. The building and every room inside it are drawn live in WebGL, lit the way they are actually lit. Around that sit the things a Saturday night needs: door times, a countdown to opening, the line up, and an enquiry form.",
   ],
   facts: [
     { k: "Role", v: "Design and build" },
@@ -90,7 +89,7 @@ export const FEATURED = {
     { k: "Pages", v: "Main site and Labrinth" },
     { k: "Framework", v: "None" },
   ],
-  outcome: "Three floors that used to need explaining now explain themselves.",
+  outcome: "A building that used to need explaining now explains itself.",
   video: "/work/eddies-scroll.webm",
   poster: "/work/eddies-poster.jpg",
   liveUrl: "/eddie-rocks/",
@@ -180,9 +179,9 @@ export const PROJECTS: Project[] = [
 export const SERVICES = [
   {
     title: "Website design",
-    lead: "Designed around your business, from a blank page.",
+    lead: "Built around what your business actually needs to say.",
     detail:
-      "I start with what your business actually needs to say, then design the page around that. Nothing stretched to fit.",
+      "We start with the one thing a visitor has to understand, and the page gets built outward from that.",
     points: ["A design built for you alone", "Layouts that hold on any screen", "A look you can reuse everywhere"],
   },
   {
@@ -223,7 +222,7 @@ export const PROCESS = {
     },
     {
       k: "Build",
-      v: "Hand-built and tested on real devices. Fast on rural signal, accessible, and set up so you can edit the words yourself.",
+      v: "Built and tested on real devices, not just a fast laptop. You watch it come together instead of waiting in silence.",
       note: "Usually two to three weeks",
     },
     {
@@ -233,7 +232,6 @@ export const PROCESS = {
     },
   ],
   why: [
-    "You brief the person who builds it",
     "Messages answered in hours, not next week",
     "Agency standard without the agency overheads",
     "Still here after the invoice is paid",
@@ -246,19 +244,20 @@ export const ABOUT = {
   heading: "I am Kit Ryder, and I build websites in Pembrokeshire.",
   body: [
     "I build for businesses that look better in person than they do online. That gap is the website, and it is fixable.",
-    "I care about how a site feels in the first three seconds, how fast it loads on a phone with two bars of signal, and whether it brings you more of the customers you want.",
+    "I care about how a site feels in the first three seconds, and whether it brings you more of the customers you actually want.",
   ],
-  progression: [
-    { title: "Design", note: "Why some pages feel expensive and most do not." },
-    { title: "Code", note: "React, TypeScript and WebGL, so the design survives contact with the browser." },
-    { title: "Performance", note: "Load times measured on real phones and rural signal, not a fast laptop." },
-    { title: "AI and automation", note: "Used where it removes work, left out where it would flatten the craft." },
+  /* EDIT: say these in your own words. They exist to be the things a business
+     owner cannot read on every other web designer's site. */
+  straight: [
+    { title: "I will tell you if you do not need one", note: "Sometimes the photographs, or the Google listing, are the thing that is actually costing you." },
+    { title: "You will get a price, not a range", note: "Quoted on the work, before it starts, and it does not move unless you change the job." },
+    { title: "No retainer unless you want one", note: "Hosting and small changes are handled either way. You are not signed into anything." },
   ],
 };
 
 export const WHERE = {
   heading: "Built for businesses on this coast.",
-  body: "From St Davids to Tenby, and remotely with everyone else. Being nearby means you can show me the place and get an answer the same day.",
+  body: "From St Davids to Tenby, and remotely with everyone else. Near enough that I can come and stand in the place before I design anything for it.",
 };
 
 export const CONTACT = {
