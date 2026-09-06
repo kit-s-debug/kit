@@ -13,6 +13,23 @@ const CalEmbed = dynamic(() => import("./cal-embed").then((m) => m.CalEmbed), {
 });
 
 /**
+ * Until the Cal.com link is set there is nothing to load, so the step says so
+ * and offers the phone instead of sitting on a spinner that never resolves.
+ */
+function NoCalendarYet() {
+  const [before, after] = booking.timeMissing.split(practice.phone);
+  return (
+    <p className="booking-fallback">
+      {before}
+      <a href={practice.phoneHref} className="link-plain">
+        {practice.phone}
+      </a>
+      {after}
+    </p>
+  );
+}
+
+/**
  * A calm, single-column, four-step flow.
  *
  * With JavaScript off it is one plain form that posts to /api/enquiry and
@@ -204,7 +221,7 @@ export function Booking() {
             <div className="booking-step" data-active={step === 1}>
               <h3 className="booking-step-heading">{booking.timeHeading}</h3>
               <p className="booking-step-help">{booking.timeHelp}</p>
-              {reachedTime && <CalEmbed />}
+              {practice.cal.link ? reachedTime && <CalEmbed /> : <NoCalendarYet />}
             </div>
 
             {/* --- 3. how to reach you ----------------------------------- */}
