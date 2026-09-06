@@ -9,9 +9,10 @@ import localFont from "next/font/local";
  * trade. Both are subset to Latin-1 plus the punctuation the site actually uses.
  */
 export const newsreader = localFont({
-  src: "./fonts/newsreader.woff2",
-  weight: "300 650",
-  style: "normal",
+  src: [
+    { path: "./fonts/newsreader.woff2", weight: "300 650", style: "normal" },
+    { path: "./fonts/newsreader-italic.woff2", weight: "380 500", style: "italic" },
+  ],
   display: "swap",
   variable: "--font-newsreader",
   preload: true,

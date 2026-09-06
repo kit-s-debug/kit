@@ -1,4 +1,5 @@
-import { arriving, practice } from "@/content/site";
+import { arriving, chapters, practice } from "@/content/site";
+import { Chapter } from "./chapter";
 import { Placeholder } from "./placeholder";
 
 /**
@@ -14,7 +15,9 @@ export function Arriving() {
 
   return (
     <section id="arriving" className="room arriving" aria-labelledby="arriving-heading">
-      <div className="shell arriving-grid">
+      <div className="shell-editorial arriving-shell">
+        <Chapter {...chapters.arriving} />
+        <div className="arriving-grid">
         <div className="arriving-intro">
           <h2 id="arriving-heading" className="arriving-heading">
             {arriving.heading}
@@ -78,6 +81,7 @@ export function Arriving() {
             <Placeholder {...practice.hoursNote} />
           </p>
         </aside>
+        </div>
       </div>
     </section>
   );

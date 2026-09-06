@@ -1,31 +1,44 @@
 import Image from "next/image";
 import portraitImage from "@/public/images/portrait.jpg";
-import { welcome } from "@/content/site";
+import { chapters, welcome } from "@/content/site";
+import { Chapter } from "./chapter";
 
 /**
- * Her portrait, a generous framed photo beside the description on a full ink
- * field — substantial, not a small circular avatar. Three lines, first person,
- * and nothing else. The temptation to add a fourth is the thing to resist.
+ * An editorial spread rather than a photo-beside-a-bio. The chapter opens on a
+ * large italic pull-line — the one true thing she wants a nervous reader to
+ * know — with her portrait floated into the margin and the practical detail
+ * kept small beneath. Asymmetric on purpose.
  */
 export function Welcome() {
   return (
-    <section className="welcome on-dark" aria-label="From Lyndsay">
-      <div className="welcome-portrait">
-        <Image
-          src={portraitImage}
-          alt={welcome.portraitAlt}
-          sizes="(max-width: 60rem) 20rem, 24rem"
-          placeholder="blur"
-          quality={80}
-          className="welcome-photo"
-        />
-      </div>
-      <div className="welcome-words">
-        {welcome.lines.map((line, index) => (
-          <p key={line} className="welcome-line" data-i={index}>
-            {line}
-          </p>
-        ))}
+    <section id="welcome" className="welcome on-dark" aria-label="From Lyndsay">
+      <div className="shell-editorial welcome-inner">
+        <Chapter {...chapters.welcome} />
+
+        <div className="welcome-spread">
+          <figure className="welcome-portrait">
+            <Image
+              src={portraitImage}
+              alt={welcome.portraitAlt}
+              sizes="(max-width: 60rem) 60vw, 22rem"
+              placeholder="blur"
+              quality={82}
+            />
+          </figure>
+
+          <div className="welcome-lead">
+            <p className="pull welcome-pull">
+              {welcome.pull.before}
+              <em>{welcome.pull.em}</em>
+              {welcome.pull.after}
+            </p>
+
+            <div className="welcome-note">
+              <p>{welcome.lines[0]}</p>
+              <p>{welcome.lines[2]}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

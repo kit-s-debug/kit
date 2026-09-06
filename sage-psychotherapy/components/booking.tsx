@@ -2,8 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { booking, crisis, formats, practice } from "@/content/site";
+import { booking, chapters, crisis, formats, practice } from "@/content/site";
 import { collectErrors, enquirySchema, type FieldErrors } from "@/lib/enquiry";
+import { Chapter } from "./chapter";
 import { Leaf } from "./leaf";
 
 const CalEmbed = dynamic(() => import("./cal-embed").then((m) => m.CalEmbed), {
@@ -99,7 +100,7 @@ export function Booking() {
   if (state === "sent") {
     return (
       <section id="book" className="booking on-dark" aria-labelledby="booking-heading">
-        <div className="shell booking-shell">
+        <div className="shell-editorial booking-shell">
           <div className="booking-done" ref={heading} tabIndex={-1}>
             <p lang="cy" className="booking-diolch">
               {booking.confirmation.welsh}.
@@ -140,7 +141,8 @@ export function Booking() {
 
   return (
     <section id="book" className="booking on-dark" aria-labelledby="booking-heading">
-      <div className="shell booking-shell">
+      <div className="shell-editorial booking-shell">
+        <Chapter {...chapters.booking} />
         <div className="booking-head">
           <Leaf size="mark" className="booking-leaf" />
           <h2 id="booking-heading" className="booking-heading">

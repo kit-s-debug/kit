@@ -1,4 +1,5 @@
-import { cta, fees } from "@/content/site";
+import { chapters, cta, fees } from "@/content/site";
+import { Chapter } from "./chapter";
 
 /**
  * One wide flat field, the number set at display size, and concessions given
@@ -8,8 +9,9 @@ import { cta, fees } from "@/content/site";
 export function Fees() {
   return (
     <section id="fees" className="fees on-dark" aria-labelledby="fees-heading">
-      <div className="shell fees-shell">
-        <h2 id="fees-heading" className="label fees-label">
+      <div className="shell-editorial fees-shell">
+        <Chapter {...chapters.fees} />
+        <h2 id="fees-heading" className="visually-hidden">
           {fees.heading}
         </h2>
 

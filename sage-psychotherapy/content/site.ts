@@ -67,6 +67,7 @@ export const cta = {
 
 export const hero = {
   welcomeWelsh: "Croeso",
+  kicker: "Counselling and psychotherapy in Milford Haven",
   headline: "Therapy in a front room in Milford Haven, in person or online.",
   credit: "Lyndsay Gent — Adlerian psychotherapist and counsellor. BACP member.",
   imageAlt:
@@ -84,6 +85,11 @@ export const hero = {
 /* -------------------------------------------------------------------------- */
 
 export const welcome = {
+  pull: {
+    before: "Almost everyone tells me the same thing afterwards: the hardest part was ",
+    em: "making contact",
+    after: ".",
+  },
   lines: [
     "I'm Lyndsay. I see people in my front room here in Milford Haven, or online if that suits you better.",
     "Almost everyone tells me the same thing afterwards: the hardest part was making contact.",
@@ -554,6 +560,11 @@ export const sessionsSection = {
 
 export const approach = {
   heading: "Adlerian therapy, in plain words",
+  pull: {
+    before: "You are understood in the context of a whole life — and the work looks ",
+    em: "forward",
+    after: " as much as back.",
+  },
   body: [
     "Adlerian therapy looks at you in the context of your whole life — your family, your work, the people round you, where you grew up. Not one symptom on its own.",
     "It also looks forward. Where you're heading matters as much as what happened. A lot of the work is practical: what would a slightly different week actually look like?",
@@ -643,6 +654,26 @@ export const credentials = {
   noTestimonialsHeading: "There are no client reviews on this site",
   noTestimonialsBody:
     "She is BACP-registered. What clients say in that room stays in it, and that includes saying nice things about her in public.",
+  statement: {
+    before: "Trust here is carried by training, registration and tone — ",
+    em: "not by testimonials",
+    after: ".",
+  },
+} as const;
+
+/* -------------------------------------------------------------------------- */
+/* Chapter index — the page read as a sequence of rooms                       */
+/* -------------------------------------------------------------------------- */
+
+export const chapters = {
+  welcome: { n: "i", label: "First, hello" },
+  words: { n: "ii", label: "What she works with" },
+  sessions: { n: "iii", label: "How sessions work" },
+  approach: { n: "iv", label: "How she works" },
+  fees: { n: "v", label: "What it costs" },
+  credentials: { n: "vi", label: "Background" },
+  arriving: { n: "vii", label: "Coming here" },
+  booking: { n: "viii", label: "The first step" },
 } as const;
 
 /* -------------------------------------------------------------------------- */

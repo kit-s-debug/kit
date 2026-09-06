@@ -88,8 +88,9 @@ export function Hero() {
           <div className="hero-warm" aria-hidden="true" />
         </div>
 
-        <div className="shell-wide hero-content">
+        <div className="shell-editorial hero-content">
           <div className="hero-opening">
+            <p className="kicker hero-kicker">{hero.kicker}</p>
             <h1 className="hero-headline">
               <span lang="cy" className="hero-croeso">
                 {hero.welcomeWelsh}.

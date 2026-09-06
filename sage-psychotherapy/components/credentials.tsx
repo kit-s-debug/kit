@@ -1,30 +1,40 @@
-import { credentials } from "@/content/site";
+import { chapters, credentials } from "@/content/site";
+import { Chapter } from "./chapter";
 
 /**
- * A register, not a badge row. Small grotesque, hairline rules, quiet facts.
- * Trust on a therapy site is carried by tone and by verifiable membership —
- * and deliberately not by testimonials, which is stated rather than implied.
+ * A register, not a badge row — and the chapter leads with why there are no
+ * testimonials, stated plainly as a large line rather than tucked in an aside.
+ * The qualifications sit opposite as a clean hairline list.
  */
 export function Credentials() {
   return (
-    <section className="room-tight credentials" aria-labelledby="credentials-heading">
-      <div className="shell credentials-grid">
-        <h2 id="credentials-heading" className="label credentials-label">
-          {credentials.heading}
-        </h2>
+    <section id="credentials" className="room credentials" aria-labelledby="credentials-heading">
+      <div className="shell-editorial">
+        <Chapter {...chapters.credentials} />
 
-        <ul className="credentials-list">
-          {credentials.rows.map((row) => (
-            <li key={row.fact}>
-              <span className="credentials-fact">{row.fact}</span>
-              {row.note && <span className="credentials-note">{row.note}</span>}
-            </li>
-          ))}
-        </ul>
+        <div className="credentials-spread">
+          <div className="credentials-statement">
+            <p className="pull">
+              {credentials.statement.before}
+              <em>{credentials.statement.em}</em>
+              {credentials.statement.after}
+            </p>
+            <p className="credentials-aside-body">{credentials.noTestimonialsBody}</p>
+          </div>
 
-        <div className="credentials-aside">
-          <h3 className="credentials-aside-heading">{credentials.noTestimonialsHeading}</h3>
-          <p className="credentials-aside-body">{credentials.noTestimonialsBody}</p>
+          <div className="credentials-register">
+            <h2 id="credentials-heading" className="kicker credentials-label">
+              {credentials.heading}
+            </h2>
+            <ul className="credentials-list">
+              {credentials.rows.map((row) => (
+                <li key={row.fact}>
+                  <span className="credentials-fact">{row.fact}</span>
+                  {row.note && <span className="credentials-note">{row.note}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

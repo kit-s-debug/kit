@@ -1,4 +1,5 @@
-import { formats, sessionsSection } from "@/content/site";
+import { chapters, formats, sessionsSection } from "@/content/site";
+import { Chapter } from "./chapter";
 
 /**
  * Four formats as a selector rather than four paragraphs — and with no
@@ -11,7 +12,8 @@ import { formats, sessionsSection } from "@/content/site";
 export function Sessions() {
   return (
     <section id="sessions" className="room sessions" aria-labelledby="sessions-heading">
-      <div className="shell">
+      <div className="shell-editorial">
+        <Chapter {...chapters.sessions} />
         <div className="sessions-head">
           <h2 id="sessions-heading" className="sessions-heading">
             {sessionsSection.heading}

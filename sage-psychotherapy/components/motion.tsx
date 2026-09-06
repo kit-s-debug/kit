@@ -27,13 +27,14 @@ export function Motion() {
     let tagged = false;
 
     // Each entry: selector, reveal kind, and whether items stagger in sequence.
-    const groups: [string, "rise" | "scale" | "draw", boolean][] = [
+    const groups: [string, "rise" | "scale" | "draw" | "none", boolean][] = [
       [
         ".finder-heading, .sessions-heading, .approach-heading, .arriving-heading, .booking-heading, .fees-free-heading, .fees-concession-heading, .credentials-aside-heading, .about-section-heading, .prose-section h2, .page-heading",
         "rise",
         false,
       ],
       [".sill", "draw", false],
+      [".chapter-open", "none", false],
       [".welcome-portrait, .about-portrait", "scale", false],
       [".fees-number", "rise", false],
       [

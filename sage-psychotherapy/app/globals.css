@@ -2640,6 +2640,11 @@ body {
   transition: transform 0.9s var(--ease-lamp);
 }
 
+:root[data-animate="on"] .reveal[data-reveal="none"] {
+  opacity: 1;
+  transform: none;
+}
+
 :root[data-animate="on"] .reveal.is-in {
   opacity: 1;
   transform: none;
@@ -2813,4 +2818,368 @@ body {
 .fees-shell:hover .fees-number {
   text-shadow: 0 0 30px color-mix(in oklab, var(--lamp) 45%, transparent);
   transition: text-shadow 0.5s var(--ease-lamp);
+}
+
+/* ==========================================================================
+   ELEVATION — "a journal of a front room"
+   The page is recomposed as a quiet chapbook: a running chapter index, an
+   asymmetric editorial grid, display typography with real restraint, italic
+   pull-quotes, and a faint paper grain for analog warmth. Editorial rhythm,
+   not a stack of coloured bands.
+   ========================================================================== */
+
+:root {
+  --step-7: clamp(3.5rem, 1.4rem + 9vw, 8.5rem);
+  --tracking-display: -0.03em;
+  --measure-narrow: 20rem;
+  --rule: color-mix(in oklab, currentColor 22%, transparent);
+  --edge: clamp(1.25rem, 6vw, 7rem);   /* wide editorial margin */
+}
+
+/* --- paper grain: a faint analog tooth over everything, fixed to the glass -- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+
+:root[data-mode="evening"] body::before,
+:root:not([data-mode="day"]) body::before {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+/* --- wider editorial shell + a real 12-column grid ----------------------- */
+.shell-editorial {
+  width: 100%;
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-inline: var(--edge);
+}
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.5vw, 2rem);
+}
+
+/* --- the chapter opener: a hand-set index that threads the whole page ----- */
+.chapter-open {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-block-end: clamp(1.75rem, 4vw, 3rem);
+}
+
+.chapter-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--accent-text);
+  flex: 0 0 auto;
+}
+
+.on-dark .chapter-num {
+  color: color-mix(in oklab, var(--accent) 80%, white);
+}
+
+.chapter-label {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+  flex: 0 0 auto;
+}
+
+.on-dark .chapter-label {
+  color: var(--on-surface-muted);
+}
+
+.chapter-rule {
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line-strong);
+  transform: translateY(-0.28em);
+  transform-origin: left;
+}
+
+.on-dark .chapter-rule {
+  background: var(--line-on-dark);
+}
+
+:root[data-animate="on"] .chapter-rule {
+  transform: translateY(-0.28em) scaleX(0);
+  transition: transform 1s var(--ease-lamp);
+}
+
+:root[data-animate="on"] .chapter-open.is-in .chapter-rule {
+  transform: translateY(-0.28em) scaleX(1);
+}
+
+/* --- display + editorial type roles -------------------------------------- */
+.display-xl {
+  font-family: var(--font-serif);
+  font-weight: 380;
+  font-size: var(--step-7);
+  line-height: 0.98;
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+}
+
+.pull {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--step-4);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.pull em {
+  font-style: italic;
+  color: var(--accent-text);
+}
+
+.on-dark .pull em {
+  color: color-mix(in oklab, var(--accent) 78%, white);
+}
+
+.kicker {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--accent-text);
+}
+
+.on-dark .kicker {
+  color: color-mix(in oklab, var(--accent) 80%, white);
+}
+
+/* ==========================================================================
+   ELEVATION — section compositions (appended last so it leads the cascade)
+   ========================================================================== */
+
+/* --- hero: kicker, confident single-sentence display ---------------------- */
+.hero-kicker {
+  margin-block-end: 1.1rem;
+  color: #d6e0cd;
+}
+
+.hero-headline {
+  font-family: var(--font-serif);
+  font-weight: 380;
+  font-size: var(--step-5);
+  line-height: 1.03;
+  letter-spacing: -0.025em;
+  color: #f6f1e5;
+  max-width: 19ch;
+}
+
+.hero-croeso {
+  color: #dfe7d5;
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* --- welcome: editorial spread, portrait floated into the margin ---------- */
+.welcome {
+  display: block;
+  background: var(--surface);
+  color: var(--on-surface);
+  padding-block: var(--room);
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  padding-inline: 0;
+}
+
+.welcome-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  gap: clamp(2rem, 7vw, 6.5rem);
+  align-items: start;
+}
+
+.welcome-portrait {
+  margin: clamp(1rem, 4vw, 3.5rem) 0 0;
+  border-radius: 3px;
+  overflow: clip;
+  box-shadow: 0 0 0 1px var(--line-on-dark);
+  aspect-ratio: 4 / 5;
+}
+
+.welcome-portrait :is(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 26%;
+  transition: transform 0.7s var(--ease-lamp), filter 0.7s var(--ease-lamp);
+}
+
+.welcome-portrait:hover :is(img) {
+  transform: scale(1.035);
+  filter: brightness(1.04);
+}
+
+.welcome-pull {
+  color: #f2ead9;
+  font-size: var(--step-5);
+  line-height: 1.08;
+  max-width: 18ch;
+}
+
+.welcome-note {
+  margin-block-start: clamp(1.75rem, 4vw, 2.75rem);
+  display: grid;
+  gap: 1rem;
+  max-width: 40ch;
+  color: var(--on-surface-muted);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+@media (max-width: 60rem) {
+  .welcome-spread {
+    grid-template-columns: 1fr;
+  }
+  .welcome-portrait {
+    width: min(18rem, 66vw);
+    margin-block-start: 0;
+    order: -1;
+  }
+}
+
+/* --- approach: statement-led spread with a leaf watermark ----------------- */
+.approach {
+  background: var(--ground);
+  padding-block: var(--room);
+}
+
+.approach-lead {
+  position: relative;
+  margin-block-end: clamp(2.5rem, 6vw, 4.5rem);
+  padding-inline-end: clamp(0rem, 12vw, 12rem);
+}
+
+.approach-watermark {
+  position: absolute;
+  inset-inline-end: clamp(-1rem, 2vw, 2rem);
+  inset-block-start: -2.5rem;
+  color: color-mix(in oklab, var(--accent) 24%, transparent);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.approach-pull {
+  position: relative;
+  z-index: 1;
+  font-size: var(--step-5);
+  line-height: 1.06;
+  max-width: 20ch;
+}
+
+.approach-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.approach-heading {
+  font-size: var(--step-2);
+  max-width: 12ch;
+}
+
+.approach-prose {
+  display: grid;
+  gap: 1.15rem;
+  max-width: 42ch;
+}
+
+.approach-paragraph {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.approach-clients {
+  margin-block-start: clamp(2.5rem, 6vw, 4rem);
+  display: grid;
+  gap: 0.9rem;
+}
+
+@media (max-width: 54rem) {
+  .approach-columns {
+    grid-template-columns: 1fr;
+  }
+  .approach-watermark {
+    inset-block-start: -1.5rem;
+    opacity: 0.7;
+  }
+}
+
+/* --- credentials: statement opposite a hairline register ------------------ */
+.credentials {
+  background: var(--ground);
+  padding-block: var(--room);
+}
+
+.credentials-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 27rem);
+  gap: clamp(2rem, 7vw, 6rem);
+  align-items: start;
+}
+
+.credentials-statement .pull {
+  font-size: var(--step-4);
+  line-height: 1.12;
+  max-width: 16ch;
+}
+
+.credentials-statement .credentials-aside-body {
+  margin-block-start: 1.5rem;
+  font-size: var(--step-0);
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
+.credentials-register .credentials-label {
+  margin-block-end: 1.25rem;
+}
+
+@media (max-width: 60rem) {
+  .credentials-spread {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- finder: left-aligned editorial (was centred) ------------------------- */
+.finder-shell {
+  max-width: 62rem;
+  text-align: start;
+}
+
+.finder-heading {
+  margin-inline: 0;
+  max-width: 15ch;
+}
+
+.finder-form {
+  margin-inline: 0;
+  max-width: 44rem;
+}
+
+.finder-help {
+  margin-inline: 0;
 }

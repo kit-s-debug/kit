@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { areas, clusters, crisis, cta, finder } from "@/content/site";
+import { areas, chapters, clusters, crisis, cta, finder } from "@/content/site";
 import { findAreas } from "@/lib/match";
+import { Chapter } from "./chapter";
 import { Leaf } from "./leaf";
 
 /**
@@ -77,7 +78,8 @@ export function FindingWords() {
 
   return (
     <section id="words" className="room finder" aria-labelledby="finder-heading">
-      <div className="shell finder-shell">
+      <div className="shell-editorial finder-shell">
+        <Chapter {...chapters.words} />
         <h2 id="finder-heading" className="finder-heading">
           {finder.heading}
         </h2>
