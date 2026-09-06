@@ -47,7 +47,7 @@ export function Approach() {
         </details>
 
         <div className="approach-clients">
-          <span className="kicker">Who she works with</span>
+          <span className="kicker">{approach.clientsLabel}</span>
           <ul className="clients">
             {clients.map((group) => (
               <li key={group}>{group}</li>

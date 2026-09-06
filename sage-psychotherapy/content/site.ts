@@ -23,11 +23,13 @@ export const practice = {
   postcode: "SA73",
   region: "Wales",
   country: "GB",
-  /** Her home practice. She has agreed to the address being public — confirm once more before launch. */
-  street: { value: "Street address to be supplied", status: "TO CONFIRM" as Confirm },
-  fullPostcode: { value: "SA73 — full postcode to be supplied", status: "TO CONFIRM" as Confirm },
-  /** Approximate, for the structured data only. Milford Haven town centre. */
-  geo: { lat: 51.7128, lng: -5.0417 },
+  /** The home practice. Lyndsay has confirmed the address may be public. */
+  street: { value: "61 High Street", status: "confirmed" as Confirm },
+  /** Neyland is the town; Milford Haven is the post town for SA73. */
+  locality: "Neyland",
+  fullPostcode: { value: "SA73 1TE", status: "confirmed" as Confirm },
+  /** Approximate, for the structured data only. Neyland. */
+  geo: { lat: 51.7085, lng: -4.9447 },
   hours: [
     { days: "Monday to Thursday", time: "9am – 8pm" },
     { days: "Friday", time: "9am – 5pm" },
@@ -58,7 +60,7 @@ export const practice = {
 export const cta = {
   primary: "Book a free 15\u2011minute call",
   short: "Book a free call",
-  phoneLabel: "Or ring her",
+  phoneLabel: "Or ring me",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -74,7 +76,7 @@ export const hero = {
     "The therapy room: a Victorian front room with a deep navy-teal wall, tan leather sofas, a mustard-yellow armchair, a honey parquet floor and a tall sash window with a lace café curtain, lit by a warm lamp.",
   /** The three lines that change over the held image. Keep them under eight words. */
   beats: [
-    "It is not a clinic — it's her front room.",
+    "It is not a clinic — it's my front room.",
     "You can ring first, and decide after.",
   ],
 } as const;
@@ -119,13 +121,13 @@ export const finder = {
     "I can't stop checking things",
   ],
   resultHeading: "That often sits with",
-  worksWith: "Lyndsay works with all of these.",
+  worksWith: "I work with all of these.",
   noMatch: {
     heading: "Nothing matched — which is not a problem.",
-    body: "You don't have to name it. Ring her and describe it the way you just did.",
+    body: "You don't have to name it. Ring me and describe it the way you just did.",
   },
   listHeading: "Or read the whole list",
-  listHelp: "Everything she works with, grouped. Open whichever looks closest.",
+  listHelp: "Everything I work with, grouped. Open whichever looks closest.",
   noscript:
     "This works best with JavaScript on. The full list of areas is open below.",
 } as const;
@@ -516,7 +518,7 @@ export const formats = [
   {
     id: "in-person",
     name: "In person",
-    where: "Her front room, Milford Haven",
+    where: "My front room, Neyland",
     suits: "Most people, most of the time. Being in the same room is still the thing that works best.",
     happens: "Fifty minutes, same chair, same time each week. Tea if you want it.",
     needed: "A way to get to SA73. Parking is on the street outside.",
@@ -534,15 +536,15 @@ export const formats = [
     name: "Phone",
     where: "A call, at a set time",
     suits: "People with poor broadband, or anyone who thinks better without a camera on them.",
-    happens: "She rings you at the agreed time. You can walk about while you talk.",
+    happens: "I ring you at the agreed time. You can walk about while you talk.",
     needed: "A signal and fifty minutes. Withheld numbers are fine.",
   },
   {
     id: "home-visit",
     name: "Home visit",
-    where: "She comes to you, across Pembrokeshire",
+    where: "I come to you, across Pembrokeshire",
     suits: "People who can't travel — health, mobility, no car, no bus, or small children at home.",
-    happens: "She drives to you. Same session, in your kitchen or front room.",
+    happens: "I drive to you. Same session, in your kitchen or front room.",
     needed: "An address within reach of Milford Haven, and a door you can answer.",
   },
 ] as const;
@@ -557,7 +559,7 @@ export const sessionsSection = {
 } as const;
 
 /* -------------------------------------------------------------------------- */
-/* Her approach                                                               */
+/* My approach                                                               */
 /* -------------------------------------------------------------------------- */
 
 export const approach = {
@@ -565,7 +567,8 @@ export const approach = {
   body: [
     "In practice that means less time spent on why last week was hard, and more on what a slightly different next week could actually look like — small, real changes you leave with.",
   ],
-  moreLabel: "The other approaches she draws on",
+  clientsLabel: "Who I work with",
+  moreLabel: "The other approaches I draw on",
   moreHelp: "Chosen to fit you, not the other way round.",
   modalities: [
     {
@@ -586,7 +589,7 @@ export const approach = {
     },
     {
       name: "Humanistic therapies",
-      line: "You are the expert on your own life. She is not there to correct you.",
+      line: "You are the expert on your own life. I am not there to correct you.",
     },
     {
       name: "Integrative counselling",
@@ -598,11 +601,11 @@ export const approach = {
     },
   ],
   cpdNote:
-    "She keeps training. What she uses with you depends on you, and it changes as the work goes on.",
+    "I keep training. What I use with you depends on you, and it changes as the work goes on.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
-/* Who she works with                                                         */
+/* Who I work with                                                         */
 /* -------------------------------------------------------------------------- */
 
 export const clients = [
@@ -627,7 +630,7 @@ export const fees = {
   freeBody: "Fifteen minutes, no charge, nothing to prepare and no obligation after it.",
   concessionHeading: "If £45 is the thing stopping you",
   concessionBody:
-    "She holds a few places at a lower rate and decides them case by case. Tick the box in the form and she'll sort it with you privately. You won't have to explain yourself.",
+    "I hold a few places at a lower rate and decide them case by case. Tick the box in the form and I'll sort it with you privately. You won't have to explain yourself.",
   payment: "Cash, bank transfer or card, after each session.",
   cancellation: "Twenty-four hours' notice and there's no charge.",
 } as const;
@@ -639,7 +642,7 @@ export const fees = {
 export const credentials = {
   heading: "Qualifications and registration",
   rows: [
-    { fact: "Diploma in Adlerian Counselling & Psychotherapy", note: "Her core training" },
+    { fact: "Diploma in Adlerian Counselling & Psychotherapy", note: "My core training" },
     { fact: "Certificate in Adlerian Counselling & Psychotherapy", note: "" },
     { fact: "Registered member, BACP", note: "British Association for Counselling and Psychotherapy" },
     { fact: "Professional Standards Authority", note: "Accredited Register" },
@@ -649,7 +652,7 @@ export const credentials = {
   ],
   noTestimonialsHeading: "There are no client reviews on this site",
   noTestimonialsBody:
-    "She is BACP-registered. What clients say in that room stays in it, and that includes saying nice things about her in public.",
+    "I am BACP-registered. What clients say in that room stays in it, and that includes saying nice things about me in public.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -658,9 +661,9 @@ export const credentials = {
 
 export const chapters = {
   welcome: { n: "i", label: "First, hello" },
-  words: { n: "ii", label: "What she works with" },
+  words: { n: "ii", label: "What I work with" },
   sessions: { n: "iii", label: "How sessions work" },
-  approach: { n: "iv", label: "How she works" },
+  approach: { n: "iv", label: "How I work" },
   fees: { n: "v", label: "What it costs" },
   credentials: { n: "vi", label: "Background" },
   arriving: { n: "vii", label: "Coming here" },
@@ -685,7 +688,7 @@ export const arriving = {
     {
       at: "The door",
       text: {
-        value: "Knock or ring. She answers it herself — there is no waiting room and no reception.",
+        value: "Knock or ring. I answer it myself — there is no waiting room and no reception.",
         status: "confirmed" as Confirm,
       },
     },
@@ -704,7 +707,7 @@ export const arriving = {
     status: "TO CONFIRM" as Confirm,
   },
   coverageLine:
-    "She also visits at home across Haverfordwest, Neyland, Pembroke Dock, Pembroke, Johnston, Narberth and Tenby. Not sure you're in reach? Ring and ask.",
+    "I also visit at home across Milford Haven, Haverfordwest, Pembroke Dock, Pembroke, Johnston, Narberth and Tenby. Not sure you're in reach? Ring and ask.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -714,12 +717,12 @@ export const arriving = {
 export const booking = {
   heading: "Book a free 15\u2011minute call",
   intro:
-    "Four short steps. Nothing here asks what's wrong — she'd rather hear it from you than read it.",
+    "Four short steps. Nothing here asks what's wrong — I'd rather hear it from you than read it.",
   steps: [
     { id: "format", name: "Kind of session", short: "Session" },
     { id: "time", name: "Pick a time", short: "Time" },
     { id: "contact", name: "How to reach you", short: "Contact" },
-    { id: "note", name: "Anything she should know", short: "Note" },
+    { id: "note", name: "Anything I should know", short: "Note" },
   ],
   formatQuestion: "Which are you thinking of?",
   formatHelp: "You can change your mind later. The first call is on the phone either way.",
@@ -727,30 +730,30 @@ export const booking = {
   timeHelp:
     "Fifteen minutes, free. Times are shown in your own timezone. You'll get a reminder and can move it whenever you like.",
   timeMissing:
-    "The calendar isn't connected yet. Ring 07864 011 852 and Lyndsay will find you a time.",
-  contactHeading: "How should she reach you?",
-  contactHelp: "One way is enough. She only uses it to arrange the call.",
-  nameLabel: "What should she call you?",
+    "The calendar isn't connected yet. Ring 07864 011 852 and I'll find you a time.",
+  contactHeading: "How should I reach you?",
+  contactHelp: "One way is enough. I only use it to arrange the call.",
+  nameLabel: "What should I call you?",
   namePlaceholder: "First name is fine",
   methodLabel: "Best way to reach you",
   methodPhone: "Phone",
   methodEmail: "Email",
   phoneLabel: "Phone number",
   emailLabel: "Email address",
-  discreetLabel: "Anything she should know about contacting you",
+  discreetLabel: "Anything I should know about contacting you",
   discreetHelp:
     "Optional. If a call at the wrong moment would cause a problem, say so here. For example: don't leave a voicemail, or text first.",
   safeTimesLabel: "Safe times to ring",
   safeTimesPlaceholder: "Weekdays before 3pm, for example",
-  noteHeading: "Anything you'd like her to know?",
+  noteHeading: "Anything you'd like me to know?",
   noteHelp:
     "Completely optional. There's no need to explain anything yet — that's what the call is for. Plenty of people leave this empty.",
   notePlaceholder: "Or leave this blank",
   concessionLabel: "I'd like to ask about a lower rate",
-  concessionHelp: "She'll raise it on the call. Nobody has to say it out loud first.",
+  concessionHelp: "I'll raise it on the call. Nobody has to say it out loud first.",
   consentHeading: "What happens to what you've typed",
   consentBody:
-    "Your name and contact details are emailed to Lyndsay and nowhere else. Nothing is stored on this website, there's no database and no analytics can read this form. She deletes the email once you've spoken, or within 30 days if you don't.",
+    "Your name and contact details are emailed straight to me and nowhere else. Nothing is stored on this website, there's no database and no analytics can read this form. I delete the email once we've spoken, or within 30 days if you don't.",
   submit: "Send this to Lyndsay",
   submitting: "Sending…",
   back: "Back",
@@ -759,13 +762,13 @@ export const booking = {
   errorBody: "Try once more, or ring 07864 011 852 instead.",
   confirmation: {
     welsh: "Diolch",
-    heading: "That's with her.",
+    heading: "That's with me.",
     lines: [
-      "She'll reply within one working day, usually sooner, using the way you asked her to.",
-      "The call is fifteen minutes. She'll ask what's brought you, and answer anything you want to ask about how she works.",
+      "I'll reply within one working day, usually sooner, using the way you asked me to.",
+      "The call is fifteen minutes. I'll ask what's brought you, and answer anything you want to ask about how I work.",
       "You don't have to prepare. You don't have to book anything at the end of it.",
     ],
-    ring: "If you'd rather not wait, ring her on",
+    ring: "If you'd rather not wait, ring me on",
   },
 } as const;
 
@@ -775,7 +778,7 @@ export const booking = {
 
 export const crisis = {
   heading: "If you need someone now",
-  body: "This is a private practice, not an emergency service. Lyndsay can't respond urgently and does not monitor messages out of hours.",
+  body: "This is a private practice, not an emergency service. I can't respond urgently and don't monitor messages out of hours.",
   lines: [
     { name: "Samaritans", detail: "116 123 — free, 24 hours", href: "tel:116123" },
     { name: "NHS 111, option 2", detail: "Urgent mental health support", href: "tel:111" },
@@ -809,7 +812,7 @@ export const safety = {
 /* -------------------------------------------------------------------------- */
 
 export const nav = [
-  { href: "#words", label: "What she works with" },
+  { href: "#words", label: "What I work with" },
   { href: "#sessions", label: "Sessions" },
   { href: "#approach", label: "Approach" },
   { href: "#fees", label: "Fees" },
@@ -849,24 +852,24 @@ export const about = {
   heading: "About Lyndsay",
   sections: [
     {
-      heading: "How she got here",
+      heading: "How I got here",
       body: [
-        "She trained as an Adlerian counsellor and psychotherapist, took the certificate and then the diploma, and spent a year counselling for MIND.",
-        "Four years of client work in an office followed. She now practises from her own home in Milford Haven, which suits the work better than any office did.",
+        "I trained as an Adlerian counsellor and psychotherapist, took the certificate and then the diploma, and spent a year counselling for MIND.",
+        "Four years of client work in an office followed. I now practise from my own home in Neyland, just outside Milford Haven, which suits the work better than any office did.",
       ],
     },
     {
-      heading: "How she works",
+      heading: "How I work",
       body: [
-        "Adlerian therapy is the base. Everything else she has trained in gets used when it fits the person in front of her, which is why she keeps training.",
-        "She is not a blank screen. You will get a real conversation, and she will say what she thinks if you ask her.",
+        "Adlerian therapy is the base. Everything else I have trained in gets used when it fits the person in front of me, which is why I keep training.",
+        "I am not a blank screen. You will get a real conversation, and I will say what I think if you ask me.",
       ],
     },
     {
-      heading: "What she will not do",
+      heading: "What I will not do",
       body: [
-        "She won't diagnose you, and she won't promise you an outcome — nobody honest can.",
-        "She won't ask you to describe anything before you're ready, and she won't be shocked by whatever you do describe.",
+        "I won't diagnose you, and I won't promise you an outcome — nobody honest can.",
+        "I won't ask you to describe anything before you're ready, and I won't be shocked by whatever you do describe.",
       ],
     },
   ],
@@ -889,8 +892,8 @@ export const privacy = {
       heading: "The enquiry form",
       body: [
         "It collects your name, one way to reach you, optional notes about contacting you safely, and anything you choose to write in the free-text box.",
-        "It is emailed to Lyndsay and nowhere else. It is not written to any database, and the contents are never written to a server log.",
-        "She deletes the email once you have spoken, or within 30 days if you don't reply.",
+        "It is emailed straight to me and nowhere else. It is not written to any database, and the contents are never written to a server log.",
+        "I delete the email once we have spoken, or within 30 days if you don't reply.",
       ],
     },
     {
@@ -920,13 +923,13 @@ export const privacy = {
     {
       heading: "Your rights",
       body: [
-        "You can ask what she holds about you, ask for it to be corrected, or ask her to delete it. Ring 07864 011 852. You can also complain to the Information Commissioner's Office at ico.org.uk.",
+        "You can ask what I hold about you, ask for it to be corrected, or ask me to delete it. Ring 07864 011 852. You can also complain to the Information Commissioner's Office at ico.org.uk.",
       ],
     },
     {
       heading: "Once you are a client",
       body: [
-        "Clinical notes are a separate matter from this website, kept under BACP requirements. She will go through that with you before you start.",
+        "Clinical notes are a separate matter from this website, kept under BACP requirements. I will go through that with you before you start.",
       ],
     },
   ],

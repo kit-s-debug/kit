@@ -45,9 +45,9 @@ export function StructuredData({ siteUrl }: { siteUrl: string }) {
     address: {
       "@type": "PostalAddress",
       streetAddress: practice.street.value,
-      addressLocality: practice.town,
+      addressLocality: practice.locality,
       addressRegion: practice.county,
-      postalCode: practice.postcode,
+      postalCode: practice.fullPostcode.value,
       addressCountry: practice.country,
     },
     geo: {

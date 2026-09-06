@@ -10,7 +10,7 @@ import { Placeholder } from "./placeholder";
  */
 export function Arriving() {
   const query = encodeURIComponent(
-    `${practice.name}, ${practice.town}, ${practice.county} ${practice.postcode}`,
+    `${practice.street.value}, ${practice.locality}, ${practice.town}, ${practice.fullPostcode.value}`,
   );
 
   return (
@@ -41,6 +41,7 @@ export function Arriving() {
             <h3 className="kicker">{arriving.addressHeading}</h3>
             <address className="arriving-address">
               <Placeholder {...practice.street} />
+              <span>{practice.locality}</span>
               <span>{practice.town}</span>
               <span>
                 {practice.county}{" "}

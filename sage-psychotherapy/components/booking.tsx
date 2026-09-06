@@ -9,7 +9,7 @@ import { Leaf } from "./leaf";
 
 const CalEmbed = dynamic(() => import("./cal-embed").then((m) => m.CalEmbed), {
   ssr: false,
-  loading: () => <p className="booking-fallback">Loading her calendar…</p>,
+  loading: () => <p className="booking-fallback">Loading my calendar…</p>,
 });
 
 /**
@@ -312,7 +312,7 @@ export function Booking() {
               </div>
             </fieldset>
 
-            {/* --- 4. anything she should know --------------------------- */}
+            {/* --- 4. anything I should know --------------------------- */}
             <fieldset className="booking-step" data-active={step === 3}>
               <legend className="booking-step-heading">{booking.noteHeading}</legend>
               <p className="booking-step-help">{booking.noteHelp}</p>
