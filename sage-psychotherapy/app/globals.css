@@ -3363,3 +3363,94 @@ body::before {
 .arriving-intro {
   margin-block-end: 0;
 }
+
+/* ==========================================================================
+   HERO SCROLL — a slow push into the room
+   While the image is pinned it used to sit frozen while two lines cross-faded,
+   which read as a still photograph with captions. Now the room pushes in slowly
+   and the light dims toward the hand-off into the ink field below, driven by a
+   scroll timeline so it runs on the compositor rather than a JS scroll handler.
+   Everything is scoped to [data-pin], which only exists when motion is welcome.
+   ========================================================================== */
+
+@supports (animation-timeline: view()) {
+  .hero-stage[data-pin] {
+    view-timeline-name: --hero-run;
+    view-timeline-axis: block;
+  }
+
+  /* the room drifts closer the whole way down the pin */
+  .hero-stage[data-pin] .hero-image {
+    animation: hero-push linear both;
+    animation-timeline: --hero-run;
+    animation-range: entry 100% exit 100%;
+    will-change: transform;
+  }
+
+  /* and the light goes down as the ink field approaches, so the seam is soft */
+  .hero-stage[data-pin] .hero-image::after {
+    animation: hero-dim linear both;
+    animation-timeline: --hero-run;
+    animation-range: exit 10% exit 95%;
+  }
+}
+
+.hero-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #0b1519;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes hero-push {
+  from {
+    transform: scale(1.005);
+  }
+  to {
+    transform: scale(1.11);
+  }
+}
+
+@keyframes hero-dim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.42;
+  }
+}
+
+/* --- the lines resolve out of the light instead of plainly fading --------- */
+.hero-stage[data-pin] .hero-beat {
+  opacity: 0;
+  transform: translateY(1.35rem);
+  filter: blur(7px);
+  transition:
+    opacity 900ms var(--ease-lamp),
+    transform 900ms var(--ease-lamp),
+    filter 900ms var(--ease-lamp);
+}
+
+.hero-viewport[data-beat="1"] .hero-beat[data-i="1"],
+.hero-viewport[data-beat="2"] .hero-beat[data-i="2"] {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+/* the opening leaves the same way it arrived */
+.hero-stage[data-pin] .hero-opening {
+  transition:
+    opacity 750ms var(--ease-lamp),
+    transform 750ms var(--ease-lamp),
+    filter 750ms var(--ease-lamp);
+}
+
+.hero-viewport:not([data-beat="0"]) .hero-opening {
+  opacity: 0;
+  transform: translateY(-1rem);
+  filter: blur(5px);
+  pointer-events: none;
+}
