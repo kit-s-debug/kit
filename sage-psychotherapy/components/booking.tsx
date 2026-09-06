@@ -195,7 +195,6 @@ export function Booking() {
                       onChange={() => setFormat(option.id)}
                     />
                     <span className="choice-name">{option.name}</span>
-                    <span className="choice-where">{option.where}</span>
                   </label>
                 ))}
               </div>

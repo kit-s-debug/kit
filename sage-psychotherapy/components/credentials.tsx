@@ -19,7 +19,6 @@ export function Credentials() {
               <em>{credentials.statement.em}</em>
               {credentials.statement.after}
             </p>
-            <p className="credentials-aside-body">{credentials.noTestimonialsBody}</p>
           </div>
 
           <div className="credentials-register">

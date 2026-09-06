@@ -33,10 +33,7 @@ export function Welcome() {
               {welcome.pull.after}
             </p>
 
-            <div className="welcome-note">
-              <p>{welcome.lines[0]}</p>
-              <p>{welcome.lines[2]}</p>
-            </div>
+            <p className="welcome-note">{welcome.note}</p>
           </div>
         </div>
       </div>

@@ -74,8 +74,7 @@ export const hero = {
     "The therapy room: a Victorian front room with a deep navy-teal wall, tan leather sofas, a mustard-yellow armchair, a honey parquet floor and a tall sash window with a lace café curtain, lit by a warm lamp.",
   /** The three lines that change over the held image. Keep them under eight words. */
   beats: [
-    "It is not a clinic.",
-    "It is her front room, lamp on.",
+    "It is not a clinic — it's her front room.",
     "You can ring first, and decide after.",
   ],
 } as const;
@@ -95,6 +94,9 @@ export const welcome = {
     "Almost everyone tells me the same thing afterwards: the hardest part was making contact.",
     "So we start with fifteen minutes on the phone. Free, and you owe me nothing after it.",
   ],
+  /* The one line shown beneath the pull — deliberately not a repeat of the hero
+     or the fees panel. */
+  note: "There is no wrong reason to get in touch, and no need to have the words ready.",
   portraitAlt:
     "Lyndsay Gent in natural light, wearing a blue scarf, looking towards the camera.",
 } as const;
@@ -566,8 +568,7 @@ export const approach = {
     after: " as much as back.",
   },
   body: [
-    "Adlerian therapy looks at you in the context of your whole life — your family, your work, the people round you, where you grew up. Not one symptom on its own.",
-    "It also looks forward. Where you're heading matters as much as what happened. A lot of the work is practical: what would a slightly different week actually look like?",
+    "In practice that means less time spent on why last week was hard, and more on what a slightly different next week could actually look like — small, real changes you leave with.",
   ],
   moreLabel: "The other approaches she draws on",
   moreHelp: "Chosen to fit you, not the other way round.",
@@ -694,8 +695,7 @@ export const arriving = {
   addressHeading: "Where",
   directionsLabel: "Open in maps",
   coverageHeading: "She also travels",
-  coverageBody:
-    "Home visits across the county, and online anywhere. If you're not sure you're in reach, ring and ask.",
+  coverageBody: "Not sure you're in reach? Ring and ask.",
 } as const;
 
 /* -------------------------------------------------------------------------- */

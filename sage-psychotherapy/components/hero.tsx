@@ -122,7 +122,7 @@ export function Hero() {
 
       {/* Sentinels for the pinned act. Zero height, no paint, no layout cost. */}
       <div className="hero-marks" aria-hidden="true">
-        {[0, 1, 2, 3].map((i) => (
+        {Array.from({ length: hero.beats.length + 1 }).map((_, i) => (
           <div key={i} data-mark={i} />
         ))}
       </div>

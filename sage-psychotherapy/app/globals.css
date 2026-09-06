@@ -3183,3 +3183,56 @@ body::before {
 .finder-help {
   margin-inline: 0;
 }
+
+/* ==========================================================================
+   COMPRESSION — tighter vertical rhythm, less scrolled height, no repeats
+   (appended last so these win)
+   ========================================================================== */
+
+:root {
+  --room: clamp(3.25rem, 6.5vw, 6rem);
+  --room-tight: clamp(2.25rem, 4.5vw, 3.75rem);
+}
+
+/* chapter openers sit closer to their content */
+.chapter-open {
+  margin-block-end: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+/* the big statements were a touch tall — bring them in one step */
+.welcome-pull,
+.approach-pull {
+  font-size: var(--step-4);
+  line-height: 1.1;
+}
+
+.welcome-note {
+  margin-block-start: clamp(1.25rem, 3vw, 2rem);
+  max-width: 40ch;
+}
+
+.approach-lead {
+  margin-block-end: clamp(1.75rem, 4vw, 3rem);
+}
+
+.welcome-portrait {
+  margin-block-start: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+/* shorter pinned hero: two beats instead of three, less scroll spent on it */
+.hero-stage[data-pin] {
+  height: 185svh;
+}
+
+.hero-marks > [data-mark="0"] {
+  top: 0;
+  height: 44%;
+}
+.hero-marks > [data-mark="1"] {
+  top: 44%;
+  height: 28%;
+}
+.hero-marks > [data-mark="2"] {
+  top: 72%;
+  height: 28%;
+}
