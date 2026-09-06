@@ -1,10 +1,22 @@
 # Kit Ryder
 
 Personal site for Kit Ryder, web designer and developer in Pembrokeshire.
-One page: hero, work, about, services, why me, service area, contact.
+One page, built to make a local business owner think "this is the person I
+want building mine" inside five seconds.
 
-Dark, quiet, and built to make a local business owner think "this is the
-person I want building mine" inside five seconds.
+## The colour system
+
+The page runs on two grounds, not one, and alternates between them: ink,
+bone, ink, bone, tint, ink, bone, ink, bone, ink. Sections declare which
+ground they are on with a single class (`s-light`, `s-tint`, `s-dark`), and
+that class sets local tokens (`--fg`, `--fg-2`, `--line`, `--accent`,
+`--btn-bg`, `--field-line`). Components read those tokens, so the same
+button, rule or field works on either ground without a `dark:` variant
+anywhere. The navigation reads the ground passing under it and inverts.
+
+The accent is the red of the Old Red Sandstone the Pembrokeshire cliffs are
+cut from, in two values: a darker one for text on bone, a lighter one for
+text on ink, so both clear WCAG AA.
 
 ## Run it
 
@@ -37,9 +49,24 @@ The things to change first:
 | Your photo | drop a file at `public/kit.jpg`, set `ABOUT.portrait` to `/kit.jpg` |
 | Domain, page title, description | `index.html` (title, meta, canonical, JSON-LD) |
 
-### Projects
+### The featured build
 
-The five projects are **placeholders**. The businesses are invented and the
+Eddie Rocks is real work and the case study links to the real thing.
+`scripts/link-eddies.mjs` copies the site from the repo root into
+`public/eddie-rocks/` before dev and before build, so "View the live site"
+goes somewhere. The copy is gitignored, so the site is never duplicated in
+version control.
+
+The scroll-through video was recorded from that site with Playwright and
+encoded to VP8 (`public/work/eddies-scroll.webm`, 640kB, 16s). On a pointer
+device the scroll scrubs it, eased in a frame loop so a fast flick does not
+become a stack of seeks. On touch it plays as an ordinary muted loop,
+because seeking by finger is unreliable on iOS. Without WebM support the
+poster image renders instead of a dead video element.
+
+### The other projects
+
+The other five projects are **placeholders**. The businesses are invented and the
 previews are design concepts, not client work. Replace them as you ship real
 sites: change the copy in `PROJECTS`, and drop a screenshot into `public/work/`
 using the same file name. Set `aspect` to whatever ratio you export ("3 / 2"

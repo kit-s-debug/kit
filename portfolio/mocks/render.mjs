@@ -7,7 +7,7 @@ const CHROME = process.env.CHROME_PATH;
 const here = new URL(".", import.meta.url).pathname;
 const b = await chromium.launch(CHROME ? { executablePath: CHROME, args: ["--no-sandbox"] } : {});
 
-const page = await b.newPage({ viewport: { width: 1700, height: 1100 }, deviceScaleFactor: 1.5 });
+const page = await b.newPage({ viewport: { width: 1700, height: 1100 }, deviceScaleFactor: 1 });
 await page.goto(`file://${here}mocks.html`, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(500);

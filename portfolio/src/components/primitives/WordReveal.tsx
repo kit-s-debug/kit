@@ -8,7 +8,7 @@ type Props = {
   delay?: number;
   stagger?: number;
   play?: "load" | "inView";
-  as?: "h1" | "h2" | "p";
+  as?: "h1" | "h2" | "p" | "span";
 };
 
 const word: Variants = {

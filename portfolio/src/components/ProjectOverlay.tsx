@@ -49,7 +49,7 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
     <AnimatePresence>
       {project && (
         <motion.div
-          className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-ink/92 backdrop-blur-md"
+          className="s-dark fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-[rgb(12_13_16/0.93)] backdrop-blur-md"
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -61,7 +61,7 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
             role="dialog"
             aria-modal="true"
             aria-label={`${project.name} case study`}
-            className="mx-auto min-h-full w-full max-w-[1120px] bg-ink-2 px-[clamp(1.25rem,4vw,3.5rem)] pt-6 pb-24"
+            className="s-dark mx-auto min-h-full w-full max-w-[1120px] bg-[var(--color-ink-2)] px-[clamp(1.25rem,4vw,3.5rem)] pt-6 pb-24"
             initial={reduce ? false : { y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={reduce ? { opacity: 0 } : { y: 24, opacity: 0 }}
@@ -71,14 +71,14 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
               <button
                 type="button"
                 onClick={onClose}
-                className="flex items-center gap-2 py-2 text-[0.85rem] text-mist transition-colors hover:text-chalk"
+                className="flex items-center gap-2 py-2 text-[0.85rem] text-[var(--fg-2)] transition-colors hover:text-[var(--fg)]"
               >
                 Close <X size={16} weight="regular" aria-hidden />
               </button>
             </div>
 
-            <h2 className="u-h2 mt-6 text-chalk">{project.name}</h2>
-            <p className="mt-3 text-[0.95rem] text-mist">
+            <h2 className="u-h2 mt-6">{project.name}</h2>
+            <p className="mt-3 text-[0.95rem] text-[var(--fg-2)]">
               {project.sector}, {project.town}
             </p>
 
@@ -96,24 +96,24 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
                   ["What I built", project.approach],
                 ].map(([k, v]) => (
                   <div key={k} className="mb-9">
-                    <h3 className="text-[0.8rem] font-medium tracking-[0.14em] text-mist uppercase">{k}</h3>
-                    <p className="mt-3 text-[1rem] leading-[1.72] text-chalk/90">{v}</p>
+                    <h3 className="text-[0.8rem] font-medium tracking-[0.14em] text-[var(--fg-2)] uppercase">{k}</h3>
+                    <p className="mt-3 text-[1rem] leading-[1.72] text-[var(--fg)]/90">{v}</p>
                   </div>
                 ))}
               </div>
 
               <div className="md:col-span-4 md:col-start-9">
-                <div className="u-hairline-t py-6">
-                  <h3 className="text-[0.8rem] font-medium tracking-[0.14em] text-mist uppercase">Outcome</h3>
-                  <p className="mt-3 text-[1rem] leading-[1.6] text-chalk">{project.outcome}</p>
+                <div className="u-line-t py-6">
+                  <h3 className="text-[0.8rem] font-medium tracking-[0.14em] text-[var(--fg-2)] uppercase">Outcome</h3>
+                  <p className="mt-3 text-[1rem] leading-[1.6]">{project.outcome}</p>
                 </div>
-                <div className="u-hairline-t py-6">
-                  <h3 className="text-[0.8rem] font-medium tracking-[0.14em] text-mist uppercase">Built with</h3>
+                <div className="u-line-t py-6">
+                  <h3 className="text-[0.8rem] font-medium tracking-[0.14em] text-[var(--fg-2)] uppercase">Built with</h3>
                   <ul className="mt-4 flex flex-wrap gap-2">
                     {project.tech.map((t) => (
                       <li
                         key={t}
-                        className="border border-[var(--color-slate-line)] px-2.5 py-1 text-[0.75rem] text-mist"
+                        className="border border-[var(--line)] px-2.5 py-1 text-[0.75rem] text-[var(--fg-2)]"
                       >
                         {t}
                       </li>
@@ -125,7 +125,7 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
                     href={project.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="group u-hairline-t flex items-center gap-2 py-6 text-[0.95rem] text-chalk"
+                    className="group u-line-t flex items-center gap-2 py-6 text-[0.95rem]"
                   >
                     Visit live site
                     <ArrowUpRight

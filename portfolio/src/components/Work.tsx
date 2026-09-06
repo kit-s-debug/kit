@@ -1,169 +1,158 @@
 "use client";
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight } from "@phosphor-icons/react";
-import { useRef, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
+import { ArrowUpRight } from "@phosphor-icons/react";
+import { useState } from "react";
 import { PROJECTS, type Project } from "../content";
-import { EASE } from "../lib/motion";
+import { EASE, viewportOnce } from "../lib/motion";
 import { ProjectOverlay } from "./ProjectOverlay";
 import { Reveal } from "./primitives/Reveal";
-import { Tilt } from "./primitives/Tilt";
 import { WordReveal } from "./primitives/WordReveal";
 
-function TechList({ items }: { items: string[] }) {
+function Preview({ project, onOpen, className = "" }: { project: Project; onOpen: () => void; className?: string }) {
+  const mx = useMotionValue(-500);
+  const my = useMotionValue(-500);
+  const glare = useMotionTemplate`radial-gradient(420px circle at ${mx}px ${my}px, rgba(255,255,255,0.28), transparent 65%)`;
+
   return (
-    <ul className="flex flex-wrap gap-1.5">
-      {items.map((t) => (
-        <li key={t} className="border border-[var(--color-slate-line)] px-2.5 py-1 text-[0.72rem] text-mist">
-          {t}
-        </li>
-      ))}
-    </ul>
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`Open the ${project.name} case study`}
+      onPointerMove={(e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        mx.set(e.clientX - r.left);
+        my.set(e.clientY - r.top);
+      }}
+      className={`group relative block w-full cursor-pointer overflow-hidden border border-[var(--line)] text-left ${className}`}
+    >
+        <img
+          src={project.image}
+          alt={`The ${project.name} website`}
+          loading="lazy"
+          decoding="async"
+          className="block aspect-[16/9] w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.025]"
+        />
+        <motion.span
+          aria-hidden
+          style={{ background: glare }}
+          className="pointer-events-none absolute inset-0 opacity-0 mix-blend-overlay transition-opacity duration-500 group-hover:opacity-100"
+        />
+        <span className="pointer-events-none absolute right-4 bottom-4 flex items-center gap-2 rounded-pill bg-[var(--btn-bg)] px-4 py-2 text-[0.8rem] text-[var(--btn-fg)] opacity-0 transition-all duration-400 ease-[var(--ease-out-expo)] group-hover:translate-y-0 group-hover:opacity-100 md:translate-y-2">
+        Case study
+        <ArrowUpRight size={14} weight="regular" aria-hidden />
+      </span>
+    </button>
   );
 }
 
-function Featured({ project, onOpen }: { project: Project; onOpen: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  /* The frame drifts, the image does not. Panning inside the frame would crop
-     the sides off a screenshot, which is the one thing a work preview cannot
-     afford. */
-  const frameY = useTransform(scrollYProgress, [0, 1], [26, -26]);
-
-  const mx = useMotionValue(-400);
-  const my = useMotionValue(-400);
-  const spotlight = useMotionTemplate`radial-gradient(460px circle at ${mx}px ${my}px, rgba(210,85,43,0.18), transparent 72%)`;
-
+function Meta({ project, size = "lg" }: { project: Project; size?: "lg" | "sm" }) {
   return (
-    <div ref={ref} className="mt-12 grid items-center gap-8 md:grid-cols-12 md:gap-10">
-      <motion.button
-        type="button"
-        onClick={onOpen}
-        aria-label={`Open the ${project.name} case study`}
-        style={reduce ? undefined : { y: frameY }}
-        className="group relative block w-full cursor-pointer overflow-hidden text-left md:col-span-7"
-        onPointerMove={(e) => {
-          const r = e.currentTarget.getBoundingClientRect();
-          mx.set(e.clientX - r.left);
-          my.set(e.clientY - r.top);
-        }}
-      >
-        <div className="relative w-full overflow-hidden bg-ink-2" style={{ aspectRatio: project.aspect ?? "16 / 9" }}>
-          <img
-            src={project.image}
-            alt={`The ${project.name} website`}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.025]"
-          />
-          <motion.span
-            aria-hidden
-            style={{ background: spotlight }}
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          />
-        </div>
-      </motion.button>
-
-      <div className="md:col-span-4 md:col-start-9">
-        <h3 className="u-display text-[clamp(1.8rem,2.8vw,2.4rem)] text-chalk">{project.name}</h3>
-        <p className="mt-1.5 text-[0.9rem] text-mist">
-          {project.sector}, {project.town}
-        </p>
-        <p className="mt-5 text-[0.97rem] leading-[1.6] text-chalk/85">{project.summary}</p>
-        <p className="mt-4 text-[0.92rem] leading-[1.55] text-mist">{project.outcome}</p>
-        <div className="mt-5">
-          <TechList items={project.tech} />
-        </div>
-        <div>
-          <button
-            type="button"
-            onClick={onOpen}
-            className="group mt-7 inline-flex items-center gap-2 text-[0.95rem] text-chalk"
-          >
-            <span className="relative">
-              View project
-              <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-rust transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100" />
-            </span>
-            <ArrowRight size={15} weight="regular" aria-hidden className="transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
-        </div>
-      </div>
+    <div>
+      <h3 className={`u-display ${size === "lg" ? "text-[clamp(1.6rem,2.4vw,2.1rem)]" : "text-[clamp(1.35rem,1.8vw,1.6rem)]"}`}>
+        {project.name}
+      </h3>
+      <p className="u-fg2 mt-1.5 text-[0.86rem]">
+        {project.sector}, {project.town}
+      </p>
+      <p className="mt-3.5 max-w-[38ch] text-[0.95rem] leading-[1.6]">{project.outcome}</p>
+      <ul className="mt-4 flex flex-wrap gap-1.5">
+        {project.tech.map((t) => (
+          <li key={t} className="border border-[var(--line)] px-2.5 py-1 text-[0.72rem] text-[var(--fg-2)]">
+            {t}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-function Card({ project, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
+/* Three shapes, not four of the same row: a wide opener, a pair, then a wide
+   closer flipped the other way. The composition changes as you read down it. */
+function Block({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const reduce = useReducedMotion();
   return (
-    <Reveal delay={(index % 2) * 0.08} className={index % 2 === 1 ? "md:mt-16" : ""}>
-      <Tilt className="w-full">
-        <button
-          type="button"
-          onClick={onOpen}
-          aria-label={`Open the ${project.name} case study`}
-          className="group block w-full cursor-pointer text-left"
-        >
-          <div className="relative w-full overflow-hidden bg-ink-2" style={{ aspectRatio: project.aspect ?? "16 / 9" }}>
-            <img
-              src={project.image}
-              alt={`The ${project.name} website`}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover transition-transform duration-[900ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]"
-            />
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-ink/12 transition-opacity duration-500 group-hover:opacity-0"
-            />
-          </div>
-
-          <div className="flex items-baseline justify-between gap-4 pt-6">
-            <h3 className="u-display text-[clamp(1.4rem,2.1vw,1.9rem)] text-chalk">{project.name}</h3>
-            <ArrowRight
-              size={17}
-              weight="regular"
-              aria-hidden
-              className="shrink-0 translate-y-[-2px] text-mist transition-all duration-400 group-hover:translate-x-1 group-hover:text-ember"
-            />
-          </div>
-          <p className="mt-1.5 text-[0.88rem] text-mist">
-            {project.sector}, {project.town}
-          </p>
-          <p className="mt-3.5 max-w-[40ch] text-[0.93rem] leading-[1.6] text-chalk/80">{project.outcome}</p>
-          <div className="mt-4">
-            <TechList items={project.tech} />
-          </div>
-        </button>
-      </Tilt>
-    </Reveal>
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={viewportOnce}
+      transition={{ duration: 0.7, delay, ease: EASE }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
 export function Work() {
   const [open, setOpen] = useState<Project | null>(null);
-  const [featured, ...rest] = PROJECTS;
-  const reduce = useReducedMotion();
 
   return (
-    <section id="work" className="u-container py-[clamp(3.5rem,8vh,5.5rem)]">
-      <div>
-        <WordReveal text="Selected work" className="u-h2 text-chalk" />
-        <motion.p
-          className="mt-4 max-w-[42ch] text-[0.98rem] leading-[1.6] text-mist"
-          initial={reduce ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-        >
-          Every one designed from a blank page, and handed over so the owner can run it themselves.
-        </motion.p>
-      </div>
+    <section data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
+      <div className="u-wide">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="u-label">Also built</p>
+            <WordReveal text="Selected work" className="u-h2 mt-4" />
+          </div>
+          <p className="u-fg2 max-w-[34ch] text-[0.95rem] leading-[1.6]">
+            Every one designed from a blank page, and handed over so the owner can run it themselves.
+          </p>
+        </div>
 
-      <Featured project={featured} onOpen={() => setOpen(featured)} />
+        <div className="mt-[clamp(2rem,5vh,3.25rem)] flex flex-col gap-[clamp(2.25rem,5vh,3.5rem)]">
+          <Block>
+            <article className="grid items-center gap-7 md:grid-cols-12 md:gap-10">
+              <Preview project={PROJECTS[0]} onOpen={() => setOpen(PROJECTS[0])} className="md:col-span-7" />
+              <div className="md:col-span-4 md:col-start-9">
+                <Meta project={PROJECTS[0]} />
+              </div>
+            </article>
+          </Block>
 
-      <div className="mt-16 grid gap-x-10 gap-y-12 md:mt-16 md:grid-cols-2 md:gap-x-12">
-        {rest.map((p, i) => (
-          <Card key={p.slug} project={p} index={i} onOpen={() => setOpen(p)} />
-        ))}
+          <div className="grid gap-x-10 gap-y-[clamp(2.5rem,6vh,4rem)] md:grid-cols-2">
+            {[PROJECTS[1], PROJECTS[2]].map((p, i) => (
+              <Block key={p.slug} delay={i * 0.08}>
+                <article className={i === 1 ? "md:mt-14" : ""}>
+                  <Preview project={p} onOpen={() => setOpen(p)} />
+                  <div className="mt-6">
+                    <Meta project={p} size="sm" />
+                  </div>
+                </article>
+              </Block>
+            ))}
+          </div>
+
+          <Block>
+            <article className="grid items-center gap-7 md:grid-cols-12 md:gap-10">
+              <div className="md:col-span-4 md:row-start-1">
+                <Meta project={PROJECTS[3]} />
+              </div>
+              <Preview
+                project={PROJECTS[3]}
+                onOpen={() => setOpen(PROJECTS[3])}
+                className="md:col-span-7 md:col-start-6 md:row-start-1"
+              />
+            </article>
+          </Block>
+        </div>
+
+        <Reveal>
+          <div className="u-line-t mt-[clamp(2.5rem,5vh,3.5rem)] flex flex-wrap items-center justify-between gap-4 pt-6">
+            <p className="u-fg2 text-[0.95rem]">
+              {PROJECTS[4].name}, {PROJECTS[4].sector.toLowerCase()} in {PROJECTS[4].town}.
+            </p>
+            <button
+              type="button"
+              onClick={() => setOpen(PROJECTS[4])}
+              className="group inline-flex items-center gap-2 text-[0.95rem]"
+            >
+              <span className="relative">
+                Read that case study
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[var(--accent-graphic)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100" />
+              </span>
+              <ArrowUpRight size={15} weight="regular" aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          </div>
+        </Reveal>
       </div>
 
       <ProjectOverlay project={open} onClose={() => setOpen(null)} />

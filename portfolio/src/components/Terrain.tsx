@@ -193,36 +193,26 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string) {
    section: the hero sits low on the deck, the middle of the page pulls up and
    back so the terrain stays out of the way of the reading, and the Pembrokeshire
    beat climbs into a chart view as the coastline resolves. */
-const PATH = [
-  { at: 0.0, eye: 1.05, look: 0.35, drift: 0 },
-  { at: 0.15, eye: 1.9, look: 0.18, drift: 4 },
-  { at: 0.45, eye: 3.4, look: -0.1, drift: 13 },
-  { at: 0.7, eye: 4.0, look: -0.3, drift: 21 },
-  { at: 1.0, eye: 3.2, look: -0.15, drift: 30 },
-];
+const PATHS = {
+  /* Low over the deck through the hero, lifting a little as it leaves. */
+  drift: [
+    { at: 0, eye: 0.95, look: 0.42, drift: 0 },
+    { at: 0.5, eye: 1.45, look: 0.24, drift: 5 },
+    { at: 1, eye: 2.6, look: 0.05, drift: 12 },
+  ],
+  /* Climbs into a chart view over the middle of its section, then settles. */
+  coast: [
+    { at: 0, eye: 3.2, look: -0.2, drift: 16 },
+    { at: 0.5, eye: 8.2, look: -2.4, drift: 20 },
+    { at: 1, eye: 4.4, look: -0.7, drift: 25 },
+  ],
+} as const;
 
-/* How much ink sits between the landscape and the words at a given point in
-   the scroll: wide open under the hero, closed down for the reading. */
-const VEIL = [
-  { at: 0, v: 0.12 },
-  { at: 0.1, v: 0.72 },
-  { at: 0.55, v: 0.78 },
-  { at: 1, v: 0.74 },
-];
-function veilAt(p: number) {
+function sample(path: readonly { at: number; eye: number; look: number; drift: number }[], p: number) {
   let i = 0;
-  while (i < VEIL.length - 2 && p > VEIL[i + 1].at) i++;
-  const a = VEIL[i];
-  const b = VEIL[i + 1];
-  const t = Math.min(1, Math.max(0, (p - a.at) / (b.at - a.at)));
-  return a.v + (b.v - a.v) * (t * t * (3 - 2 * t));
-}
-
-function sample(p: number) {
-  let i = 0;
-  while (i < PATH.length - 2 && p > PATH[i + 1].at) i++;
-  const a = PATH[i];
-  const b = PATH[i + 1];
+  while (i < path.length - 2 && p > path[i + 1].at) i++;
+  const a = path[i];
+  const b = path[i + 1];
   const t = Math.min(1, Math.max(0, (p - a.at) / (b.at - a.at)));
   const e = t * t * (3 - 2 * t);
   return {
@@ -232,9 +222,12 @@ function sample(p: number) {
   };
 }
 
-export function Terrain({ className = "" }: { className?: string }) {
+/* "drift" flies low over procedural relief. "coast" climbs into a chart view
+   and resolves the same terrain into the real Pembrokeshire coastline. */
+export function Terrain({ mode = "drift", className = "" }: { mode?: "drift" | "coast"; className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { scrollYProgress } = useScroll();
+  const hostRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: hostRef, offset: ["start end", "end start"] });
   const progress = useRef<MotionValue<number>>(scrollYProgress);
   progress.current = scrollYProgress;
 
@@ -341,24 +334,12 @@ export function Terrain({ className = "" }: { className?: string }) {
     };
     if (!reduce && !coarse) window.addEventListener("pointermove", onMove, { passive: true });
 
-    /* How close the Pembrokeshire section is to the middle of the screen.
-       Reading it from the element rather than a hard coded scroll percentage
-       means the reveal stays locked to the copy however the page changes. */
-    const coastNode = () => document.getElementById("where");
-    const coastAmount = () => {
-      const el = coastNode();
-      if (!el) return 0;
-      const r = el.getBoundingClientRect();
-      const mid = r.top + r.height / 2 - window.innerHeight / 2;
-      const reach = window.innerHeight * 0.85;
-      return Math.max(0, 1 - Math.abs(mid) / reach);
-    };
+    const path = PATHS[mode];
 
     const draw = (p: number, time: number, morph: number) => {
-      const s = sample(p);
-      /* The camera climbs into a chart view for the reveal and settles back. */
-      const eye = s.eye + morph * 4.4;
-      const look = s.look - morph * 2.1;
+      const s = sample(path, p);
+      const eye = s.eye;
+      const look = s.look;
       const proj = perspective((55 * Math.PI) / 180, aspect, 0.1, 44);
       const view = lookAt([0, eye, 1.4], [0, look, -9]);
       gl.uniformMatrix4fv(uVP, false, mul(proj, view));
@@ -374,8 +355,7 @@ export function Terrain({ className = "" }: { className?: string }) {
     if (reduce) {
       /* One frame, no camera move on scroll. Flying a viewer over a landscape
          is exactly what reduced motion is asking us not to do. */
-      draw(0, 8, 0);
-      document.documentElement.style.setProperty("--veil", "0.7");
+      draw(mode === "coast" ? 0.5 : 0, 8, mode === "coast" ? 1 : 0);
       return () => {
         ro.disconnect();
         gl.deleteProgram(prog);
@@ -394,9 +374,10 @@ export function Terrain({ className = "" }: { className?: string }) {
       if (!visible || document.hidden) return;
       cur.x += (target.x - cur.x) * 0.05;
       cur.y += (target.y - cur.y) * 0.05;
-      morph += (coastAmount() - morph) * 0.1;
       const p = progress.current.get();
-      document.documentElement.style.setProperty("--veil", (veilAt(p) * (1 - 0.55 * morph)).toFixed(3));
+      /* The coastline resolves through the middle of its own section. */
+      const want = mode === "coast" ? Math.max(0, 1 - Math.abs(p - 0.5) / 0.42) : 0;
+      morph += (want - morph) * 0.1;
       draw(p, (now - start) / 1000, morph);
     };
     raf = requestAnimationFrame(frame);
@@ -412,14 +393,11 @@ export function Terrain({ className = "" }: { className?: string }) {
       gl.deleteVertexArray(vao);
       gl.deleteTexture(tex);
     };
-  }, []);
+  }, [mode]);
 
-  return <canvas ref={canvasRef} aria-hidden className={className} />;
-}
-
-/* The veil between the landscape and the words. Its opacity is written by the
-   terrain's own frame loop as a CSS variable, so the page opens up at exactly
-   the moment the coastline arrives rather than at a guessed scroll percentage. */
-export function Veil({ className = "" }: { className?: string }) {
-  return <div aria-hidden style={{ opacity: "var(--veil, 0.7)" }} className={className} />;
+  return (
+    <div ref={hostRef} className={className}>
+      <canvas ref={canvasRef} aria-hidden className="h-full w-full" />
+    </div>
+  );
 }

@@ -1,81 +1,94 @@
 "use client";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import { ABOUT } from "../content";
+import { motion, useReducedMotion } from "motion/react";
+import { ABOUT, CTA, SITE } from "../content";
 import { EASE, viewportOnce } from "../lib/motion";
+import { Cta } from "./primitives/Cta";
 import { Reveal } from "./primitives/Reveal";
 import { WordReveal } from "./primitives/WordReveal";
 
-/* The progression rail. The line fills as the section is read, so the eye is
-   pulled down it rather than the stops all arriving at once. */
-function Progression() {
-  const ref = useRef<HTMLOListElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 78%", "end 70%"] });
-  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  return (
-    <ol ref={ref} className="relative mt-12 pl-7 md:mt-14 md:pl-10">
-      <span aria-hidden className="absolute top-2 bottom-2 left-0 w-px bg-[var(--color-slate-line)]" />
-      <motion.span
-        aria-hidden
-        className="absolute top-2 bottom-2 left-0 w-px origin-top bg-rust"
-        style={reduce ? { scaleY: 1 } : { scaleY }}
-      />
-      {ABOUT.progression.map((step, i) => (
-        <li key={step.title} className="relative grid gap-1.5 pb-6 last:pb-0 md:grid-cols-12 md:gap-10">
-          <motion.span
-            aria-hidden
-            className="absolute top-[0.6rem] -left-7 -ml-[2.5px] h-1.5 w-1.5 bg-chalk md:-left-10"
-            initial={reduce ? false : { scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={viewportOnce}
-            transition={{ duration: 0.4, delay: 0.05 * i, ease: EASE }}
-          />
-          <Reveal delay={0.05 * i} y={16} className="md:col-span-4">
-            <h3 className="u-display text-[clamp(1.3rem,2vw,1.7rem)] text-chalk">{step.title}</h3>
-          </Reveal>
-          <Reveal delay={0.05 * i + 0.05} y={16} className="md:col-span-6 md:col-start-6">
-            <p className="max-w-[52ch] text-[0.97rem] leading-[1.7] text-mist">{step.note}</p>
-          </Reveal>
-        </li>
-      ))}
-    </ol>
-  );
-}
+/* Four things I care about, set as a zigzag rather than four equal columns,
+   so the block reads as a composition instead of a spec sheet. */
+const SPANS = [
+  "md:col-span-6",
+  "md:col-span-5 md:col-start-8",
+  "md:col-span-5 md:col-start-2",
+  "md:col-span-6 md:col-start-7",
+];
 
 export function About() {
+  const reduce = useReducedMotion();
   const hasPortrait = Boolean(ABOUT.portrait);
 
   return (
-    <section id="about" className="u-container py-[clamp(3.5rem,8vh,5.5rem)]">
-      <div className="grid gap-12 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-5">
-          <WordReveal text={ABOUT.heading} stagger={0.03} className="u-h2 text-chalk" />
-          {hasPortrait && (
-            <Reveal delay={0.15}>
-              <img
-                src={ABOUT.portrait}
-                alt="Kit Ryder"
-                width={900}
-                height={1125}
-                loading="lazy"
-                className="mt-12 aspect-[4/5] w-full max-w-[26rem] object-cover"
-              />
+    <section id="about" data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
+      <div className="u-wide">
+        <div className="grid gap-10 md:grid-cols-12 md:gap-10">
+          <div className="md:col-span-7">
+            <p className="u-label">Who builds it</p>
+            <WordReveal text={ABOUT.heading} stagger={0.03} className="u-h2 mt-4 max-w-[13ch]" />
+          </div>
+
+          <div className="md:col-span-4 md:col-start-9">
+            {ABOUT.body.map((p, i) => (
+              <Reveal key={p.slice(0, 20)} delay={0.06 * i} className="mb-5 last:mb-0">
+                <p className="u-body max-w-[46ch] text-[1rem]">{p}</p>
+              </Reveal>
+            ))}
+            <Reveal delay={0.18}>
+              <div className="u-line-t mt-8 pt-6">
+                <p className="flex items-center gap-2.5 text-[0.9rem]">
+                  <span aria-hidden className="relative flex h-2 w-2">
+                    {!reduce && (
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-pill bg-[var(--accent-graphic)] opacity-60" />
+                    )}
+                    <span className="relative inline-flex h-2 w-2 rounded-pill bg-[var(--accent-graphic)]" />
+                  </span>
+                  {SITE.availability}
+                </p>
+                <div className="mt-5">
+                  <Cta href={CTA.href} variant="text">
+                    {CTA.label}
+                  </Cta>
+                </div>
+              </div>
             </Reveal>
-          )}
+          </div>
         </div>
 
-        <div className="md:col-span-6 md:col-start-7">
-          {ABOUT.body.map((p, i) => (
-            <Reveal key={p.slice(0, 24)} delay={0.06 * i} className="mb-5 last:mb-0">
-              <p className="max-w-[56ch] text-[1.02rem] leading-[1.75] text-mist">{p}</p>
-            </Reveal>
+        {hasPortrait && (
+          <Reveal delay={0.1}>
+            <img
+              src={ABOUT.portrait}
+              alt="Kit Ryder"
+              width={900}
+              height={600}
+              loading="lazy"
+              className="mt-14 aspect-[3/2] w-full object-cover"
+            />
+          </Reveal>
+        )}
+
+        <ol className="mt-[clamp(3rem,7vh,4.5rem)] grid gap-x-10 gap-y-[clamp(2rem,4vh,3rem)] md:grid-cols-12">
+          {ABOUT.progression.map((step, i) => (
+            <motion.li
+              key={step.title}
+              className={SPANS[i % SPANS.length]}
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportOnce}
+              transition={{ duration: 0.6, delay: (i % 2) * 0.08, ease: EASE }}
+            >
+              <div className="u-line-t flex items-start gap-5 pt-5">
+                <span aria-hidden className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 bg-[var(--accent-graphic)]" />
+                <div>
+                  <h3 className="u-display text-[clamp(1.25rem,1.9vw,1.6rem)]">{step.title}</h3>
+                  <p className="u-body mt-2 max-w-[42ch] text-[0.95rem]">{step.note}</p>
+                </div>
+              </div>
+            </motion.li>
           ))}
-        </div>
+        </ol>
       </div>
-
-      <Progression />
     </section>
   );
 }

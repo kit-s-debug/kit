@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/link-eddies.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/link-eddies.mjs",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "map": "node scripts/build-map.mjs",

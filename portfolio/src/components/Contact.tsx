@@ -14,8 +14,8 @@ type Errors = Partial<Record<keyof Fields, string>>;
 const EMPTY: Fields = { name: "", email: "", business: "", projectType: CONTACT.projectTypes[0], message: "" };
 
 const field =
-  "w-full border border-[var(--color-field-line)] bg-ink-3 px-4 py-3.5 text-[0.98rem] text-chalk " +
-  "transition-colors duration-300 hover:border-chalk/55 focus:border-ember focus:outline-none";
+  "w-full border border-[var(--field-line)] bg-[var(--field)] px-4 py-3.5 text-[0.98rem] text-[var(--fg)] " +
+  "transition-colors duration-300 hover:border-[var(--fg)] focus:border-[var(--accent)] focus:outline-none";
 
 function validate(v: Fields): Errors {
   const e: Errors = {};
@@ -70,34 +70,36 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="u-container py-[clamp(3.5rem,9vh,6rem)]">
+    <section id="contact" data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
+      <div className="u-wide">
       <div className="grid gap-12 md:grid-cols-12 md:gap-12">
         <div className="flex flex-col md:col-span-5">
-          <WordReveal text={CONTACT.heading} stagger={0.035} className="u-h2 max-w-[15ch] text-chalk" />
+          <p className="u-label">Start here</p>
+          <WordReveal text={CONTACT.heading} stagger={0.035} className="u-h2 mt-4 max-w-[15ch]" />
           <Reveal delay={0.15}>
-            <p className="u-lede mt-6 max-w-[34ch]">{CONTACT.sub}</p>
+            <p className="u-lede mt-6 max-w-[36ch]">{CONTACT.sub}</p>
           </Reveal>
 
           <Reveal delay={0.22} className="mt-auto">
             <div className="pt-10">
               <a
                 href={`mailto:${SITE.email}`}
-                className="group inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)] text-chalk"
+                className="group inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)]"
               >
                 <span className="relative">
                   {SITE.email}
-                  <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-rust transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100" />
+                  <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[var(--accent-graphic)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100" />
                 </span>
                 <ArrowUpRight size={17} weight="regular" aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
 
               {/* Real availability, the one status indicator on the page. */}
-              <p className="mt-7 flex items-center gap-2.5 text-[0.9rem] text-mist">
+              <p className="mt-7 flex items-center gap-2.5 text-[0.9rem] text-[var(--fg-2)]">
                 <span aria-hidden className="relative flex h-2 w-2">
                   {!reduce && (
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-pill bg-ember opacity-60" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-pill bg-[var(--accent-graphic)] opacity-60" />
                   )}
-                  <span className="relative inline-flex h-2 w-2 rounded-pill bg-ember" />
+                  <span className="relative inline-flex h-2 w-2 rounded-pill bg-[var(--accent-graphic)]" />
                 </span>
                 {SITE.availability}
               </p>
@@ -111,7 +113,7 @@ export function Contact() {
                         href={s.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-[0.92rem] text-mist transition-colors duration-300 hover:text-chalk"
+                        className="text-[0.92rem] text-[var(--fg-2)] transition-colors duration-300 hover:text-[var(--fg)]"
                       >
                         {s.label}
                       </a>
@@ -128,14 +130,14 @@ export function Contact() {
               <motion.div
                 key="sent"
                 role="status"
-                className="flex min-h-[22rem] flex-col justify-center border border-[var(--color-slate-line)] bg-ink-2 p-10"
+                className="flex min-h-[22rem] flex-col justify-center border border-[var(--line)] bg-[var(--panel)] p-10"
                 initial={reduce ? false : { opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: EASE }}
               >
-                <CheckCircle size={30} weight="regular" className="text-ember" aria-hidden />
-                <h3 className="u-display mt-5 text-[1.6rem] text-chalk">Message on its way.</h3>
-                <p className="mt-3 max-w-[34ch] text-[0.95rem] leading-[1.65] text-mist">
+                <CheckCircle size={30} weight="regular" className="text-[var(--accent)]" aria-hidden />
+                <h3 className="u-display mt-5 text-[1.6rem]">Message on its way.</h3>
+                <p className="u-body mt-3 max-w-[34ch] text-[0.95rem]">
                   {SITE.formEndpoint
                     ? "I read every enquiry myself and usually reply the same day."
                     : "Your email app should be open with the details filled in. Send it and I will reply the same day."}
@@ -143,7 +145,7 @@ export function Contact() {
                 <button
                   type="button"
                   onClick={() => setState("idle")}
-                  className="mt-8 self-start text-[0.9rem] text-mist underline underline-offset-4 transition-colors hover:text-chalk"
+                  className="mt-8 self-start text-[0.9rem] text-[var(--fg-2)] underline underline-offset-4 transition-colors hover:text-[var(--fg)]"
                 >
                   Send another
                 </button>
@@ -164,7 +166,7 @@ export function Contact() {
                     ["email", "Email", "email", "email"],
                   ] as const).map(([key, label, type, auto]) => (
                     <div key={key} className="grid gap-2">
-                      <label htmlFor={key} className="text-[0.85rem] text-mist">
+                      <label htmlFor={key} className="text-[0.85rem] text-[var(--fg-2)]">
                         {label}
                       </label>
                       <input
@@ -176,18 +178,18 @@ export function Contact() {
                         onChange={set(key)}
                         aria-invalid={Boolean(errors[key])}
                         aria-describedby={errors[key] ? `${key}-error` : undefined}
-                        className={`${field} ${errors[key] ? "border-ember" : ""}`}
+                        className={`${field} ${errors[key] ? "border-[var(--accent)]" : ""}`}
                       />
                       {errors[key] && (
-                        <p id={`${key}-error`} className="text-[0.82rem] text-ember">
+                        <p id={`${key}-error`} className="text-[0.82rem] text-[var(--accent)]">
                           {errors[key]}
                         </p>
                       )}
                     </div>
                   ))}
                   <div className="grid gap-2">
-                    <label htmlFor="business" className="text-[0.85rem] text-mist">
-                      Business <span className="text-mist">(optional)</span>
+                    <label htmlFor="business" className="text-[0.85rem] text-[var(--fg-2)]">
+                      Business <span className="text-[var(--fg-2)]">(optional)</span>
                     </label>
                     <input
                       id="business"
@@ -202,7 +204,7 @@ export function Contact() {
                 </div>
 
                 <fieldset className="grid gap-3">
-                  <legend className="mb-1 text-[0.85rem] text-mist">Project type</legend>
+                  <legend className="mb-1 text-[0.85rem] text-[var(--fg-2)]">Project type</legend>
                   <div className="flex flex-wrap gap-2">
                     {CONTACT.projectTypes.map((t) => {
                       const on = values.projectType === t;
@@ -211,8 +213,8 @@ export function Contact() {
                           key={t}
                           className={`cursor-pointer rounded-pill border px-4 py-2 text-[0.88rem] transition-colors duration-300 ${
                             on
-                              ? "border-chalk bg-chalk text-ink"
-                              : "border-[var(--color-field-line)] text-mist hover:border-chalk/60 hover:text-chalk"
+                              ? "border-[var(--btn-bg)] bg-[var(--btn-bg)] text-[var(--btn-fg)]"
+                              : "border-[var(--field-line)] text-[var(--fg-2)] hover:border-[var(--fg)] hover:text-[var(--fg)]"
                           }`}
                         >
                           <input
@@ -231,7 +233,7 @@ export function Contact() {
                 </fieldset>
 
                 <div className="grid gap-2">
-                  <label htmlFor="message" className="text-[0.85rem] text-mist">
+                  <label htmlFor="message" className="text-[0.85rem] text-[var(--fg-2)]">
                     What are you building?
                   </label>
                   <textarea
@@ -242,10 +244,10 @@ export function Contact() {
                     onChange={set("message")}
                     aria-invalid={Boolean(errors.message)}
                     aria-describedby={errors.message ? "message-error" : undefined}
-                    className={`${field} resize-y ${errors.message ? "border-ember" : ""}`}
+                    className={`${field} resize-y ${errors.message ? "border-[var(--accent)]" : ""}`}
                   />
                   {errors.message && (
-                    <p id="message-error" className="text-[0.82rem] text-ember">
+                    <p id="message-error" className="text-[0.82rem] text-[var(--accent)]">
                       {errors.message}
                     </p>
                   )}
@@ -256,7 +258,7 @@ export function Contact() {
                     {state === "sending" ? "Sending" : "Send enquiry"}
                   </Cta>
                   {state === "failed" && (
-                    <p role="alert" className="text-[0.88rem] text-ember">
+                    <p role="alert" className="text-[0.88rem] text-[var(--accent)]">
                       That did not send. Email me directly at {SITE.email}.
                     </p>
                   )}
@@ -265,6 +267,7 @@ export function Contact() {
             )}
           </AnimatePresence>
         </div>
+      </div>
       </div>
     </section>
   );

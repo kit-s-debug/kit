@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-/* ---------------------------------------------------------------------------
-   Self-hosted variable fonts. Archivo carries a width axis, which is what gives
-   the headings their wide, set-in-stone feel without a second display family.
---------------------------------------------------------------------------- */
 @font-face {
   font-family: "Archivo";
   src: url("/fonts/archivo-var-latin.woff2") format("woff2-variations");
@@ -21,96 +17,168 @@
 }
 
 @theme {
-  /* One palette: cold near-black ground, chalk type, a single rust accent
-     borrowed from the Old Red Sandstone the Pembrokeshire cliffs are made of. */
-  --color-ink: #08090b;
-  --color-ink-2: #0c0e11;
-  --color-ink-3: #12151a;
-  --color-chalk: #eeece7;
+  /* Two grounds, not one. Warm bone for reading, cold ink for the moments
+     that should feel like a room with the lights off. The accent is the red
+     of the Old Red Sandstone the Pembrokeshire cliffs are cut from, in two
+     values so it can sit on either ground and still pass contrast. */
+  --color-bone: #f2efe9;
+  --color-bone-2: #e9e4db;
+  --color-ink: #0c0d10;
+  --color-ink-2: #14161b;
+  --color-ink-3: #1c1f26;
+  --color-graphite: #5a5f68;
   --color-mist: #9ba0a8;
-  --color-slate-line: rgb(238 236 231 / 0.1);
-  /* Form field boundaries need to clear 3:1 against both the page and the
-     field fill, so they are brighter than the decorative hairlines. */
-  --color-field-line: rgb(238 236 231 / 0.38);
-  --color-rust: #d2552b;
-  --color-ember: #e8825a; /* lighter rust, used where small text needs AA contrast */
+  --color-rust: #c2481f;
+  --color-rust-ink: #b2401b;
+  --color-ember: #e8825a;
 
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-sans: "Geist", "Helvetica Neue", Arial, sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-
   --radius-pill: 999px;
 }
 
 @layer base {
   :root {
-    color-scheme: dark;
-    --nav-h: 72px;
+    color-scheme: light dark;
+    --nav-h: 74px;
   }
 
   html {
     -webkit-text-size-adjust: 100%;
   }
-
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
     }
   }
 
-  body {
-    background-color: var(--color-ink);
-    color: var(--color-chalk);
-    font-family: var(--font-sans);
-    font-synthesis-weight: none;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+  /* Clip sideways on the root, not on body. overflow-x on body turns body
+     into its own scroll container, which stops overflow propagating to the
+     viewport and leaves the last couple of hundred pixels of the page
+     unreachable. */
+  html {
     overflow-x: hidden;
   }
 
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
   section[id] {
-    scroll-margin-top: calc(var(--nav-h) + 8px);
+    scroll-margin-top: calc(var(--nav-h) + 10px);
   }
 
   ::selection {
     background: var(--color-rust);
     color: #fff;
   }
-
   :focus-visible {
-    outline: 2px solid var(--color-ember);
+    outline: 2px solid var(--focus, var(--color-rust));
     outline-offset: 3px;
     border-radius: 2px;
   }
 
-  /* Shape system: every surface, image and input is square. Only things you
-     press are pill-shaped. Nothing in between. */
   input,
   textarea,
-  button {
+  button,
+  select {
     font: inherit;
     color: inherit;
   }
 }
 
 @layer components {
-  .u-container {
+  /* --- the surface system -------------------------------------------------
+     Every section declares which ground it is on. Components then read the
+     local tokens rather than hard coding a colour, so the same card, rule or
+     label works on bone and on ink without a single dark: variant. */
+  .s-light {
+    --fg: var(--color-ink);
+    --fg-2: var(--color-graphite);
+    --line: rgb(12 13 16 / 0.13);
+    --line-soft: rgb(12 13 16 / 0.07);
+    --accent: var(--color-rust-ink);
+    --accent-graphic: var(--color-rust);
+    --panel: #fbfaf7;
+    --field: #ffffff;
+    --field-line: #818183;
+    --focus: var(--color-rust-ink);
+    --btn-bg: var(--color-ink);
+    --btn-fg: var(--color-bone);
+    --btn-bg-hover: #000;
+    background-color: var(--color-bone);
+    color: var(--fg);
+  }
+  .s-tint {
+    --fg: var(--color-ink);
+    --fg-2: #565b63;
+    --line: rgb(12 13 16 / 0.14);
+    --line-soft: rgb(12 13 16 / 0.08);
+    --accent: var(--color-rust-ink);
+    --accent-graphic: var(--color-rust);
+    --panel: #f4f1ea;
+    --field: #ffffff;
+    --field-line: #818183;
+    --focus: var(--color-rust-ink);
+    --btn-bg: var(--color-ink);
+    --btn-fg: var(--color-bone);
+    --btn-bg-hover: #000;
+    background-color: var(--color-bone-2);
+    color: var(--fg);
+  }
+  .s-dark {
+    --fg: var(--color-bone);
+    --fg-2: var(--color-mist);
+    --line: rgb(242 239 233 / 0.14);
+    --line-soft: rgb(242 239 233 / 0.07);
+    --accent: var(--color-ember);
+    --accent-graphic: var(--color-rust);
+    --panel: var(--color-ink-2);
+    --field: var(--color-ink-3);
+    --field-line: rgb(242 239 233 / 0.4);
+    --focus: var(--color-ember);
+    --btn-bg: var(--color-bone);
+    --btn-fg: var(--color-ink);
+    --btn-bg-hover: #fff;
+    background-color: var(--color-ink);
+    color: var(--fg);
+  }
+
+  /* Containers, deliberately more than one. */
+  .u-wide {
     width: 100%;
     margin-inline: auto;
-    max-width: 1440px;
-    padding-inline: clamp(1.25rem, 5vw, 5rem);
+    max-width: 1520px;
+    padding-inline: clamp(1.15rem, 4vw, 4.5rem);
+  }
+  .u-mid {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 1180px;
+    padding-inline: clamp(1.15rem, 4vw, 4.5rem);
+  }
+  .u-narrow {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 760px;
+    padding-inline: clamp(1.15rem, 4vw, 4.5rem);
   }
 
   .u-display {
     font-family: var(--font-display);
     font-weight: 600;
     font-stretch: 112%;
-    letter-spacing: -0.028em;
-    line-height: 0.98;
+    letter-spacing: -0.032em;
+    line-height: 0.94;
     text-wrap: balance;
+    margin: 0;
   }
-
   .u-wordmark {
     font-family: var(--font-display);
     font-weight: 700;
@@ -118,80 +186,66 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
-
-  /* Section heading scale, one step down from the hero. */
   .u-h2 {
     font-family: var(--font-display);
     font-weight: 600;
     font-stretch: 110%;
-    letter-spacing: -0.025em;
-    line-height: 1.02;
-    font-size: clamp(2rem, 4.4vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
     text-wrap: balance;
+    margin: 0;
   }
-
+  .u-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-stretch: 108%;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-2);
+  }
   .u-lede {
-    font-size: clamp(1rem, 1.15vw, 1.15rem);
-    line-height: 1.65;
-    color: var(--color-mist);
-    max-width: 58ch;
+    font-size: clamp(1rem, 1.1vw, 1.12rem);
+    line-height: 1.7;
+    color: var(--fg-2);
+    max-width: 56ch;
   }
-
-  /* Full-bleed rail whose first item still lines up with the page container. */
-  .u-rail-pad {
-    --rail-pad: calc(max(0px, (100% - 1440px)) / 2 + clamp(1.25rem, 5vw, 5rem));
-    padding-inline: var(--rail-pad);
-    /* Without this the mandatory snap treats the first card's edge as the only
-       valid resting point and eats the leading padding on load. */
-    scroll-padding-inline: var(--rail-pad);
+  .u-body {
+    color: var(--fg-2);
+    line-height: 1.7;
   }
 
   .u-rule {
     height: 1px;
-    background: var(--color-slate-line);
+    background: var(--line);
+    border: 0;
   }
 
-  /* Frosted panel. Falls back to a solid fill where transparency is unwanted
-     or backdrop-filter is unsupported. */
-  .u-glass {
-    background: rgb(12 14 17 / 0.72);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
-  }
-  @supports not (backdrop-filter: blur(1px)) {
-    .u-glass {
-      background: rgb(10 12 15 / 0.97);
-    }
-  }
-  @media (prefers-reduced-transparency: reduce) {
-    .u-glass {
-      background: rgb(10 12 15 / 0.98);
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-  }
-
-  /* Fine film grain over the whole page. Fixed and non-interactive so it never
-     forces a repaint while scrolling. */
+  /* Grain, fixed and non interactive so it never repaints on scroll. Lighter
+     on the bone sections, where it would otherwise read as dirt. */
   .u-grain::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
   }
 }
 
 @layer utilities {
-  .u-hairline-t {
-    border-top: 1px solid var(--color-slate-line);
+  .u-line-t {
+    border-top: 1px solid var(--line);
   }
-  .u-hairline-b {
-    border-bottom: 1px solid var(--color-slate-line);
+  .u-line-b {
+    border-bottom: 1px solid var(--line);
   }
-  .u-hairline-l {
-    border-left: 1px solid var(--color-slate-line);
+  .u-fg2 {
+    color: var(--fg-2);
+  }
+  .u-accent {
+    color: var(--accent);
   }
 }
