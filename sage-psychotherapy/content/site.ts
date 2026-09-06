@@ -562,11 +562,6 @@ export const sessionsSection = {
 
 export const approach = {
   heading: "Adlerian therapy, in plain words",
-  pull: {
-    before: "You are understood in the context of a whole life — and the work looks ",
-    em: "forward",
-    after: " as much as back.",
-  },
   body: [
     "In practice that means less time spent on why last week was hard, and more on what a slightly different next week could actually look like — small, real changes you leave with.",
   ],
@@ -655,11 +650,6 @@ export const credentials = {
   noTestimonialsHeading: "There are no client reviews on this site",
   noTestimonialsBody:
     "She is BACP-registered. What clients say in that room stays in it, and that includes saying nice things about her in public.",
-  statement: {
-    before: "Trust here is carried by training, registration and tone — ",
-    em: "not by testimonials",
-    after: ".",
-  },
 } as const;
 
 /* -------------------------------------------------------------------------- */

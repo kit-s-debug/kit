@@ -3,10 +3,9 @@ import { Chapter } from "./chapter";
 import { Leaf } from "./leaf";
 
 /**
- * Adlerian therapy is her real differentiator, so this chapter leads with the
- * idea as a large statement, not a heading over paragraphs. The explanation
- * sits beneath in a narrow editorial column; the other modalities stay quiet,
- * behind disclosure. A single large olive leaf watermarks the spread.
+ * Adlerian therapy is her real differentiator, so the chapter leads on the name
+ * of the thing and then explains it plainly — no manufactured aphorism. A
+ * single large olive leaf watermarks the spread.
  */
 export function Approach() {
   return (
@@ -16,24 +15,17 @@ export function Approach() {
 
         <div className="approach-lead">
           <Leaf size="large" className="approach-watermark" />
-          <p className="pull approach-pull">
-            {approach.pull.before}
-            <em>{approach.pull.em}</em>
-            {approach.pull.after}
-          </p>
-        </div>
-
-        <div className="approach-columns">
-          <h2 id="approach-heading" className="approach-heading">
+          <h2 id="approach-heading" className="approach-display">
             {approach.heading}
           </h2>
-          <div className="approach-prose">
-            {approach.body.map((paragraph) => (
-              <p key={paragraph} className="approach-paragraph">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+        </div>
+
+        <div className="approach-prose">
+          {approach.body.map((paragraph) => (
+            <p key={paragraph} className="approach-paragraph">
+              {paragraph}
+            </p>
+          ))}
         </div>
 
         <details className="disclosure approach-more">

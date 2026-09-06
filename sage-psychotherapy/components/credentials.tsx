@@ -2,9 +2,8 @@ import { chapters, credentials } from "@/content/site";
 import { Chapter } from "./chapter";
 
 /**
- * A register, not a badge row — and the chapter leads with why there are no
- * testimonials, stated plainly as a large line rather than tucked in an aside.
- * The qualifications sit opposite as a clean hairline list.
+ * A register, not a badge row — stated plainly. The no-testimonials position is
+ * a fact about how she practises, so it reads as a fact rather than a slogan.
  */
 export function Credentials() {
   return (
@@ -14,11 +13,8 @@ export function Credentials() {
 
         <div className="credentials-spread">
           <div className="credentials-statement">
-            <p className="pull">
-              {credentials.statement.before}
-              <em>{credentials.statement.em}</em>
-              {credentials.statement.after}
-            </p>
+            <h3 className="credentials-display">{credentials.noTestimonialsHeading}</h3>
+            <p className="credentials-aside-body">{credentials.noTestimonialsBody}</p>
           </div>
 
           <div className="credentials-register">

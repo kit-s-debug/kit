@@ -3236,3 +3236,107 @@ body::before {
   top: 72%;
   height: 28%;
 }
+
+/* ==========================================================================
+   HERO — lighter, brighter room
+   The broad scrims that used to darken half the photograph are replaced by a
+   gentle vignette, a slim scrim under the header, and a local pool behind the
+   type. The room reads bright and airy; the headline stays legible.
+   ========================================================================== */
+
+.hero-photo {
+  animation: lamp-photo-light 2000ms var(--ease-lamp) both;
+}
+
+@keyframes lamp-photo-light {
+  from {
+    transform: scale(1.05);
+    filter: brightness(0.86) saturate(0.92);
+  }
+  to {
+    transform: scale(1);
+    filter: brightness(1.1) saturate(1.04);
+  }
+}
+
+/* a soft edge-darkening only, nothing across the middle */
+.hero-vignette {
+  background: radial-gradient(
+    120% 95% at 42% 52%,
+    transparent 46%,
+    rgba(12, 24, 30, 0.22) 78%,
+    rgba(10, 20, 26, 0.44) 100%
+  );
+  animation: lamp-vignette-light 2000ms var(--ease-lamp) both;
+}
+
+@keyframes lamp-vignette-light {
+  from {
+    opacity: 0.95;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 0.62;
+    transform: scale(1);
+  }
+}
+
+/* the lamp, a slim scrim under the header, and a local pool behind the copy */
+.hero-warm {
+  background:
+    radial-gradient(42% 36% at 16% 76%, rgba(246, 223, 174, 0.34), transparent 72%),
+    radial-gradient(56% 46% at 20% 82%, rgba(8, 16, 21, 0.62), transparent 72%),
+    linear-gradient(to bottom, rgba(8, 16, 21, 0.46) 0%, transparent 20%),
+    linear-gradient(to top, rgba(8, 16, 21, 0.5) 0%, rgba(8, 16, 21, 0.16) 26%, transparent 48%);
+  animation: lamp-warm 2400ms var(--ease-lamp) both;
+}
+
+/* the type carries its own soft shadow so the image can stay bright */
+.hero-kicker,
+.hero-headline,
+.hero-credit,
+.hero-phone,
+.hero-beat {
+  text-shadow: 0 1px 18px rgba(6, 13, 17, 0.62), 0 1px 3px rgba(6, 13, 17, 0.4);
+}
+
+.hero-sill {
+  background: color-mix(in oklab, #f4eee0 52%, transparent);
+}
+
+/* --- fewer pull-quotes: approach and credentials lead on plain headings ---- */
+.approach-display {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-serif);
+  font-weight: 380;
+  font-size: var(--step-4);
+  line-height: 1.06;
+  letter-spacing: var(--tracking-display);
+  max-width: 16ch;
+}
+
+.approach-prose {
+  max-width: 46ch;
+  margin-inline-start: clamp(0rem, 12vw, 11rem);
+}
+
+.credentials-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--step-3);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  color: var(--heading);
+  max-width: 15ch;
+}
+
+.credentials-statement .credentials-aside-body {
+  margin-block-start: 1.1rem;
+}
+
+@media (max-width: 54rem) {
+  .approach-prose {
+    margin-inline-start: 0;
+  }
+}
