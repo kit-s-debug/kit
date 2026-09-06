@@ -3340,3 +3340,26 @@ body::before {
     margin-inline-start: 0;
   }
 }
+
+/* --- arriving, simplified: three beats and a compact where-block ---------- */
+.arriving-hours {
+  margin-block-start: 1.5rem;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.arriving-where .arriving-coverage-body {
+  margin-block-start: 0.75rem;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+  max-width: 40ch;
+}
+
+.arriving-where .action-quiet {
+  margin-block-start: 0.25rem;
+}
+
+/* the grid's row gap already spaces the intro; drop the doubled margin */
+.arriving-intro {
+  margin-block-end: 0;
+}

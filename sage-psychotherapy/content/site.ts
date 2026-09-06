@@ -673,19 +673,38 @@ export const chapters = {
 
 export const arriving = {
   heading: "What arriving is actually like",
-  intro: "The bit nobody tells you. Read it now so it's boring by the time you do it.",
+  intro: "The bit nobody tells you, so it is boring by the time you do it.",
+  /* Three beats, not a guided tour: where to stop the car, what happens at the
+     door, and what the first ten seconds inside are. Everything else people can
+     find out when they get there. */
   steps: [
-    { at: "Parking", text: { value: "Park on the street outside. Details to be supplied.", status: "TO CONFIRM" as Confirm } },
-    { at: "The door", text: { value: "Description of the front door to be supplied.", status: "TO CONFIRM" as Confirm } },
-    { at: "Knocking", text: { value: "Knock or ring — you don't need to arrive early. She'll come to the door herself.", status: "confirmed" as Confirm } },
-    { at: "Inside", text: { value: "Straight into the front room. Coats stay on if you'd rather.", status: "confirmed" as Confirm } },
-    { at: "Sitting down", text: { value: "Take whichever chair you want. Tea, water, or neither.", status: "confirmed" as Confirm } },
-    { at: "Leaving", text: { value: "Fifty minutes later she'll say so. You don't have to book another one there and then.", status: "confirmed" as Confirm } },
+    {
+      at: "Parking",
+      text: { value: "Park on the street outside.", status: "TO CONFIRM" as Confirm },
+    },
+    {
+      at: "The door",
+      text: {
+        value: "Knock or ring. She answers it herself — there is no waiting room and no reception.",
+        status: "confirmed" as Confirm,
+      },
+    },
+    {
+      at: "Inside",
+      text: {
+        value: "Straight into the front room. Take whichever chair you like, coat on if you'd rather.",
+        status: "confirmed" as Confirm,
+      },
+    },
   ],
   addressHeading: "Where",
   directionsLabel: "Open in maps",
-  coverageHeading: "She also travels",
-  coverageBody: "Not sure you're in reach? Ring and ask.",
+  hoursLine: {
+    value: "Monday to Thursday until 8pm, Friday until 5pm",
+    status: "TO CONFIRM" as Confirm,
+  },
+  coverageLine:
+    "She also visits at home across Haverfordwest, Neyland, Pembroke Dock, Pembroke, Johnston, Narberth and Tenby. Not sure you're in reach? Ring and ask.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
