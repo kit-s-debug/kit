@@ -49,7 +49,7 @@ Environment variables to set on the host:
 
 | Variable | What it does | Unset |
 | --- | --- | --- |
-| `VITE_SITE_URL` | The live domain. Fills in the canonical link, the Open Graph tags, the schema record, `robots.txt` and the sitemap. | Falls back to `https://ryderdesigns.co.uk` |
+| `VITE_SITE_URL` | The live domain. Fills in the canonical link, the Open Graph tags, the schema record, `robots.txt` and the sitemap. | Falls back to `https://ryder-designs.co.uk` |
 | `VITE_FORM_ENDPOINT` | Where the contact form posts. | Form falls back to opening the visitor's mail client |
 | `VITE_ANALYTICS_DOMAIN` | Your domain, to switch on cookie-free Plausible analytics. | No analytics, no third-party request, and the privacy notice drops its analytics section |
 | `VITE_ANALYTICS_HOST` | Only if you self-host Plausible. | `https://plausible.io` |
