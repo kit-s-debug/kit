@@ -34,7 +34,10 @@ export function BookingBar({ sentinelId }: { sentinelId: string }) {
     <div className="booking-bar" data-shown={shown || undefined} aria-hidden={!shown}>
       <div className="shell-wide booking-bar-inner">
         <a href="#book" className="action booking-bar-action" tabIndex={shown ? undefined : -1}>
-          {cta.primary}
+          {/* the full label wraps to two lines on a narrow phone, so the bar
+              carries the short one there */}
+          <span className="bar-label-long">{cta.primary}</span>
+          <span className="bar-label-short">{cta.short}</span>
         </a>
         <a href={practice.phoneHref} className="booking-bar-phone" tabIndex={shown ? undefined : -1}>
           <span className="visually-hidden">{cta.phoneLabel}: </span>

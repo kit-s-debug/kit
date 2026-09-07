@@ -48,6 +48,7 @@ export function Sessions() {
             {formats.map((format) => (
               <div key={format.id} className="format-panel">
                 <h3 className="format-panel-heading">{format.name}</h3>
+                <p className="format-panel-where">{format.where}</p>
                 <dl className="format-detail">
                   <dt className="label">{sessionsSection.suitsLabel}</dt>
                   <dd>{format.suits}</dd>
