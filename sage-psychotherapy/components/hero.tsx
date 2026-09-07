@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import roomImage from "@/public/images/room.jpg";
 import { cta, hero, practice } from "@/content/site";
 
@@ -113,7 +113,19 @@ export function Hero() {
           <div className="hero-beats">
             {hero.beats.map((line, index) => (
               <p key={line} className="hero-beat" data-i={index + 1}>
-                {line}
+                {/* split into words so each can rise in turn — a line that
+                    arrives word by word reads as considered, where a single
+                    fade reads as a slide transition */}
+                {line.split(" ").map((word, w) => (
+                  <Fragment key={`${word}-${w}`}>
+                    {/* a real space between words, so the line still reads as a
+                        sentence to a screen reader and copies out correctly */}
+                    {w > 0 ? " " : null}
+                    <span className="beat-word" style={{ "--w": w } as React.CSSProperties}>
+                      <span>{word}</span>
+                    </span>
+                  </Fragment>
+                ))}
               </p>
             ))}
           </div>

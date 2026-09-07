@@ -3454,3 +3454,107 @@ body::before {
   filter: blur(5px);
   pointer-events: none;
 }
+
+/* ==========================================================================
+   HERO SCROLL, second pass — a move through the room, not a zoom
+   The straight scale was too small to register. Now the room drifts diagonally
+   as it pushes in, the lamp pool spreads, and the type travels at a different
+   rate so there is real depth between them. The lines arrive a word at a time.
+   Still entirely scoped to [data-pin], which exists only when motion is welcome.
+   ========================================================================== */
+
+.hero-stage[data-pin] {
+  height: 220svh;
+}
+
+@supports (animation-timeline: view()) {
+  .hero-stage[data-pin] .hero-image {
+    animation: hero-drift linear both;
+    animation-timeline: --hero-run;
+    animation-range: entry 100% exit 100%;
+  }
+
+  /* the lamp opens out as you move in */
+  .hero-stage[data-pin] .hero-warm {
+    animation: hero-lamp-open linear both;
+    animation-timeline: --hero-run;
+    animation-range: entry 100% exit 100%;
+  }
+
+  /* the type rides up more slowly than the room moves — parallax depth */
+  .hero-stage[data-pin] .hero-content {
+    animation: hero-copy-drift linear both;
+    animation-timeline: --hero-run;
+    animation-range: entry 100% exit 90%;
+  }
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.06) translate3d(1.2%, -0.8%, 0);
+  }
+  to {
+    transform: scale(1.2) translate3d(-1.8%, 1.2%, 0);
+  }
+}
+
+@keyframes hero-lamp-open {
+  from {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  to {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-copy-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -3.5rem, 0);
+  }
+}
+
+/* --- the lines arrive a word at a time ----------------------------------- */
+.beat-word {
+  display: inline-block;
+  overflow: hidden;
+  /* let descenders through the mask */
+  padding-block-end: 0.14em;
+  margin-block-end: -0.14em;
+}
+
+.beat-word > span {
+  display: inline-block;
+}
+
+.hero-stage[data-pin] .hero-beat {
+  opacity: 0;
+  transform: none;
+  filter: none;
+  transition: opacity 260ms var(--ease-lamp);
+}
+
+.hero-stage[data-pin] .beat-word > span {
+  transform: translateY(115%);
+  transition: transform 880ms var(--ease-lamp);
+  transition-delay: calc(var(--w, 0) * 65ms);
+}
+
+.hero-viewport[data-beat="1"] .hero-beat[data-i="1"],
+.hero-viewport[data-beat="2"] .hero-beat[data-i="2"] {
+  opacity: 1;
+}
+
+.hero-viewport[data-beat="1"] .hero-beat[data-i="1"] .beat-word > span,
+.hero-viewport[data-beat="2"] .hero-beat[data-i="2"] .beat-word > span {
+  transform: translateY(0);
+}
+
+/* the word spans changed the wrap; give the pinned lines room to break well */
+.hero-stage[data-pin] .hero-beat {
+  max-width: 19ch;
+}
