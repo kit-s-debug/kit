@@ -19,19 +19,26 @@ export function About() {
     <section id="about" data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide">
         <div className="grid gap-10 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-7">
+          <div className="md:col-span-7 md:col-start-1 md:row-start-1">
             <p className="u-label">Who you are hiring</p>
             <WordReveal text={ABOUT.heading} stagger={0.03} className="u-h2 mt-4 max-w-[13ch]" />
           </div>
 
-          <div className="md:col-span-4 md:col-start-9">
+          {/* The prose column spans both rows so the availability line below the
+             heading can settle against its baseline instead of leaving a hole
+             under the display type. On mobile the grid collapses and the three
+             children fall in DOM order: heading, prose, availability. */}
+          <div className="md:col-span-4 md:col-start-9 md:row-start-1 md:row-span-2">
             {ABOUT.body.map((p, i) => (
               <Reveal key={p.slice(0, 20)} delay={0.06 * i} className="mb-5 last:mb-0">
                 <p className="u-body max-w-[46ch] text-[1rem]">{p}</p>
               </Reveal>
             ))}
-            <Reveal delay={0.18}>
-              <div className="u-line-t mt-8 pt-6">
+          </div>
+
+          <div className="md:col-span-5 md:col-start-1 md:row-start-2 md:self-end">
+            <Reveal delay={0.12}>
+              <div className="u-line-t pt-6">
                 <p className="flex items-center gap-2.5 text-[0.9rem]">
                   <span aria-hidden className="relative flex h-2 w-2">
                     {!reduce && (

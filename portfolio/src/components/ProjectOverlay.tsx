@@ -78,9 +78,22 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
             </div>
 
             <h2 className="u-h2 mt-6">{project.name}</h2>
-            <p className="mt-3 text-[0.95rem] text-[var(--fg-2)]">
-              {project.sector}, {project.town}
+            <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.95rem] text-[var(--fg-2)]">
+              <span>
+                {project.sector}, {project.town}
+              </span>
+              {project.status && (
+                <span className="border border-[var(--line)] px-2 py-0.5 text-[0.68rem] tracking-[0.14em] uppercase">
+                  {project.status}
+                </span>
+              )}
             </p>
+            {project.status && (
+              <p className="mt-4 max-w-[54ch] text-[0.9rem] leading-[1.6] text-[var(--fg-2)]">
+                A build I designed to a brief of my own, not a client engagement. The thinking below is
+                how I would approach the real one.
+              </p>
+            )}
 
             <img
               src={project.image}

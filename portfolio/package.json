@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "map": "node scripts/build-map.mjs",
     "previews": "node mocks/render.mjs",
-    "standalone": "npm run build && node scripts/build-standalone.mjs"
+    "standalone": "npm run build && node scripts/build-standalone.mjs",
+    "audit": "node scripts/audit.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

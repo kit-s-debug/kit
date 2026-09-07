@@ -1,6 +1,5 @@
 "use client";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { Check } from "@phosphor-icons/react";
 import { useRef } from "react";
 import { PROCESS } from "../content";
 import { EASE, viewportOnce } from "../lib/motion";
@@ -25,21 +24,17 @@ export function Process() {
             <p className="u-label">How it works</p>
             <WordReveal text={PROCESS.heading} className="u-h2 mt-4 max-w-[15ch]" />
           </div>
-          <ul className="md:col-span-5 md:col-start-8 md:self-end">
-            {PROCESS.why.map((w, i) => (
-              <motion.li
-                key={w}
-                className="flex items-start gap-3 py-1.5 text-[0.95rem]"
-                initial={reduce ? false : { opacity: 0, x: 10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={viewportOnce}
-                transition={{ duration: 0.5, delay: i * 0.07, ease: EASE }}
-              >
-                <Check size={16} weight="bold" aria-hidden className="mt-1 shrink-0 text-[var(--accent)]" />
-                {w}
-              </motion.li>
-            ))}
-          </ul>
+          {/* This used to be three ticked promises, which were the fact strip and
+             the About answers said a third time. One line about the process. */}
+          <motion.p
+            className="u-body md:col-span-5 md:col-start-8 md:self-end"
+            initial={reduce ? false : { opacity: 0, x: 10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            {PROCESS.note}
+          </motion.p>
         </div>
 
         <div ref={ref} className="relative mt-[clamp(2.75rem,6vh,4rem)]">

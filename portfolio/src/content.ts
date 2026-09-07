@@ -6,7 +6,7 @@
 export const SITE = {
   name: "Kit Ryder",
   role: "Web designer & developer",
-  place: "Pembrokeshire, Wales",
+  place: "Haverfordwest, Pembrokeshire",
   email: "hello@kitryder.co.uk", // EDIT
   /* Where the contact form posts. Leave empty and the form falls back to
      opening a pre-filled email instead, so it always works. Formspree, Basin,
@@ -31,13 +31,13 @@ export const NAV = [
 export const CTA = { label: "Start a project", href: "#contact" };
 
 export const HERO = {
-  eyebrow: "Web design and build, Pembrokeshire",
+  eyebrow: "Freelance web design and build",
   headline: ["Websites that", "make a business", "impossible to ignore."],
   sub: "Pubs, restaurants, trades, shops and salons across West Wales.",
   primary: { label: "See the work", href: "#work" },
   secondary: CTA,
   /* A caption for the frame beside it, not a second headline. */
-  proof: "On screen: Eddie Rocks, Haverfordwest",
+  proof: "On screen: Eddie Rocks, a site I designed and built",
 };
 
 export const STRIP = {
@@ -64,6 +64,10 @@ export type Project = {
   image: string;
   aspect?: string;
   liveUrl?: string;
+  /* Marks a piece that is not a client engagement. Eddie Rocks has no status
+     because it is live; anything with one is labelled on the card and in the
+     case study, so nothing here can be mistaken for work that shipped. */
+  status?: string;
 };
 
 /* The flagship. Real work, real venue, and the case study links to the site
@@ -74,11 +78,9 @@ export const FEATURED = {
   sector: "Nightclub",
   town: "Haverfordwest",
   role: "Design and build",
-  year: "Quay Street",
-  kicker: "Featured build",
   headline: "Three floors, drawn in the browser.",
   summary:
-    "West Wales' biggest nightclub, and a site that had to make you feel the room before you reached the door.",
+    "A nightclub on Quay Street, and a site that had to make you feel the room before you reached the door.",
   body: [
     "A night out sells on atmosphere, and atmosphere does not survive a list of opening times. The site had to carry the feeling of the room, explain a building most people only half know, and take private hire without a phone call.",
     "So the venue is not photographed, it is modelled. The building and every room inside it are drawn live in WebGL, lit the way they are actually lit. Around that sit the things a Saturday night needs: door times, a countdown to opening, the line up, and an enquiry form.",
@@ -96,8 +98,10 @@ export const FEATURED = {
   cta: { label: "Get one like this", href: "#contact" },
 };
 
-/* EDIT: placeholder projects. Replace the copy and drop a real screenshot into
-   /public/work using the same file name. Images are 16:9. */
+/* EDIT: concept builds. Replace the copy and drop a real screenshot into
+   /public/work using the same file name. Images are 16:9. When one of these
+   becomes a real client, delete its `status` line and it stops being labelled
+   as a concept. */
 export const PROJECTS: Project[] = [
   {
     slug: "ninth-wave",
@@ -105,14 +109,15 @@ export const PROJECTS: Project[] = [
     sector: "Bar and late lounge",
     town: "Tenby",
     role: "Design and build",
-    summary: "A late bar whose whole identity lived in Instagram stories that vanished after 24 hours.",
+    summary: "A late bar everybody in town knew, and nobody could find online.",
     challenge:
-      "Everything the room had going for it, the line-up, the private hire, the Friday crowd, was invisible by Sunday. People searching for somewhere to go found a Facebook page and a phone number.",
+      "Search for somewhere open past eleven in Tenby and it did not come up at all. What did was a review site carrying the wrong closing time and a photograph from 2016.",
     approach:
-      "A full-bleed dark site built around the room itself. The line-up and hours come from a small CMS the manager updates on his phone, and table enquiries land in one inbox with the date, the size of the group and the occasion attached.",
-    outcome: "Table enquiries arrive as a form instead of a direct message at 1am.",
+      "One page that answers the question people are actually asking at half ten at night. Open or not, what is on, where the door is. Built light on purpose, because it has to work on one bar of signal outside.",
+    outcome: "Someone standing outside at half ten can tell it is open, without ringing.",
     tech: ["React", "TypeScript", "Sanity CMS", "Vercel"],
     image: "/work/ninth-wave.jpg",
+    status: "Concept",
   },
   {
     slug: "penrhos",
@@ -128,6 +133,7 @@ export const PROJECTS: Project[] = [
     outcome: "The kitchen updates its own menu. No email, no wait, no PDF.",
     tech: ["Astro", "Tailwind", "Sanity CMS", "Netlify"],
     image: "/work/penrhos.jpg",
+    status: "Concept",
   },
   {
     slug: "ivor-and-sons",
@@ -143,6 +149,7 @@ export const PROJECTS: Project[] = [
     outcome: "Chairs get filled before the shop opens, without anyone answering a call.",
     tech: ["Next.js", "Tailwind", "Booking API", "Cloudflare"],
     image: "/work/ivor-and-sons.jpg",
+    status: "Concept",
   },
   {
     slug: "carreg",
@@ -158,6 +165,7 @@ export const PROJECTS: Project[] = [
     outcome: "Quote requests come in with photos, a postcode and a start date attached.",
     tech: ["React", "TypeScript", "Cloudinary", "Netlify"],
     image: "/work/carreg.jpg",
+    status: "Concept",
   },
   {
     slug: "elin-vaughan",
@@ -173,6 +181,7 @@ export const PROJECTS: Project[] = [
     outcome: "One site she owns, that shows the work at full quality without the wait.",
     tech: ["React", "Motion", "Cloudflare Images"],
     image: "/work/elin-vaughan.jpg",
+    status: "Concept",
   },
 ];
 
@@ -182,7 +191,7 @@ export const SERVICES = [
     lead: "Built around what your business actually needs to say.",
     detail:
       "We start with the one thing a visitor has to understand, and the page gets built outward from that.",
-    points: ["A design built for you alone", "Layouts that hold on any screen", "A look you can reuse everywhere"],
+    points: ["Designed on your real words and photographs", "Layouts that hold on any screen", "A look you can reuse everywhere"],
   },
   {
     title: "Website development",
@@ -228,23 +237,25 @@ export const PROCESS = {
     {
       k: "Launch",
       v: "Domain, hosting, search listings and analytics, all handled. Then I stay reachable, because things always come up.",
-      note: "Support after launch",
+      note: "Live within a day of sign off",
     },
   ],
-  why: [
-    "Messages answered in hours, not next week",
-    "Agency standard without the agency overheads",
-    "Still here after the invoice is paid",
-  ],
+  note: "Every step ends with something you can actually look at, so you are never taking my word for how it is going.",
 };
 
 export const ABOUT = {
   /* EDIT: drop a photo at /public/kit.jpg and set portrait to "/kit.jpg". */
   portrait: "",
-  heading: "I am Kit Ryder, and I build websites in Pembrokeshire.",
+  heading: "I am Kit Ryder, and I work out of Haverfordwest.",
+  /* EDIT: this is the one section that should sound like you and nobody else.
+     Saying your age outright is a deliberate call: stated plainly it reads as
+     confidence, and the third paragraph turns it into a reason to hire you.
+     If you would rather it were not on the page, delete the first sentence of
+     the first paragraph and the rest still stands on its own. */
   body: [
-    "I build for businesses that look better in person than they do online. That gap is the website, and it is fixable.",
-    "I care about how a site feels in the first three seconds, and whether it brings you more of the customers you actually want.",
+    "I am eighteen. I have been making things on a screen since well before I was any good at it, and design is the part I kept chasing: why one page feels expensive and the next one does not, why people stop scrolling at one thing and slide past another.",
+    "The nightclub at the top of this page is in the same town as my desk. That is roughly the point. I would rather build for somewhere I can walk into and stand in than for a brief that arrives in an inbox.",
+    "The advantage of hiring someone at the start of this is simple enough. I am not juggling twelve other jobs, I have not learned to cut corners, and I do not intend to.",
   ],
   /* EDIT: say these in your own words. They exist to be the things a business
      owner cannot read on every other web designer's site. */
@@ -257,7 +268,7 @@ export const ABOUT = {
 
 export const WHERE = {
   heading: "Built for businesses on this coast.",
-  body: "From St Davids to Tenby, and remotely with everyone else. Near enough that I can come and stand in the place before I design anything for it.",
+  body: "From St Davids to Tenby, and remotely with everyone else. Close enough that meeting on a Tuesday morning is not an event, it is just a Tuesday.",
 };
 
 export const CONTACT = {

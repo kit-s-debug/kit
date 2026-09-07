@@ -20,23 +20,30 @@ body { background: #222; font-family: PublicSans, sans-serif; }
 
 /* 1. Ninth Wave ------------------------------------------------------------ */
 .nw { background: #05070c; color: #eef3f7; }
-.nw img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.75) contrast(1.05) brightness(.72) hue-rotate(-8deg); }
-.nw .veil { position: absolute; inset: 0; background:
-  linear-gradient(180deg, rgba(5,7,12,.86) 0%, rgba(5,7,12,.25) 38%, rgba(5,7,12,.94) 88%),
-  radial-gradient(80% 60% at 12% 70%, rgba(5,7,12,.8), transparent 70%); }
+/* No photograph on purpose. This one is about being legible at half ten at
+   night, and the only photography available is the other venue's. */
+.nw .grid { position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(134,198,242,.07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(134,198,242,.07) 1px, transparent 1px);
+  background-size: 78px 78px; }
+.nw .glow { position: absolute; inset: 0;
+  background: radial-gradient(58% 76% at 86% 20%, rgba(134,198,242,.17), transparent 66%),
+              radial-gradient(50% 60% at 6% 96%, rgba(134,198,242,.08), transparent 70%); }
 .nw .in { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 44px 60px 46px; }
 .nw .top { display: flex; align-items: center; justify-content: space-between; }
 .nw .mark { font-family: Anton; font-size: 22px; letter-spacing: .34em; }
 .nw nav { display: flex; gap: 38px; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: #b9c6d2; }
-.nw h1 { font-family: Anton; font-size: 132px; line-height: .86; letter-spacing: -.01em; max-width: 12ch; text-transform: uppercase; }
+.nw .status { display: inline-flex; align-items: center; gap: 12px; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: #86c6f2; }
+.nw .status .dot { width: 9px; height: 9px; border-radius: 50%; background: #86c6f2; box-shadow: 0 0 0 6px rgba(134,198,242,.15); }
+.nw h1 { margin-top: 26px; font-family: Anton; font-size: 186px; line-height: .92; letter-spacing: -.02em; text-transform: uppercase; }
 .nw h1 em { font-style: normal; color: #86c6f2; }
-.nw .sub { margin-top: 26px; font-size: 17px; letter-spacing: .04em; color: #c3cfda; }
-.nw .btm { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
-.nw .nights { display: flex; gap: 54px; }
-.nw .night .d { font-family: Anton; font-size: 15px; letter-spacing: .2em; color: #86c6f2; }
-.nw .night .t { margin-top: 8px; font-size: 19px; font-weight: 600; }
-.nw .night .h { margin-top: 4px; font-size: 13px; color: #93a3b1; }
-.nw .book { border: 1px solid rgba(238,243,247,.9); border-radius: 999px; padding: 15px 30px; font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+.nw .sub { margin-top: 30px; font-size: 18px; letter-spacing: .04em; color: #9fb0bd; }
+.nw .btm { display: flex; align-items: flex-end; justify-content: space-between; gap: 48px; }
+.nw .week { display: flex; flex: 1; max-width: 800px; }
+.nw .week .d { flex: 1; border-top: 1px solid rgba(238,243,247,.22); padding: 15px 26px 0 0; }
+.nw .week .d b { display: block; font-family: Anton; font-weight: 400; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #86c6f2; }
+.nw .week .d span { display: block; margin-top: 9px; font-size: 17px; color: #dfe7ee; }
+.nw .map { border: 1px solid rgba(238,243,247,.85); border-radius: 999px; padding: 15px 32px; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
 
 /* 2. Penrhos --------------------------------------------------------------- */
 .pn { background: #10241d; color: #f0ebe0; display: grid; grid-template-columns: 1fr 560px; }

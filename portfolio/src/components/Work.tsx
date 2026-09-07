@@ -67,8 +67,15 @@ function Meta({ project, size = "lg" }: { project: Project; size?: "lg" | "sm" }
       <h3 className={`u-display ${size === "lg" ? "text-[clamp(1.6rem,2.4vw,2.1rem)]" : "text-[clamp(1.35rem,1.8vw,1.6rem)]"}`}>
         {project.name}
       </h3>
-      <p className="u-fg2 mt-1.5 text-[0.86rem]">
-        {project.sector}, {project.town}
+      <p className="u-fg2 mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[0.86rem]">
+        <span>
+          {project.sector}, {project.town}
+        </span>
+        {project.status && (
+          <span className="border border-[var(--line)] px-1.5 py-px text-[0.66rem] tracking-[0.14em] uppercase">
+            {project.status}
+          </span>
+        )}
       </p>
       <p className="mt-3.5 max-w-[38ch] text-[0.95rem] leading-[1.6]">{project.outcome}</p>
       <ul className="mt-4 flex flex-wrap gap-1.5">
@@ -174,8 +181,11 @@ export function Work() {
             <p className="u-label">The work</p>
             <WordReveal text="Selected work" className="u-h2 mt-4" />
           </div>
-          <p className="u-fg2 max-w-[34ch] text-[0.95rem] leading-[1.6]">
-Real businesses, real problems. What each site had to fix is in its case study.
+          {/* Says plainly which of these shipped. The live one is worth more when
+             it is not sitting in a row of five things that all look equally real. */}
+          <p className="u-fg2 max-w-[36ch] text-[0.95rem] leading-[1.6]">
+            Eddie Rocks is live, and it is in my town. The four under it are concept builds: the same
+            process, run on the kinds of business I want to work with.
           </p>
         </div>
 
@@ -224,7 +234,8 @@ Real businesses, real problems. What each site had to fix is in its case study.
           <Reveal>
             <div className="u-line-t mt-[clamp(2.5rem,5vh,3.5rem)] flex flex-wrap items-center justify-between gap-4 pt-6">
               <p className="u-fg2 text-[0.95rem]">
-                {PROJECTS[4].name}, {PROJECTS[4].sector.toLowerCase()} in {PROJECTS[4].town}.
+                {PROJECTS[4].name}, {PROJECTS[4].sector.toLowerCase()} in {PROJECTS[4].town}
+                {PROJECTS[4].status ? `, ${PROJECTS[4].status.toLowerCase()}` : ""}.
               </p>
               <button
                 type="button"
