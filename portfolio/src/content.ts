@@ -11,7 +11,7 @@ export const SITE = {
   /* EDIT: your number, in the form you want it displayed. Trades, salons and
      pubs ring people; they do not fill in forms. Leave it empty and no phone
      link is rendered anywhere, so an unset number is never a dead link. */
-  phone: "",
+  phone: "07354 941781",
   /* Where the contact form posts. Leave empty and the form falls back to
      opening a pre-filled email instead, so it always works. Formspree, Basin,
      Netlify Forms and Web3Forms all accept a plain POST like this. */

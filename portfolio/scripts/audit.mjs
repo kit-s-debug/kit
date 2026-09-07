@@ -132,6 +132,27 @@ H("PRIVACY NOTICE");
   await pv.close();
 }
 
+H("CONTACT DETAILS");
+{
+  const tel = await page.evaluate(() =>
+    [...document.querySelectorAll('a[href^="tel:"]')].map((a) => ({
+      href: a.getAttribute("href").replace("tel:", ""),
+      text: a.textContent.trim(),
+    })),
+  );
+  say(tel.length >= 2, `${tel.length} phone links (contact and footer)`);
+  for (const t of tel) {
+    const digits = t.text.replace(/[^\d+]/g, "");
+    say(/^\+?\d{7,}$/.test(t.href) && t.href === digits, `tel:${t.href} dials what it shows ("${t.text}")`);
+  }
+  const schema = await page.evaluate(() => {
+    const el = document.querySelector('script[type="application/ld+json"]');
+    return el ? JSON.parse(el.textContent) : null;
+  });
+  say(Boolean(schema?.telephone), `schema carries a telephone (${schema?.telephone ?? "none"})`);
+  say(Boolean(schema?.email), `schema carries an email (${schema?.email ?? "none"})`);
+}
+
 H("NO DEAD PLACEHOLDER LINKS");
 {
   const bad = await page.evaluate(() =>
@@ -174,28 +195,49 @@ for (const id of ["work", "services", "about", "contact"]) {
 }
 for (const pct of [0, 0.25, 0.5, 0.75, 1]) {
   await page.evaluate((f) => scrollTo(0, (document.body.scrollHeight - innerHeight) * f), pct);
-  // The bar cross-fades its colours over 500ms. Sampling mid-transition reads a
-  // blend, so wait for the computed colour to stop moving before judging it.
-  let last = "";
-  let stable = 0;
-  for (let t = 0; t < 3500; t += 150) {
-    await page.waitForTimeout(150);
-    const now = await page.evaluate(() => getComputedStyle(document.querySelector("header")).color);
-    stable = now === last ? stable + 1 : 0;
-    last = now;
-    if (t >= 1400 && stable >= 2) break;
+  /* The bar reads its ground from an IntersectionObserver and then cross-fades
+     its colours over 500ms. Neither has a completion signal, and timing either
+     by a fixed wait fails a correct bar under software rendering: a colour that
+     has not started changing yet looks exactly as settled as one that has
+     finished. So poll for the end state instead. Contrast is stable once
+     reached and a mid-transition blend is low contrast, not high, so this
+     cannot pass on a transient. A bar that is genuinely wrong never contrasts
+     and the check fails on the timeout. */
+  const read = () =>
+    page.evaluate(() => {
+      const lum = (c) => {
+        const [r, g, b] = c
+          .match(/\d+\.?\d*/g)
+          .map(Number)
+          .slice(0, 3)
+          .map((v) => {
+            v /= 255;
+            return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+          });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const bar = document.querySelector("header");
+      let node = document.elementFromPoint(innerWidth / 2, 78);
+      let bg = "rgb(255,255,255)";
+      while (node) {
+        const c = getComputedStyle(node).backgroundColor;
+        if (c && !/rgba\(0, 0, 0, 0\)/.test(c)) {
+          bg = c;
+          break;
+        }
+        node = node.parentElement;
+      }
+      const t = lum(getComputedStyle(bar).color);
+      const g = lum(bg);
+      return { text: t < 0.2 ? "dark" : "light", ground: g < 0.2 ? "dark" : "light", gap: Math.abs(t - g) };
+    });
+
+  let r = await read();
+  for (let t = 0; t < 3000 && r.text === r.ground; t += 100) {
+    await page.waitForTimeout(100);
+    r = await read();
   }
-  const r = await page.evaluate(() => {
-    const bar = document.querySelector("header");
-    const cs = getComputedStyle(bar);
-    const lum = (c) => { const [r, g, b] = c.match(/\d+\.?\d*/g).map(Number).slice(0, 3).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
-    const under = document.elementFromPoint(innerWidth / 2, 78);
-    let bg = "rgb(255,255,255)", n = under;
-    while (n) { const c = getComputedStyle(n).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)/.test(c)) { bg = c; break; } n = n.parentElement; }
-    return { text: lum(cs.color) < 0.2 ? "dark" : "light", ground: lum(bg) < 0.2 ? "dark" : "light" };
-  });
-  const ok = r.text !== r.ground;
-  say(ok, `at ${Math.round(pct * 100)}% bar ${r.text === "dark" ? "dark" : "light"} over ${r.ground}`);
+  say(r.text !== r.ground, `at ${Math.round(pct * 100)}% bar ${r.text} over ${r.ground}`);
 }
 
 H("MOBILE");

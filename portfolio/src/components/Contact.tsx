@@ -82,6 +82,9 @@ export function Contact() {
 
           <Reveal delay={0.22} className="mt-auto">
             <div className="pt-10">
+              {/* Stacked, not inline: two inline-flex links share a line and the
+                 email's arrow ends up butted against the phone number. */}
+              <div className="flex flex-col items-start gap-3.5">
               <a
                 href={`mailto:${SITE.email}`}
                 className="group inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)]"
@@ -98,7 +101,7 @@ export function Contact() {
               {SITE.phone && (
                 <a
                   href={`tel:${SITE.phone.replace(/[^\d+]/g, "")}`}
-                  className="group mt-4 inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)]"
+                  className="group inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)]"
                 >
                   <span className="relative">
                     {SITE.phone}
@@ -106,6 +109,7 @@ export function Contact() {
                   </span>
                 </a>
               )}
+              </div>
 
               {/* Real availability, the one status indicator on the page. Gone
                  entirely when the line is empty, rather than claiming nothing. */}
