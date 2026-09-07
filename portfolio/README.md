@@ -29,6 +29,13 @@ npm run preview    # serve the built site
 
 ## Going live
 
+**The repository's default branch is not this site.** It is a separate branch
+that predates the portfolio and only holds the raw Eddie Rocks static site. A
+host that deploys "the default branch" without being told otherwise will
+build that, not this. On Vercel: Project Settings -> Git -> Production Branch,
+set it to the branch this portfolio lives on. On Netlify: Site configuration ->
+Build & deploy -> the branch to deploy.
+
 `netlify.toml` and `vercel.json` are in the repository root and set everything
 up for those two hosts. For Cloudflare Pages or anything else:
 
