@@ -13,9 +13,12 @@ export const SITE = {
      link is rendered anywhere, so an unset number is never a dead link. */
   phone: "07354 941781",
   /* Where the contact form posts. Leave empty and the form falls back to
-     opening a pre-filled email instead, so it always works. Formspree, Basin,
-     Netlify Forms and Web3Forms all accept a plain POST like this. */
+     opening a pre-filled email instead, so it always works. Formspree, Basin
+     and Netlify Forms accept a plain POST like this with no further setup. */
   formEndpoint: import.meta.env.VITE_FORM_ENDPOINT ?? "",
+  /* Only for Web3Forms, which identifies the account by a key in the POST body
+     rather than by the endpoint URL. Leave empty for every other provider. */
+  formAccessKey: import.meta.env.VITE_FORM_ACCESS_KEY ?? "",
   /* EDIT: keep this true. Empty string hides the whole availability line, which
      is the honest thing to do when you are full. Avoid naming a season here,
      it goes stale on the page and nobody notices but the visitor. */

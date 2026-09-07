@@ -58,6 +58,7 @@ Environment variables to set on the host:
 | --- | --- | --- |
 | `VITE_SITE_URL` | The live domain. Fills in the canonical link, the Open Graph tags, the schema record, `robots.txt` and the sitemap. | Falls back to `https://www.ryderdesigns.org` |
 | `VITE_FORM_ENDPOINT` | Where the contact form posts. | Form falls back to opening the visitor's mail client |
+| `VITE_FORM_ACCESS_KEY` | Only for Web3Forms, which needs a key in the request body. | Omitted from the request |
 | `VITE_ANALYTICS_DOMAIN` | Your domain, to switch on cookie-free Plausible analytics. | No analytics, no third-party request, and the privacy notice drops its analytics section |
 | `VITE_ANALYTICS_HOST` | Only if you self-host Plausible. | `https://plausible.io` |
 
@@ -112,15 +113,24 @@ a "Visit live site" link appears in the case study.
 
 With no endpoint configured the form validates, then hands the message to the
 visitor's own email client, so it works on day one. To collect submissions
-properly, create a form endpoint (Formspree, Basin, Netlify Forms, Web3Forms)
-and set it as an environment variable at build time:
+properly, pick one:
+
+**Formspree or Basin** — create a form in their dashboard, then:
 
 ```
 VITE_FORM_ENDPOINT=https://formspree.io/f/yourid
 ```
 
+**Web3Forms** — no account, just an email address. Get a key at
+web3forms.com and set both:
+
+```
+VITE_FORM_ENDPOINT=https://api.web3forms.com/submit
+VITE_FORM_ACCESS_KEY=your-key
+```
+
 The form posts JSON with `name`, `email`, `business`, `projectType` and
-`message`.
+`message` (plus `access_key`, only when `VITE_FORM_ACCESS_KEY` is set).
 
 ## How it is built
 

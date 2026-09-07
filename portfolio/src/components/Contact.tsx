@@ -56,10 +56,14 @@ export function Contact() {
     }
 
     try {
+      /* Web3Forms identifies the account by a key in the body, not the URL, so
+         it rides along only when one is configured. Every other provider
+         ignores a field it was not expecting. */
+      const payload = SITE.formAccessKey ? { access_key: SITE.formAccessKey, ...values } : values;
       const res = await fetch(SITE.formEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error(String(res.status));
       setState("sent");
