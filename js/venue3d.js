@@ -706,16 +706,56 @@ export function mountVenue(config) {
     var probe = [];
     var probed = false;
     var lastFrameAt = 0;
+    var deadlineTimer = null;
+    /* Requiring 18 whole frames before a verdict is fine on a machine near
+       60fps — that is a third of a second — but the wait scales with
+       exactly the problem it exists to catch. A machine drawing this at
+       650-930ms a frame, the case that motivated the check in the first
+       place, needs 12-17 real seconds to produce 18 of them, and every one
+       of those seconds is spent inside the slow thing before the verdict
+       that removes it.
+
+       A verdict that only gets checked once each frame finishes cannot
+       outrun that either: if a frame itself takes seconds under the load
+       being measured, several such frames stack up before the check even
+       gets a turn to look at the clock, because nothing runs between them.
+       setTimeout does not have that problem — it queues independently of
+       the render loop, so it gets a turn as soon as whichever frame is
+       currently in flight finishes, not after however many more it takes
+       the loop to notice on its own. Past this many milliseconds without a
+       verdict, the delay itself is already the answer, so this decides on
+       whatever rendered so far rather than waiting for the loop to catch up. */
+    var PROBE_DEADLINE_MS = 1200;
+
+    function verdict(samples) {
+      /* Six warm-up frames are thrown away on the normal path — shader
+         compilation, texture upload and whatever else the page is still
+         doing all land in the first few — and the verdict is the median of
+         the rest, so one busy moment cannot take the scene down.
+
+         The deadline does not get that luxury: a machine that triggers it
+         has, by definition, not produced enough frames to spare six as
+         warm-up without emptying the sample entirely, which would leave
+         nothing to judge and — worse than never deciding — silently never
+         stand down at all. So at most one frame's width less than it has is
+         kept, always leaving something to judge: a machine already this far
+         behind is not going to be rescued by one more frame of patience. */
+      var keepFrom = Math.min(6, Math.max(0, samples.length - 1));
+      var s = samples.slice(keepFrom).sort(function (a, b) { return a - b; });
+      return s.length > 0 && s[Math.floor(s.length / 2)] > SLOW_FRAME_MS;
+    }
+
+    function onDeadline() {
+      if (probed) return;
+      probed = true;
+      if (verdict(probe)) standDown();
+    }
 
     function tooSlowToBeWorthIt() {
-      /* Six warm-up frames are thrown away — shader compilation, texture
-         upload and whatever else the page is still doing all land in the
-         first few — and the verdict is the median of the twelve after them,
-         so one busy moment cannot take the scene down. */
       if (probed || probe.length < 18) return false;
-      var s = probe.slice(6).sort(function (a, b) { return a - b; });
       probed = true;
-      return s[Math.floor(s.length / 2)] > SLOW_FRAME_MS;
+      clearTimeout(deadlineTimer);
+      return verdict(probe);
     }
 
     function standDown() {
@@ -823,7 +863,10 @@ export function mountVenue(config) {
 
       if (!probed) {
         var now = performance.now();
-        if (lastFrameAt) probe.push(now - lastFrameAt);
+        if (lastFrameAt) {
+          if (!probe.length) deadlineTimer = setTimeout(onDeadline, PROBE_DEADLINE_MS);
+          probe.push(now - lastFrameAt);
+        }
         lastFrameAt = now;
         if (tooSlowToBeWorthIt()) standDown();
       }
