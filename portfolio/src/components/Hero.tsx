@@ -114,6 +114,18 @@ export function Hero() {
           <div className="lg:-mr-[14vw] xl:-mr-[10vw]" style={{ perspective: 1400 }}>
             <motion.div
               style={tilt && !reduce ? { rotateY: ry, rotateX: rx, transformStyle: "preserve-3d" } : undefined}
+              /* No cursor on a phone to lean toward, so the frame gets a small,
+                 slow, ambient tilt of its own instead — just enough to read as
+                 a floating object rather than a flat, static screenshot. Kept
+                 small on purpose: this is full-bleed width at this size, and a
+                 rotation big enough to notice reads as a skewed image rather
+                 than a dimensional one. */
+              animate={
+                !tilt && !reduce
+                  ? { rotateY: [-2.5, 2.5, -2.5], rotateX: [1, -1, 1] }
+                  : undefined
+              }
+              transition={!tilt && !reduce ? { duration: 9, repeat: Infinity, ease: "easeInOut" } : undefined}
               className="origin-left"
             >
               <SitePreview

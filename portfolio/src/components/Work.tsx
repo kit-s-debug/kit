@@ -3,7 +3,7 @@ import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useScroll,
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { useRef, useState, type ReactNode } from "react";
 import { FEATURED, PROJECTS, type Project } from "../content";
-import { EASE, viewportOnce } from "../lib/motion";
+import { EASE, useDrift, viewportOnce } from "../lib/motion";
 import { ProjectOverlay } from "./ProjectOverlay";
 import { Cta } from "./primitives/Cta";
 import { Reveal } from "./primitives/Reveal";
@@ -172,15 +172,18 @@ function Lead() {
 
 export function Work() {
   const [open, setOpen] = useState<Project | null>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const headingY = useDrift(headingRef);
 
   return (
     <section id="work" data-surface="light" className="s-tint py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
+          <motion.div ref={headingRef} style={reduce ? undefined : { y: headingY }}>
             <p className="u-label">The work</p>
             <WordReveal text="Selected work" className="u-h2 mt-4" />
-          </div>
+          </motion.div>
           {/* Says plainly which of these shipped. The live one is worth more when
              it is not sitting in a row of five things that all look equally real. */}
           <p className="u-fg2 max-w-[36ch] text-[0.95rem] leading-[1.6]">

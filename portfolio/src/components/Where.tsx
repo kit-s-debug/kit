@@ -1,6 +1,9 @@
 "use client";
+import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
 import { WHERE } from "../content";
 import { TOWNS } from "../data/pembrokeshire";
+import { useDrift } from "../lib/motion";
 import { Reveal } from "./primitives/Reveal";
 import { WordReveal } from "./primitives/WordReveal";
 import { Terrain } from "./Terrain";
@@ -9,6 +12,10 @@ import { Terrain } from "./Terrain";
    landscape behind the section stops being abstract and resolves into the
    real coastline, so the copy gets out of its way. */
 export function Where() {
+  const reduce = useReducedMotion();
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingY = useDrift(headingRef);
+
   return (
     <section
       id="where"
@@ -25,8 +32,10 @@ export function Where() {
 
       <div className="u-wide relative flex min-h-[68vh] items-center">
         <div className="max-w-[34rem]">
-          <p className="u-label">Where I work</p>
-          <WordReveal text={WHERE.heading} className="u-h2 mt-4 max-w-[13ch]" />
+          <motion.div ref={headingRef} style={reduce ? undefined : { y: headingY }}>
+            <p className="u-label">Where I work</p>
+            <WordReveal text={WHERE.heading} className="u-h2 mt-4 max-w-[13ch]" />
+          </motion.div>
           <Reveal delay={0.12}>
             <p className="u-lede mt-6 max-w-[40ch]">{WHERE.body}</p>
           </Reveal>

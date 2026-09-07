@@ -1,9 +1,9 @@
 "use client";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, CheckCircle } from "@phosphor-icons/react";
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { CONTACT, SITE } from "../content";
-import { EASE } from "../lib/motion";
+import { EASE, useDrift } from "../lib/motion";
 import { Cta } from "./primitives/Cta";
 import { Reveal } from "./primitives/Reveal";
 import { WordReveal } from "./primitives/WordReveal";
@@ -30,6 +30,8 @@ export function Contact() {
   const [errors, setErrors] = useState<Errors>({});
   const [state, setState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
   const reduce = useReducedMotion();
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingY = useDrift(headingRef);
 
   const set = (k: keyof Fields) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [k]: e.target.value }));
@@ -78,8 +80,10 @@ export function Contact() {
       <div className="u-wide">
       <div className="grid gap-12 md:grid-cols-12 md:gap-12">
         <div className="flex flex-col md:col-span-5">
-          <p className="u-label">Start here</p>
-          <WordReveal text={CONTACT.heading} stagger={0.035} className="u-h2 mt-4 max-w-[15ch]" />
+          <motion.div ref={headingRef} style={reduce ? undefined : { y: headingY }}>
+            <p className="u-label">Start here</p>
+            <WordReveal text={CONTACT.heading} stagger={0.035} className="u-h2 mt-4 max-w-[15ch]" />
+          </motion.div>
           <Reveal delay={0.15}>
             <p className="u-lede mt-6 max-w-[36ch]">{CONTACT.sub}</p>
           </Reveal>

@@ -1,9 +1,9 @@
 "use client";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Plus } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SERVICES } from "../content";
-import { EASE } from "../lib/motion";
+import { EASE, useDrift } from "../lib/motion";
 import { WordReveal } from "./primitives/WordReveal";
 
 /* Big type rows that open in place. The first is open on arrival so the section
@@ -11,12 +11,16 @@ import { WordReveal } from "./primitives/WordReveal";
 export function Services() {
   const [open, setOpen] = useState(0);
   const reduce = useReducedMotion();
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingY = useDrift(headingRef);
 
   return (
     <section id="services" data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide">
-      <p className="u-label">What I do</p>
-      <WordReveal text="Four things. Most projects need the first two." className="u-h2 mt-4 max-w-[18ch]" />
+      <motion.div ref={headingRef} style={reduce ? undefined : { y: headingY }}>
+        <p className="u-label">What I do</p>
+        <WordReveal text="Four things. Most projects need the first two." className="u-h2 mt-4 max-w-[18ch]" />
+      </motion.div>
 
       <div className="mt-10 u-line-t">
         {SERVICES.map((s, i) => {

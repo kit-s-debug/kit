@@ -2,7 +2,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { PROCESS } from "../content";
-import { EASE, viewportOnce } from "../lib/motion";
+import { EASE, useDrift, viewportOnce } from "../lib/motion";
 import { Cta } from "./primitives/Cta";
 import { CTA } from "../content";
 import { Reveal } from "./primitives/Reveal";
@@ -12,18 +12,20 @@ import { WordReveal } from "./primitives/WordReveal";
    cards: the line is the thing, the steps hang off it. */
 export function Process() {
   const ref = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 60%"] });
   const grow = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const headingY = useDrift(headingRef);
 
   return (
     <section data-surface="dark" className="s-dark py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide">
         <div className="grid gap-8 md:grid-cols-12">
-          <div className="md:col-span-6">
+          <motion.div ref={headingRef} style={reduce ? undefined : { y: headingY }} className="md:col-span-6">
             <p className="u-label">How it works</p>
             <WordReveal text={PROCESS.heading} className="u-h2 mt-4 max-w-[15ch]" />
-          </div>
+          </motion.div>
           {/* This used to be three ticked promises, which were the fact strip and
              the About answers said a third time. One line about the process. */}
           <motion.p

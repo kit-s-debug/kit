@@ -1,13 +1,21 @@
+"use client";
+import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
 import { STRIP } from "../content";
+import { useDrift } from "../lib/motion";
 import { Reveal } from "./primitives/Reveal";
 import { WordReveal } from "./primitives/WordReveal";
 
 /* The first breath of light on the page, and the argument in two sentences. */
 export function Strip() {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const y = useDrift(ref);
+
   return (
     <section data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide grid gap-12 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-7">
+        <motion.div ref={ref} style={reduce ? undefined : { y }} className="md:col-span-7">
           <WordReveal
             text={STRIP.line}
             stagger={0.02}
@@ -16,7 +24,7 @@ export function Strip() {
           <Reveal delay={0.12}>
             <p className="u-h2 mt-2 text-[clamp(1.5rem,2.9vw,2.35rem)] leading-[1.15]">{STRIP.emphasis}</p>
           </Reveal>
-        </div>
+        </motion.div>
 
         <ul className="md:col-span-4 md:col-start-9">
           {STRIP.facts.map((f, i) => (

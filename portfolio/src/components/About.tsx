@@ -1,7 +1,8 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
+import { useRef } from "react";
 import { ABOUT, CTA, SITE } from "../content";
-import { EASE, viewportOnce } from "../lib/motion";
+import { EASE, useDrift, viewportOnce } from "../lib/motion";
 import { Cta } from "./primitives/Cta";
 import { Reveal } from "./primitives/Reveal";
 import { WordReveal } from "./primitives/WordReveal";
@@ -14,15 +15,21 @@ const SPANS = ["md:col-span-6", "md:col-span-5 md:col-start-8", "md:col-span-6 m
 export function About() {
   const reduce = useReducedMotion();
   const hasPortrait = Boolean(ABOUT.portrait);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingY = useDrift(headingRef);
 
   return (
     <section id="about" data-surface="light" className="s-light py-[clamp(3.25rem,8vh,5.5rem)]">
       <div className="u-wide">
         <div className="grid gap-10 md:grid-cols-12 md:gap-10">
-          <div className="md:col-span-7 md:col-start-1 md:row-start-1">
+          <motion.div
+            ref={headingRef}
+            style={reduce ? undefined : { y: headingY }}
+            className="md:col-span-7 md:col-start-1 md:row-start-1"
+          >
             <p className="u-label">Who you are hiring</p>
             <WordReveal text={ABOUT.heading} stagger={0.03} className="u-h2 mt-4 max-w-[13ch]" />
-          </div>
+          </motion.div>
 
           {/* The prose column spans both rows so the availability line below the
              heading can settle against its baseline instead of leaving a hole
