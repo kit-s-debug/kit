@@ -68,9 +68,23 @@ export function mountVenue(config) {
     });
   }
   if ("IntersectionObserver" in window) {
+    /* This section sits right after the hero, and the hero is close enough
+       to a full viewport tall that the section's top edge already sits at
+       the fold on load, before any scrolling. A positive rootMargin — this
+       used to carry 150%, meant as "a viewport and a half of warning" —
+       only ever pushes the trigger boundary further past a section that is
+       already there, so the fetch, parse and full room build fired the
+       moment the page loaded on every visitor, scrolled or not. That is
+       the page's own load competing with the busiest thing on it.
+
+       A negative bottom margin instead requires the section to have
+       genuinely scrolled up into view: shrinking the root by 35% of the
+       viewport from the bottom means the top of the section has to cross
+       into the upper 65% before this counts as intersecting, which cannot
+       happen without the visitor actually scrolling towards it. */
     var boot = new IntersectionObserver(function (entries) {
       if (entries[0].isIntersecting) { boot.disconnect(); start(); }
-    }, { rootMargin: "150% 0px" });
+    }, { rootMargin: "0px 0px -35% 0px" });
     boot.observe(section);
   } else {
     start();
