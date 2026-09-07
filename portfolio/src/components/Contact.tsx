@@ -93,16 +93,33 @@ export function Contact() {
                 <ArrowUpRight size={17} weight="regular" aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
 
-              {/* Real availability, the one status indicator on the page. */}
-              <p className="mt-7 flex items-center gap-2.5 text-[0.9rem] text-[var(--fg-2)]">
-                <span aria-hidden className="relative flex h-2 w-2">
-                  {!reduce && (
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-pill bg-[var(--accent-graphic)] opacity-60" />
-                  )}
-                  <span className="relative inline-flex h-2 w-2 rounded-pill bg-[var(--accent-graphic)]" />
-                </span>
-                {SITE.availability}
-              </p>
+              {/* Half this audience rings rather than types. Rendered only when a
+                 number is set, so an unset one is never a dead tel: link. */}
+              {SITE.phone && (
+                <a
+                  href={`tel:${SITE.phone.replace(/[^\d+]/g, "")}`}
+                  className="group mt-4 inline-flex items-center gap-2 text-[clamp(1.05rem,1.7vw,1.35rem)]"
+                >
+                  <span className="relative">
+                    {SITE.phone}
+                    <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[var(--accent-graphic)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100" />
+                  </span>
+                </a>
+              )}
+
+              {/* Real availability, the one status indicator on the page. Gone
+                 entirely when the line is empty, rather than claiming nothing. */}
+              {SITE.availability && (
+                <p className="mt-7 flex items-center gap-2.5 text-[0.9rem] text-[var(--fg-2)]">
+                  <span aria-hidden className="relative flex h-2 w-2">
+                    {!reduce && (
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-pill bg-[var(--accent-graphic)] opacity-60" />
+                    )}
+                    <span className="relative inline-flex h-2 w-2 rounded-pill bg-[var(--accent-graphic)]" />
+                  </span>
+                  {SITE.availability}
+                </p>
+              )}
 
               <ul className="mt-9 flex flex-wrap gap-x-6 gap-y-2">
                 {SITE.socials

@@ -28,6 +28,20 @@ export function Footer() {
           >
             Email
           </a>
+          {SITE.phone && (
+            <a
+              href={`tel:${SITE.phone.replace(/[^\d+]/g, "")}`}
+              className="text-[0.88rem] text-[var(--fg-2)] transition-colors duration-300 hover:text-[var(--fg)]"
+            >
+              {SITE.phone}
+            </a>
+          )}
+          <a
+            href="/privacy/"
+            className="text-[0.88rem] text-[var(--fg-2)] transition-colors duration-300 hover:text-[var(--fg)]"
+          >
+            Privacy
+          </a>
         </nav>
 
         <p className="u-fg2 text-[0.8rem]">&copy; {new Date().getFullYear()} {SITE.name}</p>

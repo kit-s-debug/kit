@@ -38,7 +38,7 @@ for (const asset of readdirSync(join(dist, "work"))) {
 /* The Eddie Rocks site is a whole directory, so it cannot travel inside a
    single file. Say so rather than shipping a link that 404s. */
 if (js.includes("/eddie-rocks/")) {
-  console.warn("note: the 'View the live site' link needs the deployed build, not this single file");
+  console.warn("note: 'View the live site' and the footer's Privacy link need the deployed\n      build, not this single file");
 }
 /* A literal </script> anywhere in the bundle would end the tag early. */
 js = js.replaceAll("</script", "<\\/script");

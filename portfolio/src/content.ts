@@ -8,16 +8,25 @@ export const SITE = {
   role: "Web design and development",
   place: "Haverfordwest, Pembrokeshire",
   email: "hello@ryderdesigns.co.uk", // EDIT
+  /* EDIT: your number, in the form you want it displayed. Trades, salons and
+     pubs ring people; they do not fill in forms. Leave it empty and no phone
+     link is rendered anywhere, so an unset number is never a dead link. */
+  phone: "",
   /* Where the contact form posts. Leave empty and the form falls back to
      opening a pre-filled email instead, so it always works. Formspree, Basin,
      Netlify Forms and Web3Forms all accept a plain POST like this. */
   formEndpoint: import.meta.env.VITE_FORM_ENDPOINT ?? "",
-  availability: "Taking on two new projects this autumn", // EDIT
+  /* EDIT: keep this true. Empty string hides the whole availability line, which
+     is the honest thing to do when you are full. Avoid naming a season here,
+     it goes stale on the page and nobody notices but the visitor. */
+  availability: "Taking on two new projects",
+  /* EDIT: fill in the href for each account you actually have. An empty href is
+     not rendered, so these sit here harmlessly until the accounts exist rather
+     than sending a prospective client to a 404. */
   socials: [
-    // EDIT: swap in your real profile links. Anything left empty is not rendered.
-    { label: "Instagram", href: "https://instagram.com/ryderdesigns" },
-    { label: "LinkedIn", href: "https://linkedin.com/company/ryderdesigns" },
-    { label: "GitHub", href: "https://github.com/ryderdesigns" },
+    { label: "Instagram", href: "" },
+    { label: "LinkedIn", href: "" },
+    { label: "GitHub", href: "" },
   ],
 };
 
@@ -275,4 +284,66 @@ export const CONTACT = {
   heading: "Have a business that deserves a better website?",
   sub: "Tell me what you do and where it is falling short. I reply the same day.",
   projectTypes: ["New website", "Redesign", "AI & automation", "Something else"],
+};
+
+/* ---------------------------------------------------------------------------
+   The privacy notice, served at /privacy/. UK GDPR requires one the moment a
+   site collects personal data, and the contact form does. Keep it accurate:
+   if you change what the form collects or which services handle it, change
+   this too. The analytics paragraph appears only when analytics is switched on.
+--------------------------------------------------------------------------- */
+export const LEGAL = {
+  updated: "September 2026", // EDIT when you revise the notice
+  heading: "Privacy",
+  intro:
+    "This is the whole of it. No cookie banner, because there are no cookies to consent to.",
+  sections: [
+    {
+      k: "Who is responsible",
+      v: [
+        `${SITE.name} is a sole trader based in ${SITE.place}. If you want anything on this page explained, or you want your data removed, email ${SITE.email} and you will be dealing with the person who reads it.`,
+      ],
+    },
+    {
+      k: "What the contact form collects",
+      v: [
+        "Your name, your email address, optionally your business name, the type of project you picked, and whatever you write in the message box.",
+        "It is used to reply to you and to quote for the work. It is not added to a mailing list, not sold, and not shared with anyone outside the services listed below.",
+        "The lawful basis is that you asked to be contacted about work: taking steps at your request before entering a contract, and legitimate interest in replying to an enquiry.",
+      ],
+    },
+    {
+      k: "How long it is kept",
+      v: [
+        "Enquiries that do not become work are deleted within twelve months. Where the enquiry becomes a project, the correspondence is kept for six years after the last invoice, because tax records have to be.",
+      ],
+    },
+    {
+      k: "Who else handles it",
+      v: [
+        "The form provider that delivers the message, the email provider that receives it, and the hosting company that serves this site. Hosting companies keep short-lived server logs that include the IP address of every visitor; that is standard and is not something this site controls or reads.",
+      ],
+    },
+    {
+      k: "Cookies",
+      v: [
+        "This site sets no cookies and stores nothing in your browser. Nothing here follows you anywhere else.",
+      ],
+    },
+    {
+      k: "Your rights",
+      v: [
+        "You can ask what is held about you, ask for it to be corrected or deleted, or object to it being held at all. Email the address above and it will be done, without you having to explain why.",
+        "If you think it has been handled badly you can complain to the Information Commissioner's Office at ico.org.uk, and you do not need to raise it here first.",
+      ],
+    },
+  ],
+  /* Only shown when VITE_ANALYTICS_DOMAIN is set, so the notice describes the
+     site as actually deployed rather than a configuration it might not have. */
+  analytics: {
+    k: "Analytics",
+    v: [
+      "Visits are counted with a privacy-first analytics service that sets no cookies, stores nothing in your browser and does not build a profile of you. It records the page, roughly where in the world the request came from, and what linked you here. None of that identifies you, and none of it leaves the report.",
+    ],
+  },
 };

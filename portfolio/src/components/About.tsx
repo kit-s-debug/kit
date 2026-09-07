@@ -39,6 +39,7 @@ export function About() {
           <div className="md:col-span-5 md:col-start-1 md:row-start-2 md:self-end">
             <Reveal delay={0.12}>
               <div className="u-line-t pt-6">
+                {SITE.availability && (
                 <p className="flex items-center gap-2.5 text-[0.9rem]">
                   <span aria-hidden className="relative flex h-2 w-2">
                     {!reduce && (
@@ -48,6 +49,7 @@ export function About() {
                   </span>
                   {SITE.availability}
                 </p>
+                )}
                 <div className="mt-5">
                   <Cta href={CTA.href} variant="text">
                     {CTA.label}

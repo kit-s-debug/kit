@@ -108,6 +108,40 @@ const tags = await page.evaluate(() => ({
 say(tags.concepts === tags.cards, `${tags.concepts}/${tags.cards} non-live cards labelled Concept`);
 say(!tags.overclaim, "no blanket \"real businesses\" claim over concept work");
 
+H("PRIVACY NOTICE");
+{
+  const r = await page.request.get(BASE + "/privacy/");
+  say(r.status() === 200, `/privacy/ -> ${r.status()}`);
+  const pv = await newPage();
+  await land(pv, BASE + "/privacy/");
+  const info = await pv.evaluate(() => ({
+    h1: document.querySelector("h1")?.textContent?.trim() ?? "",
+    sections: document.querySelectorAll("main section").length,
+    back: [...document.querySelectorAll('a[href="/"]')].length,
+    mail: [...document.querySelectorAll('a[href^="mailto:"]')].length,
+    logo: document.querySelectorAll("header svg").length,
+    words: (document.querySelector("main")?.textContent ?? "").split(/\s+/).length,
+  }));
+  say(info.h1.length > 0, `heading "${info.h1}"`);
+  say(info.sections >= 6, `${info.sections} sections, ${info.words} words`);
+  say(info.back >= 2, `${info.back} links back to the site`);
+  say(info.mail >= 1, "contact address on the page");
+  say(info.logo >= 1, "logo renders on the notice");
+  const over = await pv.evaluate(() => Math.max(0, document.documentElement.scrollWidth - innerWidth));
+  say(over === 0, `no sideways overflow (${over}px)`);
+  await pv.close();
+}
+
+H("NO DEAD PLACEHOLDER LINKS");
+{
+  const bad = await page.evaluate(() =>
+    [...document.querySelectorAll("a[href]")]
+      .map((a) => a.getAttribute("href"))
+      .filter((h) => /^https?:\/\/(www\.)?ryderdesigns\.co\.uk\/?$|^https?:\/\/(www\.)?(instagram\.com\/ryderdesigns|linkedin\.com\/company\/ryderdesigns|github\.com\/ryderdesigns)\/?$|^#$|^$/.test(h)),
+  );
+  say(bad.length === 0, bad.length ? `placeholder links rendered: ${bad.join(", ")}` : "no unset placeholder is rendered as a link");
+}
+
 H("EDDIE ROCKS ROUTE");
 for (const r of ["/eddie-rocks/", "/eddie-rocks/css/styles.css", "/eddie-rocks/js/main.js", "/work/eddies-scroll.webm"]) {
   const res = await page.request.get(BASE + r);
@@ -143,11 +177,13 @@ for (const pct of [0, 0.25, 0.5, 0.75, 1]) {
   // The bar cross-fades its colours over 500ms. Sampling mid-transition reads a
   // blend, so wait for the computed colour to stop moving before judging it.
   let last = "";
-  for (let t = 0; t < 3000; t += 150) {
+  let stable = 0;
+  for (let t = 0; t < 3500; t += 150) {
     await page.waitForTimeout(150);
     const now = await page.evaluate(() => getComputedStyle(document.querySelector("header")).color);
-    if (now === last && t >= 600) break;
+    stable = now === last ? stable + 1 : 0;
     last = now;
+    if (t >= 1400 && stable >= 2) break;
   }
   const r = await page.evaluate(() => {
     const bar = document.querySelector("header");
@@ -166,10 +202,10 @@ H("MOBILE");
 const m = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
 await land(m); await m.waitForTimeout(1400);
 say(await m.evaluate(() => { const v = document.querySelector("video"); return !v || (!v.paused && v.currentTime > 0); }), "hero preview autoplays on mobile");
-await m.click('button[aria-label="Open menu"]'); await m.waitForTimeout(600);
-say(await m.evaluate(() => Boolean(document.querySelector('[data-menu="mobile"]'))), "mobile menu opens");
-await m.click('button[aria-label="Close menu"]'); await m.waitForTimeout(700);
-say(await m.evaluate(() => !document.querySelector('[data-menu="mobile"]')), "mobile menu closes");
+await m.click('button[aria-label="Open menu"]');
+say(await waitFor(m, () => Boolean(document.querySelector('[data-menu="mobile"]'))), "mobile menu opens");
+await m.click('button[aria-label="Close menu"]');
+say(await waitFor(m, () => !document.querySelector('[data-menu="mobile"]')), "mobile menu closes");
 await m.close();
 for (const w of [320, 390, 768, 1024, 1440, 1920]) {
   const q = await newPage({ viewport: { width: w, height: 900 } });

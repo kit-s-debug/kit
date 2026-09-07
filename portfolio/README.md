@@ -27,9 +27,34 @@ npm run build      # type check, then build to dist/
 npm run preview    # serve the built site
 ```
 
-Deploy `dist/` to any static host. On Vercel or Netlify, set the project root
-to `portfolio`, the build command to `npm run build`, and the output directory
-to `dist`.
+## Going live
+
+`netlify.toml` and `vercel.json` are in the repository root and set everything
+up for those two hosts. For Cloudflare Pages or anything else:
+
+| Setting | Value |
+| --- | --- |
+| Root / base directory | `portfolio` |
+| Build command | `npm run build` |
+| Output directory | `portfolio/dist` |
+| Node version | 22 |
+
+**Point the host at the whole repository, not just the `portfolio` folder.**
+The build's `prebuild` step copies the Eddie Rocks site in from the repository
+root, and that is what makes the case study's "View the live site" a real link
+instead of a dead button. If `/eddie-rocks/` 404s on your deployed site, this
+is why.
+
+Environment variables to set on the host:
+
+| Variable | What it does | Unset |
+| --- | --- | --- |
+| `VITE_SITE_URL` | The live domain. Fills in the canonical link, the Open Graph tags, the schema record, `robots.txt` and the sitemap. | Falls back to `https://ryderdesigns.co.uk` |
+| `VITE_FORM_ENDPOINT` | Where the contact form posts. | Form falls back to opening the visitor's mail client |
+| `VITE_ANALYTICS_DOMAIN` | Your domain, to switch on cookie-free Plausible analytics. | No analytics, no third-party request, and the privacy notice drops its analytics section |
+| `VITE_ANALYTICS_HOST` | Only if you self-host Plausible. | `https://plausible.io` |
+
+Copy `.env.example` to `.env` for local development.
 
 ## What to edit
 
@@ -47,7 +72,10 @@ The things to change first:
 | Availability line | `SITE.availability` |
 | Projects | `PROJECTS` plus the images in `public/work/` |
 | Your photo | drop a file at `public/kit.jpg`, set `ABOUT.portrait` to `/kit.jpg` |
-| Domain, page title, description | `index.html` (title, meta, canonical, JSON-LD) |
+| Phone number | `SITE.phone` (empty means no phone link is rendered) |
+| Privacy notice | `LEGAL` in `src/content.ts` |
+| Domain | `VITE_SITE_URL` on your host, nowhere else |
+| Page title, description | `index.html` (title, meta, JSON-LD) |
 
 ### The featured build
 
@@ -121,6 +149,19 @@ npm run previews
 ```
 
 Once you have real screenshots you can delete `mocks/` entirely.
+
+## Checking it still works
+
+```bash
+npm run build
+npx vite preview --port 4173 &
+npm run audit
+```
+
+`scripts/audit.mjs` drives the built site in a real browser and checks every
+link, button, video, route, fallback and breakpoint, then exits non-zero if
+anything fails. It needs a Chromium: either `npx playwright install chromium`
+or point `CHROME_PATH` at one you already have.
 
 ## Accessibility and performance notes
 
