@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kitryder.co.uk/sitemap.xml
+Sitemap: https://ryderdesigns.co.uk/sitemap.xml

@@ -1,6 +1,6 @@
-# Kit Ryder
+# Ryder Designs
 
-Personal site for Kit Ryder, web designer and developer in Pembrokeshire.
+Personal site for Ryder Designs, web designer and developer in Pembrokeshire.
 One page, built to make a local business owner think "this is the person I
 want building mine" inside five seconds.
 
