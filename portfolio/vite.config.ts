@@ -32,7 +32,7 @@ function siteUrl(url: string): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), siteUrl(process.env.VITE_SITE_URL || "https://ryder-designs.co.uk")],
+  plugins: [react(), tailwindcss(), siteUrl(process.env.VITE_SITE_URL || "https://www.ryderdesigns.org")],
   build: {
     target: "es2020",
     cssMinify: "lightningcss",
