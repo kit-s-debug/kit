@@ -4,10 +4,10 @@
 --------------------------------------------------------------------------- */
 
 export const SITE = {
-  name: "Kit Ryder",
-  role: "Web designer & developer",
+  name: "Ryder Design",
+  role: "Web design and development",
   place: "Haverfordwest, Pembrokeshire",
-  email: "hello@kitryder.co.uk", // EDIT
+  email: "hello@ryderdesign.co.uk", // EDIT
   /* Where the contact form posts. Leave empty and the form falls back to
      opening a pre-filled email instead, so it always works. Formspree, Basin,
      Netlify Forms and Web3Forms all accept a plain POST like this. */
@@ -15,9 +15,9 @@ export const SITE = {
   availability: "Taking on two new projects this autumn", // EDIT
   socials: [
     // EDIT: swap in your real profile links. Anything left empty is not rendered.
-    { label: "Instagram", href: "https://instagram.com/kitryder" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/kitryder" },
-    { label: "GitHub", href: "https://github.com/kitryder" },
+    { label: "Instagram", href: "https://instagram.com/ryderdesign" },
+    { label: "LinkedIn", href: "https://linkedin.com/company/ryderdesign" },
+    { label: "GitHub", href: "https://github.com/ryderdesign" },
   ],
 };
 
@@ -31,7 +31,7 @@ export const NAV = [
 export const CTA = { label: "Start a project", href: "#contact" };
 
 export const HERO = {
-  eyebrow: "Freelance web design and build",
+  eyebrow: "Web design and build",
   headline: ["Websites that", "make a business", "impossible to ignore."],
   sub: "Pubs, restaurants, trades, shops and salons across West Wales.",
   primary: { label: "See the work", href: "#work" },
@@ -246,7 +246,7 @@ export const PROCESS = {
 export const ABOUT = {
   /* EDIT: drop a photo at /public/kit.jpg and set portrait to "/kit.jpg". */
   portrait: "",
-  heading: "I am Kit Ryder, and I work out of Haverfordwest.",
+  heading: "Ryder Design is one person, in Haverfordwest.",
   /* EDIT: this is the one section that should sound like you and nobody else.
      Saying your age outright is a deliberate call: stated plainly it reads as
      confidence, and the third paragraph turns it into a reason to hire you.

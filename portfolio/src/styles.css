@@ -186,6 +186,14 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
+  /* The stacked half of the logo. Stretch and tracking are set per line in
+     Logo.tsx, because the whole point of the lockup is that the two lines
+     measure the same width. */
+  .u-wordmark-stack {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
   .u-h2 {
     font-family: var(--font-display);
     font-weight: 600;

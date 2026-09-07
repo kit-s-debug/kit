@@ -140,7 +140,15 @@ for (const id of ["work", "services", "about", "contact"]) {
 }
 for (const pct of [0, 0.25, 0.5, 0.75, 1]) {
   await page.evaluate((f) => scrollTo(0, (document.body.scrollHeight - innerHeight) * f), pct);
-  await page.waitForTimeout(900);
+  // The bar cross-fades its colours over 500ms. Sampling mid-transition reads a
+  // blend, so wait for the computed colour to stop moving before judging it.
+  let last = "";
+  for (let t = 0; t < 3000; t += 150) {
+    await page.waitForTimeout(150);
+    const now = await page.evaluate(() => getComputedStyle(document.querySelector("header")).color);
+    if (now === last && t >= 600) break;
+    last = now;
+  }
   const r = await page.evaluate(() => {
     const bar = document.querySelector("header");
     const cs = getComputedStyle(bar);

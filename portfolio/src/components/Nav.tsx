@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { CTA, NAV, SITE } from "../content";
 import { EASE } from "../lib/motion";
 import { Cta } from "./primitives/Cta";
+import { Logo } from "./primitives/Logo";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -76,8 +77,8 @@ export function Nav() {
           }`}
           style={{ height: scrolled ? 62 : 74 }}
         >
-          <a href="#top" className="u-wordmark text-[0.95rem] leading-none" aria-label={`${SITE.name}, back to top`}>
-            Kit Ryder
+          <a href="#top" aria-label={`${SITE.name}, back to top`} className="leading-none">
+            <Logo />
           </a>
 
           <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
@@ -132,7 +133,7 @@ export function Nav() {
             transition={{ duration: 0.3, ease: EASE }}
           >
             <div className="u-wide flex h-[74px] items-center justify-between">
-              <span className="u-wordmark text-[0.95rem] leading-none">Kit Ryder</span>
+              <Logo />
               <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="-mr-2 p-2">
                 <X size={22} weight="regular" />
               </button>

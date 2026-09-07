@@ -62,7 +62,7 @@ export function About() {
           <Reveal delay={0.1}>
             <img
               src={ABOUT.portrait}
-              alt="Kit Ryder"
+              alt={SITE.name}
               width={900}
               height={600}
               loading="lazy"
