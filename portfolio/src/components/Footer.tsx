@@ -1,16 +1,15 @@
 import { NAV, SITE } from "../content";
-import { LogoMark, LogoStack } from "./primitives/Logo";
+import { Logo } from "./primitives/Logo";
 
 export function Footer() {
   return (
     <footer data-surface="dark" className="s-dark">
       <div className="u-wide u-line-t flex flex-col gap-8 py-11 md:flex-row md:items-center md:justify-between">
-        {/* The footer gets the stacked mark rather than the bar's lockup. It is
-           the last thing on the page, so the name is allowed to sit at size. */}
+        {/* Same lockup as the bar, a size up. The stacked version the logo ships
+           with is taller than this row allows. */}
         <div>
-          <a href="#top" className="inline-flex items-end gap-3.5" aria-label={`${SITE.name}, back to top`}>
-            <LogoMark size={40} />
-            <LogoStack size="1.35rem" />
+          <a href="#top" className="inline-flex items-center" aria-label={`${SITE.name}, back to top`}>
+            <Logo height={38} />
           </a>
           <p className="u-fg2 mt-3 text-[0.85rem]">
             {SITE.role}, {SITE.place}

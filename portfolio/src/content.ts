@@ -4,10 +4,10 @@
 --------------------------------------------------------------------------- */
 
 export const SITE = {
-  name: "Ryder Design",
+  name: "Ryder Designs",
   role: "Web design and development",
   place: "Haverfordwest, Pembrokeshire",
-  email: "hello@ryderdesign.co.uk", // EDIT
+  email: "hello@ryderdesigns.co.uk", // EDIT
   /* Where the contact form posts. Leave empty and the form falls back to
      opening a pre-filled email instead, so it always works. Formspree, Basin,
      Netlify Forms and Web3Forms all accept a plain POST like this. */
@@ -15,9 +15,9 @@ export const SITE = {
   availability: "Taking on two new projects this autumn", // EDIT
   socials: [
     // EDIT: swap in your real profile links. Anything left empty is not rendered.
-    { label: "Instagram", href: "https://instagram.com/ryderdesign" },
-    { label: "LinkedIn", href: "https://linkedin.com/company/ryderdesign" },
-    { label: "GitHub", href: "https://github.com/ryderdesign" },
+    { label: "Instagram", href: "https://instagram.com/ryderdesigns" },
+    { label: "LinkedIn", href: "https://linkedin.com/company/ryderdesigns" },
+    { label: "GitHub", href: "https://github.com/ryderdesigns" },
   ],
 };
 
@@ -246,7 +246,7 @@ export const PROCESS = {
 export const ABOUT = {
   /* EDIT: drop a photo at /public/kit.jpg and set portrait to "/kit.jpg". */
   portrait: "",
-  heading: "Ryder Design is one person, in Haverfordwest.",
+  heading: "Ryder Designs is one person, in Haverfordwest.",
   /* EDIT: this is the one section that should sound like you and nobody else.
      Saying your age outright is a deliberate call: stated plainly it reads as
      confidence, and the third paragraph turns it into a reason to hire you.

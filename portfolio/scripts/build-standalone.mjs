@@ -1,7 +1,7 @@
 /* Bundles the built site into one self-contained HTML file with the CSS, JS,
    fonts and work previews inlined, for sharing a preview link without a host.
    Run `npm run build` first, then `node scripts/build-standalone.mjs`.
-   Output: dist-standalone/ryder-design.html
+   Output: dist-standalone/ryder-designs.html
 
    The file is written as a document fragment (no <html>/<head>/<body>) so it
    works both opened directly in a browser and pasted into a host that supplies
@@ -43,13 +43,13 @@ if (js.includes("/eddie-rocks/")) {
 /* A literal </script> anywhere in the bundle would end the tag early. */
 js = js.replaceAll("</script", "<\\/script");
 
-const html = `<title>Ryder Design</title>
+const html = `<title>Ryder Designs</title>
 <style>${css}</style>
 <div id="root"></div>
 <script type="module">${js}</script>
 `;
 
 mkdirSync(join(root, "dist-standalone"), { recursive: true });
-const out = join(root, "dist-standalone", "ryder-design.html");
+const out = join(root, "dist-standalone", "ryder-designs.html");
 writeFileSync(out, html);
 console.log(`${out}  ${(html.length / 1e6).toFixed(2)} MB`);
