@@ -26,7 +26,7 @@ export const SITE = {
      link, and they do not belong in a page's markup. */
   socials: [
     { label: "Instagram", href: "https://www.instagram.com/ryder_design5" },
-    { label: "Facebook", href: "https://www.facebook.com/share/199JdYNtp5/" },
+    { label: "Facebook", href: "https://www.facebook.com/share/199DdRtfaj/" },
   ],
 };
 
