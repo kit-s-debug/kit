@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "map": "node scripts/build-map.mjs",
     "previews": "node mocks/render.mjs",
-    "standalone": "npm run build && node scripts/build-standalone.mjs",
+    "standalone": "node scripts/build-standalone.mjs",
     "audit": "node scripts/audit.mjs"
   },
   "dependencies": {
