@@ -735,7 +735,10 @@ select {
   font-size: var(--step-0);
 }
 
-@media (max-width: 68rem) {
+/* The full bar carries a wordmark, five links, two toggles, two socials and
+   the leave button; below this it does not fit the column without crowding,
+   so it collapses to the menu instead of overflowing. */
+@media (max-width: 80rem) {
   .site-nav,
   .site-header-tools {
     display: none;
@@ -745,14 +748,18 @@ select {
   }
 }
 
+/* the panel drops from the button rather than spanning the whole bar */
+@media (min-width: 48rem) {
+  .site-menu-panel {
+    inset-inline-start: auto;
+    width: min(24rem, 50vw);
+  }
+}
+
 /* --- hero --------------------------------------------------------------- */
 .hero-stage {
   position: relative;
   background: var(--surface-deep);
-}
-
-.hero-stage[data-pin] {
-  height: 280svh;
 }
 
 .hero-viewport {
@@ -761,13 +768,6 @@ select {
   display: grid;
   align-items: end;
   overflow: clip;
-}
-
-.hero-stage[data-pin] .hero-viewport {
-  position: sticky;
-  inset-block-start: 0;
-  height: 100svh;
-  min-height: 0;
 }
 
 .hero-image {
@@ -897,105 +897,6 @@ select {
     opacity: 1;
     transform: none;
   }
-}
-
-/* Beats: stacked and readable by default; cross-fading only once pinned. */
-.hero-beats {
-  margin-block-start: clamp(2rem, 6vw, 3.5rem);
-  display: grid;
-  gap: 0.75rem;
-}
-
-.hero-beat {
-  font-family: var(--font-serif);
-  font-size: var(--step-2);
-  line-height: 1.2;
-  color: #eae3d4;
-  max-width: 22ch;
-}
-
-.hero-stage[data-pin] .hero-content {
-  grid-template-areas: "stack";
-  align-items: end;
-}
-
-.hero-stage[data-pin] .hero-opening,
-.hero-stage[data-pin] .hero-beats {
-  grid-area: stack;
-  transition:
-    opacity 700ms var(--ease-lamp),
-    transform 700ms var(--ease-lamp);
-}
-
-.hero-stage[data-pin] .hero-beats {
-  margin-block-start: 0;
-  display: grid;
-  grid-template-areas: "beat";
-  align-content: end;
-}
-
-.hero-stage[data-pin] .hero-beat {
-  grid-area: beat;
-  font-size: var(--step-5);
-  line-height: 1.04;
-  max-width: 14ch;
-  opacity: 0;
-  transform: translateY(0.8rem);
-  transition:
-    opacity 700ms var(--ease-lamp),
-    transform 700ms var(--ease-lamp);
-}
-
-/* Both of these hide something, so both are scoped to the pinned act. Unpinned
-   — no JavaScript, calm mode, reduced motion — the opening and the three lines
-   simply stack and stay readable. */
-.hero-stage[data-pin] .hero-viewport[data-beat="0"] .hero-beats {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.hero-stage[data-pin] .hero-viewport:not([data-beat="0"]) .hero-opening {
-  opacity: 0;
-  transform: translateY(-0.6rem);
-  pointer-events: none;
-}
-
-.hero-viewport[data-beat="1"] .hero-beat[data-i="1"],
-.hero-viewport[data-beat="2"] .hero-beat[data-i="2"],
-.hero-viewport[data-beat="3"] .hero-beat[data-i="3"] {
-  opacity: 1;
-  transform: none;
-}
-
-/* Zero-height sentinels the observer watches. They paint nothing. */
-.hero-marks {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-/* Bands rather than hairlines: exactly one always straddles the middle of the
-   viewport, so jumping the scroll position can never skip a beat. */
-.hero-marks > div {
-  position: absolute;
-  inset-inline: 0;
-}
-
-.hero-marks > [data-mark="0"] {
-  top: 0;
-  height: 30%;
-}
-.hero-marks > [data-mark="1"] {
-  top: 30%;
-  height: 23%;
-}
-.hero-marks > [data-mark="2"] {
-  top: 53%;
-  height: 23%;
-}
-.hero-marks > [data-mark="3"] {
-  top: 76%;
-  height: 24%;
 }
 
 /* --- welcome ------------------------------------------------------------ */
@@ -3231,24 +3132,6 @@ body::before {
   margin-block-start: clamp(0.5rem, 2vw, 1.5rem);
 }
 
-/* shorter pinned hero: two beats instead of three, less scroll spent on it */
-.hero-stage[data-pin] {
-  height: 185svh;
-}
-
-.hero-marks > [data-mark="0"] {
-  top: 0;
-  height: 44%;
-}
-.hero-marks > [data-mark="1"] {
-  top: 44%;
-  height: 28%;
-}
-.hero-marks > [data-mark="2"] {
-  top: 72%;
-  height: 28%;
-}
-
 /* ==========================================================================
    HERO — lighter, brighter room
    The broad scrims that used to darken half the photograph are replaced by a
@@ -3307,8 +3190,7 @@ body::before {
 .hero-kicker,
 .hero-headline,
 .hero-credit,
-.hero-phone,
-.hero-beat {
+.hero-phone {
   text-shadow: 0 1px 18px rgba(6, 13, 17, 0.62), 0 1px 3px rgba(6, 13, 17, 0.4);
 }
 
@@ -3377,201 +3259,6 @@ body::before {
 }
 
 /* ==========================================================================
-   HERO SCROLL — a slow push into the room
-   While the image is pinned it used to sit frozen while two lines cross-faded,
-   which read as a still photograph with captions. Now the room pushes in slowly
-   and the light dims toward the hand-off into the ink field below, driven by a
-   scroll timeline so it runs on the compositor rather than a JS scroll handler.
-   Everything is scoped to [data-pin], which only exists when motion is welcome.
-   ========================================================================== */
-
-@supports (animation-timeline: view()) {
-  .hero-stage[data-pin] {
-    view-timeline-name: --hero-run;
-    view-timeline-axis: block;
-  }
-
-  /* the room drifts closer the whole way down the pin */
-  .hero-stage[data-pin] .hero-image {
-    animation: hero-push linear both;
-    animation-timeline: --hero-run;
-    animation-range: entry 100% exit 100%;
-    will-change: transform;
-  }
-
-  /* and the light goes down as the ink field approaches, so the seam is soft */
-  .hero-stage[data-pin] .hero-image::after {
-    animation: hero-dim linear both;
-    animation-timeline: --hero-run;
-    animation-range: exit 10% exit 95%;
-  }
-}
-
-.hero-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #0b1519;
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes hero-push {
-  from {
-    transform: scale(1.005);
-  }
-  to {
-    transform: scale(1.11);
-  }
-}
-
-@keyframes hero-dim {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.42;
-  }
-}
-
-/* --- the lines resolve out of the light instead of plainly fading --------- */
-.hero-stage[data-pin] .hero-beat {
-  opacity: 0;
-  transform: translateY(1.35rem);
-  filter: blur(7px);
-  transition:
-    opacity 900ms var(--ease-lamp),
-    transform 900ms var(--ease-lamp),
-    filter 900ms var(--ease-lamp);
-}
-
-.hero-viewport[data-beat="1"] .hero-beat[data-i="1"],
-.hero-viewport[data-beat="2"] .hero-beat[data-i="2"] {
-  opacity: 1;
-  transform: none;
-  filter: blur(0);
-}
-
-/* the opening leaves the same way it arrived */
-.hero-stage[data-pin] .hero-opening {
-  transition:
-    opacity 750ms var(--ease-lamp),
-    transform 750ms var(--ease-lamp),
-    filter 750ms var(--ease-lamp);
-}
-
-.hero-stage[data-pin] .hero-viewport:not([data-beat="0"]) .hero-opening {
-  opacity: 0;
-  transform: translateY(-1rem);
-  filter: blur(5px);
-  pointer-events: none;
-}
-
-/* ==========================================================================
-   HERO SCROLL, second pass — a move through the room, not a zoom
-   The straight scale was too small to register. Now the room drifts diagonally
-   as it pushes in, the lamp pool spreads, and the type travels at a different
-   rate so there is real depth between them. The lines arrive a word at a time.
-   Still entirely scoped to [data-pin], which exists only when motion is welcome.
-   ========================================================================== */
-
-.hero-stage[data-pin] {
-  height: 220svh;
-}
-
-@supports (animation-timeline: view()) {
-  .hero-stage[data-pin] .hero-image {
-    animation: hero-drift linear both;
-    animation-timeline: --hero-run;
-    animation-range: entry 100% exit 100%;
-  }
-
-  /* the lamp opens out as you move in */
-  .hero-stage[data-pin] .hero-warm {
-    animation: hero-lamp-open linear both;
-    animation-timeline: --hero-run;
-    animation-range: entry 100% exit 100%;
-  }
-
-  /* the type rides up more slowly than the room moves — parallax depth */
-  .hero-stage[data-pin] .hero-content {
-    animation: hero-copy-drift linear both;
-    animation-timeline: --hero-run;
-    animation-range: entry 100% exit 90%;
-  }
-}
-
-@keyframes hero-drift {
-  from {
-    transform: scale(1.06) translate3d(1.2%, -0.8%, 0);
-  }
-  to {
-    transform: scale(1.2) translate3d(-1.8%, 1.2%, 0);
-  }
-}
-
-@keyframes hero-lamp-open {
-  from {
-    transform: scale(1);
-    opacity: 0.92;
-  }
-  to {
-    transform: scale(1.18);
-    opacity: 1;
-  }
-}
-
-@keyframes hero-copy-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(0, -3.5rem, 0);
-  }
-}
-
-/* --- the lines arrive a word at a time ----------------------------------- */
-.beat-word {
-  display: inline-block;
-  overflow: hidden;
-  /* let descenders through the mask */
-  padding-block-end: 0.14em;
-  margin-block-end: -0.14em;
-}
-
-.beat-word > span {
-  display: inline-block;
-}
-
-.hero-stage[data-pin] .hero-beat {
-  opacity: 0;
-  transform: none;
-  filter: none;
-  transition: opacity 260ms var(--ease-lamp);
-}
-
-.hero-stage[data-pin] .beat-word > span {
-  transform: translateY(115%);
-  transition: transform 880ms var(--ease-lamp);
-  transition-delay: calc(var(--w, 0) * 65ms);
-}
-
-.hero-viewport[data-beat="1"] .hero-beat[data-i="1"],
-.hero-viewport[data-beat="2"] .hero-beat[data-i="2"] {
-  opacity: 1;
-}
-
-.hero-viewport[data-beat="1"] .hero-beat[data-i="1"] .beat-word > span,
-.hero-viewport[data-beat="2"] .hero-beat[data-i="2"] .beat-word > span {
-  transform: translateY(0);
-}
-
-/* the word spans changed the wrap; give the pinned lines room to break well */
-.hero-stage[data-pin] .hero-beat {
-  max-width: 19ch;
-}
-
-/* ==========================================================================
    PHONE — designed for the screen, not a narrowed desktop
    The stacked layouts were correct but loose: too much air, type a size too
    large, and a couple of components that only made sense side by side. This
@@ -3623,15 +3310,6 @@ body::before {
   .sessions-intro,
   .booking-intro {
     margin-block-start: 0.9rem;
-  }
-
-  /* the hero holds for less scroll on a phone */
-  .hero-stage[data-pin] {
-    height: 175svh;
-  }
-
-  .hero-stage[data-pin] .hero-beat {
-    max-width: 15ch;
   }
 
   /* --- sessions: four chips, then the panel right beneath them ----------- */
@@ -3783,25 +3461,6 @@ body::before {
   }
 }
 
-/* Unpinned — no JavaScript, calm mode, reduced motion — the opening and the
-   three lines both sit in the frame at once, so the copy runs the whole height
-   of the photograph rather than the lower third. The scrim has to cover that
-   much, at every width. */
-.hero-stage:not([data-pin]) .hero-warm {
-  background:
-    radial-gradient(46% 40% at 15% 76%, rgba(246, 223, 174, 0.42), transparent 70%),
-    linear-gradient(to bottom, rgba(6, 13, 17, 0.6) 0%, rgba(6, 13, 17, 0.24) 14%, transparent 32%),
-    linear-gradient(
-      to top,
-      rgba(6, 13, 17, 0.9) 0%,
-      rgba(6, 13, 17, 0.78) 34%,
-      rgba(6, 13, 17, 0.56) 60%,
-      rgba(6, 13, 17, 0.3) 84%,
-      transparent 100%
-    ),
-    linear-gradient(to right, rgba(6, 13, 17, 0.6) 0%, rgba(6, 13, 17, 0.24) 48%, transparent 76%);
-}
-
 /* Someone reaching for one of these on a phone is not having a good day. Give
    the crisis links and the footer links a thumb-sized row to land on. */
 @media (max-width: 48rem) {
@@ -3821,5 +3480,231 @@ body::before {
 
   .site-footer-list {
     gap: 0.1rem;
+  }
+}
+
+/* ==========================================================================
+   FLOW — one continuous read, not nine stacked pages
+   The rooms were right; the doors between them were not. Three things carry
+   the eye across a boundary now: the hero's foot dissolves into the colour the
+   next section begins with, every field starts by fading out of the one above
+   it, and a single hairline runs the length of the page with each chapter
+   hung off it. All of it degrades to a still, fully-readable page.
+   ========================================================================== */
+
+/* --- 1. the hero resolves into the field the next section begins with ----- */
+.hero-dissolve {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: clamp(7rem, 22vh, 14rem);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklab, var(--surface) 30%, transparent) 32%,
+    color-mix(in oklab, var(--surface) 72%, transparent) 64%,
+    var(--surface) 97%
+  );
+}
+
+/* --- 2. seams: each field fades out of the one above it ------------------- */
+:root {
+  /* Short and fast. A long fade between a dark room and a light one reads as
+     fog; a tight one reads as the field above casting onto the field below,
+     which is what a seam between two rooms should look like. */
+  --seam: min(2.75rem, calc(var(--room) * 0.5));
+}
+
+.finder {
+  --seam-from: var(--surface);
+}
+.sessions {
+  --seam-from: var(--ground);
+}
+.approach {
+  --seam-from: var(--ground-sunk);
+}
+.fees {
+  --seam-from: var(--ground);
+}
+.credentials {
+  --seam-from: var(--surface);
+}
+.arriving {
+  --seam-from: var(--ground);
+}
+.booking {
+  --seam-from: var(--ground-sunk);
+}
+
+.finder,
+.sessions,
+.approach,
+.fees,
+.credentials,
+.arriving,
+.booking {
+  /* only the image layer — the background-colour set earlier still stands */
+  background-image: linear-gradient(
+    to bottom,
+    var(--seam-from) 0%,
+    color-mix(in oklab, var(--seam-from) 52%, transparent) 16%,
+    color-mix(in oklab, var(--seam-from) 22%, transparent) 36%,
+    color-mix(in oklab, var(--seam-from) 7%, transparent) 62%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--seam);
+  background-position: top center;
+}
+
+/* --- 3. the spine: one hairline, eight chapters hung off it --------------- */
+:root {
+  --spine-x: calc(max(var(--edge), (100% - 82rem) / 2 + var(--edge)) - 2.75rem);
+  --spine-ink: color-mix(in oklab, var(--ink) 16%, transparent);
+}
+
+.on-dark {
+  --spine-ink: color-mix(in oklab, #f4eee0 18%, transparent);
+}
+
+/* Narrow screens have no margin to hang it in — there, the seams and the
+   chapter rules carry the continuity on their own. */
+@media (min-width: 68rem) {
+  .welcome,
+  .finder,
+  .sessions,
+  .approach,
+  .fees,
+  .credentials,
+  .arriving,
+  .booking {
+    position: relative;
+  }
+
+  .welcome::before,
+  .finder::before,
+  .sessions::before,
+  .approach::before,
+  .fees::before,
+  .credentials::before,
+  .arriving::before,
+  .booking::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: var(--spine-x);
+    width: 1px;
+    background: var(--spine-ink);
+    transform-origin: top;
+    pointer-events: none;
+  }
+
+  /* it draws itself as each section passes, so the line is always being made
+     just ahead of where you are reading */
+  @supports (animation-timeline: view()) {
+    .welcome::before,
+    .finder::before,
+    .sessions::before,
+    .approach::before,
+    .fees::before,
+    .credentials::before,
+    .arriving::before,
+    .booking::before {
+      animation: draw-spine linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 58%;
+    }
+  }
+
+  /* and each chapter hangs off it by a short tick. It is a flex item on the
+     same baseline row as the chapter's own rule, so the two line up exactly;
+     the negative margins reach it back out to the spine and cancel the row
+     gap, leaving the numeral where it was. */
+  .chapter-open::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 2.3rem;
+    height: 1px;
+    margin-inline: -2.75rem -0.55rem;
+    background: var(--spine-ink);
+    transform: translateY(-0.28em);
+  }
+}
+
+/* the keyframes hold the undrawn state, so calm mode and reduced motion leave
+   a finished line rather than none at all */
+@keyframes draw-spine {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* --- 4. entrances: a section arrives as one thing ------------------------- */
+/* Blocks rise in sequence within their own section rather than every heading,
+   list item and card animating on its own clock. Fewer, slower, together. */
+:root[data-animate="on"] .reveal {
+  transform: translateY(10px);
+  transition:
+    opacity 0.85s var(--ease-lamp),
+    transform 0.85s var(--ease-lamp),
+    filter 0.85s var(--ease-lamp);
+  transition-delay: calc(var(--i, 0) * 85ms);
+}
+
+:root[data-animate="on"] .reveal[data-reveal="rise"] {
+  filter: brightness(0.82);
+}
+
+/* --- 5. one left edge for the whole page --------------------------------- */
+/* The finder and the booking flow read better on a narrow measure, but they
+   were centring that measure, so their chapter numerals sat 160px and 300px
+   right of everyone else's. Keep the measure; start it on the same line as
+   every other section, so the spine, the ticks and the copy all agree. */
+.finder-shell,
+.finder-list,
+.booking-shell {
+  margin-inline: max(0px, calc((100% - 82rem) / 2)) auto;
+}
+
+.finder-list {
+  max-width: 62rem;
+}
+
+/* the footer is end matter, not a separate site: same left edge as the rooms */
+.site-footer > .shell-editorial {
+  max-width: 82rem;
+}
+
+/* The header floats over everything, but it should still start on the page's
+   own line rather than one of its own. Only once the page is wide enough for
+   the full navigation to fit inside that column — below this the header is
+   near enough full-bleed anyway, so the two edges are within a few pixels. */
+@media (min-width: 82rem) {
+  .site-header-inner {
+    max-width: 82rem;
+    padding-inline: var(--edge);
+  }
+}
+
+/* The quick exit is a safety affordance, so it never goes behind the menu on a
+   screen that has room for it. Between the two breakpoints the bar keeps the
+   button and nothing else. */
+@media (min-width: 68.0625rem) and (max-width: 80rem) {
+  .site-header-tools {
+    display: flex;
+    margin-inline-start: auto;
+  }
+
+  .site-header-tools > :not(.exit-button) {
+    display: none;
+  }
+
+  .site-menu {
+    margin-inline-start: 0;
   }
 }

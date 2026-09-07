@@ -8,7 +8,7 @@ import { SocialLinks } from "./social-links";
 export function Footer() {
   return (
     <footer className="site-footer on-dark">
-      <div className="shell">
+      <div className="shell-editorial">
         <div className="site-footer-top">
           <div className="site-footer-brand">
             <span className="site-footer-logo">

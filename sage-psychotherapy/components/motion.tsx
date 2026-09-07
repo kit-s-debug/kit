@@ -26,32 +26,52 @@ export function Motion() {
     let observer: IntersectionObserver | null = null;
     let tagged = false;
 
-    // Each entry: selector, reveal kind, and whether items stagger in sequence.
-    const groups: [string, "rise" | "scale" | "draw" | "none", boolean][] = [
-      [
-        ".finder-heading, .sessions-heading, .approach-heading, .arriving-heading, .booking-heading, .fees-free-heading, .fees-concession-heading, .credentials-aside-heading, .about-section-heading, .prose-section h2, .page-heading",
-        "rise",
-        false,
-      ],
-      [".sill", "draw", false],
-      [".chapter-open", "none", false],
-      [".welcome-portrait, .about-portrait", "scale", false],
-      [".fees-number", "rise", false],
-      [
-        ".credentials-list li, .modalities li, .band, .thread-step, .clients li, .format-tab",
-        "rise",
-        true,
-      ],
+    // Anything outside the run of rooms — the inner pages — still reveals by
+    // element, since those pages are prose rather than a sequence.
+    const pageGroups: [string, "rise" | "scale" | "draw"][] = [
+      [".page-heading, .about-section-heading, .prose-section h2", "rise"],
+      [".about-portrait", "scale"],
+      [".page .sill", "draw"],
     ];
 
+    /**
+     * On the home page a section arrives as one thing: the chapter opener, then
+     * each block beneath it a beat later. Tagging the shell's own children —
+     * rather than every heading, list item and card — is what makes the page
+     * read as a continuous scroll instead of a field of things popping in.
+     */
     const tag = () => {
       if (tagged) return;
       tagged = true;
-      for (const [selector, kind, stagger] of groups) {
-        document.querySelectorAll<HTMLElement>(selector).forEach((el, i) => {
+
+      document.querySelectorAll<HTMLElement>("main > section").forEach((section) => {
+        section.querySelectorAll<HTMLElement>(":scope > .shell-editorial").forEach((shell) => {
+          let i = 0;
+          // The booking flow rebuilds its own contents as you move through the
+          // steps, so only its opening is ours to animate.
+          const blocks =
+            section.id === "book"
+              ? Array.from(shell.children).slice(0, 3)
+              : Array.from(shell.children);
+
+          blocks.forEach((child) => {
+            const el = child as HTMLElement;
+            el.classList.add("reveal");
+            el.dataset.reveal = el.classList.contains("chapter-open")
+              ? "none"
+              : el.classList.contains("sill")
+                ? "draw"
+                : "rise";
+            el.style.setProperty("--i", String(Math.min(i, 3)));
+            i += 1;
+          });
+        });
+      });
+
+      for (const [selector, kind] of pageGroups) {
+        document.querySelectorAll<HTMLElement>(selector).forEach((el) => {
           el.classList.add("reveal");
           el.dataset.reveal = kind;
-          if (stagger) el.style.setProperty("--i", String(i % 7));
         });
       }
     };

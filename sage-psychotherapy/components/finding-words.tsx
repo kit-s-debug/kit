@@ -173,7 +173,7 @@ export function FindingWords() {
         </div>
       </div>
 
-      <div className="shell finder-list" id="words-list">
+      <div className="shell-editorial finder-list" id="words-list">
         <div className="finder-list-head">
           <Leaf size="mark" className="finder-leaf" />
           <h3 className="finder-list-heading">{finder.listHeading}</h3>

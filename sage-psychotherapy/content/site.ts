@@ -74,11 +74,6 @@ export const hero = {
   credit: "Lyndsay Gent — Adlerian psychotherapist and counsellor. BACP member.",
   imageAlt:
     "The therapy room: a Victorian front room with a deep navy-teal wall, tan leather sofas, a mustard-yellow armchair, a honey parquet floor and a tall sash window with a lace café curtain, lit by a warm lamp.",
-  /** The three lines that change over the held image. Keep them under eight words. */
-  beats: [
-    "It is not a clinic — it's my front room.",
-    "You can ring first, and decide after.",
-  ],
 } as const;
 
 /* -------------------------------------------------------------------------- */
