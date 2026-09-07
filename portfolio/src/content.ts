@@ -7,7 +7,7 @@ export const SITE = {
   name: "Ryder Designs",
   role: "Web design and development",
   place: "Haverfordwest, Pembrokeshire",
-  email: "hello@ryderdesigns.co.uk", // EDIT
+  email: "designsryder4@gmail.com", // EDIT
   /* EDIT: your number, in the form you want it displayed. Trades, salons and
      pubs ring people; they do not fill in forms. Leave it empty and no phone
      link is rendered anywhere, so an unset number is never a dead link. */
@@ -20,13 +20,13 @@ export const SITE = {
      is the honest thing to do when you are full. Avoid naming a season here,
      it goes stale on the page and nobody notices but the visitor. */
   availability: "Taking on two new projects",
-  /* EDIT: fill in the href for each account you actually have. An empty href is
-     not rendered, so these sit here harmlessly until the accounts exist rather
-     than sending a prospective client to a 404. */
+  /* EDIT: an empty href is not rendered, so a row can sit here unset rather than
+     sending a prospective client to a 404. Tracking parameters are stripped:
+     the ones a share sheet or a QR code adds identify the person who copied the
+     link, and they do not belong in a page's markup. */
   socials: [
-    { label: "Instagram", href: "" },
-    { label: "LinkedIn", href: "" },
-    { label: "GitHub", href: "" },
+    { label: "Instagram", href: "https://www.instagram.com/ryder_design5" },
+    { label: "Facebook", href: "https://www.facebook.com/share/199JdYNtp5/" },
   ],
 };
 
