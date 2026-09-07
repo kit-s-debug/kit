@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Labrinth — the building, in three dimensions.
+   Labyrinth — the building, in three dimensions.
 
    Two storeys, and the two of them do genuinely different jobs: the Main Bar
    upstairs with a live DJ, and Rewind downstairs where the 90s and 00s get
@@ -221,7 +221,7 @@ function labelTexture(T, text, vertical) {
   return tex;
 }
 
-function buildLabrinthFrontage(ctx) {
+function buildLabyrinthFrontage(ctx) {
   var T = ctx.THREE;
   var W = ctx.W, FH = ctx.FH, FRONT = ctx.FRONT, ROOF = ctx.ROOF;
   var B = ctx.building;
@@ -296,7 +296,7 @@ function buildLabrinthFrontage(ctx) {
   });
   var fascia = new T.Mesh(
     new T.PlaneGeometry(W * 0.62, 0.44),
-    new T.MeshStandardMaterial({ map: labelTexture(T, "LABRINTH", false), transparent: true, roughness: 0.8 })
+    new T.MeshStandardMaterial({ map: labelTexture(T, "LABYRINTH", false), transparent: true, roughness: 0.8 })
   );
   fascia.position.set(0.5, FH - 0.3, FRONT + 0.29);
   B.add(fascia);
@@ -319,7 +319,7 @@ function buildLabrinthFrontage(ctx) {
     });
     var banner = new T.Mesh(
       new T.PlaneGeometry(0.85, 0.34),
-      new T.MeshStandardMaterial({ map: labelTexture(T, "LABRINTH", true), transparent: true, roughness: 0.8 })
+      new T.MeshStandardMaterial({ map: labelTexture(T, "LABYRINTH", true), transparent: true, roughness: 0.8 })
     );
     banner.position.set(fx + face * 0.005, armY - 0.55, FRONT + 0.95);
     banner.rotation.y = face * Math.PI / 2;
@@ -343,7 +343,7 @@ mountVenue({
   dims: { W: 5.6, D: 7.2, FH: 3.0, ATTIC: 1 },
   fogDensity: 0.034,
   exposure: 1.18,
-  buildExterior: buildLabrinthFrontage,
+  buildExterior: buildLabyrinthFrontage,
   /* Pale render reads as a grey slab at night without something on it. A
      cool wash plus the warmth spilling from the doorway, rather than the
      venue's interior magenta, which isn't what the street sees. */

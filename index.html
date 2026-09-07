@@ -5,24 +5,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest</title>
 <meta name="description" content="Eddie Rocks, Haverfordwest. Three floors on Quay Street: The Forbidden Florist, the Main Bar and the RnB Bar. Private hire and showcase events.">
-<link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+<!-- Share cards. A nightclub's marketing runs on Facebook and WhatsApp, and
+     a link with none of this pastes as a bare grey URL. og:image paths are
+     relative — every scraper resolves them against the page — and should
+     become absolute once the site has its real domain, along with og:url. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Eddie Rocks">
+<meta property="og:title" content="Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest">
+<meta property="og:description" content="Three floors on Quay Street, Haverfordwest. Open Wednesday, Friday and Saturday. Private hire and showcase nights.">
+<meta property="og:image" content="assets/images/og-eddies.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eddie Rocks | West Wales' No.1 Nightclub, Haverfordwest">
+<meta name="twitter:description" content="Three floors on Quay Street, Haverfordwest. Open Wednesday, Friday and Saturday. Private hire and showcase nights.">
+<meta name="twitter:image" content="assets/images/og-eddies.jpg">
+<meta name="theme-color" content="#1B1116">
+<!-- Both pages used to serve the same stand-in wordmark as their icon,
+     which put Eddie's mark in the tab for Labyrinth. A stacked wordmark
+     is a smudge at 16px anyway, so each is now its own mark's first
+     letter, cut from the real artwork. -->
+<link rel="icon" href="assets/images/favicon-eddies.png" type="image/png" sizes="180x180">
+<link rel="apple-touch-icon" href="assets/images/favicon-eddies.png">
+<!-- The display face reflows the hero when it swaps in, which was the whole
+     of the page's layout shift. Two faces cover every heading and every line
+     of body copy above the fold; the rest can swap without moving anything. -->
+<link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/publicsans-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/styles.css">
-<script>
-  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
-  var userScrolled = false;
-  function markUserScrolled() { userScrolled = true; }
-  function forceScrollTop() { if (!userScrolled) window.scrollTo(0, 0); }
-  document.addEventListener("DOMContentLoaded", forceScrollTop);
-  window.addEventListener("load", forceScrollTop);
-  window.addEventListener("wheel", markUserScrolled, { once: true, passive: true });
-  window.addEventListener("touchmove", markUserScrolled, { once: true, passive: true });
-  window.addEventListener("click", markUserScrolled, { once: true, passive: true });
-  window.addEventListener("keydown", function (e) {
-    if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"].indexOf(e.key) > -1) markUserScrolled();
-  }, { once: true });
-  [0, 60, 150, 300, 600, 1200].forEach(function (ms) { setTimeout(forceScrollTop, ms); });
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NightClub",
+  "name": "Eddie Rocks",
+  "description": "Three floors on Quay Street, Haverfordwest: The Forbidden Florist underground, the Main Bar at street level and the RnB Bar above it.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "4 Quay Street",
+    "addressLocality": "Haverfordwest",
+    "addressRegion": "Pembrokeshire",
+    "postalCode": "SA61 1BG",
+    "addressCountry": "GB"
+  },
+  "telephone": "+441437779595",
+  "email": "contact@eddies.co",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Wednesday", "Friday"],
+    "opens": "21:00",
+    "closes": "02:00"
+  }],
+  "amenityFeature": [
+    { "@type": "LocationFeatureSpecification", "name": "Outdoor seating", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Live performances", "value": true },
+    { "@type": "LocationFeatureSpecification", "name": "Cocktails", "value": true }
+  ]
+}
 </script>
+<script src="js/deeplink.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -56,22 +97,22 @@
 <header class="site-header" id="site-header">
   <div class="header-inner">
     <div class="header-brand">
-      <!-- One owner, three connected rooms, so they read as a single lockup:
-           the mark is the way back to Eddie's, and the two names beside it
-           are set in the mark's own Anton rather than as a separate nav.
-           Labrinth is its own site; Rewind is the floor under it. -->
+      <!-- Two sites, one owner, so the marks read as a single lockup and the
+           switch between them is one control rather than a nav. Rewind is a
+           floor of Labyrinth rather than a site of its own, so it is reached
+           from that page instead of sitting here as a third button. -->
       <nav class="venue-switch" aria-label="Choose venue">
         <a href="#top" class="venue-switch-mark is-current" aria-current="page">
-          <img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark">
+          <img src="assets/images/logo-eddies.png" alt="Eddie Rocks" class="venue-logo venue-logo--eddies" width="420" height="215">
         </a>
-        <a href="labrinth.html" class="venue-switch-item">Labrinth</a>
-        <a href="labrinth.html#rewind" class="venue-switch-item">Rewind</a>
+        <a href="labyrinth.html" class="venue-switch-item"><img src="assets/images/logo-labyrinth-light.png" alt="Labyrinth" class="venue-logo venue-logo--labyrinth" width="420" height="151"></a>
       </nav>
     </div>
 
     <nav class="primary-nav" aria-label="Primary">
       <ul>
         <li><a href="#floors">The Building</a></li>
+        <li><a href="#drinks">Drinks</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -92,11 +133,12 @@
   <nav aria-label="Mobile">
     <ul>
       <li style="--i:0"><a href="#floors"><span class="mobile-nav-num">01</span>The Building</a></li>
-      <li style="--i:1"><a href="#experience"><span class="mobile-nav-num">02</span>Private Hire</a></li>
-      <li style="--i:2"><a href="#reviews"><span class="mobile-nav-num">03</span>Reviews</a></li>
-      <li style="--i:3"><a href="#faq"><span class="mobile-nav-num">04</span>FAQ</a></li>
-      <li style="--i:4"><a href="#events"><span class="mobile-nav-num">05</span>Events</a></li>
-      <li style="--i:5"><a href="#contact"><span class="mobile-nav-num">06</span>Contact</a></li>
+      <li style="--i:1"><a href="#drinks"><span class="mobile-nav-num">02</span>Drinks</a></li>
+      <li style="--i:2"><a href="#experience"><span class="mobile-nav-num">03</span>Private Hire</a></li>
+      <li style="--i:3"><a href="#reviews"><span class="mobile-nav-num">04</span>Reviews</a></li>
+      <li style="--i:4"><a href="#faq"><span class="mobile-nav-num">05</span>FAQ</a></li>
+      <li style="--i:5"><a href="#events"><span class="mobile-nav-num">06</span>Events</a></li>
+      <li style="--i:6"><a href="#contact"><span class="mobile-nav-num">07</span>Contact</a></li>
     </ul>
   </nav>
   <div class="mobile-nav-foot">
@@ -128,7 +170,7 @@
       <p class="hero-place reveal"><span>Haverfordwest</span><span>Quay Street</span></p>
       <h1 class="reveal">A Night Out,<br><em>Done Right.</em></h1>
       <div class="hero-lower reveal">
-        <p class="hero-sub">Eddie Rocks is West Wales' number one nightclub. Whether it's your regular weekend out or one of our show-stopping events, three floors under one roof mean we can cater to any night out.</p>
+        <p class="hero-sub">Eddie Rocks is West Wales' number one nightclub. Three floors under one roof, so whether it's your usual Friday or one of our big showcase nights, there's a room for it.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn--solid" data-magnetic>Enquire</a>
           <a href="#floors" class="btn btn--text" data-magnetic>View the Building <span aria-hidden="true">→</span></a>
@@ -142,15 +184,15 @@
         <div><dt>Doors</dt><dd>Wed · Fri · Sat</dd></div>
         <div><dt>Entry</dt><dd>18+ · ID required</dd></div>
       </dl>
-      <a class="hero-scrollcue" href="#floors" aria-label="Scroll to the building"><span aria-hidden="true"></span></a>
     </div>
+    <a class="hero-scrollcue" href="#floors" aria-label="Scroll to the building"><span aria-hidden="true"></span></a>
   </section>
 
   <section class="venue" id="floors" aria-labelledby="floors-heading">
     <div class="venue-intro reveal">
       <p class="eyebrow">Quay Street, Haverfordwest</p>
       <h2 id="floors-heading">One building, three floors</h2>
-      <p class="venue-intro-line">The Forbidden Florist on the ground, Eddie's Main Bar above it, the RnB Bar on top. Scroll to go inside.</p>
+      <p class="venue-intro-line">The Forbidden Florist underground, Eddie's Main Bar at street level, the RnB Bar above it. Scroll to go inside.</p>
     </div>
 
     <div class="venue-scroller" id="venue-scroller">
@@ -233,7 +275,7 @@
                     <img src="assets/images/floor-rnb.jpg" alt="A packed RnB Bar dancefloor with the DJ on the decks, hands up under green lights" loading="lazy">
                   </div>
                   <div class="level-copy">
-                    <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours, and low light that's easy to stay lost in.</p>
+                    <p>One flight up from the Main Bar, the night slows down: smoother sets, later hours and low light that's easy to stay lost in.</p>
                     <dl class="level-meta">
                       <div><dt>On the decks</dt><dd>RnB, hip-hop, slow-burners</dd></div>
                       <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
@@ -268,7 +310,7 @@
                     <img src="assets/images/floor-main.jpg" alt="A packed Main Bar dancefloor under lights" loading="lazy">
                   </div>
                   <div class="level-copy">
-                    <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday, first up the stairs from Quay Street.</p>
+                    <p>Full sound rig, resident DJs, and a room that's rarely quiet on a Wednesday, Friday or Saturday. Straight in off Quay Street.</p>
                     <dl class="level-meta">
                       <div><dt>On the decks</dt><dd>House &amp; dance, guest line-ups</dd></div>
                       <div><dt>Nights</dt><dd>Wed · Fri · Sat</dd></div>
@@ -334,6 +376,30 @@
     </div>
   </section>
 
+  <section class="drinks" id="drinks" aria-labelledby="drinks-heading">
+    <!-- A photograph of the bar itself carries the header; the menu below is
+         a tab control, not a page of anchors, so a category is one tap away. -->
+    <div class="drinks-hero reveal">
+      <!-- The Forbidden Florist's room belongs to the Forbidden Florist. It
+           was carrying this header and the private hire card as well, which
+           put one basement bar behind three different parts of the page. -->
+      <img class="drinks-hero-bg" src="assets/images/resident-rnb.jpg"
+           alt="A packed floor at Eddie Rocks with hands in the air" loading="lazy">
+      <div class="drinks-hero-inner">
+        <h2 id="drinks-heading">The Drinks</h2>
+        <p>Find your favourite. Discover something new.</p>
+      </div>
+    </div>
+
+    <div class="drink-menu reveal" id="drink-menu">
+      <!-- built by js/drinks.js from js/drinks-data.js; the list below is the
+           no-JS fallback and is replaced on mount -->
+      <noscript>
+        <p class="drink-fallback">Spirits, bottles, draught, cocktails, shooters, soft drinks, wines and champagne are all served on all three floors. Wednesday and Friday carry the offers — ask at the bar.</p>
+      </noscript>
+    </div>
+  </section>
+
   <section class="experience" id="experience" aria-labelledby="experience-heading">
     <div class="experience-head reveal">
       <p class="eyebrow">Book it</p>
@@ -341,25 +407,49 @@
     </div>
 
     <ol class="experience-list">
-      <li class="experience-row reveal">
-        <div class="experience-media" data-tilt>
-          <img src="assets/images/exp-showcase.jpg" alt="A DJ on the decks in the RnB Bar with the crowd's hands in the air" loading="lazy">
-        </div>
-        <div class="experience-body">
-          <span class="experience-index" aria-hidden="true">01</span>
-          <h3>Showcase Events</h3>
-          <p>Resident and guest line-ups on the Main Bar, for the nights the whole room turns up.</p>
-          <a href="#events" class="btn btn--text" data-magnetic>See What's On <span aria-hidden="true">→</span></a>
+      <!-- Showcase Events isn't a row you read, it's the line-up itself:
+           the rail sits on the photograph of the room it happens in, and
+           runs left into the past, right into what's coming. -->
+      <li class="experience-row experience-row--lineup reveal" id="events">
+        <img class="lineup-bg" src="assets/images/exp-showcase.jpg"
+             alt="A DJ on the decks in the RnB Bar with the crowd's hands in the air" loading="lazy">
+        <div class="lineup-panel">
+          <div class="events-head">
+            <div>
+              <span class="experience-index" aria-hidden="true">01</span>
+              <h3 id="events-heading">Showcase Events</h3>
+            </div>
+            <div class="lineup-nav">
+              <button type="button" class="lineup-btn" data-lineup-dir="-1" aria-label="Earlier nights">
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" class="lineup-btn" data-lineup-dir="1" aria-label="Later nights">
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+          <p class="lineup-intro">Resident and guest line-ups for the nights the whole room turns up. Left for the nights that have been, right for what's coming.</p>
+
+          <div class="lineup" id="lineup">
+            <div class="lineup-rail" id="lineup-rail" tabindex="0" role="region"
+                 aria-label="Line-ups, earliest to latest">
+              <!-- Built by main.js from the venue's real opening nights so it
+                   can never go stale. no-JS gets the sentence below. -->
+              <noscript>
+                <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights go up as they're confirmed — get in touch for what's coming.</p>
+              </noscript>
+            </div>
+          </div>
         </div>
       </li>
       <li class="experience-row reveal">
         <div class="experience-media" data-tilt>
-          <img src="assets/images/exp-private.jpg" alt="The Forbidden Florist floor laid out with tables and booth seating before service" loading="lazy">
+          <img src="assets/images/frontage.jpg" alt="Eddie Rocks lit up on Quay Street at night" loading="lazy">
         </div>
         <div class="experience-body">
           <span class="experience-index" aria-hidden="true">02</span>
           <h3>Private Hire</h3>
-          <p>Close the doors to everyone but your guest list on either floor, and we'll style it to match the occasion.</p>
+          <p>Close the doors to everyone but your guest list, on one floor or all three, and we'll style it to match the occasion.</p>
           <a href="#contact" class="btn btn--text" data-magnetic>Enquire <span aria-hidden="true">→</span></a>
         </div>
       </li>
@@ -393,33 +483,9 @@
   </section>
 
 
-  <section class="events" id="events" aria-labelledby="events-heading">
+  <section class="events" aria-labelledby="events-ask-heading">
     <div class="events-inner reveal">
-      <div class="events-head">
-        <h2 id="events-heading">Showcase Events</h2>
-        <!-- The rail runs in time order: drag left for nights that have been,
-             right for the ones coming. It lands on tonight. -->
-        <div class="lineup-nav">
-          <button type="button" class="lineup-btn" data-lineup-dir="-1" aria-label="Earlier nights">
-            <span aria-hidden="true">←</span>
-          </button>
-          <button type="button" class="lineup-btn" data-lineup-dir="1" aria-label="Later nights">
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
-      </div>
-
-      <div class="lineup" id="lineup">
-        <div class="lineup-rail" id="lineup-rail" tabindex="0" role="region"
-             aria-label="Line-ups, earliest to latest">
-          <!-- Built by main.js from the venue's real opening nights so it can
-               never go stale. The no-JS fallback below is what stands in. -->
-          <noscript>
-            <p class="lineup-fallback">Eddie's runs Wednesday, Friday and Saturday. New showcase nights are announced regularly on both floors — get in touch for what's coming up.</p>
-          </noscript>
-        </div>
-      </div>
-
+      <h2 id="events-ask-heading" class="visually-hidden">Line-up enquiries</h2>
       <div class="events-empty">
         <p>Line-ups for the showcase nights are announced as they're confirmed. Get in touch if you want to know what's on before it goes up.</p>
         <a href="#contact" class="btn btn--outline" data-magnetic>Enquire</a>
@@ -434,31 +500,31 @@
       <div class="faq-list">
         <details class="faq-item">
           <summary><span class="faq-num">01</span><span class="faq-q">What are your opening days and hours?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Wednesday, Friday and Saturday. Wednesday and Friday we're open 9pm till 2am, and Saturday we run 9pm till late.</p>
+          <p>Wednesday, Friday and Saturday. Wednesday and Friday, 9pm till 2am. Saturday, 9pm till late.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">02</span><span class="faq-q">Is there an entry fee?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Wednesday and Friday are free entry. Saturday's entry fee varies depending on the night, get in touch if you want the price ahead of time.</p>
+          <p>Wednesday and Friday are free. Saturday varies with the night — ask us and we'll tell you the price before you come down.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">03</span><span class="faq-q">Do I need to book a table in advance?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Walk-ins are welcome on both floors, but tables and booths are limited. Get in touch ahead of time and we'll hold one for you.</p>
+          <p>Walk-ins are welcome on every floor, but tables and booths are limited. Let us know ahead of time and we'll hold one for you.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">04</span><span class="faq-q">What's the age policy?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Eddie's is strictly 18+. Valid photo ID is required for entry: a passport, driving licence, or PASS card.</p>
+          <p>Eddie's is strictly 18+. Bring valid photo ID — a passport, driving licence or PASS card.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">05</span><span class="faq-q">Is there a dress code?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>No. There's no dress code on either floor, come as you are.</p>
+          <p>No. No dress code on any floor — come as you are.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">06</span><span class="faq-q">Can I hire the whole venue?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>Yes, either floor or the whole building, for private parties, showcases and corporate bookings. Get in touch with your date and numbers to get a package together.</p>
+          <p>Yes — one floor or the whole building, for private parties, showcases and corporate bookings. Send us your date and numbers and we'll put a package together.</p>
         </details>
         <details class="faq-item">
           <summary><span class="faq-num">07</span><span class="faq-q">Where do I park?</span><span class="plus" aria-hidden="true"></span></summary>
-          <p>There's public parking within a short walk of Quay Street. Get in touch if you'd like directions for the night.</p>
+          <p>There's public parking a short walk from Quay Street. Ask us if you'd like directions on the night.</p>
         </details>
       </div>
     </div>
@@ -510,7 +576,7 @@
   </div>
 
   <div class="footer-inner">
-    <a href="#top" class="wordmark wordmark--footer"><img src="assets/images/logo.svg" alt="Eddie Rocks" class="logo-mark"></a>
+    <a href="#top" class="wordmark wordmark--footer"><img src="assets/images/logo-eddies.png" alt="Eddie Rocks" class="logo-mark" width="420" height="215"></a>
 
     <nav aria-label="Footer">
       <ul>
@@ -525,16 +591,9 @@
     <div class="footer-meta">
       <address>4 Quay Street, Haverfordwest, SA61 1BG</address>
       <p><a href="tel:01437779595">01437 779595</a> · <a href="mailto:contact@eddies.co">contact@eddies.co</a></p>
-      <ul class="social-links" aria-label="Social media">
-        <li><a href="#" aria-label="Eddie Rocks on Facebook">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.7V3.7C16.4 3.65 15.4 3.5 14.2 3.5c-2.5 0-4.2 1.5-4.2 4.3v2.1H7.3V13h2.7v8h3.5Z"/></svg>
-        </a></li>
-        <li><a href="#" aria-label="Eddie Rocks on Instagram">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 8.4a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2Zm0 5.94a2.34 2.34 0 1 1 0-4.68 2.34 2.34 0 0 1 0 4.68ZM17.34 3H6.66A3.66 3.66 0 0 0 3 6.66v10.68A3.66 3.66 0 0 0 6.66 21h10.68A3.66 3.66 0 0 0 21 17.34V6.66A3.66 3.66 0 0 0 17.34 3Zm2.4 14.34a2.4 2.4 0 0 1-2.4 2.4H6.66a2.4 2.4 0 0 1-2.4-2.4V6.66a2.4 2.4 0 0 1 2.4-2.4h10.68a2.4 2.4 0 0 1 2.4 2.4v10.68ZM17.7 7.44a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0Z"/></svg>
-        </a></li>
-        <li><a href="#" aria-label="Eddie Rocks on X (Twitter)">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M13.6 10.4 20 3.5h-1.7L12.8 9.3 8 3.5H2.6l6.7 8.2-6.7 7.8h1.7l5.9-6.3 5.1 6.3h5.4l-7.1-8.7Zm-2.1 2.3-.7-.9L5 4.9h2.4l4.4 5.5.7.9 6.1 7.6h-2.4l-4.7-6.2Z"/></svg>
-        </a></li>
+      <ul class="social-links" aria-label="Eddie Rocks on social media">
+        <li><a href="https://www.facebook.com/share/1F88JXBHW4/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Eddie Rocks on Facebook"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.7V3.7C16.4 3.65 15.4 3.5 14.2 3.5c-2.5 0-4.2 1.5-4.2 4.3v2.1H7.3V13h2.7v8h3.5Z"/></svg></a></li>
+        <li><a href="https://www.instagram.com/eddierocksclub?igsi=cXdjMzIyOGYzN3c1" target="_blank" rel="noopener" aria-label="Eddie Rocks on Instagram"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 8.4a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 0 0 0-7.2Zm0 5.94a2.34 2.34 0 1 1 0-4.68 2.34 2.34 0 0 1 0 4.68ZM17.34 3H6.66A3.66 3.66 0 0 0 3 6.66v10.68A3.66 3.66 0 0 0 6.66 21h10.68A3.66 3.66 0 0 0 21 17.34V6.66A3.66 3.66 0 0 0 17.34 3Zm2.4 14.34a2.4 2.4 0 0 1-2.4 2.4H6.66a2.4 2.4 0 0 1-2.4-2.4V6.66a2.4 2.4 0 0 1 2.4-2.4h10.68a2.4 2.4 0 0 1 2.4 2.4v10.68ZM17.7 7.44a.9.9 0 1 1-1.8 0 .9.9 0 0 1 1.8 0Z"/></svg></a></li>
       </ul>
     </div>
   </div>
@@ -553,6 +612,7 @@
 
 
 <script type="module" src="js/building3d.js"></script>
+<script type="module" src="js/drinks.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

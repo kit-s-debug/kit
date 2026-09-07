@@ -8,7 +8,7 @@ import { join } from "node:path";
 const root = new URL("../..", import.meta.url).pathname;
 const out = new URL("../public/eddie-rocks/", import.meta.url).pathname;
 
-const parts = ["index.html", "labrinth.html", "css", "js", "assets"];
+const parts = ["index.html", "labyrinth.html", "css", "js", "assets"];
 const missing = parts.filter((p) => !existsSync(join(root, p)));
 if (missing.length) {
   console.warn(`skipping eddie-rocks copy, not found: ${missing.join(", ")}`);

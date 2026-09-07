@@ -100,7 +100,7 @@ export const FEATURED = {
   facts: [
     { k: "Role", v: "Design and build" },
     { k: "Built with", v: "WebGL, Three.js, vanilla JS" },
-    { k: "Pages", v: "Main site and Labrinth" },
+    { k: "Pages", v: "Main site and Labyrinth" },
     { k: "Framework", v: "None" },
   ],
   outcome: "A building that used to need explaining now explains itself.",
