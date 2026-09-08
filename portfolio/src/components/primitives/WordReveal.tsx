@@ -46,16 +46,23 @@ export function WordReveal({
       initial={reduce ? false : "hidden"}
       {...(play === "load" ? { animate: "shown" } : { whileInView: "shown", viewport: viewportOnce })}
     >
-      {words.map((w, i) => (
-        <span
-          key={`${w}-${i}`}
-          className="inline-block overflow-hidden pb-[0.14em] -mb-[0.14em] mr-[0.24em] align-bottom"
-        >
-          <motion.span className="inline-block" variants={word}>
-            {w}
-          </motion.span>
-        </span>
-      ))}
+      {/* The animated words below have no real space character between them
+         (the gap is margin, not text), which reads to a screen reader as one
+         run-together word. This carries the real, spaced sentence for
+         assistive tech while the animated version stays purely decorative. */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {words.map((w, i) => (
+          <span
+            key={`${w}-${i}`}
+            className="inline-block overflow-hidden pb-[0.14em] -mb-[0.14em] mr-[0.24em] align-bottom"
+          >
+            <motion.span className="inline-block" variants={word}>
+              {w}
+            </motion.span>
+          </span>
+        ))}
+      </span>
     </Tag>
   );
 }
