@@ -5,6 +5,7 @@ import portraitImage from "@/public/images/portrait.jpg";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SocialLinks } from "@/components/social-links";
+import { RegisterMarks } from "@/components/register-marks";
 import { Sprig } from "@/components/sprig";
 import { about, credentials, cta, welcome } from "@/content/site";
 
@@ -66,6 +67,8 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
+
+          <RegisterMarks />
 
           <Link href="/#book" className="action">
             {cta.primary}

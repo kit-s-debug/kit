@@ -3898,3 +3898,50 @@ body::before {
     height: auto;
   }
 }
+
+/* --- the BACP and PSA marks ----------------------------------------------
+   Two registration logos, small, under the register they confirm. Neither may
+   be recoloured, so each sits on its own paper plate — paper being a fixed
+   value rather than a palette role, the plate stays the same in the evening
+   and the marks keep the ground they were drawn for. BACP is set smaller than
+   the PSA badge: one is four letters, the other is a stack of three things,
+   so matching their heights would make the wordmark shout. */
+.register-marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-block-start: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.register-mark {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.7rem;
+  background: var(--paper);
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--ink) 10%, transparent);
+}
+
+.register-mark :is(img) {
+  display: block;
+  width: auto;
+}
+
+.register-bacp {
+  height: 1.85rem;
+}
+
+.register-psa {
+  height: 2.75rem;
+}
+
+@media (max-width: 48rem) {
+  .register-bacp {
+    height: 1.6rem;
+  }
+
+  .register-psa {
+    height: 2.35rem;
+  }
+}

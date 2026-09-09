@@ -1,5 +1,6 @@
 import { chapters, credentials } from "@/content/site";
 import { Chapter } from "./chapter";
+import { RegisterMarks } from "./register-marks";
 import { Sprig } from "./sprig";
 
 /**
@@ -31,6 +32,8 @@ export function Credentials() {
                 </li>
               ))}
             </ul>
+
+            <RegisterMarks />
           </div>
         </div>
       </div>
