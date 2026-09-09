@@ -705,6 +705,12 @@ select {
   display: none;
 }
 
+/* A closed <details> still lays this out, and its links sit far wider than a
+   phone screen — which widened the document even though nothing was visible. */
+.site-menu:not([open]) .site-menu-panel {
+  display: none;
+}
+
 .site-menu-panel {
   position: absolute;
   inset-inline: var(--gutter);
@@ -3807,13 +3813,20 @@ body::before {
   color: color-mix(in oklab, var(--accent) 30%, transparent);
 }
 
-/* the sections that host one need to be the thing it is positioned against */
+/* Every room that holds a sprig or a piece of greenery has to be the thing it
+   is positioned against. Miss one and its absolutely-positioned decoration
+   resolves against the page instead — which puts it outside the room's clip,
+   and a piece hanging off the right edge then widens the whole document. */
 .welcome,
 .finder,
 .sessions,
+.approach,
 .fees,
 .credentials,
-.site-footer {
+.arriving,
+.booking,
+.site-footer,
+.page {
   position: relative;
 }
 
