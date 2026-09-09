@@ -1,5 +1,6 @@
 import { chapters, credentials } from "@/content/site";
 import { Chapter } from "./chapter";
+import { Sprig } from "./sprig";
 
 /**
  * A register, not a badge row — stated plainly. The no-testimonials position is
@@ -8,6 +9,7 @@ import { Chapter } from "./chapter";
 export function Credentials() {
   return (
     <section id="credentials" className="room credentials" aria-labelledby="credentials-heading">
+      <Sprig variant="pair" size={62} className="sprig-set credentials-sprig" />
       <div className="shell-editorial">
         <Chapter {...chapters.credentials} />
 

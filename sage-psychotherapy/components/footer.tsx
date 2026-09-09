@@ -4,10 +4,12 @@ import { footer, practice, safety } from "@/content/site";
 import { Crisis } from "./crisis";
 import { Placeholder } from "./placeholder";
 import { SocialLinks } from "./social-links";
+import { Sprig } from "./sprig";
 
 export function Footer() {
   return (
     <footer className="site-footer on-dark">
+      <Sprig variant="arc" size={104} className="sprig-set footer-sprig" />
       <div className="shell-editorial">
         <div className="site-footer-top">
           <div className="site-footer-brand">

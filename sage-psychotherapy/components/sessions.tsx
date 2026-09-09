@@ -1,5 +1,6 @@
 import { chapters, formats, sessionsSection } from "@/content/site";
 import { Chapter } from "./chapter";
+import { Sprig } from "./sprig";
 
 /**
  * Four formats as a selector rather than four paragraphs — and with no
@@ -12,6 +13,7 @@ import { Chapter } from "./chapter";
 export function Sessions() {
   return (
     <section id="sessions" className="room sessions" aria-labelledby="sessions-heading">
+      <Sprig variant="five" size={54} className="sprig-set sessions-sprig" />
       <div className="shell-editorial">
         <Chapter {...chapters.sessions} />
         <div className="sessions-head">

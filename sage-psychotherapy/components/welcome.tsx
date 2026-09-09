@@ -1,17 +1,20 @@
 import Image from "next/image";
 import portraitImage from "@/public/images/portrait.jpg";
-import { chapters, welcome } from "@/content/site";
+import { about, chapters, welcome } from "@/content/site";
 import { Chapter } from "./chapter";
+import { SocialLinks } from "./social-links";
+import { Sprig } from "./sprig";
 
 /**
- * An editorial spread rather than a photo-beside-a-bio. The chapter opens on a
- * large italic pull-line — the one true thing she wants a nervous reader to
- * know — with her portrait floated into the margin and the practical detail
- * kept small beneath. Asymmetric on purpose.
+ * Lyndsay's introduction, in her own words, beside her portrait — the same
+ * text the About page carries, from the same place in the content file, so
+ * the two can never drift apart.
  */
 export function Welcome() {
   return (
     <section id="welcome" className="welcome on-dark" aria-label="From Lyndsay">
+      <Sprig variant="nine" size={132} className="sprig-set welcome-sprig" />
+
       <div className="shell-editorial welcome-inner">
         <Chapter {...chapters.welcome} />
 
@@ -20,20 +23,28 @@ export function Welcome() {
             <Image
               src={portraitImage}
               alt={welcome.portraitAlt}
-              sizes="(max-width: 60rem) 60vw, 22rem"
+              sizes="(max-width: 60rem) 60vw, 16rem"
               placeholder="blur"
               quality={82}
             />
           </figure>
 
           <div className="welcome-lead">
-            <p className="pull welcome-pull">
-              {welcome.pull.before}
-              <em>{welcome.pull.em}</em>
-              {welcome.pull.after}
-            </p>
+            <p className="welcome-lede">{about.lede}</p>
 
-            <p className="welcome-note">{welcome.note}</p>
+            <div className="welcome-note">
+              <p>{about.body[0]}</p>
+
+              {/* a div, not a paragraph: the social links are a list */}
+              <div className="welcome-socials">
+                <p>{about.socialsLine}</p>
+                <SocialLinks tone="dark" />
+              </div>
+
+              {about.body.slice(1).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
           </div>
         </div>
       </div>

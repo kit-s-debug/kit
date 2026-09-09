@@ -2967,13 +2967,15 @@ body::before {
 
 .welcome-spread {
   display: grid;
-  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
-  gap: clamp(2rem, 7vw, 6.5rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5.5rem);
+  /* her words run longer than the portrait, so it sits on their middle rather
+     than leaving a column of nothing beneath it */
+  align-items: center;
 }
 
 .welcome-portrait {
-  margin: clamp(1rem, 4vw, 3.5rem) 0 0;
+  margin: 0;
   border-radius: 3px;
   overflow: clip;
   box-shadow: 0 0 0 1px var(--line-on-dark);
@@ -2993,11 +2995,15 @@ body::before {
   filter: brightness(1.04);
 }
 
-.welcome-pull {
+.welcome-lede {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
   color: #f2ead9;
-  font-size: var(--step-5);
-  line-height: 1.08;
-  max-width: 18ch;
+  font-size: var(--step-3);
+  line-height: 1.18;
+  max-width: 22ch;
 }
 
 .welcome-note {
@@ -3162,7 +3168,6 @@ body::before {
 }
 
 /* the big statements were a touch tall — bring them in one step */
-.welcome-pull,
 .approach-pull {
   font-size: var(--step-4);
   line-height: 1.1;
@@ -3177,8 +3182,15 @@ body::before {
   margin-block-end: clamp(1.75rem, 4vw, 3rem);
 }
 
-.welcome-portrait {
-  margin-block-start: clamp(0.5rem, 2vw, 1.5rem);
+.welcome-socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.85rem;
+}
+
+.welcome-socials p {
+  margin: 0;
 }
 
 /* ==========================================================================
@@ -3333,12 +3345,16 @@ body::before {
 
   /* one step down on the display sizes so headlines stop wrapping to four lines */
   .display-xl,
-  .welcome-pull,
   .approach-pull,
   .approach-display,
   .page-heading {
     font-size: var(--step-3);
     line-height: 1.1;
+  }
+
+  .welcome-lede {
+    font-size: var(--step-2);
+    max-width: none;
   }
 
   .credentials-display,
@@ -3759,5 +3775,126 @@ body::before {
 
   .site-menu {
     margin-inline-start: 0;
+  }
+}
+
+/* ==========================================================================
+   HER SPRIGS — cuttings from the wreath in her logo, set around the page
+   The mark is the practice's, so it earns real placement: a full cutting in
+   the corner of a dark field, a small one lying on a hairline, one tucked
+   into a card. Six shapes, never the same one twice in a row, all of them
+   decoration — behind the type, out of the pointer's way, invisible to a
+   screen reader.
+   ========================================================================== */
+
+.sprig {
+  pointer-events: none;
+}
+
+/* the placed ones, as opposed to the marks that sit inline beside a heading */
+.sprig-set {
+  position: absolute;
+  z-index: 0;
+  color: color-mix(in oklab, var(--accent) 46%, transparent);
+}
+
+.on-dark .sprig-set {
+  color: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* the sections that host one need to be the thing it is positioned against */
+.welcome,
+.finder,
+.sessions,
+.fees,
+.credentials,
+.site-footer {
+  position: relative;
+}
+
+/* welcome — the fullest cutting, high in the right of the ink field */
+.welcome-sprig {
+  inset-block-start: clamp(1.5rem, 5vw, 4rem);
+  inset-inline-end: clamp(1rem, 6vw, 6rem);
+  color: color-mix(in oklab, var(--accent) 20%, transparent);
+}
+
+/* words — one lying along the bottom right, under the list */
+.finder-sprig {
+  inset-block-end: clamp(1rem, 4vw, 3rem);
+  inset-inline-end: clamp(1rem, 6vw, 5.5rem);
+  color: color-mix(in oklab, var(--accent) 26%, transparent);
+}
+
+/* sessions — a small upright one out to the right of the heading, clear of
+   the chapter rule that runs above it */
+.sessions-sprig {
+  inset-block-start: clamp(5rem, 12vw, 9.5rem);
+  inset-inline-end: clamp(1.25rem, 7vw, 7rem);
+}
+
+/* credentials — the forked cutting, low right */
+.credentials-sprig {
+  inset-block-end: clamp(1.5rem, 5vw, 4rem);
+  inset-inline-end: clamp(1.25rem, 7vw, 7rem);
+}
+
+/* fees — the seven-leaf cutting, mirrored, low in the right of the field */
+.fees-sprig {
+  inset-block-end: clamp(1.5rem, 5vw, 4rem);
+  inset-inline-end: clamp(1.25rem, 7vw, 7rem);
+}
+
+/* arriving — tucked into the top corner of the where-card */
+.arriving-where {
+  position: relative;
+}
+
+.arriving-sprig {
+  inset-block-start: 0.85rem;
+  inset-inline-end: 0.9rem;
+  color: color-mix(in oklab, var(--accent) 34%, transparent);
+}
+
+/* the footer signs off with one lying in the corner */
+.footer-sprig {
+  inset-block-end: clamp(1rem, 3vw, 2.5rem);
+  inset-inline-end: clamp(1rem, 5vw, 4rem);
+  color: color-mix(in oklab, var(--accent) 22%, transparent);
+}
+
+/* about — beside the qualifications */
+.about-register {
+  position: relative;
+}
+
+.about-sprig {
+  inset-block-start: 0.25rem;
+  inset-inline-end: clamp(0rem, 4vw, 4rem);
+}
+
+/* Below the widest phone the corner cuttings would crowd the copy, so the
+   two full-height ones stand down and the rest come in a size. */
+@media (max-width: 48rem) {
+  .welcome-sprig,
+  .credentials-sprig,
+  .fees-sprig {
+    display: none;
+  }
+
+  .finder-sprig,
+  .footer-sprig {
+    width: 68px;
+    height: auto;
+  }
+
+  .sessions-sprig {
+    width: 34px;
+    height: auto;
+  }
+
+  .about-sprig {
+    width: 36px;
+    height: auto;
   }
 }

@@ -5,7 +5,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { booking, chapters, crisis, formats, practice } from "@/content/site";
 import { collectErrors, enquirySchema, type FieldErrors } from "@/lib/enquiry";
 import { Chapter } from "./chapter";
-import { Leaf } from "./leaf";
+import { Sprig } from "./sprig";
 
 const CalEmbed = dynamic(() => import("./cal-embed").then((m) => m.CalEmbed), {
   ssr: false,
@@ -161,7 +161,7 @@ export function Booking() {
       <div className="shell-editorial booking-shell">
         <Chapter {...chapters.booking} />
         <div className="booking-head">
-          <Leaf size="mark" className="booking-leaf" />
+          <Sprig variant="five" size={22} className="booking-leaf" />
           <h2 id="booking-heading" className="booking-heading">
             {booking.heading}
           </h2>

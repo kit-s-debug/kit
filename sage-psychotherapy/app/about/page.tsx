@@ -5,6 +5,7 @@ import portraitImage from "@/public/images/portrait.jpg";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SocialLinks } from "@/components/social-links";
+import { Sprig } from "@/components/sprig";
 import { about, credentials, cta, welcome } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -55,6 +56,7 @@ export default function AboutPage() {
         </div>
 
         <div className="shell-editorial about-register">
+          <Sprig variant="pair" size={52} className="sprig-set about-sprig" />
           <h2 className="about-section-heading">{credentials.heading}</h2>
           <ul className="credentials-list">
             {credentials.rows.map((row) => (

@@ -81,19 +81,8 @@ export const hero = {
 /* -------------------------------------------------------------------------- */
 
 export const welcome = {
-  pull: {
-    before: "Almost everyone tells me the same thing afterwards: the hardest part was ",
-    em: "making contact",
-    after: ".",
-  },
-  lines: [
-    "I'm Lyndsay. I see people in my front room here in Milford Haven, or online if that suits you better.",
-    "Almost everyone tells me the same thing afterwards: the hardest part was making contact.",
-    "So we start with fifteen minutes on the phone. Free, and you owe me nothing after it.",
-  ],
-  /* The one line shown beneath the pull — deliberately not a repeat of the hero
-     or the fees panel. */
-  note: "There is no wrong reason to get in touch, and no need to have the words ready.",
+  /* The words in this section are Lyndsay's own — see `about` below, which is
+     where they live, so the home page and the About page cannot drift apart. */
   portraitAlt:
     "Lyndsay Gent in natural light, wearing a blue scarf, looking towards the camera.",
 } as const;

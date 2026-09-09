@@ -1,6 +1,6 @@
 import { approach, chapters, clients } from "@/content/site";
 import { Chapter } from "./chapter";
-import { Leaf } from "./leaf";
+import { Sprig } from "./sprig";
 
 /**
  * Adlerian therapy is her real differentiator, so the chapter leads on the name
@@ -14,7 +14,7 @@ export function Approach() {
         <Chapter {...chapters.approach} />
 
         <div className="approach-lead">
-          <Leaf size="large" className="approach-watermark" />
+          <Sprig variant="seven" size={150} className="approach-watermark" />
           <h2 id="approach-heading" className="approach-display">
             {approach.heading}
           </h2>

@@ -1,5 +1,6 @@
 import { arriving, chapters, practice } from "@/content/site";
 import { Chapter } from "./chapter";
+import { Sprig } from "./sprig";
 import { Placeholder } from "./placeholder";
 
 /**
@@ -38,6 +39,7 @@ export function Arriving() {
           </ol>
 
           <aside className="arriving-where">
+            <Sprig variant="three" size={40} className="sprig-set arriving-sprig" />
             <h3 className="kicker">{arriving.addressHeading}</h3>
             <address className="arriving-address">
               <Placeholder {...practice.street} />
