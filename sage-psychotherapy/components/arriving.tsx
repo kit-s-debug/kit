@@ -1,5 +1,6 @@
 import { arriving, chapters, practice } from "@/content/site";
 import { Chapter } from "./chapter";
+import { Scene } from "./scene";
 import { Sprig } from "./sprig";
 import { Placeholder } from "./placeholder";
 
@@ -17,6 +18,7 @@ export function Arriving() {
   return (
     <section id="arriving" className="room arriving" aria-labelledby="arriving-heading">
       <Sprig variant="arc" size={360} className="greenery arriving-greenery" />
+      <Scene name="rest" size={205} className="arriving-scene" />
       <div className="shell-editorial arriving-shell">
         <Chapter {...chapters.arriving} />
         <div className="arriving-grid">

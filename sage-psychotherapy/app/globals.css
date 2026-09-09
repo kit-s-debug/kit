@@ -4171,3 +4171,71 @@ body::before {
     inset-inline-end: -5rem;
   }
 }
+
+/* ==========================================================================
+   THE ILLUSTRATIONS
+   Four drawings, cut off the flat grounds they came on, set into corners the
+   layout had left empty. They belong to the same background plane as the
+   greenery — behind the type, drifting with it, out of the pointer's way and
+   silent to a screen reader — so the page still reads as one thing rather than
+   a layout with pictures dropped into it. Light fields only: cut out, these
+   are pale drawings, and on the ink fields they would glow rather than settle.
+   ========================================================================== */
+
+.scene {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.88;
+}
+
+@supports (animation-timeline: view()) {
+  .scene {
+    animation: greenery-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+/* sessions — the consulting room, low right, opposite the rail */
+.sessions-scene {
+  inset-block-end: clamp(1.25rem, 4vw, 3rem);
+  inset-inline-end: clamp(1rem, 5vw, 5rem);
+}
+
+/* approach — low right, under the statement */
+.approach-scene {
+  inset-block-end: clamp(1rem, 3vw, 2.5rem);
+  inset-inline-end: clamp(1rem, 5vw, 5rem);
+}
+
+/* arriving — below the walk, on the left where the steps run out */
+.arriving-scene {
+  inset-block-end: clamp(1rem, 3vw, 2.5rem);
+  inset-inline-start: clamp(1rem, 8vw, 9rem);
+}
+
+/* about — the garden, opening out of the top right corner of the page */
+.page-scene {
+  inset-block-start: 2rem;
+  inset-inline-end: -2rem;
+}
+
+/* A phone column has no empty corners — every one of these would end up
+   behind body copy, and three of them carry solid fields of colour that copy
+   should not have to sit on. So on a phone they stand down. The exception is
+   the About corner: that drawing was already cut as a corner, and it tucks in
+   beside the page heading without touching anything. */
+@media (max-width: 48rem) {
+  .sessions-scene,
+  .approach-scene,
+  .arriving-scene {
+    display: none;
+  }
+
+  .page-scene {
+    width: 168px !important;
+    inset-block-start: 0.5rem;
+    inset-inline-end: -1.5rem;
+  }
+}

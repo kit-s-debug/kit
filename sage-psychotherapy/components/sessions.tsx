@@ -1,5 +1,6 @@
 import { chapters, formats, sessionsSection } from "@/content/site";
 import { Chapter } from "./chapter";
+import { Scene } from "./scene";
 import { Sprig } from "./sprig";
 
 /**
@@ -14,6 +15,7 @@ export function Sessions() {
   return (
     <section id="sessions" className="room sessions" aria-labelledby="sessions-heading">
       <Sprig variant="nine" size={300} className="greenery sessions-greenery" />
+      <Scene name="room" size={220} className="sessions-scene" />
       <Sprig variant="five" size={54} className="sprig-set sessions-sprig" />
       <div className="shell-editorial">
         <Chapter {...chapters.sessions} />
