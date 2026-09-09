@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SocialLinks } from "@/components/social-links";
 import { RegisterMarks } from "@/components/register-marks";
-import { Sprig } from "@/components/sprig";
+import { Sprig, Wreath } from "@/components/sprig";
 import { about, credentials, cta, welcome } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -25,6 +25,7 @@ export default function AboutPage() {
     <>
       <Header />
       <main id="main" className="page">
+        <Wreath size={440} leaves={15} className="greenery page-greenery" />
         <div className="shell-editorial page-head">
           <h1 className="page-heading">{about.heading}</h1>
         </div>

@@ -251,3 +251,116 @@ export function Sprig({
     </svg>
   );
 }
+
+/**
+ * The wreath from her logo, drawn open at the top the way hers is.
+ *
+ * Two branches rise from the base and curve round, leaves turned outward, with
+ * a gap left at the crown. Used large and very faint as a background — the
+ * mark at the scale of a room rather than a badge.
+ */
+export function Wreath({
+  size = 240,
+  className = "",
+  /** Leaves per branch. */
+  leaves = 13,
+  /** Degrees of sky left open at the crown. */
+  crown = 54,
+}: {
+  size?: number;
+  className?: string;
+  leaves?: number;
+  crown?: number;
+}) {
+  const cx = 50;
+  const cy = 50;
+  const r = 33;
+
+  // Sweep from the base (90°, straight down in SVG terms) round each way,
+  // stopping short of the crown.
+  const span = 180 - crown / 2;
+  const branches = [1, -1].map((dir) => {
+    const arc: { a: number; scale: number }[] = [];
+    for (let i = 0; i < leaves; i += 1) {
+      const t = i / (leaves - 1);
+      arc.push({
+        a: 90 + dir * (t * span),
+        // leaves thin out towards the open crown, as they do on a real branch
+        scale: 1 - t * 0.42,
+      });
+    }
+    return { dir, arc };
+  });
+
+  const path = (dir: number) => {
+    const a0 = (90 * Math.PI) / 180;
+    const a1 = ((90 + dir * span) * Math.PI) / 180;
+    return [
+      `M${(cx + Math.cos(a0) * r).toFixed(2)} ${(cy + Math.sin(a0) * r).toFixed(2)}`,
+      `A${r} ${r} 0 0 ${dir > 0 ? 1 : 0} ${(cx + Math.cos(a1) * r).toFixed(2)} ${(cy + Math.sin(a1) * r).toFixed(2)}`,
+    ].join(" ");
+  };
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+      className={`sprig wreath ${className}`}
+    >
+      {branches.map(({ dir }) => (
+        <path
+          key={dir}
+          d={path(dir)}
+          stroke="currentColor"
+          strokeWidth="1.1"
+          strokeLinecap="round"
+        />
+      ))}
+
+      {branches.flatMap(({ dir, arc }) =>
+        arc.map(({ a, scale }, i) => {
+          const rad = (a * Math.PI) / 180;
+          const sx = cx + Math.cos(rad) * r;
+          const sy = cy + Math.sin(rad) * r;
+          // outward, with a lean along the branch so they overlap like real leaves
+          const out = a + dir * 26;
+          const len = 8.6 * scale;
+          const lx = sx + Math.cos((out * Math.PI) / 180) * len;
+          const ly = sy + Math.sin((out * Math.PI) / 180) * len;
+          return (
+            <ellipse
+              key={`${dir}-${i}`}
+              cx={lx}
+              cy={ly}
+              rx={len}
+              ry={3.4 * scale}
+              fill="currentColor"
+              transform={`rotate(${out} ${lx} ${ly})`}
+            />
+          );
+        }),
+      )}
+
+      {[0.28, 0.56, 0.84].flatMap((t) =>
+        [1, -1].map((dir) => {
+          const a = ((90 + dir * (t * span)) * Math.PI) / 180;
+          const inward = r - 5.2;
+          return (
+            <circle
+              key={`${dir}-${t}`}
+              cx={cx + Math.cos(a) * inward}
+              cy={cy + Math.sin(a) * inward}
+              r={1.9}
+              fill="currentColor"
+              opacity="0.65"
+            />
+          );
+        }),
+      )}
+    </svg>
+  );
+}

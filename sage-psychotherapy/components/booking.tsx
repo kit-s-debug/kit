@@ -5,7 +5,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { booking, chapters, crisis, formats, practice } from "@/content/site";
 import { collectErrors, enquirySchema, type FieldErrors } from "@/lib/enquiry";
 import { Chapter } from "./chapter";
-import { Sprig } from "./sprig";
+import { Sprig, Wreath } from "./sprig";
 
 const CalEmbed = dynamic(() => import("./cal-embed").then((m) => m.CalEmbed), {
   ssr: false,
@@ -117,6 +117,7 @@ export function Booking() {
   if (state === "sent") {
     return (
       <section id="book" className="booking on-dark" aria-labelledby="booking-heading">
+        <Wreath size={520} leaves={17} crown={40} className="greenery booking-greenery" />
         <div className="shell-editorial booking-shell">
           <div className="booking-done" ref={heading} tabIndex={-1}>
             <p lang="cy" className="booking-diolch">
@@ -158,6 +159,7 @@ export function Booking() {
 
   return (
     <section id="book" className="booking on-dark" aria-labelledby="booking-heading">
+      <Wreath size={520} leaves={17} crown={40} className="greenery booking-greenery" />
       <div className="shell-editorial booking-shell">
         <Chapter {...chapters.booking} />
         <div className="booking-head">

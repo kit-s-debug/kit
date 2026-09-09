@@ -16,6 +16,7 @@ export function Arriving() {
 
   return (
     <section id="arriving" className="room arriving" aria-labelledby="arriving-heading">
+      <Sprig variant="arc" size={360} className="greenery arriving-greenery" />
       <div className="shell-editorial arriving-shell">
         <Chapter {...chapters.arriving} />
         <div className="arriving-grid">

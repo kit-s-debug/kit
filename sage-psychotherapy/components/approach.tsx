@@ -10,6 +10,7 @@ import { Sprig } from "./sprig";
 export function Approach() {
   return (
     <section id="approach" className="room approach" aria-labelledby="approach-heading">
+      <Sprig variant="nine" size={320} flip className="greenery approach-greenery" />
       <div className="shell-editorial">
         <Chapter {...chapters.approach} />
 

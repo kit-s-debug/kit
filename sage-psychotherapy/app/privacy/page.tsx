@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { Sprig } from "@/components/sprig";
 import { privacy } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function PrivacyPage() {
     <>
       <Header />
       <main id="main" className="page">
+        <Sprig variant="nine" size={320} className="greenery page-greenery" />
         <div className="shell-editorial page-head">
           <h1 className="page-heading">{privacy.heading}</h1>
           <p className="page-updated label">{privacy.updated}</p>

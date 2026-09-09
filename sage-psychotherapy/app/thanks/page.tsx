@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { Sprig } from "@/components/sprig";
 import { ThanksBody } from "./thanks-body";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function ThanksPage() {
     <>
       <Header />
       <main id="main" className="page">
+        <Sprig variant="seven" size={300} flip className="greenery page-greenery" />
         <Suspense>
           <ThanksBody />
         </Suspense>

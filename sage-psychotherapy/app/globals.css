@@ -3603,6 +3603,18 @@ body::before {
   --seam-from: var(--ground-sunk);
 }
 
+:root {
+  /* named so a section can carry it alongside a second background layer */
+  --seam-wash: linear-gradient(
+    to bottom,
+    var(--seam-from) 0%,
+    color-mix(in oklab, var(--seam-from) 52%, transparent) 16%,
+    color-mix(in oklab, var(--seam-from) 22%, transparent) 36%,
+    color-mix(in oklab, var(--seam-from) 7%, transparent) 62%,
+    transparent 100%
+  );
+}
+
 .finder,
 .sessions,
 .approach,
@@ -3611,14 +3623,7 @@ body::before {
 .arriving,
 .booking {
   /* only the image layer — the background-colour set earlier still stands */
-  background-image: linear-gradient(
-    to bottom,
-    var(--seam-from) 0%,
-    color-mix(in oklab, var(--seam-from) 52%, transparent) 16%,
-    color-mix(in oklab, var(--seam-from) 22%, transparent) 36%,
-    color-mix(in oklab, var(--seam-from) 7%, transparent) 62%,
-    transparent 100%
-  );
+  background-image: var(--seam-wash);
   background-repeat: no-repeat;
   background-size: 100% var(--seam);
   background-position: top center;
@@ -3943,5 +3948,213 @@ body::before {
 
   .register-psa {
     height: 2.35rem;
+  }
+}
+
+/* ==========================================================================
+   DEPTH — a far plane of greenery, and light in the dark rooms
+   The small cuttings sit on the page. These sit behind it: the wreath from
+   her logo and the largest cuttings, several times bigger, faint enough to
+   read as ground rather than ornament, and running off the edge of the room
+   they are in so nothing looks centred or placed. They drift against the
+   scroll, which is the whole point — two planes moving at different speeds is
+   what depth is. Still and finished under calm mode or reduced motion.
+   ========================================================================== */
+
+.greenery {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  color: color-mix(in oklab, var(--accent) 11%, transparent);
+}
+
+.on-dark .greenery {
+  color: color-mix(in oklab, var(--accent) 13%, transparent);
+}
+
+/* the far plane runs off the edge, so the room has to hold it in */
+.welcome,
+.finder,
+.sessions,
+.approach,
+.fees,
+.credentials,
+.arriving,
+.booking,
+.site-footer,
+.page {
+  overflow: clip;
+}
+
+@supports (animation-timeline: view()) {
+  .greenery {
+    animation: greenery-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+/* Both ends of this are a resting position, so whichever one reduced motion
+   lands on still looks placed. */
+@keyframes greenery-drift {
+  from {
+    transform: translate3d(0, 4.5%, 0);
+  }
+  to {
+    transform: translate3d(0, -4.5%, 0);
+  }
+}
+
+/* --- where each one sits -------------------------------------------------- */
+/* welcome: the wreath low behind her portrait, off the left edge */
+.welcome-greenery {
+  inset-block-end: -14%;
+  inset-inline-start: -9rem;
+}
+
+/* words: a wreath filling the empty right margin */
+.finder-greenery {
+  inset-block-start: -8%;
+  inset-inline-end: -7rem;
+}
+
+/* sessions: the fullest cutting, off the bottom left, behind the rail */
+.sessions-greenery {
+  inset-block-end: -20%;
+  inset-inline-start: -6rem;
+}
+
+/* approach: off the left, under the statement */
+.approach-greenery {
+  inset-block-end: -16%;
+  inset-inline-start: -8rem;
+}
+
+/* fees: the wreath off the left of the ink field */
+.fees-greenery {
+  inset-block-start: -12%;
+  inset-inline-start: -10rem;
+}
+
+/* arriving: one lying down, off the bottom right behind the card */
+.arriving-greenery {
+  inset-block-end: -12%;
+  inset-inline-end: -8rem;
+}
+
+/* booking: the biggest wreath, behind the last step */
+.booking-greenery {
+  inset-block-start: 50%;
+  inset-inline-end: -15rem;
+  translate: 0 -50%;
+}
+
+/* footer: half a wreath rising out of the bottom edge */
+.footer-greenery {
+  inset-block-end: -26%;
+  inset-inline-start: 38%;
+}
+
+/* the inner pages get one each */
+.page-greenery {
+  inset-block-start: 4rem;
+  inset-inline-end: -8rem;
+}
+
+/* The near plane drifts the other way. Two planes moving in opposite
+   directions is what separates them; on its own, either one just slides.
+   This animates `translate` rather than `transform` so the sprigs that are
+   mirrored keep their mirror, and the far plane animates `transform` so the
+   wreath that is centred keeps its centring. */
+@supports (animation-timeline: view()) {
+  .sprig-set {
+    animation: sprig-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+@keyframes sprig-drift {
+  from {
+    translate: 0 -10px;
+  }
+  to {
+    translate: 0 10px;
+  }
+}
+
+/* --- light in the dark rooms ---------------------------------------------- */
+/* The cursor lamp only exists on a mouse. These are the rooms lit at rest, so
+   the ink fields read as space rather than as flat colour. */
+.welcome {
+  background-image: radial-gradient(
+    62% 58% at 14% 26%,
+    color-mix(in oklab, var(--lamp) 10%, transparent),
+    transparent 72%
+  );
+  background-repeat: no-repeat;
+}
+
+.fees {
+  background-image:
+    radial-gradient(
+      58% 62% at 86% 24%,
+      color-mix(in oklab, var(--lamp) 9%, transparent),
+      transparent 70%
+    ),
+    var(--seam-wash);
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 100%, 100% var(--seam);
+  background-position: center, top center;
+}
+
+.booking {
+  background-image:
+    radial-gradient(
+      64% 56% at 18% 76%,
+      color-mix(in oklab, var(--lamp) 10%, transparent),
+      transparent 72%
+    ),
+    var(--seam-wash);
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 100%, 100% var(--seam);
+  background-position: center, top center;
+}
+
+/* On a phone there is no empty margin for the far plane to live in, so the
+   biggest pieces stand down and the rest come in a long way. */
+@media (max-width: 48rem) {
+  .greenery {
+    color: color-mix(in oklab, var(--accent) 8%, transparent);
+  }
+
+  .on-dark .greenery {
+    color: color-mix(in oklab, var(--accent) 10%, transparent);
+  }
+
+  .welcome-greenery,
+  .sessions-greenery,
+  .approach-greenery {
+    display: none;
+  }
+
+  .finder-greenery,
+  .fees-greenery,
+  .booking-greenery,
+  .arriving-greenery,
+  .footer-greenery,
+  .page-greenery {
+    width: 210px;
+    height: auto;
+  }
+
+  /* the offsets that hold these clear of the copy on a wide screen would put
+     them off the edge of a phone entirely, so they come back in to peek */
+  .fees-greenery {
+    inset-inline-start: -6rem;
+  }
+
+  .booking-greenery {
+    inset-inline-end: -5rem;
   }
 }

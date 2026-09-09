@@ -4,7 +4,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { areas, chapters, clusters, crisis, cta, finder } from "@/content/site";
 import { findAreas } from "@/lib/match";
 import { Chapter } from "./chapter";
-import { Sprig } from "./sprig";
+import { Sprig, Wreath } from "./sprig";
 
 /**
  * Finding the words.
@@ -78,6 +78,7 @@ export function FindingWords() {
 
   return (
     <section id="words" className="room finder" aria-labelledby="finder-heading">
+      <Wreath size={460} className="greenery finder-greenery" />
       <Sprig variant="arc" size={96} className="sprig-set finder-sprig" />
       <div className="shell-editorial finder-shell">
         <Chapter {...chapters.words} />

@@ -13,6 +13,7 @@ import { Sprig } from "./sprig";
 export function Sessions() {
   return (
     <section id="sessions" className="room sessions" aria-labelledby="sessions-heading">
+      <Sprig variant="nine" size={300} className="greenery sessions-greenery" />
       <Sprig variant="five" size={54} className="sprig-set sessions-sprig" />
       <div className="shell-editorial">
         <Chapter {...chapters.sessions} />

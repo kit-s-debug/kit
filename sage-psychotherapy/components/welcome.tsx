@@ -3,7 +3,7 @@ import portraitImage from "@/public/images/portrait.jpg";
 import { about, chapters, welcome } from "@/content/site";
 import { Chapter } from "./chapter";
 import { SocialLinks } from "./social-links";
-import { Sprig } from "./sprig";
+import { Sprig, Wreath } from "./sprig";
 
 /**
  * Lyndsay's introduction, in her own words, beside her portrait — the same
@@ -13,6 +13,7 @@ import { Sprig } from "./sprig";
 export function Welcome() {
   return (
     <section id="welcome" className="welcome on-dark" aria-label="From Lyndsay">
+      <Wreath size={420} leaves={15} className="greenery welcome-greenery" />
       <Sprig variant="nine" size={132} className="sprig-set welcome-sprig" />
 
       <div className="shell-editorial welcome-inner">

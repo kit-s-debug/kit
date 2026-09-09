@@ -4,11 +4,12 @@ import { footer, practice, safety } from "@/content/site";
 import { Crisis } from "./crisis";
 import { Placeholder } from "./placeholder";
 import { SocialLinks } from "./social-links";
-import { Sprig } from "./sprig";
+import { Sprig, Wreath } from "./sprig";
 
 export function Footer() {
   return (
     <footer className="site-footer on-dark">
+      <Wreath size={380} leaves={16} crown={34} className="greenery footer-greenery" />
       <Sprig variant="arc" size={104} className="sprig-set footer-sprig" />
       <div className="shell-editorial">
         <div className="site-footer-top">
