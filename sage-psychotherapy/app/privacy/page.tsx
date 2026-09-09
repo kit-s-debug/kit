@@ -16,13 +16,13 @@ export default function PrivacyPage() {
     <>
       <Header />
       <main id="main" className="page">
-        <div className="shell page-head">
+        <div className="shell-editorial page-head">
           <h1 className="page-heading">{privacy.heading}</h1>
           <p className="page-updated label">{privacy.updated}</p>
           <p className="page-lede">{privacy.intro}</p>
         </div>
 
-        <div className="shell prose">
+        <div className="shell-editorial prose">
           {privacy.sections.map((section) => (
             <section key={section.heading} className="prose-section">
               <h2>{section.heading}</h2>

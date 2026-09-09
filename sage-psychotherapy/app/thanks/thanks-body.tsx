@@ -10,7 +10,7 @@ export function ThanksBody() {
 
   if (state === "error" || state === "busy") {
     return (
-      <div className="shell page-head">
+      <div className="shell-editorial page-head">
         <h1 className="page-heading">{booking.errorHeading}</h1>
         <p className="page-lede">{booking.errorBody}</p>
         <p>
@@ -28,7 +28,7 @@ export function ThanksBody() {
   }
 
   return (
-    <div className="shell page-head">
+    <div className="shell-editorial page-head">
       <p lang="cy" className="booking-diolch booking-diolch-page">
         {booking.confirmation.welsh}.
       </p>

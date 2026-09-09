@@ -845,29 +845,17 @@ export const about = {
   description:
     "Lyndsay Gent is an Adlerian psychotherapist and counsellor in Milford Haven, Pembrokeshire. BACP member, PSA Accredited Register, enhanced DBS.",
   heading: "About Lyndsay",
-  sections: [
-    {
-      heading: "How I got here",
-      body: [
-        "I trained as an Adlerian counsellor and psychotherapist, took the certificate and then the diploma, and spent a year counselling for MIND.",
-        "Four years of client work in an office followed. I now practise from my own home in Neyland, just outside Milford Haven, which suits the work better than any office did.",
-      ],
-    },
-    {
-      heading: "How I work",
-      body: [
-        "Adlerian therapy is the base. Everything else I have trained in gets used when it fits the person in front of me, which is why I keep training.",
-        "I am not a blank screen. You will get a real conversation, and I will say what I think if you ask me.",
-      ],
-    },
-    {
-      heading: "What I will not do",
-      body: [
-        "I won't diagnose you, and I won't promise you an outcome — nobody honest can.",
-        "I won't ask you to describe anything before you're ready, and I won't be shocked by whatever you do describe.",
-      ],
-    },
+  /* Lyndsay's own words, in her own order. Untouched apart from a comma after
+     "Hi" and the possessive apostrophe in "clients'". Her capitalisation of
+     her job title is hers too — this is the one page written in her hand. */
+  lede: "Hi, I'm Lyndsay Gent (née Sage). I am a qualified Adlerian Psychotherapist and Counsellor.",
+  body: [
+    "I also use a variety of modalities and the various training and CPD courses I have attended to tailor therapy to my clients' individual needs.",
+    "I offer therapy from my home in Pembrokeshire, in a secure relaxed environment or online, whichever you feel would work for you.",
+    "Counselling can be a scary prospect, but taking that first step in making contact is often the hardest. Please contact me for a free 15 minute consultation.",
   ],
+  /** Sits between the first and second body paragraphs, where she put it. */
+  socialsLine: "You can find a little more info on my Facebook page or Instagram.",
 } as const;
 
 /* -------------------------------------------------------------------------- */

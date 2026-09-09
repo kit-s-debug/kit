@@ -2425,41 +2425,90 @@ body {
   max-width: 46ch;
 }
 
-.about-grid {
+/* --- about: her words, her picture set into the side of them -------------- */
+/* The portrait spans the whole run of prose and sits on its middle, so it
+   reads as placed in the writing rather than dropped at the top of a column
+   with dead space under it. */
+.about-intro {
+  margin-block-start: clamp(1.75rem, 4vw, 2.75rem);
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 27rem);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.about-portrait {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: 3px;
+  overflow: clip;
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+.about-words {
+  display: grid;
+  gap: 1.1rem;
+}
+
+/* the photograph carries black edges of its own, so it is cropped rather than
+   letterboxed */
+.about-portrait :is(img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 26%;
+}
+
+.about-words > p {
+  margin: 0;
+}
+
+.about-lede {
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--heading);
+}
+
+.about-socials {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.85rem;
+  color: var(--text-muted);
+  font-size: var(--step--1);
+}
+
+.about-socials p {
+  margin: 0;
+}
+
+.about-register {
   margin-block-start: clamp(2.5rem, 6vw, 4rem);
   display: grid;
-  grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: start;
-}
-
-.about-portrait img {
-  width: 100%;
-  height: auto;
-}
-
-.about-body {
-  display: grid;
-  gap: clamp(1.75rem, 4vw, 2.5rem);
   justify-items: start;
-}
-
-.about-section {
-  display: grid;
-  gap: 0.85rem;
+  gap: 1rem;
+  max-width: 42rem;
+  border-top: 1px solid var(--line);
+  padding-block-start: clamp(1.5rem, 4vw, 2.25rem);
 }
 
 .about-section-heading {
   font-size: var(--step-2);
 }
 
-.about-section p {
-  max-width: 52ch;
+.about-register .action {
+  margin-block-start: 0.75rem;
 }
 
-@media (max-width: 54rem) {
-  .about-grid {
+@media (max-width: 34rem) {
+  .about-intro {
     grid-template-columns: 1fr;
+  }
+
+  .about-portrait {
+    width: min(11rem, 44vw);
   }
 }
 
@@ -3667,7 +3716,11 @@ body::before {
    every other section, so the spine, the ticks and the copy all agree. */
 .finder-shell,
 .finder-list,
-.booking-shell {
+.booking-shell,
+.page-head,
+.prose,
+.about-intro,
+.about-register {
   margin-inline: max(0px, calc((100% - 82rem) / 2)) auto;
 }
 
