@@ -28,7 +28,7 @@ export function Motion() {
 
     // Anything outside the run of rooms — the inner pages — still reveals by
     // element, since those pages are prose rather than a sequence.
-    const pageGroups: [string, "rise" | "scale" | "draw"][] = [
+    const pageGroups: [string, "rise" | "scale" | "draw" | "step"][] = [
       [".page-heading, .about-section-heading, .prose-section h2", "rise"],
       [".about-portrait", "scale"],
       [".page .sill", "draw"],
@@ -74,6 +74,21 @@ export function Motion() {
           el.dataset.reveal = kind;
         });
       }
+
+      // The walk to the front door is a sequence, so it arrives as one: each
+      // step a beat behind the last, on the hairline that draws itself beside
+      // them. This is the one place a per-item stagger earns its keep.
+      document.querySelectorAll<HTMLElement>(".thread-step").forEach((step, i) => {
+        step.classList.add("reveal");
+        step.dataset.reveal = "step";
+        step.style.setProperty("--i", String(i));
+      });
+
+      // Photographs settle the last two per cent rather than rising.
+      document.querySelectorAll<HTMLElement>(".welcome-portrait").forEach((el) => {
+        el.classList.add("reveal");
+        el.dataset.reveal = "scale";
+      });
     };
 
     const arm = () => {

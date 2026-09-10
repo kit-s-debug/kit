@@ -3210,13 +3210,13 @@ body::before {
   animation: lamp-photo-light 2000ms var(--ease-lamp) both;
 }
 
+/* Only the light changes on the way in. `transform` belongs to the scroll
+   parallax further down, and two animations cannot own one property. */
 @keyframes lamp-photo-light {
   from {
-    transform: scale(1.05);
     filter: brightness(0.86) saturate(0.92);
   }
   to {
-    transform: scale(1);
     filter: brightness(1.1) saturate(1.04);
   }
 }
@@ -4578,4 +4578,209 @@ body::before {
     width: 40px;
     height: auto;
   }
+}
+
+/* ==========================================================================
+   MOTION — the last pass
+   Most of this system was already here: the reveals, the drawing spine, the
+   two drifting planes, the hover states, the reduced-motion and calm-mode
+   handling. What follows is what it was missing — an ambient layer that moves
+   on its own clock rather than on the scroll, parallax in the hero, sequence
+   in the walk to the door, and the small interactions that were still
+   snapping rather than moving.
+   Nothing here uses anything but transform, translate, opacity and filter.
+   ========================================================================== */
+
+/* --- the hero photograph drifts as you leave it --------------------------- */
+/* Slow enough to be a feeling rather than an effect: the room settles a little
+   as you scroll off it. The extra scale is headroom — without it a translate
+   would pull the edge of the photograph into view. */
+@supports (animation-timeline: view()) {
+  .hero-photo {
+    animation:
+      lamp-photo-light 2000ms var(--ease-lamp) both,
+      hero-settle linear both;
+    animation-timeline: auto, view();
+    animation-range: normal, cover 0% cover 100%;
+  }
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.07) translate3d(0, -2.2%, 0);
+  }
+  to {
+    transform: scale(1.07) translate3d(0, 2.2%, 0);
+  }
+}
+
+/* --- an ambient layer, on its own clock ----------------------------------- */
+/* These are the only animations on the site that run without being asked to,
+   so they are gated on the flag JavaScript only sets when motion is welcome,
+   they take the best part of a minute to travel a couple of per cent, and
+   they move nothing that anyone is reading. */
+:root[data-animate="on"] .hero-warm {
+  animation:
+    lamp-warm 2400ms var(--ease-lamp) both,
+    lamp-breathe 54s var(--ease-lamp) 2.4s infinite alternate;
+}
+
+@keyframes lamp-breathe {
+  from {
+    transform: translate3d(-0.8%, 0.6%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(0.8%, -0.6%, 0) scale(1.035);
+  }
+}
+
+/* the washes behind the type breathe too — on `translate`, so the scroll
+   drift on `transform` still composes with it rather than fighting it */
+:root[data-animate="on"] .field-shape {
+  animation-name: greenery-drift, field-breathe;
+  /* the first runs on the scroll, the second on the clock */
+  animation-timeline: view(), auto;
+  animation-range: cover 0% cover 100%, normal;
+  animation-duration: auto, 68s;
+  animation-timing-function: linear, var(--ease-lamp);
+  animation-iteration-count: 1, infinite;
+  animation-direction: normal, alternate;
+  animation-fill-mode: both, none;
+}
+
+@keyframes field-breathe {
+  from {
+    translate: -1.2% 0.8%;
+  }
+  to {
+    translate: 1.2% -0.8%;
+  }
+}
+
+/* --- reveals: a little further, and photographs settle instead of rising -- */
+:root[data-animate="on"] .reveal {
+  transform: translateY(16px);
+}
+
+/* 0.98 to 1 — the last two per cent of a focus pull, not a zoom */
+:root[data-animate="on"] .reveal[data-reveal="scale"] {
+  transform: scale(0.98);
+  transition-duration: 1.1s;
+}
+
+/* the walk to the door arrives a step at a time, on the line beside it */
+:root[data-animate="on"] .reveal[data-reveal="step"] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.7s var(--ease-lamp),
+    transform 0.7s var(--ease-lamp);
+  transition-delay: calc(var(--i, 0) * 130ms);
+}
+
+/* --- the bar that takes over from the header ------------------------------ */
+/* There is no sticky navigation to compact — the header sits over the hero and
+   leaves with it, and this takes its place. So this is where that transition
+   lives: it rises rather than appears, and it carries the blur and the lift
+   that say it is above the page rather than in it. */
+.booking-bar {
+  transition:
+    transform var(--dur-slow) var(--ease-lamp),
+    box-shadow var(--dur-slow) var(--ease-lamp);
+  box-shadow: none;
+}
+
+/* Deliberately not translucent. A blurred bar over the ink field looks the
+   same as an opaque one, and letting paper through from the section behind
+   dropped the ochre link on it to 3.8:1 — on the bar that carries the quick
+   exit. The lift comes from the shadow instead. */
+
+.booking-bar[data-shown] {
+  box-shadow: 0 -14px 40px -28px color-mix(in oklab, black 70%, transparent);
+}
+
+/* --- the area rows lift, just ------------------------------------------- */
+.band > summary:hover,
+.band > summary:focus-visible {
+  background: color-mix(in oklab, var(--sage) 7%, transparent);
+  transform: translateY(-1px);
+}
+
+.band > summary:active {
+  transform: translateY(0);
+}
+
+/* --- the accordions open rather than jump -------------------------------- */
+/* `interpolate-size` is what makes a height of `auto` animatable. Where it is
+   not supported the details still open, just instantly — which is exactly how
+   they behaved before this. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  .band::details-content,
+  .disclosure::details-content {
+    block-size: 0;
+    overflow: clip;
+    opacity: 0;
+    transition:
+      block-size var(--dur-mid) var(--ease-lamp),
+      opacity var(--dur-mid) var(--ease-lamp),
+      content-visibility var(--dur-mid) allow-discrete;
+  }
+
+  .band[open]::details-content,
+  .disclosure[open]::details-content {
+    block-size: auto;
+    opacity: 1;
+  }
+}
+
+/* --- buttons and inputs -------------------------------------------------- */
+/* The button already lifted on hover; this gives the press somewhere to go and
+   stops the focus ring arriving like a snapped rubber band. */
+.action:active {
+  transform: translateY(1px);
+  transition-duration: 90ms;
+}
+
+.field {
+  transition:
+    border-color var(--dur-mid) var(--ease-lamp),
+    background var(--dur-mid) var(--ease-lamp);
+}
+
+.field:hover {
+  border-color: color-mix(in oklab, var(--interactive) 45%, var(--line-strong));
+}
+
+:where(a, button, input, textarea, select, summary, [tabindex]) {
+  transition: outline-offset var(--dur-quick) var(--ease-lamp);
+}
+
+/* the step markers in the booking flow move between states */
+.progress-rule,
+.progress-name {
+  transition:
+    background var(--dur-mid) var(--ease-lamp),
+    color var(--dur-mid) var(--ease-lamp),
+    opacity var(--dur-mid) var(--ease-lamp);
+}
+
+/* --- and the whole ambient layer stands down when asked ------------------- */
+/* The global reduced-motion and calm rules already stop all of this. This is
+   the belt: an animation that repeats for ever is the one worth naming twice. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-warm,
+  .field-shape,
+  .hero-photo {
+    animation: none !important;
+  }
+}
+
+:root[data-calm="on"] .hero-warm,
+:root[data-calm="on"] .field-shape,
+:root[data-calm="on"] .hero-photo {
+  animation: none !important;
 }
