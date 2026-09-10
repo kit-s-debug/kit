@@ -66,6 +66,16 @@ const pairs = [
   ["eve  sage text on deep green", "#a3bc96", "#272620", 4.5],
   ["calm eve body on deep green", "#c4bba9", "#272620", 4.5],
   ["calm eve muted on deep green", "#948b7d", "#272620", 4.5],
+
+  /* The horizon in the ink rooms lifts the field rather than darkening it, so
+     the pairs to watch there are the light type over the topmost layer. Again
+     sampled off the rendered page. */
+  ["day  body on ink green", "#f1ead9", "#27454b", 4.5],
+  ["day  muted on ink green", "#b4c3c7", "#27454b", 4.5],
+  ["day  ochre link on ink green", "#d9a44e", "#27454b", 4.5],
+  ["eve  body on ink green", "#d6cdbd", "#1f2f34", 4.5],
+  ["eve  muted on ink green", "#9aa8ab", "#1f2f34", 4.5],
+  ["eve  ochre link on ink green", "#dca84f", "#1f2f34", 4.5],
 ];
 
 // Comfortable, not maximal: flag body pairs that are pushing 14:1+ glare.

@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SocialLinks } from "@/components/social-links";
 import { RegisterMarks } from "@/components/register-marks";
+import { Field, Hills } from "@/components/ground";
 import { Scene } from "@/components/scene";
 import { Sprig } from "@/components/sprig";
 import { about, credentials, cta, welcome } from "@/content/site";
@@ -26,6 +27,8 @@ export default function AboutPage() {
     <>
       <Header />
       <main id="main" className="page">
+        <Hills horizon="near" className="page-hills" />
+        <Field shape="band" className="page-field" />
         <Scene name="garden" size={300} className="page-scene" />
         <div className="shell-editorial page-head">
           <h1 className="page-heading">{about.heading}</h1>
@@ -43,7 +46,9 @@ export default function AboutPage() {
           </figure>
 
           <div className="about-words">
-            <p className="about-lede">{about.lede}</p>
+            <p className="about-lede">
+              {about.greeting} {about.role}
+            </p>
             <p>{about.body[0]}</p>
 
             {/* a div, not a paragraph: the social links are a list */}

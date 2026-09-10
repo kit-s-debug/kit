@@ -1,6 +1,6 @@
 import { chapters, formats, sessionsSection } from "@/content/site";
 import { Chapter } from "./chapter";
-import { Hills } from "./ground";
+import { Field, Hills } from "./ground";
 import { Sprig } from "./sprig";
 
 /**
@@ -15,6 +15,7 @@ export function Sessions() {
   return (
     <section id="sessions" className="room sessions" aria-labelledby="sessions-heading">
       <Hills horizon="low" className="sessions-hills" />
+      <Field shape="band" className="sessions-field" />
       <Sprig variant="nine" size={300} className="greenery sessions-greenery" />
       <Sprig variant="five" size={54} className="sprig-set sessions-sprig" />
       <div className="shell-editorial">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { Hills } from "@/components/ground";
 import { Sprig } from "@/components/sprig";
 import { ThanksBody } from "./thanks-body";
 
@@ -20,6 +21,7 @@ export default function ThanksPage() {
     <>
       <Header />
       <main id="main" className="page">
+        <Hills horizon="wide" className="page-hills" />
         <Sprig variant="seven" size={300} flip className="greenery page-greenery" />
         <Suspense>
           <ThanksBody />

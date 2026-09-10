@@ -4249,16 +4249,38 @@ body::before {
    ========================================================================== */
 
 :root {
-  --green-base: var(--ground);
   /* how much sage goes into the ground for each layer, back to front */
   --green-mix-1: 5%;
   --green-mix-2: 9%;
   --green-mix-3: 13.5%;
   --green-mix-4: 18%;
-  --green-1: color-mix(in oklab, var(--sage) var(--green-mix-1), var(--green-base));
-  --green-2: color-mix(in oklab, var(--sage) var(--green-mix-2), var(--green-base));
-  --green-3: color-mix(in oklab, var(--sage) var(--green-mix-3), var(--green-base));
-  --green-4: color-mix(in oklab, var(--sage) var(--green-mix-4), var(--green-base));
+  --green-1: color-mix(in oklab, var(--sage) var(--green-mix-1), var(--ground));
+  --green-2: color-mix(in oklab, var(--sage) var(--green-mix-2), var(--ground));
+  --green-3: color-mix(in oklab, var(--sage) var(--green-mix-3), var(--ground));
+  --green-4: color-mix(in oklab, var(--sage) var(--green-mix-4), var(--ground));
+}
+
+/* A var() inside a custom property is substituted where the property is
+   DECLARED, not where it is used — so pointing --green-base at a different
+   field further down the tree does nothing to a --green-N that was already
+   resolved on :root. The rooms that sit on another field have to declare the
+   whole set again against it. */
+.sessions,
+.arriving {
+  --green-1: color-mix(in oklab, var(--sage) var(--green-mix-1), var(--ground-sunk));
+  --green-2: color-mix(in oklab, var(--sage) var(--green-mix-2), var(--ground-sunk));
+  --green-3: color-mix(in oklab, var(--sage) var(--green-mix-3), var(--ground-sunk));
+  --green-4: color-mix(in oklab, var(--sage) var(--green-mix-4), var(--ground-sunk));
+}
+
+/* The ink field is dark, so the same amount of sage lifts it much further than
+   it lifts paper — far enough that an ochre link over the topmost layer fell
+   under 4.5:1. Half the mix, whichever mode is running. */
+.on-dark {
+  --green-1: color-mix(in oklab, var(--sage) calc(var(--green-mix-1) * 0.5), var(--surface));
+  --green-2: color-mix(in oklab, var(--sage) calc(var(--green-mix-2) * 0.5), var(--surface));
+  --green-3: color-mix(in oklab, var(--sage) calc(var(--green-mix-3) * 0.5), var(--surface));
+  --green-4: color-mix(in oklab, var(--sage) calc(var(--green-mix-4) * 0.5), var(--surface));
 }
 
 /* In the evening the ground is nearly black, so the same amount of sage lifts
@@ -4280,12 +4302,6 @@ body::before {
     --green-mix-3: 13.5%;
     --green-mix-4: 18%;
   }
-}
-
-/* the sunk rooms mix into their own ground, not the paper one */
-.sessions,
-.arriving {
-  --green-base: var(--ground-sunk);
 }
 
 /* --- the horizon ---------------------------------------------------------- */
@@ -4410,5 +4426,156 @@ body::before {
 
   .hills {
     height: clamp(96px, 26vw, 150px);
+  }
+}
+
+/* ==========================================================================
+   MORE GROUND — the ink rooms get it too, and the introduction gets a shape
+   ========================================================================== */
+
+.welcome-hills,
+.booking-hills {
+  height: clamp(110px, 15vw, 190px);
+}
+
+.approach-hills {
+  height: clamp(100px, 13vw, 175px);
+}
+
+.arriving-hills {
+  height: clamp(110px, 15vw, 185px);
+}
+
+.page-hills {
+  height: clamp(110px, 15vw, 190px);
+}
+
+/* --- more washes ---------------------------------------------------------- */
+.sessions-field {
+  inset-block-start: clamp(4rem, 11vw, 9rem);
+  inset-inline-start: max(0px, calc((100% - 82rem) / 2));
+  width: clamp(15rem, 40vw, 38rem);
+  height: clamp(4rem, 7vw, 6.5rem);
+}
+
+.fees-field {
+  inset-block-start: clamp(4rem, 10vw, 8.5rem);
+  inset-inline-start: calc(max(0px, (100% - 82rem) / 2) + clamp(0.5rem, 2vw, 3rem));
+  width: clamp(12rem, 26vw, 24rem);
+  height: clamp(12rem, 26vw, 24rem);
+}
+
+/* under the lede, which starts past the portrait column rather than at the
+   page edge */
+.page-field {
+  inset-block-start: clamp(7rem, 16vw, 13rem);
+  inset-inline-start: calc(max(0px, (100% - 82rem) / 2) + clamp(1rem, 13vw, 14rem));
+  width: clamp(13rem, 32vw, 30rem);
+  height: clamp(4rem, 7vw, 6rem);
+}
+
+/* ==========================================================================
+   THE INTRODUCTION — an arch, a plate behind it, a cutting across the corner
+   The block used to be a photograph in a box beside a paragraph, and it read
+   like one. The portrait now takes the arch the rest of the page uses behind
+   its type, a green arch steps out behind it, and a cutting lies across the
+   corner where the two meet. Her hello runs at display size with her title
+   set under it, so the introduction opens on something.
+   ========================================================================== */
+
+.welcome-portrait {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  /* the plate and the cutting both reach outside it */
+  overflow: visible;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* the green arch, stepped down and left */
+.welcome-portrait-plate {
+  position: absolute;
+  inset: 1.6rem -1.5rem -1.5rem 1.6rem;
+  border-radius: 999px 999px 6px 6px;
+  background: color-mix(in oklab, var(--sage) 34%, var(--surface));
+  z-index: 0;
+}
+
+/* the photograph, cut to the same arch */
+.welcome-portrait-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 999px 999px 6px 6px;
+  overflow: clip;
+  box-shadow: 0 0 0 1px color-mix(in oklab, #f4eee0 26%, transparent);
+}
+
+.welcome-portrait-frame :is(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 24%;
+}
+
+/* a cutting laid across the corner where the arch meets its plate */
+.welcome-portrait-sprig {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: -1.1rem;
+  inset-inline-end: -1.4rem;
+  color: color-mix(in oklab, var(--accent) 70%, transparent);
+  pointer-events: none;
+}
+
+.welcome-greeting {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  text-wrap: balance;
+  color: #f4ecdc;
+  font-size: var(--step-4);
+  line-height: 1.06;
+  max-width: 15ch;
+}
+
+.welcome-role {
+  margin-block-start: clamp(0.85rem, 2vw, 1.35rem);
+  font-family: var(--font-serif);
+  font-size: var(--step-1);
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--accent) 62%, #f4ecdc);
+  max-width: 26ch;
+}
+
+@media (max-width: 60rem) {
+  .welcome-portrait-plate {
+    inset: 1.2rem -1.1rem -1.1rem 1.2rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .welcome-greeting {
+    font-size: var(--step-3);
+    max-width: none;
+  }
+
+  .welcome-role {
+    font-size: var(--step-0);
+    max-width: none;
+  }
+
+  /* the portrait bleeds off the left edge here, so the plate steps the other
+     way and the cutting comes inside */
+  .welcome-portrait-plate {
+    inset: 1rem -1rem -1rem 0;
+  }
+
+  .welcome-portrait-sprig {
+    inset-block-start: -0.8rem;
+    inset-inline-end: -0.7rem;
+    width: 40px;
+    height: auto;
   }
 }

@@ -837,7 +837,11 @@ export const about = {
   /* Lyndsay's own words, in her own order. Untouched apart from a comma after
      "Hi" and the possessive apostrophe in "clients'". Her capitalisation of
      her job title is hers too — this is the one page written in her hand. */
-  lede: "Hi, I'm Lyndsay Gent (née Sage). I am a qualified Adlerian Psychotherapist and Counsellor.",
+  /* One sentence of hers, kept as two pieces so the introduction can set the
+     hello at display size and her title beneath it. Joined back together on
+     the About page, where it reads as she wrote it. */
+  greeting: "Hi, I'm Lyndsay Gent (née Sage).",
+  role: "I am a qualified Adlerian Psychotherapist and Counsellor.",
   body: [
     "I also use a variety of modalities and the various training and CPD courses I have attended to tailor therapy to my clients' individual needs.",
     "I offer therapy from my home in Pembrokeshire, in a secure relaxed environment or online, whichever you feel would work for you.",

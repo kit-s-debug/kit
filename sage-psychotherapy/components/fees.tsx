@@ -1,5 +1,6 @@
 import { chapters, cta, fees } from "@/content/site";
 import { Chapter } from "./chapter";
+import { Field } from "./ground";
 import { Sprig, Wreath } from "./sprig";
 
 /**
@@ -10,6 +11,7 @@ import { Sprig, Wreath } from "./sprig";
 export function Fees() {
   return (
     <section id="fees" className="fees on-dark" aria-labelledby="fees-heading">
+      <Field shape="orb" className="fees-field" />
       <Wreath size={400} leaves={11} crown={80} className="greenery fees-greenery" />
       <Sprig variant="seven" size={58} flip className="sprig-set fees-sprig" />
       <div className="shell-editorial fees-shell">
