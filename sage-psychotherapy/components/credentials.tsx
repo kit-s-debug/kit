@@ -1,6 +1,7 @@
 import { chapters, credentials } from "@/content/site";
 import { Chapter } from "./chapter";
 import { RegisterMarks } from "./register-marks";
+import { Field, Hills } from "./ground";
 import { Sprig } from "./sprig";
 
 /**
@@ -10,6 +11,8 @@ import { Sprig } from "./sprig";
 export function Credentials() {
   return (
     <section id="credentials" className="room credentials" aria-labelledby="credentials-heading">
+      <Hills horizon="wide" className="credentials-hills" />
+      <Field shape="orb" className="credentials-field" />
       <Sprig variant="pair" size={62} className="sprig-set credentials-sprig" />
       <div className="shell-editorial">
         <Chapter {...chapters.credentials} />

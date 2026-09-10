@@ -50,6 +50,22 @@ const pairs = [
   ["eve  action label on ochre", "#241703", "#dca84f", 4.5],
   ["calm eve body on ground", "#c4bba9", "#1b1815", 4.5],
   ["calm eve muted on ground", "#948b7d", "#1b1815", 4.5],
+
+  /* The green ground: hills and the washes behind text are tints of sage mixed
+     into the field. These are the deepest layer as actually painted, sampled
+     off the rendered page — the only one text ever has to sit on. */
+  ["day  body on deep green", "#2b2b28", "#dddfcf", 4.5],
+  ["day  muted on deep green", "#55534d", "#dddfcf", 4.5],
+  ["day  heading on deep green", "#1f3d47", "#dddfcf", 4.5],
+  ["day  sage text on deep green", "#4d6840", "#dddfcf", 4.5],
+  ["calm body on deep green", "#3a3833", "#dddfcf", 4.5],
+  ["calm muted on deep green", "#5d5b54", "#dddfcf", 4.5],
+  ["eve  body on deep green", "#d2c9b9", "#272620", 4.5],
+  ["eve  muted on deep green", "#9c9384", "#272620", 4.5],
+  ["eve  heading on deep green", "#dfd6c5", "#272620", 4.5],
+  ["eve  sage text on deep green", "#a3bc96", "#272620", 4.5],
+  ["calm eve body on deep green", "#c4bba9", "#272620", 4.5],
+  ["calm eve muted on deep green", "#948b7d", "#272620", 4.5],
 ];
 
 // Comfortable, not maximal: flag body pairs that are pushing 14:1+ glare.

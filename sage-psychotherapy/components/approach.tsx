@@ -1,6 +1,6 @@
 import { approach, chapters, clients } from "@/content/site";
 import { Chapter } from "./chapter";
-import { Scene } from "./scene";
+import { Field } from "./ground";
 import { Sprig } from "./sprig";
 
 /**
@@ -11,8 +11,8 @@ import { Sprig } from "./sprig";
 export function Approach() {
   return (
     <section id="approach" className="room approach" aria-labelledby="approach-heading">
+      <Field shape="band" className="approach-field" />
       <Sprig variant="nine" size={320} flip className="greenery approach-greenery" />
-      <Scene name="growth" size={250} className="approach-scene" />
       <div className="shell-editorial">
         <Chapter {...chapters.approach} />
 

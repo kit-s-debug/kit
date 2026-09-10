@@ -1,20 +1,14 @@
 import Image from "next/image";
 
 /**
- * The four illustrations, cut off the flat backgrounds they were drawn on and
- * set into the empty corners of the light rooms.
+ * The garden, cut off the flat ground it was drawn on and set into the corner
+ * of the About page — which is how it was cropped to begin with.
  *
- * They sit on the same plane as the greenery — behind the type, drifting with
- * it, no pointer, nothing announced — so the page still reads as one thing
- * rather than as a layout with pictures dropped into it. They are kept to the
- * paper fields: cut out, they are light drawings, and light drawings on the
- * ink fields would glow rather than settle.
+ * It sits on the same plane as the greenery: behind the type, drifting with it
+ * on scroll, no pointer, nothing announced.
  */
 const SCENES = {
-  room: { file: "scene-room.png", w: 420, h: 420 },
-  rest: { file: "scene-rest.png", w: 400, h: 423 },
   garden: { file: "scene-garden.png", w: 480, h: 415 },
-  growth: { file: "scene-growth.png", w: 460, h: 329 },
 } as const;
 
 export function Scene({

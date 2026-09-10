@@ -4239,3 +4239,176 @@ body::before {
     inset-inline-end: -1.5rem;
   }
 }
+
+/* ==========================================================================
+   GREEN GROUND — tints of the same sage, layered behind the type
+   Everything here is one colour: the sage the leaves are drawn in, mixed into
+   whichever field it sits on. So these are tints of the room rather than new
+   colours, they follow the evening palette without a second set of values,
+   and the palette is still six.
+   ========================================================================== */
+
+:root {
+  --green-base: var(--ground);
+  /* how much sage goes into the ground for each layer, back to front */
+  --green-mix-1: 5%;
+  --green-mix-2: 9%;
+  --green-mix-3: 13.5%;
+  --green-mix-4: 18%;
+  --green-1: color-mix(in oklab, var(--sage) var(--green-mix-1), var(--green-base));
+  --green-2: color-mix(in oklab, var(--sage) var(--green-mix-2), var(--green-base));
+  --green-3: color-mix(in oklab, var(--sage) var(--green-mix-3), var(--green-base));
+  --green-4: color-mix(in oklab, var(--sage) var(--green-mix-4), var(--green-base));
+}
+
+/* In the evening the ground is nearly black, so the same amount of sage lifts
+   it much further in relative terms — far enough that muted text sitting on
+   the deepest layer would drop under 4.5:1. Half the mix keeps the horizon
+   readable as four layers and keeps the type above the line. */
+:root[data-mode="evening"],
+:root:not([data-mode="day"]):not([data-mode="evening"]) {
+  --green-mix-1: 2%;
+  --green-mix-2: 4%;
+  --green-mix-3: 6%;
+  --green-mix-4: 8%;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-mode="evening"]) {
+    --green-mix-1: 5%;
+    --green-mix-2: 9%;
+    --green-mix-3: 13.5%;
+    --green-mix-4: 18%;
+  }
+}
+
+/* the sunk rooms mix into their own ground, not the paper one */
+.sessions,
+.arriving {
+  --green-base: var(--ground-sunk);
+}
+
+/* --- the horizon ---------------------------------------------------------- */
+.hills {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  width: 100%;
+  height: clamp(110px, 15vw, 200px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Four layers, four speeds. The difference between them is the depth — one
+   layer moving is just a shape sliding. */
+@supports (animation-timeline: view()) {
+  .hills > g {
+    animation: hill-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+@keyframes hill-drift {
+  from {
+    transform: translateY(calc(var(--drift) * 1px));
+  }
+  to {
+    transform: translateY(calc(var(--drift) * -1px));
+  }
+}
+
+/* --- the fields the text sits on ------------------------------------------ */
+/* No edges. A shape with a hard edge behind a paragraph reads as a panel that
+   has slipped; a wash that fades out reads as ground. The border-radius still
+   decides what kind of shape is fading — an arch, a band, a circle. */
+.field-shape {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    var(--green-4) 0%,
+    color-mix(in oklab, var(--green-4) 70%, transparent) 46%,
+    color-mix(in oklab, var(--green-4) 28%, transparent) 74%,
+    transparent 100%
+  );
+}
+
+/* an arch, like a window in the room */
+.field-arch {
+  border-radius: 999px 999px 30% 30%;
+}
+
+/* a long soft band lying under a line of type */
+.field-band {
+  border-radius: 999px;
+}
+
+/* and one plain circle */
+.field-orb {
+  border-radius: 50%;
+}
+
+/* they drift with everything else on the back plane */
+@supports (animation-timeline: view()) {
+  .field-shape {
+    animation: greenery-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+/* --- where each one sits -------------------------------------------------- */
+.finder-hills {
+  height: clamp(120px, 17vw, 220px);
+}
+
+.finder-field {
+  inset-block-start: clamp(3rem, 8vw, 7rem);
+  inset-inline-start: max(0px, calc((100% - 82rem) / 2));
+  width: clamp(13rem, 30vw, 26rem);
+  height: clamp(15rem, 32vw, 30rem);
+}
+
+.sessions-hills {
+  height: clamp(100px, 13vw, 170px);
+}
+
+.approach-field {
+  inset-block-start: clamp(5rem, 13vw, 11rem);
+  inset-inline-start: max(0px, calc((100% - 82rem) / 2));
+  width: clamp(16rem, 46vw, 44rem);
+  height: clamp(4.5rem, 8vw, 7.5rem);
+}
+
+.credentials-hills {
+  height: clamp(110px, 15vw, 200px);
+}
+
+.credentials-field {
+  inset-block-start: clamp(4rem, 10vw, 9rem);
+  inset-inline-start: calc(max(0px, (100% - 82rem) / 2) + clamp(1rem, 4vw, 5rem));
+  width: clamp(11rem, 24vw, 22rem);
+  height: clamp(11rem, 24vw, 22rem);
+}
+
+.arriving-field {
+  inset-block-start: clamp(6rem, 15vw, 13rem);
+  inset-inline-start: max(0px, calc((100% - 82rem) / 2));
+  width: clamp(12rem, 26vw, 22rem);
+  height: clamp(13rem, 28vw, 25rem);
+}
+
+/* On a phone the text runs the full column, so the fields would be under
+   every line rather than behind a block. The horizons stay — they are at the
+   foot of the room, where nothing is reading. */
+@media (max-width: 48rem) {
+  .field-shape {
+    display: none;
+  }
+
+  .hills {
+    height: clamp(96px, 26vw, 150px);
+  }
+}
