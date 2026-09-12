@@ -96,3 +96,177 @@ export function Field({
 }) {
   return <div className={`field-shape field-${shape} ${className}`} aria-hidden="true" />;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Three more grounds, each doing something the others do not.                 */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Growth rings.
+ *
+ * Everything else on the back plane is a mass — a mound, a wash, a leaf. This
+ * is a line, and an off-centre one: rings that widen unevenly the way they do
+ * in a cut olive trunk, or in water after something has touched it. Both
+ * readings suit a room where people come to talk about years of something.
+ */
+export function Rings({
+  count = 9,
+  className = "",
+}: {
+  count?: number;
+  className?: string;
+}) {
+  const rings = Array.from({ length: count }, (_, i) => {
+    const r = 26 + i * 19;
+    // the wobble is what stops it reading as a target
+    const skew = Math.sin(i * 1.7) * 0.055;
+    return {
+      cx: 200 + Math.sin(i * 0.9) * 8,
+      cy: 200 + Math.cos(i * 1.3) * 7,
+      rx: r * (1 + skew),
+      ry: r * (1 - skew * 0.7),
+      w: Math.max(0.9, 1.7 - i * 0.05),
+    };
+  });
+
+  return (
+    <svg
+      className={`rings ${className}`}
+      viewBox="0 0 400 400"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {rings.map((ring, i) => (
+        <ellipse
+          key={i}
+          cx={ring.cx}
+          cy={ring.cy}
+          rx={ring.rx}
+          ry={ring.ry}
+          stroke="currentColor"
+          strokeWidth={ring.w}
+        />
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * Dappled light.
+ *
+ * The one piece of background that is not a plant. Pools of light of the kind
+ * that come through a tree onto a floor — which is what the ink rooms are
+ * short of, since the cursor lamp only exists for people using a mouse.
+ */
+const DAPPLES: [x: number, y: number, r: number, a: number][] = [
+  [64, 78, 62, 0.9], [166, 34, 38, 0.6], [232, 120, 74, 1], [318, 58, 44, 0.7],
+  [96, 196, 50, 0.75], [206, 236, 34, 0.5], [300, 190, 58, 0.85], [376, 142, 40, 0.55],
+  [22, 140, 30, 0.45], [140, 128, 26, 0.4],
+];
+
+export function Dapple({
+  /** Two of these can share a page, and a gradient needs an id of its own. */
+  id,
+  className = "",
+}: {
+  id: string;
+  className?: string;
+}) {
+  const fade = `dapple-${id}`;
+  return (
+    <svg
+      className={`dapple ${className}`}
+      viewBox="0 0 400 280"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <radialGradient id={fade}>
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.9" />
+          <stop offset="55%" stopColor="currentColor" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      {DAPPLES.map(([x, y, r, a], i) => (
+        <circle key={i} cx={x} cy={y} r={r} fill={`url(#${fade})`} opacity={a} />
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * A canopy.
+ *
+ * Everything else hangs off the bottom of a room or sits in a corner. This one
+ * comes down from the top: a branch across the ceiling with the leaves hanging
+ * off it, so the room has something overhead as well as underfoot.
+ *
+ * The viewBox starts sixteen units above the branch. It is drawn `slice`, so a
+ * narrow screen crops from the bottom — without that headroom a phone shows
+ * the leaf tips and not the branch they are hanging from.
+ */
+const RAD = Math.PI / 180;
+
+export function Canopy({ className = "" }: { className?: string }) {
+  const from: [number, number] = [-20, 26];
+  const via: [number, number] = [600, -34];
+  const to: [number, number] = [1220, 30];
+
+  const at = (t: number): [number, number] => {
+    const u = 1 - t;
+    return [
+      u * u * from[0] + 2 * u * t * via[0] + t * t * to[0],
+      u * u * from[1] + 2 * u * t * via[1] + t * t * to[1],
+    ];
+  };
+  const slope = (t: number) => {
+    const u = 1 - t;
+    const dx = 2 * u * (via[0] - from[0]) + 2 * t * (to[0] - via[0]);
+    const dy = 2 * u * (via[1] - from[1]) + 2 * t * (to[1] - via[1]);
+    return (Math.atan2(dy, dx) * 180) / Math.PI;
+  };
+
+  // leaves hang, so they all lean downward off the branch rather than alternating
+  const leaves = Array.from({ length: 17 }, (_, i) => {
+    const t = 0.03 + (i / 16) * 0.94;
+    const [sx, sy] = at(t);
+    const lean = slope(t) + 68 + Math.sin(i * 2.1) * 22;
+    const len = 20 + Math.sin(i * 1.4) * 7;
+    return { sx, sy, lean, len, wide: 7 + Math.cos(i * 1.9) * 2 };
+  });
+
+  return (
+    <svg
+      className={`canopy ${className}`}
+      viewBox="0 -16 1200 78"
+      preserveAspectRatio="xMidYMin slice"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d={`M${from[0]} ${from[1]} Q${via[0]} ${via[1]} ${to[0]} ${to[1]}`}
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      {leaves.map((leaf, i) => {
+        const cx = leaf.sx + Math.cos(leaf.lean * RAD) * leaf.len;
+        const cy = leaf.sy + Math.sin(leaf.lean * RAD) * leaf.len;
+        return (
+          <ellipse
+            key={i}
+            cx={cx}
+            cy={cy}
+            rx={leaf.len}
+            ry={leaf.wide}
+            fill="currentColor"
+            transform={`rotate(${leaf.lean} ${cx} ${cy})`}
+          />
+        );
+      })}
+    </svg>
+  );
+}

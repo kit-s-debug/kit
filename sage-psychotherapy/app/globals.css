@@ -4295,8 +4295,13 @@ body::before {
   --green-mix-4: 8%;
 }
 
+/* `:root:root` is not a typo. The rule above it is three pseudo-classes deep,
+   so a plain `:root:not(...)` here loses on specificity and never applies —
+   which left a reader with JavaScript off and a light system on the paper
+   ground with the evening greens on it, i.e. a horizon they could not see.
+   Doubling `:root` ties the specificity, and source order then decides. */
 @media (prefers-color-scheme: light) {
-  :root:not([data-mode="evening"]) {
+  :root:root:not([data-mode="evening"]) {
     --green-mix-1: 5%;
     --green-mix-2: 9%;
     --green-mix-3: 13.5%;
@@ -4400,13 +4405,6 @@ body::before {
 
 .credentials-hills {
   height: clamp(110px, 15vw, 200px);
-}
-
-.credentials-field {
-  inset-block-start: clamp(4rem, 10vw, 9rem);
-  inset-inline-start: calc(max(0px, (100% - 82rem) / 2) + clamp(1rem, 4vw, 5rem));
-  width: clamp(11rem, 24vw, 22rem);
-  height: clamp(11rem, 24vw, 22rem);
 }
 
 .arriving-field {
@@ -4783,4 +4781,237 @@ body::before {
 :root[data-calm="on"] .field-shape,
 :root[data-calm="on"] .hero-photo {
   animation: none !important;
+}
+
+/* ==========================================================================
+   THREE MORE GROUNDS — a line, a light and a ceiling
+   The back plane had one idea repeated: green mass, low down or in a corner.
+   Rooms further down the page were getting the same horizon and the same
+   wash, which is how a background stops being noticed. These three each do
+   something none of the others do — rings are a line where the rest is mass,
+   the dapple is light where the rest is plant, the canopy comes down from
+   the ceiling where the rest sits on the floor — so a room reads as a
+   different room rather than the same one further on.
+   ========================================================================== */
+
+/* Strokes need more of the colour than fills do to read at the same weight,
+   so the rings get their own mix rather than borrowing --green-4. Same three
+   selectors the greens use: the middle one is the default-to-evening case. */
+:root {
+  --line-mix: 21%;
+}
+
+:root[data-mode="evening"],
+:root:not([data-mode="day"]):not([data-mode="evening"]) {
+  --line-mix: 10%;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:root:not([data-mode="evening"]) {
+    --line-mix: 21%;
+  }
+}
+
+/* --- growth rings --------------------------------------------------------- */
+.rings-set {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  color: color-mix(in oklab, var(--sage) var(--line-mix), var(--ground));
+}
+
+.on-dark .rings-set {
+  color: color-mix(in oklab, var(--sage) calc(var(--line-mix) * 0.7), var(--surface));
+}
+
+/* --- dappled light -------------------------------------------------------- */
+/* Only ever placed in an ink room. The gradient carries its own falloff, so
+   this sets the colour of the light and nothing else. */
+.dapple-set {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  aspect-ratio: 400 / 280;
+  color: #f4eee0;
+  opacity: 0.05;
+}
+
+/* the ochre in the lamp, not a second colour: the same warm off-white the
+   dark rooms already set type in, laid on thinner */
+:root[data-mode="evening"] .dapple-set,
+:root:not([data-mode="day"]):not([data-mode="evening"]) .dapple-set {
+  opacity: 0.035;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:root:not([data-mode="evening"]) .dapple-set {
+    opacity: 0.05;
+  }
+}
+
+/* --- the canopy ----------------------------------------------------------- */
+.canopy-set {
+  position: absolute;
+  z-index: 0;
+  inset-block-start: 0;
+  inset-inline: 0;
+  width: 100%;
+  height: clamp(56px, 6.6vw, 94px);
+  pointer-events: none;
+  color: var(--green-3);
+}
+
+/* --- where each one sits -------------------------------------------------- */
+/* rings: off the right edge of the register, where the statement column ends */
+.credentials-rings {
+  inset-block-start: clamp(1.5rem, 5vw, 5rem);
+  inset-inline-end: calc(max(0px, (100% - 82rem) / 2) - clamp(6rem, 14vw, 13rem));
+  width: clamp(15rem, 32vw, 28rem);
+  height: clamp(15rem, 32vw, 28rem);
+}
+
+/* and off the left on the short pages, opposite the cutting */
+.page-rings {
+  inset-block-start: clamp(1rem, 5vw, 4.5rem);
+  inset-inline-start: calc(max(0px, (100% - 82rem) / 2) - clamp(9rem, 22vw, 20rem));
+  width: clamp(14rem, 30vw, 26rem);
+  height: clamp(14rem, 30vw, 26rem);
+}
+
+/* light: across the top corner opposite each room's greenery */
+.fees-dapple {
+  inset-block-start: -2rem;
+  inset-inline-end: -3rem;
+  width: clamp(20rem, 54vw, 44rem);
+}
+
+.booking-dapple {
+  inset-block-start: -1.5rem;
+  inset-inline-start: -4rem;
+  width: clamp(22rem, 58vw, 48rem);
+}
+
+/* the About page's register runs down one column and leaves the other empty,
+   so the rings go in the empty half rather than behind the reading */
+.about-register {
+  position: relative;
+}
+
+.about-rings {
+  inset-block-start: clamp(-2rem, -1vw, 1rem);
+  inset-inline-end: calc(max(0px, (100% - 82rem) / 2) - clamp(2rem, 8vw, 8rem));
+  width: clamp(14rem, 30vw, 26rem);
+  height: clamp(14rem, 30vw, 26rem);
+}
+
+/* the footer is the largest ink block on the site and the one every page
+   ends on, so it gets the light rather than a fifth plant */
+.footer-dapple {
+  inset-block-start: -3rem;
+  inset-inline-end: -5rem;
+  width: clamp(22rem, 56vw, 46rem);
+}
+
+/* canopy: the whole ceiling, so the room has something overhead */
+.sessions-canopy,
+.arriving-canopy,
+.page-canopy {
+  inset-block-start: 0;
+}
+
+.arriving-canopy {
+  height: clamp(48px, 5.6vw, 80px);
+}
+
+/* --- and they move with everything else on the back plane ----------------- */
+/* `translate`, not `transform`, so the ambient sway below composes with the
+   scroll drift rather than replacing it. */
+@supports (animation-timeline: view()) {
+  .rings-set,
+  .dapple-set {
+    animation: sprig-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+
+  .canopy-set {
+    animation: canopy-drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+/* A canopy is anchored to the ceiling, so it travels less than the things
+   hanging in the middle of the room — six pixels, not twenty. */
+@keyframes canopy-drift {
+  from {
+    translate: 0 -6px;
+  }
+  to {
+    translate: 0 6px;
+  }
+}
+
+/* the one ambient piece of the three: a branch in a room with a window open.
+   Seventy seconds to cross one per cent, on the flag JavaScript only sets
+   when motion is welcome, and it moves nothing anyone is reading. */
+:root[data-animate="on"] .canopy-set {
+  animation-name: canopy-drift, canopy-sway;
+  animation-timeline: view(), auto;
+  animation-range: cover 0% cover 100%, normal;
+  animation-duration: auto, 70s;
+  animation-timing-function: linear, var(--ease-lamp);
+  animation-iteration-count: 1, infinite;
+  animation-direction: normal, alternate;
+  animation-fill-mode: both, none;
+}
+
+@keyframes canopy-sway {
+  from {
+    transform: translateX(-0.55%);
+  }
+  to {
+    transform: translateX(0.55%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canopy-set {
+    animation: none !important;
+  }
+}
+
+:root[data-calm="on"] .canopy-set {
+  animation: none !important;
+}
+
+/* --- on a phone ----------------------------------------------------------- */
+/* The washes come off below 48rem because the text runs the full column and
+   they would end up under every line rather than behind a block. These three
+   stay: the rings pull back to a corner, the light thins, and the canopy is
+   above the first line of type rather than behind it. */
+@media (max-width: 48rem) {
+  .rings-set {
+    opacity: 0.7;
+  }
+
+  .credentials-rings {
+    inset-inline-end: -9rem;
+    width: 16rem;
+    height: 16rem;
+  }
+
+  .page-rings {
+    inset-inline-start: -8rem;
+    width: 15rem;
+    height: 15rem;
+  }
+
+  .dapple-set {
+    opacity: 0.038;
+  }
+
+  .canopy-set {
+    height: clamp(32px, 10vw, 44px);
+  }
 }

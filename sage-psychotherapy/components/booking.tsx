@@ -5,7 +5,7 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { booking, chapters, crisis, formats, practice } from "@/content/site";
 import { collectErrors, enquirySchema, type FieldErrors } from "@/lib/enquiry";
 import { Chapter } from "./chapter";
-import { Hills } from "./ground";
+import { Dapple, Field, Hills } from "./ground";
 import { Sprig, Wreath } from "./sprig";
 
 const CalEmbed = dynamic(() => import("./cal-embed").then((m) => m.CalEmbed), {
@@ -119,7 +119,9 @@ export function Booking() {
     return (
       <section id="book" className="booking on-dark" aria-labelledby="booking-heading">
         <Hills horizon="far" className="booking-hills" />
-      <Wreath size={520} leaves={17} crown={40} className="greenery booking-greenery" />
+        <Dapple id="booking" className="dapple-set booking-dapple" />
+        <Field shape="band" className="booking-field" />
+        <Wreath size={520} leaves={17} crown={40} className="greenery booking-greenery" />
         <div className="shell-editorial booking-shell">
           <div className="booking-done" ref={heading} tabIndex={-1}>
             <p lang="cy" className="booking-diolch">
@@ -162,6 +164,8 @@ export function Booking() {
   return (
     <section id="book" className="booking on-dark" aria-labelledby="booking-heading">
       <Hills horizon="far" className="booking-hills" />
+      <Dapple id="booking" className="dapple-set booking-dapple" />
+      <Field shape="band" className="booking-field" />
       <Wreath size={520} leaves={17} crown={40} className="greenery booking-greenery" />
       <div className="shell-editorial booking-shell">
         <Chapter {...chapters.booking} />

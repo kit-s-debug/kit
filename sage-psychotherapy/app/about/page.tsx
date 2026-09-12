@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { SocialLinks } from "@/components/social-links";
 import { RegisterMarks } from "@/components/register-marks";
-import { Field, Hills } from "@/components/ground";
+import { Field, Hills, Rings } from "@/components/ground";
 import { Scene } from "@/components/scene";
 import { Sprig } from "@/components/sprig";
 import { about, credentials, cta, welcome } from "@/content/site";
@@ -64,6 +64,7 @@ export default function AboutPage() {
         </div>
 
         <div className="shell-editorial about-register">
+          <Rings className="rings-set about-rings" />
           <Sprig variant="pair" size={52} className="sprig-set about-sprig" />
           <h2 className="about-section-heading">{credentials.heading}</h2>
           <ul className="credentials-list">

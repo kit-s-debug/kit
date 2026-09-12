@@ -76,6 +76,27 @@ const pairs = [
   ["eve  body on ink green", "#d6cdbd", "#1f2f34", 4.5],
   ["eve  muted on ink green", "#9aa8ab", "#1f2f34", 4.5],
   ["eve  ochre link on ink green", "#dca84f", "#1f2f34", 4.5],
+
+  /* The three later grounds. The rings are a stroke and the canopy a fill, so
+     both can end up directly behind a glyph; the dappled light only ever sits
+     in an ink room and lifts it by five per cent, which is inside the ink-green
+     pairs above. Sampled as painted. */
+  ["day  body on rings", "#2b2b28", "#dbdfce", 4.5],
+  ["day  muted on rings", "#55534d", "#dbdfce", 4.5],
+  ["day  sage label on rings", "#4d6840", "#dbdfce", 4.5],
+  ["calm body on rings", "#3a3833", "#dbdfce", 4.5],
+  ["calm muted on rings", "#5d5b54", "#dbdfce", 4.5],
+  ["eve  body on rings", "#d2c9b9", "#24231d", 4.5],
+  ["eve  muted on rings", "#9c9384", "#24231d", 4.5],
+  ["calm eve muted on rings", "#948b7d", "#24231d", 4.5],
+  ["day  body on canopy", "#2b2b28", "#ddddcc", 4.5],
+  ["day  muted on canopy", "#55534d", "#ddddcc", 4.5],
+  ["day  sage label on canopy", "#4d6840", "#ddddcc", 4.5],
+  ["calm body on canopy", "#3a3833", "#ddddcc", 4.5],
+  ["calm muted on canopy", "#5d5b54", "#ddddcc", 4.5],
+  ["eve  body on canopy", "#d2c9b9", "#26241e", 4.5],
+  ["eve  muted on canopy", "#9c9384", "#26241e", 4.5],
+  ["calm eve muted on canopy", "#948b7d", "#26241e", 4.5],
 ];
 
 // Comfortable, not maximal: flag body pairs that are pushing 14:1+ glare.

@@ -1,6 +1,6 @@
 import { chapters, cta, fees } from "@/content/site";
 import { Chapter } from "./chapter";
-import { Field } from "./ground";
+import { Dapple, Field, Hills } from "./ground";
 import { Sprig, Wreath } from "./sprig";
 
 /**
@@ -11,6 +11,8 @@ import { Sprig, Wreath } from "./sprig";
 export function Fees() {
   return (
     <section id="fees" className="fees on-dark" aria-labelledby="fees-heading">
+      <Hills horizon="near" className="fees-hills" />
+      <Dapple id="fees" className="dapple-set fees-dapple" />
       <Field shape="orb" className="fees-field" />
       <Wreath size={400} leaves={11} crown={80} className="greenery fees-greenery" />
       <Sprig variant="seven" size={58} flip className="sprig-set fees-sprig" />

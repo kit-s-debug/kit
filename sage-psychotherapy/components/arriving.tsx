@@ -1,6 +1,6 @@
 import { arriving, chapters, practice } from "@/content/site";
 import { Chapter } from "./chapter";
-import { Field, Hills } from "./ground";
+import { Canopy, Field, Hills } from "./ground";
 import { Sprig } from "./sprig";
 import { Placeholder } from "./placeholder";
 
@@ -17,6 +17,7 @@ export function Arriving() {
 
   return (
     <section id="arriving" className="room arriving" aria-labelledby="arriving-heading">
+      <Canopy className="canopy-set arriving-canopy" />
       <Hills horizon="wide" className="arriving-hills" />
       <Field shape="arch" className="arriving-field" />
       <Sprig variant="arc" size={360} className="greenery arriving-greenery" />
