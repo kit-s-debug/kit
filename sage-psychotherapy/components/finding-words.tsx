@@ -104,9 +104,14 @@ export function FindingWords() {
           <label htmlFor={inputId} className="visually-hidden">
             {finder.label}
           </label>
+          {/* Deliberately un-named. A named control in a GET form is a
+              successful control, so with JavaScript off the browser would put
+              whatever was typed here — "he hits me", "I want to die" — into
+              the query string, the address bar, the back button and the
+              server's access log. Without a name nothing is serialised, and
+              the submit still jumps to the full list below. */}
           <input
             id={inputId}
-            name="q"
             type="text"
             className="field finder-input"
             autoComplete="off"

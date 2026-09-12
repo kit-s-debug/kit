@@ -284,7 +284,7 @@ select {
 :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: var(--radius);
 }
 
 ::selection {
@@ -382,7 +382,7 @@ select {
   letter-spacing: 0.01em;
   line-height: 1.1;
   border: 1px solid var(--action-edge);
-  border-radius: 2px;
+  border-radius: var(--radius);
   cursor: pointer;
   text-decoration: none;
   transition:
@@ -447,7 +447,7 @@ select {
   background: var(--ground);
   color: var(--text);
   border: 1px solid var(--line-strong);
-  border-radius: 2px;
+  border-radius: var(--radius);
   font-family: var(--font-sans);
   font-size: var(--step-0);
 }
@@ -492,7 +492,7 @@ select {
   color: #241703;
   padding: 0.75rem 1rem;
   font-weight: 600;
-  border-radius: 2px;
+  border-radius: var(--radius);
   transition: top var(--dur-quick) ease;
 }
 
@@ -612,7 +612,7 @@ select {
   padding: 0.35rem 0.6rem;
   background: none;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: var(--radius);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   color: inherit;
@@ -643,7 +643,7 @@ select {
   place-items: center;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 2px;
+  border-radius: var(--radius);
   color: inherit;
 }
 
@@ -669,7 +669,7 @@ select {
   padding: 0.4rem 0.75rem;
   background: color-mix(in oklab, currentColor 10%, transparent);
   border: 1px solid color-mix(in oklab, currentColor 38%, transparent);
-  border-radius: 2px;
+  border-radius: var(--radius);
   color: inherit;
   font-size: 0.78rem;
   font-weight: 500;
@@ -698,7 +698,7 @@ select {
   list-style: none;
   cursor: pointer;
   border: 1px solid color-mix(in oklab, currentColor 30%, transparent);
-  border-radius: 2px;
+  border-radius: var(--radius);
 }
 
 .site-menu > summary::-webkit-details-marker {
@@ -719,7 +719,7 @@ select {
   background: var(--ground);
   color: var(--text);
   border: 1px solid var(--line-strong);
-  border-radius: 2px;
+  border-radius: var(--radius);
   display: grid;
   gap: 1rem;
   --focus: #a9761f;
@@ -921,7 +921,7 @@ select {
 
 .welcome-portrait {
   position: relative;
-  border-radius: 4px;
+  border-radius: var(--radius);
   overflow: clip;
   box-shadow: 0 0 0 1px var(--line-on-dark);
   aspect-ratio: 4 / 5;
@@ -1792,7 +1792,7 @@ select {
   text-transform: lowercase;
   color: var(--interactive-text);
   border: 1px solid color-mix(in oklab, var(--interactive) 55%, transparent);
-  border-radius: 2px;
+  border-radius: var(--radius);
   vertical-align: 0.12em;
   white-space: nowrap;
 }
@@ -1937,7 +1937,7 @@ select {
   align-items: baseline;
   padding: 0.9rem 1rem;
   border: 1px solid var(--line-on-dark);
-  border-radius: 2px;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
@@ -2014,7 +2014,7 @@ select {
   gap: 0.45rem;
   padding: 0.6rem 0.9rem;
   border: 1px solid var(--line-on-dark);
-  border-radius: 2px;
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: var(--step--1);
 }
@@ -2046,7 +2046,7 @@ select {
   align-items: start;
   padding: 0.9rem 1rem;
   border: 1px solid var(--line-on-dark);
-  border-radius: 2px;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
@@ -2133,7 +2133,7 @@ select {
 .cal-frame {
   min-height: 30rem;
   background: color-mix(in oklab, var(--on-surface) 6%, transparent);
-  border-radius: 2px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -2256,7 +2256,7 @@ body {
 .crisis {
   padding: clamp(1.25rem, 3vw, 1.75rem);
   border: 1px solid var(--line-on-dark);
-  border-radius: 2px;
+  border-radius: var(--radius);
 }
 
 .crisis-heading {
@@ -2333,7 +2333,7 @@ body {
   display: inline-block;
   padding: clamp(1rem, 2.5vw, 1.5rem);
   background: var(--paper);
-  border-radius: 6px;
+  border-radius: var(--radius);
   box-shadow: 0 1px 0 color-mix(in oklab, black 25%, transparent);
 }
 
@@ -2446,7 +2446,7 @@ body {
 .about-portrait {
   margin: 0;
   aspect-ratio: 4 / 5;
-  border-radius: 3px;
+  border-radius: var(--radius);
   overflow: clip;
   box-shadow: 0 0 0 1px var(--line-strong);
 }
@@ -2711,7 +2711,7 @@ body {
   transition:
     background var(--dur-mid) ease,
     transform var(--dur-quick) var(--ease-lamp);
-  border-radius: 2px;
+  border-radius: var(--radius);
 }
 
 .credentials-list li:hover,
@@ -2982,7 +2982,7 @@ body::before {
 
 .welcome-portrait {
   margin: 0;
-  border-radius: 3px;
+  border-radius: var(--radius);
   overflow: clip;
   box-shadow: 0 0 0 1px var(--line-on-dark);
   aspect-ratio: 4 / 5;
@@ -3395,7 +3395,7 @@ body::before {
     padding: 0.7rem 0.75rem;
     border: 1px solid var(--line);
     border-inline-start-width: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius);
     min-height: 3rem;
     align-content: center;
   }
@@ -3937,7 +3937,7 @@ body::before {
   align-items: center;
   padding: 0.5rem 0.7rem;
   background: var(--paper);
-  border-radius: 3px;
+  border-radius: var(--radius);
   box-shadow: 0 0 0 1px color-mix(in oklab, var(--ink) 10%, transparent);
 }
 
@@ -5013,5 +5013,223 @@ body::before {
 
   .canopy-set {
     height: clamp(32px, 10vw, 44px);
+  }
+}
+
+/* ==========================================================================
+   PRE-LAUNCH PASS — the details that were still loose
+   ========================================================================== */
+
+/* --- one radius, used everywhere ----------------------------------------- */
+/* There were four values doing the same job (2px, 3px, 4px, 6px) with nothing
+   distinguishing them. One token, so a corner is a corner wherever it appears;
+   the pill and circle shapes stay as they are because they are shapes, not
+   corners. */
+:root {
+  --radius: 2px;
+}
+
+/* --- required and optional, said in words -------------------------------- */
+/* The form has exactly two things it cannot do without. Saying so once at the
+   top and marking the fields themselves means nobody discovers a requirement
+   by having a submit rejected. Not colour alone: it is a word. */
+.booking-required-note {
+  font-size: var(--step--1);
+  color: var(--on-surface-muted);
+  max-width: 54ch;
+  margin-block-start: -0.15rem;
+}
+
+.field-flag {
+  display: inline-block;
+  margin-inline-start: 0.15em;
+  font-family: var(--font-sans);
+  font-size: 0.68em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--interactive-on-dark);
+  vertical-align: 0.12em;
+}
+
+.field-flag[data-optional="true"] {
+  color: var(--on-surface-muted);
+  font-weight: 400;
+}
+
+/* the light rooms use the darker interactive tone */
+:where(.room, .page) .field-flag {
+  color: var(--interactive-text);
+}
+
+/* --- what not to put in the box ------------------------------------------ */
+/* Sits with the free-text box rather than in the small print underneath it,
+   because it is the only place on the site where somebody might type something
+   they would rather not have sitting in an inbox. */
+.booking-caution {
+  margin-block-start: 0.25rem;
+  padding-inline-start: 0.9rem;
+  border-inline-start: 2px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: var(--on-surface-muted);
+  max-width: 58ch;
+}
+
+/* --- a social account with no URL yet is not a link ---------------------- */
+.social-link[data-placeholder="true"] {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.social-link[data-placeholder="true"]:hover {
+  background: none;
+  transform: none;
+}
+
+/* --- the booking link in the phone menu reads as the action it is -------- */
+.site-menu-panel a.site-menu-cta {
+  font-weight: 500;
+  color: var(--interactive-text);
+}
+
+/* --- where you are, in the menu ------------------------------------------ */
+.site-menu-panel a[aria-current="page"],
+.site-footer-list a[aria-current="page"] {
+  font-weight: 500;
+  text-decoration-color: currentColor;
+}
+
+/* --- touch targets ------------------------------------------------------- */
+/* The phone number is the second most important thing on the page and it was
+   a 16px-high tap target. WCAG 2.2 asks for 24px; a little padding on the
+   inline link gets there without changing how the line reads. */
+.hero-phone .link-plain,
+.booking-done-ring .link-plain,
+.site-footer-phone {
+  display: inline-block;
+  padding-block: 0.45rem;
+}
+
+/* the checkbox itself, so a fingertip does not have to be precise */
+.checkbox input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* --- the no-JavaScript contact step -------------------------------------- */
+/* The phone/email rows are toggled by React. With JavaScript off nothing
+   toggles them, so the email field stayed hidden behind a radio that could be
+   selected — the one path through this form that could not be completed.
+   Without JS both rows show and the label says to fill in whichever applies. */
+:root:not([data-js]) .field-row[data-hidden="true"] {
+  display: grid;
+}
+
+:root:not([data-js]) .booking-nojs-note {
+  display: block;
+}
+
+.booking-nojs-note {
+  display: none;
+  font-size: var(--step--1);
+  color: var(--on-surface-muted);
+  max-width: 54ch;
+}
+
+/* the Back button has nothing to go back to when every step is on screen */
+:root:not([data-js]) .booking-back {
+  display: none;
+}
+
+/* --- which room you are in ------------------------------------------------ */
+/* The underline the nav already draws on hover, held open for the section
+   currently on screen. aria-current carries the same information for anyone
+   not looking at the underline. */
+.site-nav a[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+.site-nav a[aria-current="true"] {
+  color: var(--on-surface);
+}
+
+.site-header[data-over-hero] .site-nav a[aria-current="true"] {
+  color: var(--on-dark-strong, inherit);
+}
+
+/* --- the hero copy needs a floor ------------------------------------------ */
+/* Measured, not guessed: sampling the painted pixels behind the headline at
+   1440 and 1024 put parts of it on the blown-out window at 1.13:1. The photo's
+   own vignette only darkens the edges, and the copy sits across the middle.
+   This is a scrim for the copy column alone — the right third of the room,
+   which is the part worth looking at, keeps its light. The phone layout
+   already had a heavier scrim and measured 4.4:1 and up, so it is left alone. */
+@media (min-width: 48rem) {
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      /* an ellipse sat on the copy itself, which is what the window keeps
+         showing through — strongest where the headline is, gone by the chair */
+      radial-gradient(
+        68% 62% at 26% 46%,
+        rgba(6, 14, 18, 0.62) 0%,
+        rgba(6, 14, 18, 0.45) 52%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to right,
+        rgba(6, 14, 18, 0.84) 0%,
+        rgba(6, 14, 18, 0.8) 42%,
+        rgba(6, 14, 18, 0.66) 62%,
+        rgba(6, 14, 18, 0.34) 78%,
+        transparent 92%
+      ),
+      linear-gradient(
+        to top,
+        rgba(6, 14, 18, 0.55) 0%,
+        rgba(6, 14, 18, 0.2) 30%,
+        transparent 58%
+      );
+  }
+}
+
+/* Below that the phone scrim is doing the work and a second layer would only
+   grey the photograph out. */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* The band just above the phone breakpoint is the tightest case: the desktop
+   crop puts the window straight behind the headline, but the copy column still
+   spans most of the width, so there is nowhere for the gradient to fade to.
+   Measured at 860px the headline was 2.40:1 against 3:1 for large text; this
+   holds the scrim across almost the whole frame until there is room to open
+   it up again. */
+@media (min-width: 48rem) and (max-width: 72rem) {
+  .hero-scrim {
+    background:
+      radial-gradient(
+        86% 70% at 32% 46%,
+        rgba(6, 14, 18, 0.66) 0%,
+        rgba(6, 14, 18, 0.52) 58%,
+        rgba(6, 14, 18, 0.28) 100%
+      ),
+      linear-gradient(
+        to right,
+        rgba(6, 14, 18, 0.84) 0%,
+        rgba(6, 14, 18, 0.82) 56%,
+        rgba(6, 14, 18, 0.72) 78%,
+        rgba(6, 14, 18, 0.5) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgba(6, 14, 18, 0.55) 0%,
+        rgba(6, 14, 18, 0.2) 30%,
+        transparent 58%
+      );
   }
 }

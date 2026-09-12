@@ -1,3 +1,4 @@
+import { isPlaceholder } from "./placeholder";
 import { about, areas, credentials, fees, practice, formats } from "@/content/site";
 
 /**
@@ -61,20 +62,29 @@ export function StructuredData({ siteUrl }: { siteUrl: string }) {
       containedInPlace: { "@type": "AdministrativeArea", name: practice.county },
     })),
     availableLanguage: ["en-GB"],
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-        opens: "09:00",
-        closes: "20:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Friday"],
-        opens: "09:00",
-        closes: "17:00",
-      },
-    ],
+    /* Opening hours are published only once Lyndsay has confirmed them. The
+       page itself shows them with a "to confirm" marker; telling a search
+       engine she is open Monday to Thursday until 8pm, with no such caveat
+       available in structured data, would state it as settled fact — and it
+       is what a search result would show somebody deciding whether to ring. */
+    ...(isPlaceholder(practice.hoursNote.status)
+      ? {}
+      : {
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+              opens: "09:00",
+              closes: "20:00",
+            },
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Friday"],
+              opens: "09:00",
+              closes: "17:00",
+            },
+          ],
+        }),
     makesOffer: formats.map((format) => ({
       "@type": "Offer",
       name: `${format.name} counselling session`,
@@ -85,14 +95,21 @@ export function StructuredData({ siteUrl }: { siteUrl: string }) {
       },
     })),
     founder: person,
-    employee: person,
+    /* The same node, referenced rather than repeated: this object is ~2KB and
+       it was being written into every page's HTML twice over. */
+    employee: { "@id": person["@id"] },
   };
 
   return (
     <script
       type="application/ld+json"
       // Not user input — a constant built from content/site.ts at build time.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }}
+      /* JSON.stringify does not escape "</script>", which is the one sequence
+         that can break out of this tag. Nothing here comes from a visitor, but
+         escaping it costs a replace and removes the question. */
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(business).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }

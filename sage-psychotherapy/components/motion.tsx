@@ -145,8 +145,53 @@ export function Motion() {
       });
     }
 
+    // --- where you are in the page --------------------------------------
+    // Not motion, so it is deliberately outside the gate above: somebody with
+    // reduced motion or calm mode on still benefits from the nav saying which
+    // room they are in. It marks the link with aria-current, so it is not
+    // conveyed by the underline alone.
+    const navLinks = new Map<string, HTMLAnchorElement>();
+    document
+      .querySelectorAll<HTMLAnchorElement>('.site-nav a[href*="#"]')
+      .forEach((link) => {
+        const id = link.getAttribute("href")?.split("#")[1];
+        if (id && document.getElementById(id)) navLinks.set(id, link);
+      });
+
+    let spy: IntersectionObserver | null = null;
+    if (navLinks.size) {
+      const seen = new Set<string>();
+      const mark = () => {
+        // The topmost section currently in the reading band wins, so scrolling
+        // back up hands the mark back rather than leaving it on the last one.
+        const current = [...navLinks.keys()].find((id) => seen.has(id));
+        navLinks.forEach((link, id) => {
+          if (id === current) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
+        });
+      };
+      spy = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const id = entry.target.id;
+            if (entry.isIntersecting) seen.add(id);
+            else seen.delete(id);
+          }
+          mark();
+        },
+        // A band across the middle of the viewport: a section counts as "here"
+        // when it is what you are actually reading, not when it first peeks in.
+        { rootMargin: "-45% 0px -45% 0px" },
+      );
+      navLinks.forEach((_, id) => {
+        const section = document.getElementById(id);
+        if (section) spy!.observe(section);
+      });
+    }
+
     return () => {
       observer?.disconnect();
+      spy?.disconnect();
       calmWatcher.disconnect();
       reduceMq.removeEventListener("change", arm);
       if (frame) cancelAnimationFrame(frame);

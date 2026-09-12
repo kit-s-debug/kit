@@ -25,12 +25,20 @@ export function Hero() {
             alt={hero.imageAlt}
             fill
             priority
-            sizes="100vw"
+            fetchPriority="high"
+            /* The source photograph is 1200px wide. `100vw` asked the
+               optimiser for 1920 on a desktop, which returned an upscale:
+               more bytes for a softer picture. Capping the request at the
+               width the file actually has keeps it sharp and smaller. */
+            sizes="(max-width: 1200px) 100vw, 1200px"
             placeholder="blur"
-            quality={78}
+            quality={80}
             className="hero-photo"
           />
           <div className="hero-vignette" aria-hidden="true" />
+          {/* A floor for the copy column on wide screens. See globals.css —
+              the headline measured 1.13:1 over the window without it. */}
+          <div className="hero-scrim" aria-hidden="true" />
           <div className="hero-warm" aria-hidden="true" />
           {/* the foot of the photograph resolves to the next section's field */}
           <div className="hero-dissolve" aria-hidden="true" />

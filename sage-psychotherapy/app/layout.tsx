@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { Motion } from "@/components/motion";
 import { instrument, newsreader } from "./fonts";
 import { BOOT_SCRIPT } from "@/lib/boot-script";
@@ -57,9 +56,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         {children}
         <Motion />
-        {/* Cookieless and privacy-first, so the site needs no cookie banner.
-            Only sends data from a Vercel deployment; a no-op elsewhere. */}
-        <Analytics />
+        {/* No analytics, by design. The privacy page promises this site tracks
+            nobody; shipping a measurement script — even a cookieless one —
+            would make that sentence untrue. Nothing third-party loads here. */}
       </body>
     </html>
   );

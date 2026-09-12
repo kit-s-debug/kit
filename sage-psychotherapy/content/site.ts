@@ -69,8 +69,8 @@ export const cta = {
 
 export const hero = {
   welcomeWelsh: "Croeso",
-  kicker: "Counselling and psychotherapy in Milford Haven",
-  headline: "Therapy in a front room in Milford Haven, in person or online.",
+  kicker: "Counselling and psychotherapy in Pembrokeshire",
+  headline: "Therapy in a front room in Neyland, in person or online.",
   credit: "Lyndsay Gent — Adlerian psychotherapist and counsellor. BACP member.",
   imageAlt:
     "The therapy room: a Victorian front room with a deep navy-teal wall, tan leather sofas, a mustard-yellow armchair, a honey parquet floor and a tall sash window with a lace café curtain, lit by a warm lamp.",
@@ -548,7 +548,16 @@ export const sessionsSection = {
 
 export const approach = {
   heading: "Adlerian therapy, in plain words",
+  /* The section promised plain words and then opened on "In practice that
+     means", with nothing for "that" to refer to — the one place on the site
+     where a reader was told what they were about to get and then not given it.
+     These first two paragraphs describe the modality itself, which is public
+     and well documented; nothing here claims anything about Lyndsay's own
+     practice beyond what she has already said. Worth her reading before
+     launch all the same. */
   body: [
+    "Adler's idea was that people make sense once you know what they are moving towards. Not what happened to you and therefore what you are, but what you are trying to manage, protect or belong to — and the strategy you worked out for it, often young, often sensibly at the time.",
+    "So we look at the pattern rather than the diagnosis: where it came from, what it costs you now, and what could be done differently. It is a conversation between two people, not a treatment administered to one of them.",
     "In practice that means less time spent on why last week was hard, and more on what a slightly different next week could actually look like — small, real changes you leave with.",
   ],
   clientsLabel: "Who I work with",
@@ -717,6 +726,10 @@ export const booking = {
     "The calendar isn't connected yet. Ring 07864 011 852 and I'll find you a time.",
   contactHeading: "How should I reach you?",
   contactHelp: "One way is enough. I only use it to arrange the call.",
+  requiredNote: "Two things are needed: what to call you, and one way to reach you. Everything else on this page is optional.",
+  noJsContactNote: "Fill in whichever of the two below matches the answer you picked above.",
+  requiredMark: "needed",
+  optionalMark: "optional",
   nameLabel: "What should I call you?",
   namePlaceholder: "First name is fine",
   methodLabel: "Best way to reach you",
@@ -732,6 +745,8 @@ export const booking = {
   noteHeading: "Anything you'd like me to know?",
   noteHelp:
     "Completely optional. There's no need to explain anything yet — that's what the call is for. Plenty of people leave this empty.",
+  noteCaution:
+    "Please keep this general. Email is ordinary email, not a clinical record, so it isn't the place for diagnoses, medical history or anything you would not want sitting in an inbox. Whatever you leave out here, you can say on the call.",
   notePlaceholder: "Or leave this blank",
   concessionLabel: "I'd like to ask about a lower rate",
   concessionHelp: "I'll raise it on the call. Nobody has to say it out loud first.",
@@ -767,7 +782,7 @@ export const crisis = {
     { name: "Samaritans", detail: "116 123 — free, 24 hours", href: "tel:116123" },
     { name: "NHS 111, option 2", detail: "Urgent mental health support", href: "tel:111" },
     { name: "999", detail: "If life is at risk", href: "tel:999" },
-    { name: "Text SHOUT to 85258", detail: "Free 24-hour text support", href: "sms:85258&body=SHOUT" },
+    { name: "Text SHOUT to 85258", detail: "Free 24-hour text support", href: "sms:85258?body=SHOUT" },
   ],
 } as const;
 
@@ -804,7 +819,7 @@ export const nav = [
 ] as const;
 
 export const footer = {
-  blurb: "Adlerian psychotherapy and counselling in Milford Haven, and across Pembrokeshire.",
+  blurb: "Adlerian psychotherapy and counselling in Neyland, and across Pembrokeshire.",
   contactHeading: "Contact",
   followHeading: "Follow",
   legalHeading: "Legal",
@@ -818,11 +833,11 @@ export const footer = {
 
 export const meta = {
   title:
-    "Counselling and psychotherapy in Milford Haven — Sage Psychotherapy & Counselling",
+    "Counselling and psychotherapy in Pembrokeshire — Sage Psychotherapy & Counselling",
   description:
-    "Adlerian psychotherapy and counselling in Milford Haven, Pembrokeshire. In person, online, by phone or at your home. £45 a session and a free 15-minute call first.",
+    "Adlerian psychotherapy and counselling in Neyland, near Milford Haven. In person, online, by phone or at your home. £45 a session and a free 15-minute call first.",
   ogAlt:
-    "The therapy room in Milford Haven: navy-teal wall, tan leather sofas and a mustard armchair, lit by a lamp.",
+    "The therapy room: a navy-teal wall, tan leather sofas and a mustard armchair, lit by a lamp.",
 } as const;
 
 /* -------------------------------------------------------------------------- */
@@ -832,7 +847,7 @@ export const meta = {
 export const about = {
   title: "About Lyndsay Gent",
   description:
-    "Lyndsay Gent is an Adlerian psychotherapist and counsellor in Milford Haven, Pembrokeshire. BACP member, PSA Accredited Register, enhanced DBS.",
+    "Lyndsay Gent is an Adlerian psychotherapist and counsellor in Neyland, Pembrokeshire. BACP member, PSA Accredited Register, enhanced DBS.",
   heading: "About Lyndsay",
   /* Lyndsay's own words, in her own order. Untouched apart from a comma after
      "Hi" and the possessive apostrophe in "clients'". Her capitalisation of
@@ -887,13 +902,15 @@ export const privacy = {
     {
       heading: "Booking",
       body: [
-        "Times are booked through Cal.com, which is a separate company and holds your name, email and the appointment itself under its own privacy policy.",
+        "There is no third-party booking system connected to this site at the moment. You reach me through the enquiry form above or by phone, and nothing goes anywhere else.",
+        "If an online calendar is added later it will be named here, along with what it holds, before it goes live.",
       ],
     },
     {
       heading: "Cookies and analytics",
       body: [
-        "None. There is no cookie banner because there is nothing to consent to. Your calm-mode and lighting preferences are stored in your own browser and never sent anywhere.",
+        "None. No cookies, no analytics, no tracking pixels and no third-party scripts of any kind. There is no cookie banner because there is nothing to consent to.",
+        "Your calm-mode and lighting preferences are kept in your own browser's local storage. They never leave your device and I cannot see them.",
       ],
     },
     {

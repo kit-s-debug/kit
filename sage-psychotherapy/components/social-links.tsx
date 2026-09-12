@@ -13,41 +13,62 @@ const ICONS: Record<string, { path: string; rule?: "evenodd" }> = {
 };
 
 /**
- * Both accounts, in the header and the footer, as the brief asks. The URLs are
- * placeholders until she supplies the real ones — see README.
+ * Both accounts, in the header and the footer.
+ *
+ * Until she supplies the real URLs these render as marked-up placeholders
+ * rather than links. Pointing "Facebook" at facebook.com's front page is worse
+ * than not linking at all: it looks live, and it takes a visitor who wanted to
+ * see her page to a login wall instead. Set the href and the status in
+ * content/site.ts and each one becomes a real link on its own.
  */
 export function SocialLinks({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <ul className="socials" data-tone={tone}>
-      {practice.socials.map((social) => (
-        <li key={social.label}>
-          <a
-            href={social.href}
-            className="social-link"
-            rel="me noopener noreferrer"
-            target="_blank"
-            title={
-              social.status === "confirmed"
-                ? social.label
-                : `${social.label} — placeholder link, not yet supplied`
-            }
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-              <path
-                d={ICONS[social.label].path}
-                fill="currentColor"
-                fillRule={ICONS[social.label].rule}
-                clipRule={ICONS[social.label].rule}
-              />
-            </svg>
-            <span className="visually-hidden">
-              {social.label}
-              {social.status === "confirmed" ? "" : " (placeholder link)"}
-            </span>
-            {social.status !== "confirmed" && <span aria-hidden="true" className="social-dot" />}
-          </a>
-        </li>
-      ))}
+      {practice.socials.map((social) => {
+        const icon = (
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path
+              d={ICONS[social.label].path}
+              fill="currentColor"
+              fillRule={ICONS[social.label].rule}
+              clipRule={ICONS[social.label].rule}
+            />
+          </svg>
+        );
+
+        if (social.status !== "confirmed") {
+          return (
+            <li key={social.label}>
+              <span
+                className="social-link"
+                data-placeholder="true"
+                title={`${social.label} — link not supplied yet`}
+              >
+                {icon}
+                <span className="visually-hidden">
+                  {social.label} — link not supplied yet
+                </span>
+                <span aria-hidden="true" className="social-dot" />
+              </span>
+            </li>
+          );
+        }
+
+        return (
+          <li key={social.label}>
+            <a
+              href={social.href}
+              className="social-link"
+              rel="me noopener noreferrer"
+              target="_blank"
+              title={social.label}
+            >
+              {icon}
+              <span className="visually-hidden">{social.label} (opens in a new tab)</span>
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
 }

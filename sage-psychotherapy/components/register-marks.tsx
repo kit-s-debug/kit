@@ -16,10 +16,24 @@ export function RegisterMarks({ className = "" }: { className?: string }) {
   return (
     <div className={`register-marks ${className}`} aria-hidden="true">
       <span className="register-mark">
-        <Image src="/images/bacp.png" alt="" width={197} height={96} className="register-bacp" />
+        <Image
+          src="/images/bacp.png"
+          alt=""
+          width={197}
+          height={96}
+          sizes="64px"
+          className="register-bacp"
+        />
       </span>
       <span className="register-mark">
-        <Image src="/images/psa.png" alt="" width={196} height={96} className="register-psa" />
+        <Image
+          src="/images/psa.png"
+          alt=""
+          width={196}
+          height={96}
+          sizes="96px"
+          className="register-psa"
+        />
       </span>
     </div>
   );

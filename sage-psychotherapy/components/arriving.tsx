@@ -68,6 +68,7 @@ export function Arriving() {
               target="_blank"
             >
               {arriving.directionsLabel}
+              <span className="visually-hidden"> (opens in a new tab)</span>
             </a>
 
             <p className="arriving-hours">

@@ -213,8 +213,13 @@ layout is built so these **strengthen the site without a redesign**:
    **Settings → Environment Variables**.
 3. Add the custom domain under **Settings → Domains** and point the DNS as
    Vercel instructs.
-4. Deploy. Analytics are cookieless (`@vercel/analytics`) so no cookie banner is
-   required.
+4. Deploy. There is no analytics package and no cookie banner, because the
+   site sets no cookies and loads nothing third-party. If you ever add
+   measurement, the privacy page has to change in the same commit — it
+   currently states, as fact, that this site tracks nobody.
+
+   Under **Settings → Analytics**, leave Web Analytics **off** for the same
+   reason: enabling it injects a script and makes that sentence untrue.
 
 `robots.txt`, `sitemap.xml`, Open Graph tags and `LocalBusiness` / `Person`
 structured data are generated automatically.

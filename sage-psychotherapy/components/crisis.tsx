@@ -6,10 +6,11 @@ import { crisis } from "@/content/site";
  */
 export function Crisis({ className = "" }: { className?: string }) {
   return (
-    <section className={`crisis ${className}`} aria-labelledby="crisis-heading">
-      <h2 id="crisis-heading" className="crisis-heading">
-        {crisis.heading}
-      </h2>
+    /* Named with aria-label rather than aria-labelledby: this renders twice on
+       /thanks (here and in the footer), and a repeated id is invalid HTML that
+       points both landmarks at the same heading. */
+    <section className={`crisis ${className}`} aria-label={crisis.heading}>
+      <h2 className="crisis-heading">{crisis.heading}</h2>
       <p className="crisis-body">{crisis.body}</p>
       <ul className="crisis-list">
         {crisis.lines.map((line) => (

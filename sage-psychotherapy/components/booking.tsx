@@ -67,6 +67,35 @@ export function Booking() {
     focusStep();
   };
 
+  /** Only the two fields the contact step owns, so Next can check its own step. */
+  const validateContact = (): boolean => {
+    if (!form.current) return true;
+    const data = new FormData(form.current);
+    const parsed = enquirySchema.safeParse({
+      format: data.get("format"),
+      name: String(data.get("name") ?? ""),
+      method: data.get("method"),
+      phone: String(data.get("phone") ?? ""),
+      email: String(data.get("email") ?? ""),
+      discreet: String(data.get("discreet") ?? ""),
+      safeTimes: String(data.get("safeTimes") ?? ""),
+      note: String(data.get("note") ?? ""),
+      concession: data.get("concession") === "on",
+      website: String(data.get("website") ?? ""),
+    });
+    if (parsed.success) {
+      setErrors({});
+      return true;
+    }
+    const found = collectErrors(parsed.error);
+    const own: FieldErrors = {};
+    if (found.name) own.name = found.name;
+    if (found.phone) own.phone = found.phone;
+    if (found.email) own.email = found.email;
+    setErrors(own);
+    return Object.keys(own).length === 0;
+  };
+
   const validate = (): boolean => {
     if (!form.current) return true;
     const data = new FormData(form.current);
@@ -237,14 +266,21 @@ export function Booking() {
             <fieldset className="booking-step" data-active={step === 2}>
               <legend className="booking-step-heading">{booking.contactHeading}</legend>
               <p className="booking-step-help">{booking.contactHelp}</p>
+              <p className="booking-required-note">{booking.requiredNote}</p>
+              {/* Only shown when JavaScript is off, where both contact rows
+                  are on screen at once because nothing can toggle them. */}
+              <p className="booking-nojs-note">{booking.noJsContactNote}</p>
 
               <div className="field-row">
-                <label htmlFor={`${ids}-name`}>{booking.nameLabel}</label>
+                <label htmlFor={`${ids}-name`}>
+                  {booking.nameLabel} <span className="field-flag">{booking.requiredMark}</span>
+                </label>
                 <input
                   id={`${ids}-name`}
                   name="name"
                   type="text"
                   className="field"
+                  required
                   autoComplete="given-name"
                   placeholder={booking.namePlaceholder}
                   aria-invalid={errors.name ? true : undefined}
@@ -276,7 +312,9 @@ export function Booking() {
               </div>
 
               <div className="field-row" data-hidden={method !== "phone"}>
-                <label htmlFor={`${ids}-phone`}>{booking.phoneLabel}</label>
+                <label htmlFor={`${ids}-phone`}>
+                  {booking.phoneLabel} <span className="field-flag">{booking.requiredMark}</span>
+                </label>
                 <input
                   id={`${ids}-phone`}
                   name="phone"
@@ -295,7 +333,9 @@ export function Booking() {
               </div>
 
               <div className="field-row" data-hidden={method !== "email"}>
-                <label htmlFor={`${ids}-email`}>{booking.emailLabel}</label>
+                <label htmlFor={`${ids}-email`}>
+                  {booking.emailLabel} <span className="field-flag">{booking.requiredMark}</span>
+                </label>
                 <input
                   id={`${ids}-email`}
                   name="email"
@@ -313,7 +353,10 @@ export function Booking() {
               </div>
 
               <div className="field-row">
-                <label htmlFor={`${ids}-discreet`}>{booking.discreetLabel}</label>
+                <label htmlFor={`${ids}-discreet`}>
+                  {booking.discreetLabel}{" "}
+                  <span className="field-flag" data-optional="true">{booking.optionalMark}</span>
+                </label>
                 <p id={`${ids}-discreet-help`} className="field-help">
                   {booking.discreetHelp}
                 </p>
@@ -327,7 +370,10 @@ export function Booking() {
               </div>
 
               <div className="field-row">
-                <label htmlFor={`${ids}-safe`}>{booking.safeTimesLabel}</label>
+                <label htmlFor={`${ids}-safe`}>
+                  {booking.safeTimesLabel}{" "}
+                  <span className="field-flag" data-optional="true">{booking.optionalMark}</span>
+                </label>
                 <input
                   id={`${ids}-safe`}
                   name="safeTimes"
@@ -342,6 +388,7 @@ export function Booking() {
             <fieldset className="booking-step" data-active={step === 3}>
               <legend className="booking-step-heading">{booking.noteHeading}</legend>
               <p className="booking-step-help">{booking.noteHelp}</p>
+              <p className="booking-caution">{booking.noteCaution}</p>
 
               <div className="field-row">
                 <label htmlFor={`${ids}-note`} className="visually-hidden">
@@ -365,7 +412,7 @@ export function Booking() {
               </label>
 
               <div className="consent">
-                <h4 className="label">{booking.consentHeading}</h4>
+                <h3 className="label">{booking.consentHeading}</h3>
                 <p className="consent-body">{booking.consentBody}</p>
               </div>
 
@@ -388,16 +435,29 @@ export function Booking() {
               {booking.back}
             </button>
 
+            {/* Distinct keys are load-bearing. Both branches render a <button>
+                in the same slot, so without them React reuses the one DOM node
+                and only rewrites its attributes — which flipped `type` from
+                "button" to "submit" while the click that caused the step change
+                was still being dispatched. The browser then ran the default
+                action on the mutated node and posted the form, skipping this
+                last step entirely. Separate keys mean separate nodes. */}
             {step < 3 ? (
               <button
+                key="next"
                 type="button"
                 className="action"
-                onClick={() => goTo(Math.min(3, step + 1) as StepIndex)}
+                onClick={() => {
+                  // Catching this here means the problem is fixed on the step
+                  // that owns it, rather than at the end of the form.
+                  if (step === 2 && !validateContact()) return;
+                  goTo(Math.min(3, step + 1) as StepIndex);
+                }}
               >
                 {booking.next}
               </button>
             ) : (
-              <button type="submit" className="action" disabled={state === "sending"}>
+              <button key="submit" type="submit" className="action" disabled={state === "sending"}>
                 {state === "sending" ? booking.submitting : booking.submit}
               </button>
             )}
