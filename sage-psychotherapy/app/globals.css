@@ -5233,3 +5233,29 @@ body::before {
       );
   }
 }
+
+/* ==========================================================================
+   THE CONTENT PLANE SITS ABOVE THE BACK PLANE
+   ========================================================================== */
+/* Every piece of greenery is `position: absolute; z-index: 0`, and the shells
+   that hold the reading were not positioned at all. In CSS painting order a
+   positioned box at z-index 0 comes after all in-flow non-positioned content,
+   so the hills, washes and cuttings were painting *over* the buttons rather
+   than behind them — the main call to action on the About page, "Back to the
+   main page" on both short pages, the footer's own links, two of the session
+   tabs and two rows of the areas list.
+   
+   It had been patched section by section (.hero-content, .approach-display,
+   and .lamp-field > * — which only exists once JavaScript has run, and only on
+   a fine pointer, so touch devices never got it at all). One rule for the
+   content plane instead, so a decoration added later cannot land on top of
+   something you are meant to press. */
+.shell-editorial {
+  position: relative;
+  z-index: 1;
+}
+
+/* Anything laid deliberately over the reading keeps its own place above it. */
+.hero-content {
+  z-index: 2;
+}
