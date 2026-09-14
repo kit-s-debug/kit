@@ -28,6 +28,12 @@ const NEVER_HEAD = new Set([
   'just', 'like', 'yeah', 'uh', 'um', 'okay', 'oh', 'hey', 'ayy', 'ay',
   'you', 'he', 'she', 'we', 'they', 'it', 'that', 'this', 'what', 'when',
   'then', 'than', 'very', 'really', 'about', 'into', 'onto', 'not',
+  // Contractions survive normalisation with their apostrophe, and speech
+  // engines emit them constantly. None of them is a rhyme worth answering.
+  "i'm", "i've", "i'll", "i'd", "it's", "that's", "what's", "he's", "she's",
+  "we're", "you're", "they're", "there's", "here's", "let's", "don't",
+  "can't", "won't", "didn't", "isn't", "wasn't", "ain't", "couldn't",
+  "wouldn't", "shouldn't", "gon'", "'cause", "y'all",
 ]);
 
 export interface Anchor {

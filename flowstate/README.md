@@ -39,8 +39,8 @@ npm run typecheck  # tsc --noEmit
 
 ### The rhyme engine is real, local and synchronous
 
-`lib/rhyme/` is the heart of the product. It holds a curated lexicon of ~1,370
-words across ~201 rhyme families, where every family shares a rhyme key — the
+`lib/rhyme/` is the heart of the product. It holds a curated lexicon of ~1,399
+words across 208 rhyme families, where every family shares a rhyme key — the
 phoneme run from the last stressed vowel to the end of the word (`make` →
 `EY-K`, `money` → `AH-N-IY`). Grouping rather than storing a key per word means
 every word in a family is a guaranteed perfect rhyme for every other.

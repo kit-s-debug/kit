@@ -68,11 +68,13 @@ export function HeroDemo() {
     ideas: IdeaSuggestion[];
   } => {
     // Only analyse words the typewriter has finished — a half-typed word is a
-    // fragment, not something to rhyme with. Real speech results arrive as
-    // whole words, so this trimming is specific to the preview.
-    const complete = visible.endsWith(' ')
-      ? visible
-      : visible.slice(0, visible.lastIndexOf(' ') + 1);
+    // fragment, not something to rhyme with. Once the whole line is out, the
+    // last word counts too, so "make it" anchors as the phrase it is. Real
+    // speech results arrive as whole words, so this is specific to the preview.
+    const complete =
+      visible.length === line.length
+        ? visible
+        : visible.slice(0, visible.lastIndexOf(' ') + 1);
     const found = findAnchor(complete);
     if (!found) return { anchor: '', rhymes: [], ideas: [] };
     const topic = detectTopic(complete).topic;
@@ -82,7 +84,7 @@ export function HeroDemo() {
       rhymes: found3,
       ideas: buildIdeas(found3, { topic, limit: 2 }),
     };
-  }, [visible]);
+  }, [visible, line]);
 
   return (
     <div className="panel relative overflow-hidden p-5 sm:p-6">
