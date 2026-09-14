@@ -31,11 +31,8 @@ export function SessionDetail() {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
-    if (!id) {
-      setSession(null);
-      return;
-    }
     let cancelled = false;
+    // A blank id simply finds nothing, which renders the not-found state.
     void getSessionRepository()
       .get(id)
       .then((found) => {

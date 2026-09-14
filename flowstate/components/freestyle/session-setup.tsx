@@ -16,7 +16,7 @@ import { Tag } from '@/components/ui/misc';
 import { SectionLabel } from '@/components/ui/panel';
 import { BeatLibrary } from '@/components/beat-player/beat-library';
 import { MicAnalyser } from '@/services/audio/mic';
-import { detectSpeechCapability } from '@/services/speech';
+import { useSpeechCapability } from '@/lib/hooks/use-environment';
 import { categoryLabel } from '@/lib/beats';
 
 const DIFFICULTIES: ReadonlyArray<{ value: Difficulty; label: string; hint: string }> = [
@@ -89,17 +89,16 @@ export function SessionSetup({
   );
   const [micPermission, setMicPermission] = useState<MicPermission>('unknown');
   const [checking, setChecking] = useState(false);
-  const [speechSupported, setSpeechSupported] = useState<boolean | null>(null);
-  const [speechReason, setSpeechReason] = useState<string | undefined>();
+  const capability = useSpeechCapability();
+  const speechSupported = capability.supported;
+  const speechReason = capability.reason;
 
   useEffect(() => {
-    const capability = detectSpeechCapability();
-    setSpeechSupported(capability.supported);
-    setSpeechReason(capability.reason);
+    // Asynchronous by nature, so this one does belong in an effect.
     void MicAnalyser.queryPermission().then(setMicPermission);
   }, []);
 
-  const willBeDemo = forceDemoMode || speechSupported === false;
+  const willBeDemo = forceDemoMode || !speechSupported;
 
   const checkMicrophone = async () => {
     setChecking(true);
@@ -111,7 +110,7 @@ export function SessionSetup({
   };
 
   return (
-    <div className="mx-auto max-w-2xl px-4 pb-24 pt-8 sm:px-6">
+    <main id="main" className="mx-auto max-w-2xl px-4 pb-24 pt-8 sm:px-6">
       <div className="flex items-center justify-between gap-4">
         <h1 className="font-display text-[clamp(2rem,7vw,2.75rem)] font-black leading-[0.95]">
           Set up your run
@@ -291,7 +290,7 @@ export function SessionSetup({
             released the moment the session ends.
           </p>
 
-          {speechSupported === false ? (
+          {!speechSupported ? (
             <p className="mt-3 rounded-xl border border-ai/25 bg-ai/5 px-3 py-2.5 text-[13px] leading-relaxed text-ai">
               {speechReason} Sessions will run in Demo Mode with a scripted transcript,
               clearly marked throughout.
@@ -339,7 +338,7 @@ export function SessionSetup({
           }}
         />
       </Sheet>
-    </div>
+    </main>
   );
 }
 

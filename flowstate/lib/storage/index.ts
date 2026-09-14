@@ -39,7 +39,6 @@ export const DEFAULT_SETTINGS: FreestyleSettings = {
 
 export const DEFAULT_PREFERENCES: AppPreferences = {
   reducedMotion: null,
-  hapticsEnabled: true,
   keepTranscripts: true,
   onboardingComplete: false,
   metronomeClick: false,

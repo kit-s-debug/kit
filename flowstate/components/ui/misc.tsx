@@ -24,28 +24,6 @@ export function Tag({
   );
 }
 
-export function StatTile({
-  label,
-  value,
-  hint,
-}: {
-  label: string;
-  value: ReactNode;
-  hint?: string;
-}) {
-  return (
-    <div className="panel px-4 py-3.5">
-      <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
-        {label}
-      </div>
-      <div className="tabular mt-1.5 font-display text-2xl font-extrabold leading-none">
-        {value}
-      </div>
-      {hint ? <div className="mt-1 text-[12px] text-muted">{hint}</div> : null}
-    </div>
-  );
-}
-
 export function EmptyState({
   title,
   body,

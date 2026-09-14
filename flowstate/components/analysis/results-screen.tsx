@@ -7,7 +7,7 @@ import type {
   PerformanceAnalysis,
   RhymeHighlight,
 } from '@/types';
-import { Button, ButtonLink } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { Panel, SectionLabel } from '@/components/ui/panel';
 import { Tag, ThinkingDots } from '@/components/ui/misc';
 import { ScoreDial } from '@/components/analysis/score-dial';
@@ -71,7 +71,7 @@ export function ResultsScreen({
         {analysis.aiEnriched ? <Tag tone="ai">AI review</Tag> : null}
       </div>
 
-      <h1 className="mt-4 font-display text-[clamp(2.25rem,8vw,3.25rem)] font-black leading-[0.95]">
+      <h1 className="text-balance-tight mt-4 font-display text-[clamp(2rem,7.5vw,3.25rem)] font-black leading-[0.95]">
         {thin ? 'Not much to score' : 'Here is how that ran'}
       </h1>
       <p className="mt-2.5 text-[14px] text-muted">
@@ -233,9 +233,9 @@ export function ResultsScreen({
             <Link href="/history" className="text-muted hover:text-text">
               All sessions
             </Link>
-            <ButtonLink href="/" variant="ghost" size="sm" className="!px-0">
+            <Link href="/" className="text-muted hover:text-text">
               Home
-            </ButtonLink>
+            </Link>
           </div>
         </>
       )}

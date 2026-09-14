@@ -51,16 +51,13 @@ export interface AnalysisEnrichment {
 }
 
 /**
- * Reserved for a streaming speech-to-text provider. The browser engine in
- * `services/speech` implements the same contract shape, so swapping in a
- * hosted transcriber is a provider change rather than a UI change.
+ * Transcription is the fifth capability of this layer, and it lives next door
+ * in `services/speech/types.ts` as `SpeechEngine` — the browser engine and the
+ * scripted demo engine both implement it. It is separate because transcription
+ * has to run in the browser against a live audio stream, while everything in
+ * this file is callable from the server. Swapping in a hosted streaming
+ * transcriber means adding a third `SpeechEngine`, not touching the UI.
  */
-export interface TranscriptionProvider {
-  readonly id: string;
-  readonly streaming: boolean;
-  /** Returns a session handle that pushes results through the callbacks. */
-  isAvailable(): boolean;
-}
 
 export interface AIProvider {
   readonly id: string;

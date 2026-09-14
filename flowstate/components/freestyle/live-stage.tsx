@@ -71,7 +71,7 @@ export function LiveStage({
         onExit={onExit}
       />
 
-      <main id="main" className="mx-auto w-full max-w-5xl flex-1 px-4 pb-32 pt-4 sm:px-6">
+      <main id="main" className="mx-auto w-full max-w-5xl flex-1 px-4 pb-28 pt-3 sm:px-6 sm:pb-32 sm:pt-4">
         <div className="flex flex-wrap items-center gap-2">
           <StatusPill demoMode={demoMode} micLive={micLive} paused={paused} />
           <span className="rounded-full border border-line-soft px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-faint">
@@ -87,20 +87,31 @@ export function LiveStage({
                 title={error.title}
                 body={error.body}
                 actions={
-                  <button
-                    type="button"
-                    onClick={() => dismissError(index)}
-                    className="rounded-lg border border-line px-3 py-1.5 text-[12px] font-semibold text-muted transition-colors hover:text-text"
-                  >
-                    Dismiss
-                  </button>
+                  <>
+                    {error.offerDemo && !demoMode ? (
+                      <button
+                        type="button"
+                        onClick={() => controller.switchToDemo()}
+                        className="rounded-lg border border-ai/40 bg-ai/10 px-3 py-1.5 text-[12px] font-semibold text-ai transition-colors hover:bg-ai/20"
+                      >
+                        Switch to Demo Mode
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => dismissError(index)}
+                      className="rounded-lg border border-line px-3 py-1.5 text-[12px] font-semibold text-muted transition-colors hover:text-text"
+                    >
+                      Dismiss
+                    </button>
+                  </>
                 }
               />
             ))}
           </div>
         ) : null}
 
-        <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start">
+        <div className="mt-3 grid gap-4 sm:mt-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start">
           <div>
             <div className="relative">
               <MicOrb
@@ -128,7 +139,7 @@ export function LiveStage({
               ) : null}
             </div>
 
-            <div className="mt-6">
+            <div className="mt-4 sm:mt-6">
               <LiveTranscript demoMode={demoMode} />
             </div>
           </div>

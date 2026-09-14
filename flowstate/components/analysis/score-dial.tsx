@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useReducedMotion } from '@/lib/hooks/use-environment';
 
 /**
  * The overall score, counted up once on arrival.
@@ -10,26 +11,23 @@ import { useEffect, useState } from 'react';
  */
 export function ScoreDial({ score, label = 'Overall' }: { score: number; label?: string }) {
   const [shown, setShown] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
-      setShown(score);
-      return;
-    }
     let raf = 0;
     const start = performance.now();
-    const duration = 900;
+    // Reduced motion takes the same path with no duration, so the value is
+    // simply correct on the first frame.
+    const duration = reduceMotion ? 0 : 900;
     const step = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
+      const t = duration === 0 ? 1 : Math.min(1, (now - start) / duration);
       // Ease-out so it settles rather than snapping.
       setShown(Math.round(score * (1 - Math.pow(1 - t, 3))));
       if (t < 1) raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, [score]);
+  }, [score, reduceMotion]);
 
   const radius = 78;
   const circumference = 2 * Math.PI * radius;

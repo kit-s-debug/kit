@@ -22,7 +22,7 @@ export function LiveTranscript({ demoMode }: { demoMode: boolean }) {
   const empty = recent.length === 0 && !interim;
 
   return (
-    <section aria-label="Live transcript" className="min-h-[7.5rem]">
+    <section aria-label="Live transcript" className="min-h-[6rem] sm:min-h-[7.5rem]">
       <div className="flex items-center gap-2">
         <h2 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-faint">
           Live transcript

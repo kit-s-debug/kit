@@ -67,9 +67,11 @@ export function Sheet({ open, onClose, title, children, footer }: SheetProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      <button
-        type="button"
-        aria-label="Close"
+      {/* Click-to-dismiss, but not a control: it would otherwise announce a
+          second, full-screen "Close" button alongside the real one in the
+          header. Keyboard users close with Escape or that button. */}
+      <div
+        aria-hidden="true"
         onClick={onClose}
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
       />

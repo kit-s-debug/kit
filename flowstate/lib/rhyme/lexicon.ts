@@ -60,7 +60,7 @@ AY-N-ER|finer:a minor:a designer diner
 IY|free:a be:p see:v three key me:r tree degree agree:v guarantee sea
 IY-T|beat street heat meat seat sweet:a feet repeat:v complete:a defeat:v retreat:v concrete:a elite:a compete:v
 IY-M|dream team scheme stream seem:v extreme:a redeem:v esteem regime
-IY-N|scene mean:v clean:a green:a screen machine routine between:r unseen:a teen
+IY-N|scene mean:v clean:v lean:v green:a screen machine routine between:r unseen:a teen
 IY-L|real:a feel:v deal steal:v wheel heal:v reveal:v appeal ideal:a conceal:v
 IY-D|need:v speed lead:v seed greed feed:v bleed:v succeed:v proceed:v indeed:r agreed:p
 IY-S|peace piece release:v increase police crease decrease
@@ -213,6 +213,13 @@ OY-S|voice choice rejoice:v
 UH-D|good:a would:p could:p should:p hood wood stood:p understood:a neighbourhood misunderstood:a
 UH-K|look:v book took:p shook:p cook:v hook overlook:v
 UH-L|full:a pull:v bull
+AO-R-N|born torn:a worn:a sworn:a thorn corn horn
+AO-R-M|form storm warm:a norm perform:v transform:v inform:v
+AO-R-N-IH-NG|morning warning mourning
+AO-R-D-ER|order border recorder disorder
+AA-R-N-ER|corner
+EH-R-IH-NG|caring sharing daring:a comparing preparing
+AH-N-ER-Z|honours
 AE-N-D-IH-NG|standing landing understanding demanding commanding
 AH-DH-ER|other mother brother another:a bother:v
 AH-V-ER|lover cover:v discover:v recover:v undercover:a
@@ -318,9 +325,4 @@ export function familyFor(key: string): LexEntry[] {
 /** Topics a single word points at, for transcript topic detection. */
 export function topicsForWord(word: string): TopicId[] {
   return TOPIC_LOOKUP.get(normaliseWord(word)) ?? [];
-}
-
-export function isKnownWord(word: string): boolean {
-  const w = normaliseWord(word);
-  return byWord.has(w) || TOPIC_LOOKUP.has(w);
 }

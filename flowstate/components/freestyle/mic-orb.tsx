@@ -26,8 +26,12 @@ const BANDS = 72;
  */
 export function MicOrb({ state, mic, beatEngine, hue }: MicOrbProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // The draw loop reads this rather than closing over `state`, so a state
+  // change never tears down and rebuilds the animation frame loop.
   const stateRef = useRef(state);
-  stateRef.current = state;
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -194,7 +198,7 @@ export function MicOrb({ state, mic, beatEngine, hue }: MicOrbProps) {
           : 'Microphone idle';
 
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[min(72vw,20rem)]">
+    <div className="relative mx-auto aspect-square w-full max-w-[min(52vw,13rem)] sm:max-w-[min(60vw,18rem)]">
       <canvas
         ref={canvasRef}
         className="h-full w-full"

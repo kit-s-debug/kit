@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { AssistLevel, Difficulty } from '@/types';
 import { useAppStore } from '@/lib/store/app-store';
@@ -38,7 +38,12 @@ export function FreestyleExperience() {
   const savedSessionId = useSessionStore((state) => state.savedSessionId);
   const resetSession = useSessionStore((state) => state.reset);
 
-  const controllerRef = useRef<FreestyleController | null>(null);
+  // Lazy initialiser rather than a ref assignment: the controller owns the
+  // audio graph and the microphone, so it must be created exactly once and
+  // never during a server render.
+  const [controller] = useState<FreestyleController | null>(() =>
+    typeof window === 'undefined' ? null : new FreestyleController(),
+  );
   const [starting, setStarting] = useState(false);
   const [exitOpen, setExitOpen] = useState(false);
   const [challengeAccepted, setChallengeAccepted] = useState(true);
@@ -48,11 +53,6 @@ export function FreestyleExperience() {
   const beat = useMemo(() => getBeat(settings.beatId), [settings.beatId]);
   const challenge = useMemo(() => challengeForDay(dayKey()), []);
 
-  if (controllerRef.current === null && typeof window !== 'undefined') {
-    controllerRef.current = new FreestyleController();
-  }
-  const controller = controllerRef.current;
-
   // Send first-time visitors through onboarding before the setup screen.
   useEffect(() => {
     if (hydrated && !preferences.onboardingComplete) {
@@ -60,13 +60,15 @@ export function FreestyleExperience() {
     }
   }, [hydrated, preferences.onboardingComplete, router]);
 
+  // Releases the microphone, the beat and every timer when the screen goes
+  // away. Deliberately `abandon` rather than `dispose`: strict mode runs this
+  // cleanup once before the real mount, and the controller has to survive it.
   useEffect(() => {
     return () => {
-      controllerRef.current?.dispose();
-      controllerRef.current = null;
+      controller?.abandon();
       useSessionStore.getState().reset();
     };
-  }, []);
+  }, [controller]);
 
   // Guard against navigating away mid-run and silently losing the session.
   useEffect(() => {

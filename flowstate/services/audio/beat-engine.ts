@@ -429,11 +429,6 @@ export class BeatEngine {
     if (this.state !== 'idle') this.setState('stopped');
   }
 
-  async restart(countInBars = 0): Promise<void> {
-    this.stop();
-    await this.play(countInBars);
-  }
-
   dispose(): void {
     this.stop();
     this.teardownFile();

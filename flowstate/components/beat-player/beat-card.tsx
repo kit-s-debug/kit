@@ -99,18 +99,19 @@ export function BeatCard({
 function BeatBars({ hue, animated }: { hue: number; animated: boolean }) {
   return (
     <span aria-hidden="true" className="flex h-6 items-end gap-[3px]">
-      {Array.from({ length: 16 }).map((_, index) => (
-        <span
-          key={index}
-          className="w-[3px] rounded-full"
-          style={{
-            height: `${20 + Math.abs(Math.sin(index * 1.1)) * 70}%`,
-            background: `hsl(${hue} 85% 60% / ${animated ? 0.85 : 0.3})`,
-            animation: animated ? 'sheen 1.6s ease-in-out infinite' : undefined,
-            animationDelay: `${(index % 7) * 0.1}s`,
-          }}
-        />
-      ))}
+      {Array.from({ length: 16 }).map((_, index) => {
+        // Rounded, and built without undefined keys: React serialises those
+        // differently on the server and the client, which trips hydration.
+        const style: React.CSSProperties = {
+          height: `${(20 + Math.abs(Math.sin(index * 1.1)) * 70).toFixed(2)}%`,
+          backgroundColor: `hsl(${hue} 85% 60% / ${animated ? 0.85 : 0.3})`,
+        };
+        if (animated) {
+          style.animation = 'sheen 1.6s ease-in-out infinite';
+          style.animationDelay = `${((index % 7) * 0.1).toFixed(1)}s`;
+        }
+        return <span key={index} className="w-[3px] rounded-full" style={style} />;
+      })}
     </span>
   );
 }

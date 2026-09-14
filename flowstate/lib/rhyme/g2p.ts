@@ -28,7 +28,28 @@ const IRREGULAR: Record<string, string> = {
   friend: 'EH-N-D', been: 'IH-N', busy: 'IH-Z-IY', build: 'IH-L-D',
   bread: 'EH-D', dead: 'EH-D', head: 'EH-D', read: 'IY-D', ready: 'EH-D-IY',
   break: 'EY-K', great: 'EY-T', steak: 'EY-K', eight: 'EY-T', weight: 'EY-T',
+  most: 'OW-S-T', host: 'OW-S-T', post: 'OW-S-T', ghost: 'OW-S-T',
+  lost: 'AO-S-T', cost: 'AO-S-T', frost: 'AO-S-T', both: 'OW-TH',
+  climb: 'AY-M', comb: 'OW-M', sign: 'AY-N', island: 'AY-L-AH-N-D',
+  shall: 'AE-L', doll: 'AA-L', dull: 'AH-L', skull: 'AH-L',
 };
+
+/**
+ * Spelling patterns where English reliably breaks its own short-vowel rule.
+ * "grind" is /graind/, not /grind/ — and without this the engine would offer
+ * "spending" as a rhyme for "grinding".
+ */
+const STEM_PATTERNS: ReadonlyArray<[RegExp, string]> = [
+  [/ind$/, 'AY-N-D'],
+  [/ild$/, 'AY-L-D'],
+  [/old$/, 'OW-L-D'],
+  [/olt$/, 'OW-L-T'],
+  [/oll$/, 'OW-L'],
+  [/ign$/, 'AY-N'],
+  [/alk$/, 'AO-K'],
+  [/alt$/, 'AO-L-T'],
+  [/all$/, 'AO-L'],
+];
 
 /** Ordered longest-first: the first suffix match wins. */
 const SUFFIX_RULES: ReadonlyArray<[RegExp, string]> = [
@@ -212,6 +233,12 @@ function stressedStemKey(stem: string): string[] | null {
   const irregular = IRREGULAR[stem];
   if (irregular) return splitKey(irregular);
 
+  // "rolling" keeps the long vowel of "roll" — the doubled "ll" below is not a
+  // short-vowel marker here, so these patterns have to win first.
+  for (const [pattern, phonemes] of STEM_PATTERNS) {
+    if (pattern.test(stem)) return splitKey(phonemes);
+  }
+
   const doubled = stem.match(/([aeiouy])([^aeiouy])\2$/);
   if (doubled) {
     const vowel = SHORT_VOWEL[doubled[1] ?? 'a'];
@@ -242,6 +269,10 @@ function stressedStemKey(stem: string): string[] | null {
 /** Walk back to the final vowel group and build [nucleus, ...coda]. */
 function keyFromLetters(word: string): string[] | null {
   if (word.length < 2) return null;
+
+  for (const [pattern, phonemes] of STEM_PATTERNS) {
+    if (pattern.test(word)) return splitKey(phonemes);
+  }
 
   // Silent final "e": make, time, hope.
   const beforeE = word[word.length - 2];

@@ -45,9 +45,9 @@ export function StudioBackdrop() {
             key={index}
             className="w-[3px] flex-none rounded-full bg-gradient-to-t from-accent/70 to-accent-soft/10"
             style={{
-              height: `${14 + Math.abs(Math.sin(index * 0.7)) * 58}%`,
+              height: `${(14 + Math.abs(Math.sin(index * 0.7)) * 58).toFixed(2)}%`,
               animation: 'sheen 4s ease-in-out infinite',
-              animationDelay: `${(index % 11) * 0.18}s`,
+              animationDelay: `${((index % 11) * 0.18).toFixed(2)}s`,
             }}
           />
         ))}

@@ -30,8 +30,3 @@ export function getAIProvider(): AIProvider {
   cached = new LocalAIProvider();
   return cached;
 }
-
-/** Test seam — lets a route reset the memoised provider. */
-export function resetAIProvider(): void {
-  cached = null;
-}

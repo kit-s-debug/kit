@@ -27,9 +27,10 @@ export type SessionPhase = 'setup' | 'starting' | 'countdown' | 'live' | 'finish
 export interface SessionError {
   title: string;
   body: string;
-  /** 'mic' errors can be recovered by switching to demo mode. */
   kind: 'mic' | 'speech' | 'audio' | 'ai' | 'storage';
   recoverable: boolean;
+  /** Show a one-tap switch to Demo Mode — the session continues either way. */
+  offerDemo?: boolean;
 }
 
 interface SessionState {

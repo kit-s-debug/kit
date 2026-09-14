@@ -182,10 +182,6 @@ export class MicAnalyser {
     }
   }
 
-  getLevel(): number {
-    return this.smoothed;
-  }
-
   getRawLevel(): number {
     return this.level;
   }

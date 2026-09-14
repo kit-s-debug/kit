@@ -1,12 +1,9 @@
-import { FlatCompat } from '@eslint/eslintrc';
+import next from 'eslint-config-next';
 
-const compat = new FlatCompat({ baseDirectory: import.meta.dirname });
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  {
-    ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'],
-  },
+/** Flat config: eslint-config-next ships the Next + TypeScript rules as an array. */
+const config = [
+  { ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts'] },
+  ...next,
 ];
 
-export default eslintConfig;
+export default config;

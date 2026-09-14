@@ -9,7 +9,7 @@ export function Wordmark({ className = '' }: { className?: string }) {
           <span
             key={index}
             className="w-[3px] rounded-full bg-accent"
-            style={{ height, opacity: 0.45 + index * 0.12 }}
+            style={{ height, opacity: Number((0.45 + index * 0.12).toFixed(2)) }}
           />
         ))}
       </span>

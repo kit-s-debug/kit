@@ -16,7 +16,7 @@ import type {
   SuggestInput,
 } from './types';
 
-export const EMPTY_SUGGESTIONS: SuggestionSet = {
+const EMPTY_SUGGESTIONS: SuggestionSet = {
   anchor: '',
   anchorRhymeKey: null,
   rhymes: [],

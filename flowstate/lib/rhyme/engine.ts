@@ -78,6 +78,13 @@ export function findAnchor(text: string): Anchor | null {
 
   let head = words[headIndex];
 
+  // A single letter is a fragment, not a word: drop it and use what came before.
+  if (head && head.length < 2 && headIndex > 0) {
+    headIndex -= 1;
+    tail.length = 0;
+    head = words[headIndex];
+  }
+
   // A function word makes a weak anchor — reach back for something with weight.
   if (head && NEVER_HEAD.has(head)) {
     let probe = headIndex - 1;
@@ -93,7 +100,7 @@ export function findAnchor(text: string): Anchor | null {
     }
   }
 
-  if (!head || NEVER_HEAD.has(head)) return null;
+  if (!head || head.length < 2 || NEVER_HEAD.has(head)) return null;
 
   const phrase = [head, ...tail].join(' ');
   return {
@@ -325,15 +332,4 @@ function classify(
     return 'perfect';
   }
   return base === 'near' ? 'near' : 'assonance';
-}
-
-/** Entries that rhyme with a key, used by the analysis pass. */
-export function rhymingEntries(key: string, minScore = 0.6): LexEntry[] {
-  const out: LexEntry[] = [];
-  for (const candidateKey of ALL_KEYS) {
-    const similarity = compareKeys(key, candidateKey);
-    if (similarity.kind === 'none' || similarity.score < minScore) continue;
-    out.push(...familyFor(candidateKey));
-  }
-  return out;
 }

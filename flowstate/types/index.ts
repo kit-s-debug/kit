@@ -55,7 +55,6 @@ export interface FreestyleSettings {
 
 export interface AppPreferences {
   reducedMotion: boolean | null;
-  hapticsEnabled: boolean;
   keepTranscripts: boolean;
   onboardingComplete: boolean;
   metronomeClick: boolean;

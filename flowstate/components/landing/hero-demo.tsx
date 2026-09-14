@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useReducedMotion } from '@/lib/hooks/use-environment';
 import { buildIdeas, detectTopic, findAnchor, findRhymes } from '@/lib/rhyme';
 import type { IdeaSuggestion, RhymeSuggestion } from '@/types';
 
@@ -25,54 +26,56 @@ const HOLD_MS = 2100;
 export function HeroDemo() {
   const [lineIndex, setLineIndex] = useState(0);
   const [charCount, setCharCount] = useState(0);
-  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     const line = SCRIPT[lineIndex] ?? '';
-    if (reduce) {
-      setCharCount(line.length);
+
+    if (reduceMotion) {
+      // No typing: hold the whole line, then move on.
       const hold = setTimeout(() => {
         setLineIndex((index) => (index + 1) % SCRIPT.length);
       }, HOLD_MS * 2);
-      timers.current.push(hold);
       return () => clearTimeout(hold);
     }
 
-    setCharCount(0);
     let char = 0;
+    let hold: ReturnType<typeof setTimeout> | null = null;
     const interval = setInterval(() => {
       char += 1;
       setCharCount(char);
       if (char >= line.length) {
         clearInterval(interval);
-        const hold = setTimeout(() => {
+        hold = setTimeout(() => {
+          setCharCount(0);
           setLineIndex((index) => (index + 1) % SCRIPT.length);
         }, HOLD_MS);
-        timers.current.push(hold);
       }
     }, TYPE_MS);
 
     return () => {
       clearInterval(interval);
-      timers.current.forEach(clearTimeout);
-      timers.current = [];
+      if (hold) clearTimeout(hold);
     };
-  }, [lineIndex]);
+  }, [lineIndex, reduceMotion]);
 
-  const visible = (SCRIPT[lineIndex] ?? '').slice(0, charCount);
+  const line = SCRIPT[lineIndex] ?? '';
+  const visible = reduceMotion ? line : line.slice(0, charCount);
 
   const { anchor, rhymes, ideas } = useMemo((): {
     anchor: string;
     rhymes: RhymeSuggestion[];
     ideas: IdeaSuggestion[];
   } => {
-    const found = findAnchor(visible);
+    // Only analyse words the typewriter has finished — a half-typed word is a
+    // fragment, not something to rhyme with. Real speech results arrive as
+    // whole words, so this trimming is specific to the preview.
+    const complete = visible.endsWith(' ')
+      ? visible
+      : visible.slice(0, visible.lastIndexOf(' ') + 1);
+    const found = findAnchor(complete);
     if (!found) return { anchor: '', rhymes: [], ideas: [] };
-    const topic = detectTopic(visible).topic;
+    const topic = detectTopic(complete).topic;
     const found3 = findRhymes(found, { difficulty: 'beginner', topic, limit: 4 });
     return {
       anchor: found.phrase,
@@ -97,11 +100,13 @@ export function HeroDemo() {
       </div>
 
       <p
-        className="mt-4 min-h-[3.5rem] font-display text-[19px] font-bold leading-snug text-text sm:text-[22px]"
+        className="mt-4 min-h-[5.5rem] font-display text-[19px] font-bold leading-snug text-text sm:text-[22px]"
         aria-live="off"
       >
         {visible}
-        <span className="ml-0.5 inline-block h-[1.1em] w-[3px] translate-y-[3px] bg-accent align-middle" />
+        {reduceMotion ? null : (
+          <span className="ml-0.5 inline-block h-[1.1em] w-[3px] translate-y-[3px] bg-accent align-middle" />
+        )}
       </p>
 
       <div className="mt-5 grid gap-4 border-t border-line-soft pt-5 sm:grid-cols-2">
@@ -112,7 +117,7 @@ export function HeroDemo() {
           <div className="mt-1.5 font-display text-sm font-extrabold uppercase tracking-[0.08em] text-accent">
             {anchor || '—'}
           </div>
-          <ul className="mt-2.5 flex flex-wrap gap-1.5">
+          <ul className="mt-2.5 flex h-[7.25rem] flex-wrap content-start gap-1.5 overflow-hidden">
             {rhymes.map((rhyme) => (
               <li
                 key={rhyme.word}
@@ -131,7 +136,7 @@ export function HeroDemo() {
           <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-faint">
             Ideas
           </div>
-          <ul className="mt-2.5 space-y-1.5">
+          <ul className="mt-2.5 h-[7.5rem] space-y-1.5 overflow-hidden">
             {ideas.map((idea) => (
               <li
                 key={idea.text}

@@ -56,12 +56,18 @@ export class FreestyleController {
   private settings: FreestyleSettings | null = null;
   private beat: Beat | null = null;
   private challenge: DailyChallenge | null = null;
+  private aiLive = false;
 
   private chunks: TranscriptChunk[] = [];
   private interim = '';
   private phraseStartMs: number | null = null;
   private lastFinalMs = 0;
   private topicsSeen = new Set<TopicId>();
+
+  /** Watchdog state: is transcription actually producing anything? */
+  private heardAnything = false;
+  private micActiveMs = 0;
+  private warnedSilent = false;
 
   private ticker: ReturnType<typeof setInterval> | null = null;
   private startedAt = 0;
@@ -102,12 +108,16 @@ export class FreestyleController {
     this.settings = options.settings;
     this.beat = options.beat;
     this.challenge = options.challenge;
+    this.aiLive = options.aiLive;
     this.finished = false;
     this.chunks = [];
     this.interim = '';
     this.phraseStartMs = null;
     this.lastFinalMs = 0;
     this.topicsSeen.clear();
+    this.heardAnything = false;
+    this.micActiveMs = 0;
+    this.warnedSilent = false;
     this.suggestions.reset();
 
     sessionStore.setState({
@@ -206,9 +216,10 @@ export class FreestyleController {
         if (error.code === 'no-speech') return; // normal during a gap
         this.error({
           kind: 'speech',
-          title: error.fatal ? 'Transcription stopped' : 'Transcription hiccup',
+          title: error.fatal ? 'Transcription stopped' : 'Transcription problem',
           body: error.message,
           recoverable: !error.fatal,
+          offerDemo: true,
         });
       },
       onEnd: () => undefined,
@@ -252,10 +263,63 @@ export class FreestyleController {
       });
 
       // Keep the mic level moving even if nothing is drawing it right now.
-      if (this.mic.isActive()) this.mic.sample();
+      if (this.mic.isActive()) {
+        this.mic.sample();
+        if (this.mic.getRawLevel() > 0.025) this.micActiveMs += TICK_MS;
+      }
+      this.checkTranscriptionAlive(elapsed);
 
       if (remaining <= 0) void this.finish('timer');
     }, TICK_MS);
+  }
+
+  /**
+   * Catches the case where the browser reports speech support but the service
+   * never returns anything — offline, blocked, or an unkeyed build. Without
+   * this the screen says "Listening" forever and the user is left guessing.
+   */
+  private checkTranscriptionAlive(elapsedMs: number) {
+    if (this.warnedSilent || this.heardAnything) return;
+    const state = sessionStore.getState();
+    if (state.demoMode || !state.micLive) return;
+    // Only complain once we know they have actually been making sound.
+    if (elapsedMs < 8000 || this.micActiveMs < 3000) return;
+
+    this.warnedSilent = true;
+    this.error({
+      kind: 'speech',
+      title: 'No words are coming through',
+      body: 'Your microphone is picking up sound, but the browser\u2019s speech service has not returned any text. It may be offline or unavailable on this browser.',
+      recoverable: true,
+      offerDemo: true,
+    });
+  }
+
+  /**
+   * Swaps live transcription for the scripted demo without ending the run.
+   * The microphone is closed, and the UI relabels itself as Demo Mode.
+   */
+  switchToDemo(): void {
+    if (this.finished) return;
+    this.speech?.abort();
+    this.mic.stop();
+    this.warnedSilent = true;
+
+    const engine = createSpeechEngine(true);
+    this.speech = engine.engine;
+    sessionStore.setState({
+      demoMode: true,
+      micLive: false,
+      errors: [],
+      speechCapability: engine.capability,
+    });
+
+    this.speech.start({
+      onPartial: (text) => this.handlePartial(text),
+      onFinal: (result) => this.handleFinal(result.text, result.confidence),
+      onError: () => undefined,
+      onEnd: () => undefined,
+    });
   }
 
   /* ------------------------------------------------------- transcript */
@@ -273,6 +337,7 @@ export class FreestyleController {
 
   private handlePartial(text: string) {
     if (this.finished) return;
+    if (text) this.heardAnything = true;
     if (text && this.phraseStartMs === null) this.phraseStartMs = this.elapsedMs();
     this.interim = text;
     sessionStore.setState({ interim: text });
@@ -281,6 +346,7 @@ export class FreestyleController {
 
   private handleFinal(text: string, confidence: number) {
     if (this.finished || !text.trim()) return;
+    this.heardAnything = true;
 
     const now = this.elapsedMs();
     const chunk: TranscriptChunk = {
@@ -437,8 +503,11 @@ export class FreestyleController {
 
     this.onFinish?.({ session });
 
-    // The written observations arrive after the screen is already up.
-    if (transcriptText.split(/\s+/).length >= 12) {
+    // The written observations arrive after the screen is already up. With no
+    // hosted provider there is nothing to ask for — the local observations
+    // above are already the best available, and computed from richer stats
+    // than the route could reconstruct.
+    if (this.aiLive && transcriptText.split(/\s+/).length >= 12) {
       void enrichAnalysis(
         {
           transcript: transcriptText,
@@ -459,21 +528,31 @@ export class FreestyleController {
     }
   }
 
-  /** Leaves without scoring — used by the exit button. */
+  /**
+   * Releases every live resource — microphone, speech, audio graph, timers —
+   * without making the controller unusable. Used by the exit button and by
+   * React's unmount cleanup.
+   *
+   * It has to be reversible: React's strict mode mounts, cleans up and mounts
+   * again, so a terminal teardown here would leave the controller dead before
+   * the user ever pressed start. `start()` rebuilds whatever this released.
+   */
   abandon(): void {
     this.finished = true;
     if (this.ticker) clearInterval(this.ticker);
     this.ticker = null;
     this.speech?.abort();
+    this.speech = null;
     this.mic.stop();
-    this.beatEngine.stop();
     this.suggestions.reset();
+    // Closes the AudioContext; `ensureContext()` builds a fresh one on replay.
+    this.beatEngine.dispose();
   }
 
+  /** Terminal teardown. After this the controller will not start again. */
   dispose(): void {
-    this.disposed = true;
     this.abandon();
+    this.disposed = true;
     this.suggestions.dispose();
-    this.beatEngine.dispose();
   }
 }

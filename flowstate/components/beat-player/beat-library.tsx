@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { Beat, BeatCategory } from '@/types';
-import { BEATS, BEAT_CATEGORIES } from '@/lib/beats';
+import { BEAT_CATEGORIES, beatsByCategory } from '@/lib/beats';
 import { BeatCard } from '@/components/beat-player/beat-card';
 import { usePreviewBeat } from '@/components/beat-player/use-preview';
 import { ErrorNotice } from '@/components/ui/misc';
@@ -18,10 +18,7 @@ export function BeatLibrary({ selectedId, onSelect, footer }: BeatLibraryProps) 
   const [filter, setFilter] = useState<BeatCategory | 'all'>('all');
   const { playingId, toggle, stop, volume, setVolume, error, supported } = usePreviewBeat();
 
-  const beats = useMemo(
-    () => (filter === 'all' ? BEATS : BEATS.filter((beat) => beat.category === filter)),
-    [filter],
-  );
+  const beats = useMemo(() => beatsByCategory(filter), [filter]);
 
   return (
     <div>

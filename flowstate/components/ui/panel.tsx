@@ -19,7 +19,3 @@ export function SectionLabel({ children }: { children: ReactNode }) {
     </span>
   );
 }
-
-export function Divider({ className = '' }: { className?: string }) {
-  return <hr className={`border-0 border-t border-line-soft ${className}`} />;
-}

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import type { MicPermission } from '@/types';
 import { useAppStore } from '@/lib/store/app-store';
 import { MicAnalyser } from '@/services/audio/mic';
-import { detectSpeechCapability } from '@/services/speech';
+import { useSpeechCapability } from '@/lib/hooks/use-environment';
 import { getSessionRepository } from '@/lib/storage';
 import { Panel, SectionLabel } from '@/components/ui/panel';
 import { Toggle } from '@/components/ui/toggle';
@@ -34,17 +34,15 @@ export function SettingsPanel() {
   const resetProgress = useAppStore((state) => state.resetProgress);
 
   const [micPermission, setMicPermission] = useState<MicPermission>('unknown');
-  const [speechSupported, setSpeechSupported] = useState<boolean | null>(null);
-  const [speechReason, setSpeechReason] = useState<string | undefined>();
+  const capability = useSpeechCapability();
+  const speechSupported = capability.supported;
+  const speechReason = capability.reason;
   const [sessionCount, setSessionCount] = useState<number | null>(null);
   const [wipeOpen, setWipeOpen] = useState(false);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
 
   useEffect(() => {
-    const capability = detectSpeechCapability();
-    setSpeechSupported(capability.supported);
-    setSpeechReason(capability.reason);
     void MicAnalyser.queryPermission().then(setMicPermission);
     void getSessionRepository()
       .list()
@@ -109,11 +107,11 @@ export function SettingsPanel() {
           Your microphone is only opened while a freestyle is running, and the stream is
           released the moment the session ends. FLOWSTATE does not record or upload audio.
         </p>
-        {speechSupported === false ? (
+        {!speechSupported ? (
           <p className="mt-3 rounded-xl border border-ai/25 bg-ai/5 px-3 py-2.5 text-[13px] leading-relaxed text-ai">
             {speechReason} Sessions will run in Demo Mode with a scripted transcript.
           </p>
-        ) : speechSupported ? (
+        ) : (
           <p className="mt-3 text-[13px] leading-relaxed text-faint">
             Transcription uses your browser&rsquo;s built-in speech recognition. In
             Chrome and Edge that service processes audio on Google&rsquo;s servers — see{' '}
@@ -122,7 +120,7 @@ export function SettingsPanel() {
             </Link>{' '}
             for what that means.
           </p>
-        ) : null}
+        )}
       </Panel>
 
       {/* AI ------------------------------------------------------------ */}
