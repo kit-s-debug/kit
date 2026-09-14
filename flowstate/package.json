@@ -1,0 +1,30 @@
+{
+  "name": "flowstate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FLOWSTATE — an AI freestyle rap partner that listens to your bars and helps you keep your flow.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "zustand": "5.0.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "^9.24.0",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5.8.3"
+  }
+}

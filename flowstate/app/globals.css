@@ -1,0 +1,220 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   FLOWSTATE design tokens
+
+   Dark studio foundation: near-black with a slight violet cast, one warm
+   accent for brand and actions, and two reserved signal colours — red means
+   the microphone is genuinely live, cyan means the AI layer is doing
+   something. Nothing else glows.
+   ========================================================================== */
+
+@theme {
+  --color-void: #060609;
+  --color-ink: #0a0a0f;
+  --color-surface: #101017;
+  --color-raised: #16161f;
+  --color-line: #24242f;
+  --color-line-soft: #1b1b24;
+
+  --color-text: #f5f5f7;
+  --color-muted: #9c9caa;
+  --color-faint: #5f5f6d;
+
+  --color-accent: #ff6a2b;
+  --color-accent-soft: #ffa557;
+  --color-accent-dim: #7a2f10;
+
+  --color-live: #ff3355;
+  --color-ai: #6fe3cf;
+  --color-gold: #f2c76b;
+
+  --font-display: var(--font-archivo), 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-panel: 20px;
+
+  --animate-drift: drift 26s ease-in-out infinite;
+  --animate-drift-slow: drift 38s ease-in-out infinite reverse;
+  --animate-sheen: sheen 7s ease-in-out infinite;
+  --animate-live-ring: live-ring 2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  --animate-rise: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-bar-in: bar-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-shimmer: shimmer 1.4s linear infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(4%, -3%, 0) scale(1.08); }
+  66% { transform: translate3d(-3%, 4%, 0) scale(0.96); }
+}
+
+@keyframes sheen {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes live-ring {
+  0% { transform: scale(1); opacity: 0.55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes bar-in {
+  from { opacity: 0; transform: translate3d(0, 8px, 0) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  color-scheme: dark;
+  background-color: var(--color-void);
+  /* Stops the page shifting sideways when a scrollbar appears mid-navigation. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior-y: none;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 40%, transparent);
+  color: var(--color-text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-soft);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Firefox + WebKit scrollbars, kept quiet. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+@utility panel {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--color-raised) 92%, white 3%),
+    var(--color-surface)
+  );
+  border: 1px solid var(--color-line-soft);
+  border-radius: var(--radius-panel);
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--color-surface) 72%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, white 7%, transparent);
+}
+
+@utility hairline {
+  border: 1px solid var(--color-line-soft);
+}
+
+@utility text-balance-tight {
+  text-wrap: balance;
+}
+
+/* Big numerals should line up in columns: timers, scores, BPM. */
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-accent);
+  color: #140800;
+  font-weight: 600;
+  border-radius: 0 0 12px 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* The grain layer that keeps the flat black from looking like a void. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   Motion preferences
+
+   Respected in two places: the OS setting, and an in-app override that writes
+   data-reduced-motion on <html> from Settings.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html[data-reduced-motion='true'] *,
+html[data-reduced-motion='true'] *::before,
+html[data-reduced-motion='true'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+html[data-reduced-motion='false'] * {
+  animation-duration: revert;
+  animation-iteration-count: revert;
+  transition-duration: revert;
+}
