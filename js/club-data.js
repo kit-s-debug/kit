@@ -49,15 +49,9 @@ window.LLANGWM = {
     // empty rather than guessed. Fill it in and the rows appear under Find Us.
     openingHours: [],
 
-    // The club's official WRU site carries the live fixture list, results
-    // and league tables. Every "official site" link on the website uses this.
-    officialSite: "https://llangwm.rfc.wales/",
-    officialFixtures: "https://llangwm.rfc.wales/fixtures",
-    officialNews: "https://llangwm.rfc.wales/news/",
-
-    // CHECK — the club's official site lists the playing ground separately
-    // from the clubhouse. Confirm which address supporters should be given
-    // for matchdays, then update the mapQuery below to match.
+    // CHECK — the playing ground is recorded separately from the clubhouse.
+    // Confirm which address supporters should be given for matchdays, then
+    // update the mapQuery below to match.
     groundNote: "Pill Parks Way, Llangwm, Haverfordwest",
 
     // Used to build the Google Maps and directions buttons.
@@ -104,28 +98,23 @@ window.LLANGWM = {
   /* ----------------------------------------------------------------------
      4. NEWS / WHAT'S ON
      --------------------------------------------------------------------------
-     The two entries below are real, dated reports published on the club's
-     own official site. Add new ones at the TOP of the list.
-     Set image to "" if there is no photo — a designed plate is used instead.
+     Match reports, results and announcements. Add new ones at the TOP of the
+     list. Set image to "" if there is no photo — a designed plate is used
+     instead, and `url` can be left out for an item with nowhere to link.
+
+       {
+         date: "2026-10-04",
+         title: "Wasps sting second-placed Quins",
+         kicker: "First XV",
+         summary: "One line about what happened.",
+         image: "",
+         url: ""
+       },
+
+     While this list is empty the section shows a short panel pointing
+     supporters at the club's Instagram instead.
      ---------------------------------------------------------------------- */
-  news: [
-    {
-      date: "2024-11-02",
-      title: "Wasps sting second-placed Quins",
-      kicker: "First XV",
-      summary: "A first-team report from the club's official site.",
-      image: "",
-      url: "https://llangwm.rfc.wales/news/5de9cc42-17fd-4f30-82f9-0c2f910d4e53/wasps-sting-second-placed-quins----2-11-2024"
-    },
-    {
-      date: "2024-10-12",
-      title: "Under 12s v St Clears / Whitland",
-      kicker: "Mini & Junior",
-      summary: "A junior section match report from the club's official site.",
-      image: "",
-      url: "https://llangwm.rfc.wales/news/6633e469-160c-48d6-80d4-416a2268ecd6/u12s-v-st-clears-whitland--12th-oct-2024"
-    }
-  ],
+  news: [],
 
   /* ----------------------------------------------------------------------
      5. MEET THE TEAM
@@ -182,9 +171,9 @@ window.LLANGWM = {
   /* ----------------------------------------------------------------------
      8. MINI & JUNIOR
      --------------------------------------------------------------------------
-     The age groups below appear on the club's official site. Add training
-     times and a contact only once they are confirmed — leave "" otherwise
-     and the site will point people to the club's social media instead.
+     Add training times and a contact only once they are confirmed — leave ""
+     otherwise and the site will point people to the club's social media
+     instead.
      ---------------------------------------------------------------------- */
   juniors: {
     ageGroups: ["Under 8s", "Under 9s", "Under 10s", "Under 11s", "Under 12s", "Under 14s", "Under 16s"], // CHECK
