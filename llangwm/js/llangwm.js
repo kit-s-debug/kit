@@ -48,10 +48,7 @@
      ---------------------------------------------------------------------- */
   var LINKS = {
     instagram: SOCIAL.instagram,
-    facebook: SOCIAL.facebook,
-    officialSite: CLUB.officialSite,
-    officialFixtures: CLUB.officialFixtures,
-    officialNews: CLUB.officialNews
+    facebook: SOCIAL.facebook
   };
   var TEXTS = {
     instagramHandle: SOCIAL.instagramHandle,
@@ -63,9 +60,10 @@
   function bind() {
     $$("[data-link]").forEach(function (el) {
       var href = LINKS[el.getAttribute("data-link")];
+      /* Nothing to link to means no link: the element comes out rather than
+         pointing somewhere arbitrary. */
       if (href) { el.setAttribute("href", href); return; }
-      if (el.hasAttribute("data-hide-if-empty") && el.parentNode) el.parentNode.removeChild(el);
-      else el.setAttribute("href", CLUB.officialSite || "#top");
+      if (el.parentNode) el.parentNode.removeChild(el);
     });
     $$("[data-text]").forEach(function (el) {
       var v = TEXTS[el.getAttribute("data-text")];
@@ -102,10 +100,11 @@
     var items = (DATA.news || []).slice();
 
     if (!items.length) {
+      /* The Instagram panel sits directly beside this one, so repeating its
+         buttons here would just be the same call to action twice. */
       mount.innerHTML = emptyPanel(
         "Club news",
-        "Match reports and club announcements will appear here. In the meantime, the club posts everything to Instagram.",
-        extLink(SOCIAL.instagram, "Follow the Wasps", true) + extLink(CLUB.officialNews, "News on the official site")
+        "Match reports, results and club announcements will appear here as the season goes on. Until then, everything the club puts out goes to Instagram first."
       );
       return;
     }
@@ -134,14 +133,6 @@
         "</" + tag + ">";
     }).join("");
 
-    var more = extLink(CLUB.officialNews, "All news on the official site");
-    if (more) {
-      var wrap = document.createElement("div");
-      wrap.className = "panel-actions reveal";
-      wrap.style.marginTop = "18px";
-      wrap.innerHTML = more;
-      mount.parentNode.appendChild(wrap);
-    }
   }
 
   /* ----------------------------------------------------------------------
@@ -175,9 +166,8 @@
     if (!list || !list.length) {
       return emptyPanel(
         label + " fixtures",
-        "The club's live fixture list, results and league tables are kept up to date on its official site. Fixtures added to this website's fixture list appear here too, home and away, with kick-off times.",
-        extLink(CLUB.officialFixtures || CLUB.officialSite, "See the full fixture list", true) +
-        extLink(SOCIAL.instagram, "Team news on Instagram")
+        "The season's fixtures will be listed here, home and away, with kick-off times, venues and results. Until they are, team news and matchday updates go out on Instagram.",
+        extLink(SOCIAL.instagram, "Team news on Instagram", true) + extLink(SOCIAL.facebook, "Facebook")
       );
     }
     /* What a supporter wants first is the next game, not the season's first.
@@ -208,9 +198,7 @@
         '<ul class="fx-list">' + rows.map(fixtureRow).join("") + '</ul>';
     };
 
-    return group("Next up", upcoming) + group("Recent results", played) +
-      '<div class="panel-actions" style="margin-top:22px">' +
-      extLink(CLUB.officialFixtures || CLUB.officialSite, "Full fixture list") + '</div>';
+    return group("Next up", upcoming) + group("Recent results", played);
   }
 
   function renderFixtures() {
@@ -449,7 +437,7 @@
       var list = jr.ageGroups || [];
       ages.innerHTML = list.length
         ? list.map(function (a) { return '<span class="age">' + esc(a) + '</span>'; }).join("")
-        : '<p style="color:var(--mist-dim);margin:0">Age groups are listed on the club’s official site.</p>';
+        : '<p style="color:var(--mist-dim);margin:0">Age groups are announced each season — message the club for this year’s.</p>';
     }
 
     var facts = $("#jr-facts");
@@ -461,7 +449,7 @@
     if (jr.contactPhone)  rows.push(["Phone", '<a href="tel:' + esc(jr.contactPhone.replace(/\s+/g, "")) + '">' + esc(jr.contactPhone) + '</a>']);
 
     if (!rows.length) {
-      rows.push(["Training", "Training times are posted on the club’s Instagram and official site each season."]);
+      rows.push(["Training", "Training times are posted on the club’s Instagram each season."]);
       rows.push(["Get in touch", "Message the club on Instagram, or call the clubhouse."]);
     }
 
@@ -553,8 +541,8 @@
       if (SOCIAL.instagram) {
         out.push(["Instagram", '<a href="' + esc(SOCIAL.instagram) + '" target="_blank" rel="noopener noreferrer">' + esc(SOCIAL.instagramHandle || "Instagram") + '</a>']);
       }
-      if (CLUB.officialSite) {
-        out.push(["Official site", '<a href="' + esc(CLUB.officialSite) + '" target="_blank" rel="noopener noreferrer">llangwm.rfc.wales</a>']);
+      if (SOCIAL.facebook) {
+        out.push(["Facebook", '<a href="' + esc(SOCIAL.facebook) + '" target="_blank" rel="noopener noreferrer">Llangwm Rugby Club</a>']);
       }
       rows.innerHTML = out.map(function (r) {
         return '<div class="contact-row"><dt>' + esc(r[0]) + '</dt><dd>' + r[1] + '</dd></div>';
@@ -576,7 +564,6 @@
       if (CLUB.phone) f.push('<a href="tel:' + esc(CLUB.phone.replace(/\s+/g, "")) + '">' + esc(CLUB.phone) + '</a>');
       if (SOCIAL.instagram) f.push('<a href="' + esc(SOCIAL.instagram) + '" target="_blank" rel="noopener noreferrer">Instagram</a>');
       if (SOCIAL.facebook) f.push('<a href="' + esc(SOCIAL.facebook) + '" target="_blank" rel="noopener noreferrer">Facebook</a>');
-      if (CLUB.officialSite) f.push('<a href="' + esc(CLUB.officialSite) + '" target="_blank" rel="noopener noreferrer">Official club site</a>');
       f.push('<a href="' + esc(mapsUrl("dir")) + '" target="_blank" rel="noopener noreferrer">Directions</a>');
       foot.innerHTML = f.join("");
     }

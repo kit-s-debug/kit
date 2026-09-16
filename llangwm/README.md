@@ -66,6 +66,10 @@ fixtures: {
 Upcoming games appear under **Next up**; once a fixture has a `result`, or
 its date has passed, it moves down into **Recent results** automatically.
 
+This is the club's own fixture list now — there is no other site to fall back
+to — so it is worth keeping up to date. While it is empty the section shows a
+short panel pointing supporters at Instagram instead of anything broken.
+
 ### Adding photographs
 
 Drop the files into `assets/photos/`, then list them:
@@ -114,9 +118,9 @@ These are marked `// CHECK` in `club-data.js`:
    the files in `assets/photos/` with them will sharpen the section
    noticeably. Same filenames, same 4:5 shape, and nothing else changes.
 2. **The clubhouse address and phone number.** Both match the club's public
-   Google listing. The official club site lists the playing ground separately
-   (Pill Parks Way), so decide which address supporters should be given for
-   matchdays and update `club.mapQuery` to match.
+   Google listing. The playing ground is recorded separately from the
+   clubhouse (Pill Parks Way), so decide which address supporters should be
+   given for matchdays and update `club.mapQuery` to match.
 3. **Opening hours.** `club.openingHours` is empty, because no hours are
    published on the club's Google listing and guessing them would be worse
    than leaving them out. Add them as a list of lines and a row appears under
@@ -134,6 +138,9 @@ These are marked `// CHECK` in `club-data.js`:
    those buttons send people to the contact section rather than nowhere.
 8. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
+9. **Fixtures and news.** Both lists ship empty. They were previously seeded
+   from the club's old website, which this site replaces, so they now need
+   filling in here.
 
 ## Historical material
 
