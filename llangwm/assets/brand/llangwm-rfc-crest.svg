@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" role="img" aria-labelledby="crestTitle">
+  <title id="crestTitle">Llangwm RFC club crest — a wasp on a black and amber shield</title>
+  <defs>
+    <clipPath id="lw-shield">
+      <path d="M26 22h148v94c0 44-22 76-74 104-52-28-74-60-74-104V22z"/>
+    </clipPath>
+    <clipPath id="lw-abdomen">
+      <path d="M100 112c16 0 26 17 26 37s-11 41-26 51c-15-10-26-31-26-51s10-37 26-37z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shield field -->
+  <path d="M26 22h148v94c0 44-22 76-74 104-52-28-74-60-74-104V22z" fill="#0A0A0B"/>
+
+  <!-- Field pattern: the shirt's hoops, carried across the shield at an angle -->
+  <g clip-path="url(#lw-shield)" fill="#FFB400" opacity=".12">
+    <rect x="-60" y="34" width="330" height="17" transform="rotate(-26 100 42)"/>
+    <rect x="-60" y="76" width="330" height="17" transform="rotate(-26 100 84)"/>
+    <rect x="-60" y="118" width="330" height="17" transform="rotate(-26 100 126)"/>
+    <rect x="-60" y="160" width="330" height="17" transform="rotate(-26 100 168)"/>
+  </g>
+
+  <!-- Wings, swept back behind the body -->
+  <g fill="#FFFFFF" opacity=".22" stroke="#FFB400" stroke-opacity=".5" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M92 92C66 74 40 76 26 92c10 22 40 32 66 22z"/>
+    <path d="M108 92c26-18 52-16 66 0-10 22-40 32-66 22z"/>
+  </g>
+
+  <!-- Antennae -->
+  <g stroke="#FFB400" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M91 62 74 44"/>
+    <path d="M109 62 126 44"/>
+  </g>
+
+  <!-- Head -->
+  <path d="M100 54l13 8v15l-13 8-13-8V62z" fill="#FFB400"/>
+  <!-- Thorax -->
+  <path d="M100 86l15 9-3 17H88l-3-17z" fill="#FFB400"/>
+
+  <!-- Abdomen, banded, tapering to a sting -->
+  <path d="M100 112c16 0 26 17 26 37s-11 41-26 51c-15-10-26-31-26-51s10-37 26-37z" fill="#FFB400"/>
+  <g clip-path="url(#lw-abdomen)" fill="#0A0A0B">
+    <rect x="66" y="126" width="68" height="12"/>
+    <rect x="66" y="150" width="68" height="12"/>
+    <rect x="66" y="174" width="68" height="12"/>
+  </g>
+
+  <!-- Shield outline over the top -->
+  <path d="M26 22h148v94c0 44-22 76-74 104-52-28-74-60-74-104V22z" fill="none" stroke="#FFB400" stroke-width="8" stroke-linejoin="round"/>
+</svg>

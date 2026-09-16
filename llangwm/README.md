@@ -1,0 +1,153 @@
+# Llangwm RFC — The Wasps
+
+The club website. Plain HTML, CSS and JavaScript: no build step, no
+dependencies, no database. Upload the folder to any host and it works.
+
+```
+llangwm/
+├── index.html              the whole site, one page
+├── css/llangwm.css         all styling
+├── js/club-data.js         ← THE FILE THE CLUB EDITS
+├── js/llangwm.js           behaviour (you should not need to touch this)
+└── assets/
+    ├── brand/              the crest
+    ├── fonts/              Anton + Public Sans, self-hosted (SIL OFL)
+    ├── photos/             club photographs go here
+    └── sponsors/           partner logos go here
+```
+
+## Keeping the site up to date
+
+Nearly everything is in **`js/club-data.js`**. Open it in any text editor,
+change the words between the quote marks, save, upload. The file is
+commented throughout and every value that still needs confirming is
+marked `// CHECK`.
+
+You can edit:
+
+| What | Where in `club-data.js` |
+|---|---|
+| Address, phone, links | `club` |
+| Instagram / Facebook | `social` |
+| Fixtures and results | `fixtures.firstXV` / `fixtures.juniors` |
+| News and match reports | `news` |
+| Coaches and committee | `team` |
+| Photographs | `gallery` |
+| Junior age groups, training times | `juniors` |
+| Club shop links | `shop` |
+| Sponsors | `sponsors` |
+| WRU accreditation | `accreditation` |
+
+Two rules: keep the punctuation exactly as it is, and if you do not have
+something yet, leave it as `""` or `[]`. Empty sections show a tidy
+panel rather than a broken one.
+
+The **history timeline** and the **archive cards** are written directly in
+`index.html` (search for `id="history"` and `id="archive"`). They are
+historical and rarely change, so they live in one place rather than two.
+
+### Adding a fixture
+
+```js
+fixtures: {
+  firstXV: [
+    {
+      date: "2026-10-03",        // always YYYY-MM-DD
+      opponent: "Narberth RFC Athletic",
+      venue: "home",             // "home" or "away"
+      kickOff: "14:30",
+      ground: "The Green, Llangwm",
+      competition: "League",
+      result: ""                 // "" until played, then e.g. "W 24-17"
+    }
+  ],
+```
+
+Upcoming games appear under **Next up**; once a fixture has a `result`, or
+its date has passed, it moves down into **Recent results** automatically.
+
+### Adding photographs
+
+Drop the files into `assets/photos/`, then list them:
+
+```js
+gallery: [
+  { src: "assets/photos/matchday-01.jpg",
+    alt: "Llangwm RFC First XV drive for the line at The Green",
+    category: "Matchday" }
+],
+```
+
+Categories become filter buttons on their own. Please write a real `alt`
+description — it is what a blind supporter hears, and what Google reads.
+Save photographs at about 1600px wide; anything larger just slows the
+site down.
+
+The same applies to `team` — put a filename in a person's `photo` and the
+card becomes a portrait instead of a monogram.
+
+## Things still to confirm before launch
+
+These are marked `// CHECK` in `club-data.js`:
+
+1. **The crest.** `assets/brand/llangwm-rfc-crest.svg` is a stand-in drawn
+   for this build, not the club's official badge. Replace that one file
+   with the real artwork (SVG or a square PNG) and it updates everywhere —
+   header, hero, footer, favicon, archive cards and the shirt illustration.
+   Nothing stretches: every use fits the mark to its box.
+2. **The clubhouse address and phone number**, as supplied by the club. The
+   official club site lists the playing ground separately (Pill Parks Way),
+   so decide which address supporters should be given for matchdays and
+   update `club.mapQuery` to match.
+3. **The Facebook page.** Confirm it is the club's own, or set
+   `social.facebook` to `""` to remove every Facebook link.
+4. **WRU accreditation.** `accreditation.show` is `true` and the level is
+   set to Gold. Confirm the club's current level, and add the official WRU
+   badge artwork as `assets/brand/wru-accreditation.svg` (set
+   `accreditation.badge` to that path). Set `show: false` to hide the
+   section entirely.
+5. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
+   those buttons send people to the contact section rather than nowhere.
+6. **Photographs.** The site currently carries none. The gallery, the team
+   cards and the news list are all built to take them.
+
+## Historical material
+
+The history and archive sections are drawn from the
+[Llangwm Local History Society](https://llangwmlocalhistorysociety.org.uk/llangwmrugbyclub.html),
+whose pages reproduce photographs and records from Richard Howells'
+*Llangwm RFC: A Hundred Years of Rugby 1885–1985*, now out of print.
+
+**The photographs themselves are not reproduced on this site.** Each
+archive card is an index card that links back to the Society's own pages,
+which is where they should be viewed. If the club obtains permission to
+publish any of them, add the file to `assets/photos/` and put a caption on
+the card in `index.html`.
+
+## Deploying
+
+It is a static site. Any of these work with no configuration:
+
+- Drag the `llangwm` folder onto Netlify or Cloudflare Pages
+- GitHub Pages, serving this folder
+- Upload by FTP to any web host
+
+Everything is relative, so it works from a domain root or a subfolder.
+
+Two things worth doing once there is a live domain:
+
+- Add the full URL in front of the Open Graph image path in `index.html`
+  (there is a comment marking the spot) so link previews show the crest.
+- Check the address in the structured data block at the bottom of `<head>`
+  matches whatever was decided in point 2 above.
+
+## Accessibility and performance notes
+
+Please keep these if the site is edited:
+
+- Every image needs an `alt` description.
+- Animations are disabled automatically for anyone who has asked their
+  device to reduce motion. Do not add animation that ignores that.
+- Fonts are self-hosted, the map only loads when somebody asks for it, and
+  there are no trackers or third-party scripts. The whole site is under
+  200KB before photographs.
