@@ -86,30 +86,54 @@ site down.
 The same applies to `team` — put a filename in a person's `photo` and the
 card becomes a portrait instead of a monogram.
 
+## Assets
+
+`assets/brand/` holds two versions of the badge, both cut from the artwork
+the club supplied:
+
+- **`llangwm-rfc-logo.png`** — the full badge, wasp and banner. Used in the
+  hero, the club panel and as the background watermark.
+- **`llangwm-rfc-icon.png`** — the wasp on its own. Used in the header, the
+  mobile menu, the footer, the archive cards and as the favicon, because the
+  banner lettering is unreadable below about 90px.
+
+If the club has the badge as vector artwork (`.svg`, `.ai` or `.eps`), it is
+worth dropping in: the supplied file is 300px, which is fine everywhere it is
+used now but limits how large it can ever be printed on screen.
+
+`assets/photos/` holds the club's own photography: the home shirt (cut out
+so it sits on the dark background), the clubhouse, and the six headshots.
+
 ## Things still to confirm before launch
 
 These are marked `// CHECK` in `club-data.js`:
 
-1. **The crest.** `assets/brand/llangwm-rfc-crest.svg` is a stand-in drawn
-   for this build, not the club's official badge. Replace that one file
-   with the real artwork (SVG or a square PNG) and it updates everywhere —
-   header, hero, footer, favicon, archive cards and the shirt illustration.
-   Nothing stretches: every use fits the mark to its box.
-2. **The clubhouse address and phone number**, as supplied by the club. The
-   official club site lists the playing ground separately (Pill Parks Way),
-   so decide which address supporters should be given for matchdays and
-   update `club.mapQuery` to match.
-3. **The Facebook page.** Confirm it is the club's own, or set
+1. **Team photographs.** The six headshots were cropped from the club's own
+   "Meet the Team" graphic, which is the only copy available here. They look
+   fine at card size, but if the original photographs still exist, replacing
+   the files in `assets/photos/` with them will sharpen the section
+   noticeably. Same filenames, same 4:5 shape, and nothing else changes.
+2. **The clubhouse address and phone number.** Both match the club's public
+   Google listing. The official club site lists the playing ground separately
+   (Pill Parks Way), so decide which address supporters should be given for
+   matchdays and update `club.mapQuery` to match.
+3. **Opening hours.** `club.openingHours` is empty, because no hours are
+   published on the club's Google listing and guessing them would be worse
+   than leaving them out. Add them as a list of lines and a row appears under
+   Find Us automatically.
+4. **The Facebook page.** Confirm it is the club's own, or set
    `social.facebook` to `""` to remove every Facebook link.
-4. **WRU accreditation.** `accreditation.show` is `true` and the level is
-   set to Gold. Confirm the club's current level, and add the official WRU
-   badge artwork as `assets/brand/wru-accreditation.svg` (set
-   `accreditation.badge` to that path). Set `show: false` to hide the
-   section entirely.
-5. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
+5. **Sponsors.** Only Loche Bros is listed, taken from the front of the
+   current playing shirt. Add the rest of the season's partners, and a logo
+   file and website for each, in `sponsors`.
+6. **WRU accreditation.** `accreditation.show` is `true` and the level is set
+   to Gold. Confirm the club's current level, and add the official WRU badge
+   artwork as `assets/brand/wru-accreditation.png` (set `accreditation.badge`
+   to that path). Set `show: false` to hide the section entirely.
+7. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
    those buttons send people to the contact section rather than nowhere.
-6. **Photographs.** The site currently carries none. The gallery, the team
-   cards and the news list are all built to take them.
+8. **Gallery photographs.** The gallery is built and empty. Matchday, junior
+   section and clubhouse pictures all drop straight in.
 
 ## Historical material
 
@@ -149,5 +173,5 @@ Please keep these if the site is edited:
 - Animations are disabled automatically for anyone who has asked their
   device to reduce motion. Do not add animation that ignores that.
 - Fonts are self-hosted, the map only loads when somebody asks for it, and
-  there are no trackers or third-party scripts. The whole site is under
-  200KB before photographs.
+  there are no trackers or third-party scripts. The whole site, photographs
+  included, is around half a megabyte.

@@ -546,6 +546,10 @@
       if (CLUB.email) {
         out.push(["Email", '<a href="mailto:' + esc(CLUB.email) + '">' + esc(CLUB.email) + '</a>']);
       }
+      var hours = CLUB.openingHours || [];
+      if (hours.length) {
+        out.push(["Open", hours.map(esc).join("<br>")]);
+      }
       if (SOCIAL.instagram) {
         out.push(["Instagram", '<a href="' + esc(SOCIAL.instagram) + '" target="_blank" rel="noopener noreferrer">' + esc(SOCIAL.instagramHandle || "Instagram") + '</a>']);
       }
@@ -600,6 +604,7 @@
       iframe.setAttribute("allowfullscreen", "");
       frame.appendChild(iframe);
       if (fallback) fallback.style.display = "none";
+      btn.blur();
     });
   }
 
