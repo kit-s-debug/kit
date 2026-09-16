@@ -22,6 +22,9 @@ window.LLANGWM = {
   club: {
     name: "Llangwm Rugby Football Club",
     shortName: "Llangwm RFC",
+
+    // The clubhouse is listed publicly under this name.
+    venueName: "Llangwm Rugby, Cricket & Social Club",
     nickname: "The Wasps",
     founded: 1885,
 
@@ -39,6 +42,12 @@ window.LLANGWM = {
 
     // Leave "" to hide the email row entirely.
     email: "",
+
+    // Clubhouse opening hours. One line per row, e.g.
+    //   openingHours: ["Friday 19:00 - late", "Saturday 12:00 - late"]
+    // No hours are published on the club's Google listing, so this is left
+    // empty rather than guessed. Fill it in and the rows appear under Find Us.
+    openingHours: [],
 
     // The club's official WRU site carries the live fixture list, results
     // and league tables. Every "official site" link on the website uses this.
@@ -126,12 +135,12 @@ window.LLANGWM = {
      photo: "assets/photos/jordan-evans.jpg". Leave "" for a monogram card.
      ---------------------------------------------------------------------- */
   team: [
-    { name: "Jordan Evans",  role: "Head of Rugby",  photo: "" },
-    { name: "Dan Richards",  role: "Backs Coach",    photo: "" },
-    { name: "Gethin Thomas", role: "Forwards Coach", photo: "" },
-    { name: "James Lewis",   role: "Team Manager",   photo: "" },
-    { name: "Leanne Clarke", role: "Club Physio",    photo: "" },
-    { name: "Dan Chesmer",   role: "Chairman",       photo: "" }
+    { name: "Jordan Evans",  role: "Head of Rugby",  photo: "assets/photos/jordan-evans.jpg" },
+    { name: "Dan Richards",  role: "Backs Coach",    photo: "assets/photos/dan-richards.jpg" },
+    { name: "Gethin Thomas", role: "Forwards Coach", photo: "assets/photos/gethin-thomas.jpg" },
+    { name: "James Lewis",   role: "Team Manager",   photo: "assets/photos/james-lewis.jpg" },
+    { name: "Leanne Clarke", role: "Club Physio",    photo: "assets/photos/leanne-clarke.jpg" },
+    { name: "Dan Chesmer",   role: "Chairman",       photo: "assets/photos/dan-chesmer.jpg" }
   ],
 
   /* ----------------------------------------------------------------------
@@ -203,7 +212,12 @@ window.LLANGWM = {
          url: "https://example.co.uk" },
      Leave logo as "" and the partner's name is set in type instead.
      ---------------------------------------------------------------------- */
-  sponsors: [],
+  sponsors: [
+    // CHECK — Loche Bros is the front-of-shirt sponsor on the club's current
+    // playing kit. Add their website and a logo file when you have them, and
+    // add the rest of the season's partners in the same shape.
+    { name: "Loche Bros", logo: "", url: "" }
+  ],
 
   /* ----------------------------------------------------------------------
      11. ACCREDITATION
@@ -211,7 +225,7 @@ window.LLANGWM = {
      CHECK — set `show` to true only once the club's current WRU accreditation
      level is confirmed. Nothing is displayed while this is false.
      The official WRU accreditation badge artwork is not included here; add it
-     as assets/brand/wru-accreditation.svg and set `badge` to that path once
+     as assets/brand/wru-accreditation.png and set `badge` to that path once
      the club has the approved file.
      ---------------------------------------------------------------------- */
   accreditation: {

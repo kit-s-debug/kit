@@ -303,8 +303,8 @@ section[id],[id="top"]{scroll-margin-top:96px}
   55%,100%{transform:skewX(-14deg) translate3d(310%,0,0)}
 }
 .hero-watermark{
-  position:absolute;right:-9%;bottom:-12%;
-  width:min(40vw,540px);height:auto;
+  position:absolute;right:-4%;bottom:4%;
+  width:min(44vw,620px);height:auto;
   opacity:.045;pointer-events:none;
   animation:fade-in 1.6s var(--ease) .8s both;
 }
@@ -316,7 +316,7 @@ section[id],[id="top"]{scroll-margin-top:96px}
 .hero-inner{position:relative;width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
 
 .hero-crest{
-  width:clamp(54px,5.4vw,80px);height:auto;margin-bottom:clamp(14px,2vw,22px);
+  width:clamp(92px,9.5vw,140px);height:auto;margin-bottom:clamp(14px,2vw,22px);
   filter:drop-shadow(0 10px 30px rgba(0,0,0,.6));
   animation:crest-in 1s var(--ease) both;
 }
@@ -372,6 +372,18 @@ section[id],[id="top"]{scroll-margin-top:96px}
   animation:fade-up .9s var(--ease) .62s both;
 }
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;animation:fade-up .9s var(--ease) .74s both}
+
+/* Laptops are wide but short. Sizing the hero on viewport width alone pushed
+   the buttons under the fold at 720-760px tall, so scale it on height too. */
+@media (min-width:700px) and (max-height:840px){
+  .hero{padding-block:clamp(94px,12vh,118px) clamp(24px,3.4vw,44px)}
+  .hero-crest{width:clamp(70px,6vw,98px);margin-bottom:12px}
+  .hero-eyebrow{margin-bottom:10px}
+  .hero-title{font-size:clamp(2.6rem,7.4vw,5.6rem);margin-bottom:12px}
+  .hero-wasps{font-size:clamp(1.4rem,3.2vw,2.3rem)}
+  .hero-strap{margin-bottom:16px}
+  .hero-lede{margin-bottom:22px;font-size:1rem}
+}
 
 .hero-scroll{
   position:absolute;right:calc(var(--gutter) - 6px);bottom:clamp(34px,6vw,72px);
@@ -442,7 +454,7 @@ section[id],[id="top"]{scroll-margin-top:96px}
   content:"";position:absolute;inset:0;
   background:radial-gradient(60% 60% at 50% 45%,rgba(255,180,0,.16),transparent 70%);
 }
-.club-mark img{position:relative;width:min(56%,300px);height:auto;animation:float 7s ease-in-out infinite}
+.club-mark img{position:relative;width:min(58%,284px);height:auto;animation:float 7s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
 .club-mark-tag{
   position:absolute;left:0;bottom:0;z-index:2;
@@ -581,7 +593,7 @@ section[id],[id="top"]{scroll-margin-top:96px}
 .panel-empty::after{
   content:"";position:absolute;right:-40px;top:50%;transform:translateY(-50%);
   width:260px;height:312px;opacity:.05;
-  background:url("../assets/brand/llangwm-rfc-crest.svg") center/contain no-repeat;
+  background:url("../assets/brand/llangwm-rfc-logo.png") center/contain no-repeat;
 }
 @media (max-width:860px){.panel-empty::after{display:none}}
 .panel-empty>*{position:relative;max-width:60ch}
@@ -612,15 +624,19 @@ section[id],[id="top"]{scroll-margin-top:96px}
 }
 .person:hover{border-color:var(--amber-line)}
 .person-photo{
-  position:relative;aspect-ratio:5/6;overflow:hidden;
+  position:relative;aspect-ratio:4/5;overflow:hidden;
   background:var(--ink-3);display:grid;place-items:center;
 }
 .person-photo::after{
   content:"";position:absolute;inset:0;
   background:radial-gradient(55% 45% at 50% 46%,rgba(255,180,0,.14),transparent 70%);
 }
-.person-photo img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease);filter:grayscale(1) contrast(1.05)}
-.person:hover .person-photo img{transform:scale(1.045);filter:grayscale(0)}
+.person-photo img{
+  position:relative;z-index:1;
+  width:100%;height:100%;object-fit:cover;object-position:center 22%;
+  transition:transform .7s var(--ease);
+}
+.person:hover .person-photo img{transform:scale(1.05)}
 .person-photo::before{content:"";position:absolute;inset:0;background:var(--hoops);opacity:.8}
 .person-mono{
   position:relative;font-family:var(--display);
@@ -654,11 +670,14 @@ section[id],[id="top"]{scroll-margin-top:96px}
 
 /* The shirt, drawn rather than photographed. */
 .shirt{
-  position:relative;aspect-ratio:4/4.4;max-width:460px;width:100%;margin-inline:auto;
+  position:relative;aspect-ratio:1/1;max-width:460px;width:100%;margin-inline:auto;
   border:1px solid var(--line);overflow:hidden;background:var(--ink);
   display:grid;place-items:center;
 }
-.shirt-svg{width:74%;height:auto;filter:drop-shadow(0 30px 60px rgba(0,0,0,.65))}
+.shirt-photo{
+  width:82%;height:auto;max-height:86%;object-fit:contain;
+  filter:drop-shadow(0 26px 54px rgba(0,0,0,.7));
+}
 .shirt-tag{
   position:absolute;right:0;bottom:0;background:var(--amber);color:var(--ink);
   padding:9px 16px;font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
@@ -855,9 +874,15 @@ section[id],[id="top"]{scroll-margin-top:96px}
   border:1px solid var(--line);overflow:hidden;background:var(--ink-2);
 }
 .map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(1) invert(.92) contrast(.86)}
-.map-fallback{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:18px;text-align:center;padding:30px}
-.map-fallback::before{content:"";position:absolute;inset:0;background:var(--hoops);opacity:.8}
-.map-fallback>*{position:relative}
+.venue-shot{position:absolute;inset:0;margin:0;overflow:hidden}
+.venue-shot img{width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.venue-shot figcaption{
+  position:absolute;inset:auto 0 0;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;
+  padding:clamp(18px,2.4vw,26px);
+  background:linear-gradient(0deg,rgba(6,6,7,.94) 12%,rgba(6,6,7,.72) 55%,transparent);
+}
+.venue-shot figcaption p{margin:0;font-size:.9rem;color:var(--white);max-width:34ch}
 
 /* --------------------------------------------------------------------------
    Shop / partners / accreditation
