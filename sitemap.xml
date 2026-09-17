@@ -2,30 +2,30 @@
 <!--
   Llangwm RFC sitemap.
 
-  BEFORE LAUNCH: replace REPLACE-WITH-YOUR-DOMAIN below with the site's real
-  address. A sitemap needs absolute URLs, so it does nothing until then.
+  These are the site's live addresses. A sitemap needs absolute URLs, so they
+  cannot be made relative.
 
-  The same address is needed in three files:
-    1. this file          - the three <loc> lines below
-    2. robots.txt         - the Sitemap: line
-    3. index.html         - the og:image meta tag
-  A sitemap needs absolute URLs, so they cannot be left relative.
+  IF THE CLUB MOVES TO ITS OWN DOMAIN, the address changes in three files:
+    1. this file   - the three <loc> lines below
+    2. robots.txt  - the Sitemap: line
+    3. index.html  - the og:image meta tag
 
-  Only these three pages belong here (404.html is noindex). Do not add entries for pages that are not real.
+  Only these three pages belong here; 404.html is noindex and must not be
+  listed. Do not add entries for pages that do not exist.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/</loc>
+    <loc>https://kit-s-debug.github.io/kit/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/privacy.html</loc>
+    <loc>https://kit-s-debug.github.io/kit/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/accessibility.html</loc>
+    <loc>https://kit-s-debug.github.io/kit/accessibility.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
