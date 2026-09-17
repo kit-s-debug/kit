@@ -107,38 +107,49 @@ used now but limits how large it can ever be printed on screen.
 
 `assets/photos/` holds the club's own photography: the home shirt (cut out
 so it sits on the dark background), the clubhouse, and the six headshots.
+`assets/photos/archive/` holds the sixteen historical team photographs.
 
 ## Things still to confirm before launch
 
 These are marked `// CHECK` in `club-data.js`:
 
-1. **Team photographs.** The six headshots were cropped from the club's own
+1. **The two undated photographs.** `unidentified-01.jpg` and
+   `unidentified-02.jpg` sit at the foot of the archive under "Can you date
+   these?", because nothing in either frame dates them. If someone identifies
+   one, move it up into the main grid in `index.html` with its season, and
+   delete it from the undated block.
+2. **Three captions have no photograph.** 1937, 1938 and 1946-47 are index
+   cards: the caption and the names are there, but the photograph itself was
+   not available. Drop the file into `assets/photos/archive/` and swap the
+   card's ghost plate for a photo button (copy the shape of any dated card
+   above it).
+3. **Team photographs.** The six headshots were cropped from the club's own
    "Meet the Team" graphic, which is the only copy available here. They look
    fine at card size, but if the original photographs still exist, replacing
    the files in `assets/photos/` with them will sharpen the section
    noticeably. Same filenames, same 4:5 shape, and nothing else changes.
-2. **The clubhouse address and phone number.** Both match the club's public
+4. **The clubhouse address and phone number.** Both match the club's public
    Google listing. The playing ground is recorded separately from the
    clubhouse (Pill Parks Way), so decide which address supporters should be
    given for matchdays and update `club.mapQuery` to match.
-3. **Opening hours.** `club.openingHours` is empty, because no hours are
+5. **Opening hours.** `club.openingHours` is empty, because no hours are
    published on the club's Google listing and guessing them would be worse
    than leaving them out. Add them as a list of lines and a row appears under
    Find Us automatically.
-4. **The Facebook page.** Confirm it is the club's own, or set
+6. **The Facebook page.** Confirm it is the club's own, or set
    `social.facebook` to `""` to remove every Facebook link.
-5. **Sponsors.** Only Loche Bros is listed, taken from the front of the
+7. **Sponsors.** Only Loche Bros is listed, taken from the front of the
    current playing shirt. Add the rest of the season's partners, and a logo
    file and website for each, in `sponsors`.
-6. **WRU accreditation.** `accreditation.show` is `true` and the level is set
+8. **WRU accreditation.** `accreditation.show` is `true` and the level is set
    to Gold. Confirm the club's current level, and add the official WRU badge
    artwork as `assets/brand/wru-accreditation.png` (set `accreditation.badge`
    to that path). Set `show: false` to hide the section entirely.
-7. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
+9. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
    those buttons send people to the contact section rather than nowhere.
-8. **Gallery photographs.** The gallery is built and empty. Matchday, junior
+10. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
-9. **Fixtures and news.** Both lists ship empty. They were previously seeded
+11. **Fixtures and news.** Both lists ship empty. They were previously seeded
    from the club's old website, which this site replaces, so they now need
    filling in here.
 
@@ -149,11 +160,17 @@ The history and archive sections are drawn from the
 whose pages reproduce photographs and records from Richard Howells'
 *Llangwm RFC: A Hundred Years of Rugby 1885–1985*, now out of print.
 
-**The photographs themselves are not reproduced on this site.** Each
-archive card is an index card that links back to the Society's own pages,
-which is where they should be viewed. If the club obtains permission to
-publish any of them, add the file to `assets/photos/` and put a caption on
-the card in `index.html`.
+The sixteen photographs in the archive are reproduced here with the club's
+say-so, each one captioned with the names as the Society records them, and
+the credit block under the grid names both the author and the Society. The
+four cards without a photograph link back to the Society's own pages.
+
+If the Society or the author ever ask for one to come down, delete the file
+from `assets/photos/archive/` and change that card back to a ghost plate —
+the caption and names can stay.
+
+The season on the 1959-60 card was confirmed by the club rather than read
+off the page: the caption was obscured in the source.
 
 ## Deploying
 
