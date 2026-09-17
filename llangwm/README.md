@@ -107,7 +107,10 @@ used now but limits how large it can ever be printed on screen.
 
 `assets/photos/` holds the club's own photography: the home shirt (cut out
 so it sits on the dark background), the clubhouse, and the six headshots.
-`assets/photos/archive/` holds the sixteen historical team photographs.
+`assets/photos/archive/` holds the nineteen historical team photographs.
+Three of them (1937, 1938 and 1946-47) were recovered from screenshots of the
+Society's pages rather than supplied as files, so they are a little softer
+than the rest; if better copies turn up, overwrite them under the same names.
 
 ## Things still to confirm before launch
 
@@ -118,11 +121,10 @@ These are marked `// CHECK` in `club-data.js`:
    these?", because nothing in either frame dates them. If someone identifies
    one, move it up into the main grid in `index.html` with its season, and
    delete it from the undated block.
-2. **Three captions have no photograph.** 1937, 1938 and 1946-47 are index
-   cards: the caption and the names are there, but the photograph itself was
-   not available. Drop the file into `assets/photos/archive/` and swap the
-   card's ghost plate for a photo button (copy the shape of any dated card
-   above it).
+2. **One caption has no photograph.** 1958-59 is an index card: the caption
+   and the names are there, but the photograph was not available. Drop the
+   file into `assets/photos/archive/` and swap that card's ghost plate for a
+   photo button (copy the shape of any dated card above it).
 3. **Team photographs.** The six headshots were cropped from the club's own
    "Meet the Team" graphic, which is the only copy available here. They look
    fine at card size, but if the original photographs still exist, replacing
