@@ -1,0 +1,6 @@
+# Llangwm RFC
+User-agent: *
+Allow: /
+
+# Once the site has a live domain, replace the token below and uncomment.
+# Sitemap: https://REPLACE-WITH-YOUR-DOMAIN/sitemap.xml
