@@ -2,5 +2,5 @@
 User-agent: *
 Allow: /
 
-# Once the site has a live domain, replace the token below and uncomment.
-# Sitemap: https://REPLACE-WITH-YOUR-DOMAIN/sitemap.xml
+# Update this line if the club moves to its own domain.
+Sitemap: https://kit-s-debug.github.io/kit/sitemap.xml
