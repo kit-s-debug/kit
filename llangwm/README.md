@@ -209,78 +209,83 @@ change the date at the top.
 
 ## Deploying
 
-The site is hosted on **Vercel**, deployed straight from this repository.
+The site is live on **GitHub Pages** at:
+
+    https://kit-s-debug.github.io/kit/
 
 ### How it is wired up
 
-The repository holds two unrelated sites, so the Vercel project is pointed at
-this one's folder rather than the repository root:
+The repository holds more than one site, so this one is published from its own
+branch:
 
-- **Root Directory:** `llangwm`
-- **Production Branch:** `claude/llangwm-rfc-website-t5r4fb`
-- **Framework Preset:** Other (there is no build step — the files are served
-  exactly as they are)
+- `claude/llangwm-rfc-website-t5r4fb` — the working branch. The site lives in
+  the `llangwm/` folder here, alongside the other projects. **Edit here.**
+- `gh-pages` — a copy of *only* the `llangwm/` folder, with the site files at
+  the top level. This is the branch GitHub Pages serves. **Never edit here**;
+  it is rebuilt from the folder above and anything committed directly to it
+  will be overwritten.
 
-Because the repository is connected, **every push to the production branch
-deploys automatically**. There is nothing to run by hand.
+In **Settings → Pages**, the source is `gh-pages` / `(root)`.
 
-### Creating the project (one time)
-
-In the Vercel dashboard:
-
-1. **Add New… → Project**, and import `kit-s-debug/kit`.
-2. Before deploying, open **Root Directory** and choose `llangwm`.
-3. Set **Framework Preset** to **Other**. Leave Build Command and Install
-   Command empty.
-4. Deploy.
-5. Afterwards, go to **Settings → Git** and set the **Production Branch** to
-   `claude/llangwm-rfc-website-t5r4fb`, then redeploy once so the live URL
-   points at this branch rather than the repository default.
-
-Step 5 matters: the repository's default branch belongs to the other project,
-so without it Vercel would publish the wrong site.
+`.nojekyll` tells Pages to serve the files as they are instead of running them
+through Jekyll. Do not delete it.
 
 ### Publishing an edit
 
-Edit files in `llangwm/`, commit, and push to the production branch:
+Editing the working branch is not enough on its own — `gh-pages` has to be
+rebuilt, or the live site will not change:
 
     git add llangwm && git commit -m "Add Saturday's result"
     git push
 
-Vercel picks it up and the change is live in under a minute. Pull requests get
-their own preview URL automatically.
+    git branch -D gh-pages
+    git subtree split --prefix=llangwm -b gh-pages
+    git push -f origin gh-pages
 
-### Filling in the site's address
+The last three lines are what actually puts it live. Pages takes a minute or
+two to rebuild afterwards.
 
-Three files need the site's real address, and cannot use a relative path:
-
-1. `sitemap.xml` — the three `<loc>` lines (replace `REPLACE-WITH-YOUR-DOMAIN`)
-2. `robots.txt` — uncomment the `Sitemap:` line and replace the same token
-3. `index.html` — the `og:image` meta tag, which must be absolute or link
-   previews show no crest
-
-Do this once the Vercel URL is known, and again if the club moves to its own
-domain. Also check the address in the structured-data block at the bottom of
-`<head>` in `index.html` still matches what supporters should be given.
+Browsers cache this site hard. After a change, check it with `?v=2` on the end
+of the address (or in a private window) before concluding it has not worked.
 
 ### Adding the club's own domain
 
-In **Settings → Domains**, add the domain and follow the DNS records Vercel
-shows you at the registrar. The HTTPS certificate is issued free and renews
-itself. Then update the three files above.
+Put the domain in **Settings → Pages → Custom domain**, then add the DNS
+records GitHub shows you at whoever the domain was bought from. Tick **Enforce
+HTTPS** once it becomes available — the certificate is free.
 
-### If it ever moves off Vercel
+**One trap worth knowing.** Setting a custom domain makes GitHub commit a file
+called `CNAME` to the `gh-pages` branch. Rebuilding that branch, as above,
+wipes it, and the domain silently stops working. To make it survive, put the
+file in the source folder instead so every rebuild carries it:
+
+    echo "your-domain.co.uk" > llangwm/CNAME
+
+Then rebuild and push as usual.
+
+The address also appears in three files that need an absolute URL, and they
+have to be changed by hand:
+
+1. `sitemap.xml` — the three `<loc>` lines
+2. `robots.txt` — the `Sitemap:` line
+3. `index.html` — the `og:image` meta tag (link previews show no crest
+   without it)
+
+Check the address in the structured-data block at the bottom of `<head>` in
+`index.html` still matches what supporters should be given, too.
+
+### If it ever moves off GitHub Pages
 
 It is a plain static site with no build step and no dependencies, so it also
 works by dragging the `llangwm` folder onto Netlify or Cloudflare Pages, by
-serving it with GitHub Pages, or by uploading it over FTP to any web host.
-Everything is relative, so it runs from a domain root or a subfolder either
-way.
+importing the repository into Vercel with the Root Directory set to `llangwm`,
+or by uploading it over FTP to any web host. Everything in the site is
+relative, so it runs from a domain root or a subfolder either way.
 
-Vercel, Netlify, Cloudflare Pages and GitHub Pages all serve `404.html`
-automatically for a missing page, and all of them will serve `privacy.html` at
-`/privacy` as well as `/privacy.html`. The footer links use the `.html` form so
-they also work from a plain folder or a local file.
+All of those hosts serve `404.html` automatically for a missing page, and all
+of them will serve `privacy.html` at `/privacy` as well as `/privacy.html`. The
+footer links use the `.html` form so they also work from a plain folder or a
+local file.
 
 ## Accessibility and performance notes
 
