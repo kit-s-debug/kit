@@ -2,26 +2,29 @@
 <!--
   Llangwm RFC sitemap.
 
-  BEFORE LAUNCH: replace every occurrence of REPLACE-WITH-YOUR-DOMAIN with the
-  club's real domain (for example https://llangwmrfc.wales). A sitemap needs
-  absolute URLs, so it does nothing until that is done. Then uncomment the
-  Sitemap line in robots.txt.
+  These URLs are the site's CURRENT live address on GitHub Pages.
 
-  Only these four pages exist. Do not add entries for pages that are not real.
+  WHEN THE CLUB GETS ITS OWN DOMAIN, three files need the new address:
+    1. this file          - the three <loc> lines below
+    2. robots.txt         - the Sitemap: line
+    3. index.html         - the og:image meta tag
+  A sitemap needs absolute URLs, so they cannot be left relative.
+
+  Only these three pages belong here (404.html is noindex). Do not add entries for pages that are not real.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/</loc>
+    <loc>https://kit-s-debug.github.io/kit/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/privacy.html</loc>
+    <loc>https://kit-s-debug.github.io/kit/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-YOUR-DOMAIN/accessibility.html</loc>
+    <loc>https://kit-s-debug.github.io/kit/accessibility.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
