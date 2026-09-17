@@ -151,8 +151,8 @@ These are marked `// CHECK` in `club-data.js`:
    to Gold. Confirm the club's current level, and add the official WRU badge
    artwork as `assets/brand/wru-accreditation.png` (set `accreditation.badge`
    to that path). Set `show: false` to hide the section entirely.
-8. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
-   those buttons send people to the contact section rather than nowhere.
+8. **The KJ Prints shop URL.** RCS is linked. Until KJ Prints has a `url`,
+   its button sends people to the contact section rather than nowhere.
 9. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
 10. **An email address for privacy enquiries.** The privacy policy currently
@@ -160,9 +160,15 @@ These are marked `// CHECK` in `club-data.js`:
    privacy questions, which is honest but slow. If the club has an address it
    is happy to publish, there is a commented-out block in `privacy.html` marking
    exactly where it goes.
-11. **Fixtures and news.** Both lists ship empty. They were previously seeded
-   from the club's old website, which this site replaces, so they now need
-   filling in here.
+11. **Kick-off times and results.** The full 2026/27 First XV league season is
+   in, from the WRU's Division 4 West A fixture list. Kick-off times are not
+   on that list, so every fixture reads "Kick-off TBC" until a `kickOff` is
+   added. Games whose date has passed read "Result to follow" until a
+   `result` is added; no score is ever invented.
+12. **Mini and junior fixtures.** `fixtures.juniors` is empty, so that tab
+   still shows its placeholder panel.
+13. **News.** `news` ships empty. It was previously seeded from the club's old
+   website, which this site replaces, so it needs filling in here.
 
 ## Historical material
 
@@ -203,24 +209,73 @@ change the date at the top.
 
 ## Deploying
 
-It is a static site. Any of these work with no configuration:
+The site is live on **GitHub Pages** at:
 
-- Drag the `llangwm` folder onto Netlify or Cloudflare Pages
-- GitHub Pages, serving this folder
-- Upload by FTP to any web host
+    https://kit-s-debug.github.io/kit/
 
-Everything is relative, so it works from a domain root or a subfolder.
+### How it is wired up
 
-Three things to do once there is a live domain:
+The repository holds two unrelated sites, so this one is published from its
+own branch:
 
-- **Replace `REPLACE-WITH-YOUR-DOMAIN`** in `sitemap.xml` (three times) and
-  uncomment the `Sitemap:` line in `robots.txt`. A sitemap needs absolute
-  URLs, so it does nothing until that is done.
+- `claude/llangwm-rfc-website-t5r4fb` — the working branch. The site lives in
+  the `llangwm/` folder, alongside the other project.
+- `gh-pages` — a copy of **just** the `llangwm/` folder, with the site files at
+  the root. This is the branch GitHub Pages serves. Nothing is edited here
+  directly.
 
-- Add the full URL in front of the Open Graph image path in `index.html`
-  (there is a comment marking the spot) so link previews show the crest.
-- Check the address in the structured data block at the bottom of `<head>`
-  matches whatever was decided above.
+`.nojekyll` at the root tells Pages to serve the files as they are rather than
+running them through Jekyll.
+
+### Turning it on (one time)
+
+In the repository on GitHub: **Settings → Pages → Build and deployment →
+Source: Deploy from a branch → Branch: `gh-pages` / `(root)` → Save.**
+
+It takes a minute or two to go live the first time.
+
+### Publishing an edit
+
+Edit files in `llangwm/` on the working branch as usual, then republish:
+
+    git checkout claude/llangwm-rfc-website-t5r4fb
+    git add llangwm && git commit -m "Update fixtures"
+    git push
+
+    git branch -D gh-pages                             # drop the old copy
+    git subtree split --prefix=llangwm -b gh-pages     # rebuild it
+    git push -f origin gh-pages                        # publish
+
+The last three lines are what actually puts the change live. Pushing to the
+working branch alone does not — `gh-pages` has to be rebuilt.
+
+(If that becomes tedious, a GitHub Actions workflow can do it automatically on
+every push. That is a small one-off change and removes the three commands
+above entirely.)
+
+### Moving to the club's own domain
+
+The site currently uses its GitHub Pages address in three places. When the club
+has its own domain, change it in:
+
+1. `sitemap.xml` — the three `<loc>` lines
+2. `robots.txt` — the `Sitemap:` line
+3. `index.html` — the `og:image` meta tag (link previews show no crest without
+   an absolute URL here)
+
+Then in **Settings → Pages → Custom domain**, enter the domain and tick
+**Enforce HTTPS**. GitHub issues the certificate free. At the registrar, point
+the domain at GitHub's servers — GitHub shows the exact records to add.
+
+Also check the address in the structured-data block at the bottom of `<head>`
+in `index.html` still matches what the club wants supporters given.
+
+### If it ever moves off GitHub Pages
+
+It is a plain static site with no build step, so it also works by dragging the
+`llangwm` folder onto Netlify or Cloudflare Pages, or by uploading it over FTP
+to any web host. Everything is relative, so it runs from a domain root or a
+subfolder either way.
 
 Netlify, Cloudflare Pages and GitHub Pages all serve `404.html` automatically
 for a missing page, and all of them will serve `privacy.html` at `/privacy` as
