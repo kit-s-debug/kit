@@ -91,7 +91,37 @@ window.LLANGWM = {
        },
      ---------------------------------------------------------------------- */
   fixtures: {
-    firstXV: [],
+
+    /* Admiral Men's National Leagues, Division 4 West A, 2026/27 — as
+       published by the WRU. Nine home, nine away.
+
+       Kick-off times are NOT on the WRU list, so they are left empty rather
+       than guessed; the site shows "Kick-off TBC" until you fill one in.
+
+       When a game has been played, add the score to that fixture — e.g.
+         result: "W 24-17"
+       — and it moves itself out of Next up and into Recent results. */
+    firstXV: [
+      { date: "2026-09-12", venue: "away", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-09-19", venue: "home", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-09-26", venue: "away", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-10-10", venue: "home", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-10-17", venue: "away", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-10-31", venue: "home", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-11-21", venue: "away", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-11-28", venue: "home", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-12-05", venue: "home", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-12-12", venue: "away", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-12-19", venue: "home", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-01-02", venue: "home", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-01-09", venue: "away", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-01-16", venue: "home", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-01-23", venue: "away", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-01-30", venue: "home", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-02-27", venue: "away", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2027-03-20", venue: "away", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "", result: "" },
+    ],
+
     juniors: []
   },
 
