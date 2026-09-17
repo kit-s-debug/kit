@@ -107,7 +107,7 @@ used now but limits how large it can ever be printed on screen.
 
 `assets/photos/` holds the club's own photography: the home shirt (cut out
 so it sits on the dark background), the clubhouse, and the six headshots.
-`assets/photos/archive/` holds the nineteen historical team photographs.
+`assets/photos/archive/` holds the seventeen historical team photographs.
 Three of them (1937, 1938 and 1946-47) were recovered from screenshots of the
 Society's pages rather than supplied as files, so they are a little softer
 than the rest; if better copies turn up, overwrite them under the same names.
@@ -116,42 +116,37 @@ than the rest; if better copies turn up, overwrite them under the same names.
 
 These are marked `// CHECK` in `club-data.js`:
 
-1. **The two undated photographs.** `unidentified-01.jpg` and
-   `unidentified-02.jpg` sit at the foot of the archive under "Can you date
-   these?", because nothing in either frame dates them. If someone identifies
-   one, move it up into the main grid in `index.html` with its season, and
-   delete it from the undated block.
-2. **One caption has no photograph.** 1958-59 is an index card: the caption
+1. **One caption has no photograph.** 1958-59 is an index card: the caption
    and the names are there, but the photograph was not available. Drop the
    file into `assets/photos/archive/` and swap that card's ghost plate for a
    photo button (copy the shape of any dated card above it).
-3. **Team photographs.** The six headshots were cropped from the club's own
+2. **Team photographs.** The six headshots were cropped from the club's own
    "Meet the Team" graphic, which is the only copy available here. They look
    fine at card size, but if the original photographs still exist, replacing
    the files in `assets/photos/` with them will sharpen the section
    noticeably. Same filenames, same 4:5 shape, and nothing else changes.
-4. **The clubhouse address and phone number.** Both match the club's public
+3. **The clubhouse address and phone number.** Both match the club's public
    Google listing. The playing ground is recorded separately from the
    clubhouse (Pill Parks Way), so decide which address supporters should be
    given for matchdays and update `club.mapQuery` to match.
-5. **Opening hours.** `club.openingHours` is empty, because no hours are
+4. **Opening hours.** `club.openingHours` is empty, because no hours are
    published on the club's Google listing and guessing them would be worse
    than leaving them out. Add them as a list of lines and a row appears under
    Find Us automatically.
-6. **The Facebook page.** Confirm it is the club's own, or set
+5. **The Facebook page.** Confirm it is the club's own, or set
    `social.facebook` to `""` to remove every Facebook link.
-7. **Sponsors.** Only Loche Bros is listed, taken from the front of the
+6. **Sponsors.** Only Loche Bros is listed, taken from the front of the
    current playing shirt. Add the rest of the season's partners, and a logo
    file and website for each, in `sponsors`.
-8. **WRU accreditation.** `accreditation.show` is `true` and the level is set
+7. **WRU accreditation.** `accreditation.show` is `true` and the level is set
    to Gold. Confirm the club's current level, and add the official WRU badge
    artwork as `assets/brand/wru-accreditation.png` (set `accreditation.badge`
    to that path). Set `show: false` to hide the section entirely.
-9. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
+8. **Club shop URLs** for RCS and KJ Prints. Until a `url` is filled in,
    those buttons send people to the contact section rather than nowhere.
-10. **Gallery photographs.** The gallery is built and empty. Matchday, junior
+9. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
-11. **Fixtures and news.** Both lists ship empty. They were previously seeded
+10. **Fixtures and news.** Both lists ship empty. They were previously seeded
    from the club's old website, which this site replaces, so they now need
    filling in here.
 
