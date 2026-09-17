@@ -2,9 +2,10 @@
 <!--
   Llangwm RFC sitemap.
 
-  These URLs are the site's CURRENT live address on GitHub Pages.
+  BEFORE LAUNCH: replace REPLACE-WITH-YOUR-DOMAIN below with the site's real
+  address. A sitemap needs absolute URLs, so it does nothing until then.
 
-  WHEN THE CLUB GETS ITS OWN DOMAIN, three files need the new address:
+  The same address is needed in three files:
     1. this file          - the three <loc> lines below
     2. robots.txt         - the Sitemap: line
     3. index.html         - the og:image meta tag
@@ -14,17 +15,17 @@
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kit-s-debug.github.io/kit/</loc>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://kit-s-debug.github.io/kit/privacy.html</loc>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://kit-s-debug.github.io/kit/accessibility.html</loc>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/accessibility.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
