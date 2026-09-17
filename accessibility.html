@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Accessibility | Llangwm RFC</title>
+<meta name="description" content="How Llangwm RFC's website is built to be usable: contrast, keyboard navigation, reduced motion, and how to report a problem.">
+<meta name="theme-color" content="#0A0A0B">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Llangwm RFC">
+<meta property="og:title" content="Accessibility | Llangwm RFC">
+<meta property="og:description" content="How Llangwm RFC's website is built to be usable: contrast, keyboard navigation, reduced motion, and how to report a problem.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/brand/llangwm-rfc-icon.png" sizes="180x180" type="image/png">
+<link rel="apple-touch-icon" href="assets/brand/llangwm-rfc-icon.png">
+
+<link rel="preload" href="assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/publicsans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/llangwm.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="doc-head">
+  <a class="brand" href="index.html" aria-label="Llangwm RFC — home">
+    <img src="assets/brand/llangwm-rfc-icon.png" alt="" width="180" height="180">
+    <span class="brand-words">
+      <span class="brand-name">Llangwm RFC</span>
+      <span class="brand-est">Est. 1885</span>
+    </span>
+  </a>
+  <a class="btn btn-sm" href="index.html"><span class="btn-arrow">Back to the club</span></a>
+</header>
+
+<main id="main" class="doc">
+  <div class="shell">
+    <div class="doc-inner">
+      <p class="sec-label">Llangwm RFC</p>
+      <h1>Accessibility</h1>
+      <p class="doc-updated">Last updated 17 September 2026</p>
+
+      <p class="doc-lede">
+        This is a village rugby club website, and it should work for everyone in
+        the village. Here is what has been done, what is known to be imperfect,
+        and how to tell us if something gets in your way.
+      </p>
+
+      <h2>What has been done</h2>
+      <ul>
+        <li>Every piece of text on the site has been checked against its background
+            and meets the WCAG 2.1 AA contrast standard.</li>
+        <li>The whole site can be used with a keyboard alone. Links and buttons
+            show a clear amber focus ring, and the photograph viewer traps focus
+            while it is open and returns it when you close it.</li>
+        <li>A "Skip to content" link is the first thing a keyboard or screen
+            reader reaches.</li>
+        <li>Headings run in order, so a screen reader can navigate the page by
+            structure rather than by guesswork.</li>
+        <li>Photographs carry descriptions. Decorative marks &mdash; the wasps, the
+            badge watermark &mdash; are hidden from screen readers rather than
+            announced as meaningless images.</li>
+        <li>If your device is set to reduce motion, every animation on the site
+            stops: no drifting, no reveals, no smooth scrolling.</li>
+        <li>Text is sized in relative units and reflows, so it can be enlarged in
+            the browser without anything being cut off.</li>
+        <li>The map is not loaded until you ask for it, so nothing loads behind
+            your back.</li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <ul>
+        <li>The historical photographs are scans of a book from 1985. They are
+            not sharp, and enlarging them only goes so far. Their captions carry
+            the names, which is the part that matters most.</li>
+        <li>Some archive captions are long lists of names. On the cards they are
+            shortened to four lines; opening the photograph shows the full list.</li>
+        <li>The map, once you load it, is Google's and we do not control its
+            accessibility. The club's address is written out in plain text beside
+            it for that reason.</li>
+      </ul>
+
+      <h2>Telling us about a problem</h2>
+      <p>
+        If something on this site is hard to use, we would genuinely like to know
+        &mdash; it is far more useful than guessing. Ring the clubhouse on
+        <a href="tel:01437890462">01437 890462</a>, message the club on
+        <a href="https://www.instagram.com/llangwm_official_rfc/" target="_blank" rel="noopener noreferrer">Instagram</a>, or
+        write to Llangwm Rugby Football Club, The Green, Llangwm, Haverfordwest,
+        SA62 4HJ.
+      </p>
+
+      <div class="doc-note">
+        <p>
+          This statement describes the site as it actually behaves, tested at
+          screen widths from 320 pixels upwards. It is not a formal
+          accreditation, and it will be updated if the site changes.
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="shell">
+    <div class="foot-bar" style="border-top:0">
+      <p style="margin:0">&copy; <span id="year">2026</span> Llangwm Rugby Football Club.</p>
+      <p style="margin:0">
+        <a href="privacy.html">Privacy</a> &middot;
+        <a href="privacy.html#cookies">Cookies</a> &middot;
+        <a href="accessibility.html">Accessibility</a> &middot;
+        <a href="index.html#contact">Contact</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- These pages need no behaviour beyond the year in the footer, so the
+     site script is not loaded here. -->
+<script>document.getElementById("year").textContent=new Date().getFullYear();</script>
+</body>
+</html>

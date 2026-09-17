@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Llangwm RFC sitemap.
+
+  BEFORE LAUNCH: replace every occurrence of REPLACE-WITH-YOUR-DOMAIN with the
+  club's real domain (for example https://llangwmrfc.wales). A sitemap needs
+  absolute URLs, so it does nothing until that is done. Then uncomment the
+  Sitemap line in robots.txt.
+
+  Only these four pages exist. Do not add entries for pages that are not real.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://REPLACE-WITH-YOUR-DOMAIN/accessibility.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

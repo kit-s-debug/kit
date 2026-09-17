@@ -5,7 +5,12 @@ dependencies, no database. Upload the folder to any host and it works.
 
 ```
 llangwm/
-├── index.html              the whole site, one page
+├── index.html              the club site, one page
+├── privacy.html            privacy policy
+├── accessibility.html      accessibility statement
+├── 404.html                shown for a page that does not exist
+├── robots.txt              ← needs the live domain
+├── sitemap.xml             ← needs the live domain
 ├── css/llangwm.css         all styling
 ├── js/club-data.js         ← THE FILE THE CLUB EDITS
 ├── js/llangwm.js           behaviour (you should not need to touch this)
@@ -150,7 +155,12 @@ These are marked `// CHECK` in `club-data.js`:
    those buttons send people to the contact section rather than nowhere.
 9. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
-10. **Fixtures and news.** Both lists ship empty. They were previously seeded
+10. **An email address for privacy enquiries.** The privacy policy currently
+   gives the clubhouse phone number and postal address as the route for
+   privacy questions, which is honest but slow. If the club has an address it
+   is happy to publish, there is a commented-out block in `privacy.html` marking
+   exactly where it goes.
+11. **Fixtures and news.** Both lists ship empty. They were previously seeded
    from the club's old website, which this site replaces, so they now need
    filling in here.
 
@@ -173,6 +183,24 @@ the caption and names can stay.
 The season on the 1959-60 card was confirmed by the club rather than read
 off the page: the caption was obscured in the source.
 
+## The other pages
+
+`privacy.html`, `accessibility.html` and `404.html` are plain pages sharing the
+same stylesheet. They do not load the site script — they only need the year in
+the footer, which is one inline line — so they are about half the weight of the
+home page.
+
+The privacy policy describes what the site **actually** does, which is very
+little: no forms, no accounts, no analytics, no advertising, and **no cookies
+of any kind**. Nothing is written to the browser. That is why there is no
+cookie banner: there would be nothing to consent to. The one exception is the
+map, which is not loaded until a visitor presses *Show map*, and the policy
+says so.
+
+If you ever add a contact form, analytics, or an embedded Instagram feed, the
+privacy policy stops being true. Update it before the change goes live, and
+change the date at the top.
+
 ## Deploying
 
 It is a static site. Any of these work with no configuration:
@@ -183,12 +211,21 @@ It is a static site. Any of these work with no configuration:
 
 Everything is relative, so it works from a domain root or a subfolder.
 
-Two things worth doing once there is a live domain:
+Three things to do once there is a live domain:
+
+- **Replace `REPLACE-WITH-YOUR-DOMAIN`** in `sitemap.xml` (three times) and
+  uncomment the `Sitemap:` line in `robots.txt`. A sitemap needs absolute
+  URLs, so it does nothing until that is done.
 
 - Add the full URL in front of the Open Graph image path in `index.html`
   (there is a comment marking the spot) so link previews show the crest.
 - Check the address in the structured data block at the bottom of `<head>`
-  matches whatever was decided in point 2 above.
+  matches whatever was decided above.
+
+Netlify, Cloudflare Pages and GitHub Pages all serve `404.html` automatically
+for a missing page, and all of them will serve `privacy.html` at `/privacy` as
+well as `/privacy.html`. The footer links use the `.html` form so they also
+work from a plain folder or a local file.
 
 ## Accessibility and performance notes
 

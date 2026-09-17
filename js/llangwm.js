@@ -318,7 +318,7 @@
     buttons.forEach(function (b, i) {
       b.addEventListener("click", function () {
         lbItems = set;
-        openLightbox(i);
+        openLightbox(i, b);
       });
     });
   }
@@ -377,15 +377,18 @@
     $$(".gal-item", mount).forEach(function (item) {
       item.addEventListener("click", function () {
         lbItems = photos;
-        openLightbox(Number(item.getAttribute("data-i")));
+        openLightbox(Number(item.getAttribute("data-i")), item);
       });
     });
   }
 
-  function openLightbox(i) {
+  /* `origin` is the element that opened the dialog. Relying on
+     document.activeElement is not safe: not every activation path focuses the
+     control first, and focus then has nowhere to return to on close. */
+  function openLightbox(i, origin) {
     var lb = $("#lightbox");
     if (!lb || !lbItems.length) return;
-    lbLastFocus = document.activeElement;
+    lbLastFocus = origin || document.activeElement;
     lbIndex = i;
     lb.hidden = false;
     document.body.classList.add("is-locked");
