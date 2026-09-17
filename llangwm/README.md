@@ -107,7 +107,8 @@ used now but limits how large it can ever be printed on screen.
 
 `assets/photos/` holds the club's own photography: the home shirt (cut out
 so it sits on the dark background), the clubhouse, and the six headshots.
-`assets/photos/archive/` holds the seventeen historical team photographs.
+`assets/photos/archive/` holds the eighteen archive images: seventeen
+historical team photographs and one placeholder (see below).
 Three of them (1937, 1938 and 1946-47) were recovered from screenshots of the
 Society's pages rather than supplied as files, so they are a little softer
 than the rest; if better copies turn up, overwrite them under the same names.
@@ -116,10 +117,13 @@ than the rest; if better copies turn up, overwrite them under the same names.
 
 These are marked `// CHECK` in `club-data.js`:
 
-1. **One caption has no photograph.** 1958-59 is an index card: the caption
-   and the names are there, but the photograph was not available. Drop the
-   file into `assets/photos/archive/` and swap that card's ghost plate for a
-   photo button (copy the shape of any dated card above it).
+1. **The 1958-59 card is a placeholder.** Its photograph was never found, so
+   it currently shows a real but undated Llangwm side, flagged "Placeholder
+   image" on the card and called out at the top of its caption. To finish it:
+   put the real photograph in `assets/photos/archive/`, point the card's two
+   image paths at it (`data-lb-src` and `src`), delete the
+   `<span class="plate-flag">` and delete the placeholder sentence from the
+   start of the caption. Everything else on that card is already correct.
 2. **Team photographs.** The six headshots were cropped from the club's own
    "Meet the Team" graphic, which is the only copy available here. They look
    fine at card size, but if the original photographs still exist, replacing
