@@ -298,6 +298,31 @@
      ---------------------------------------------------------------------- */
   var lbItems = [], lbIndex = 0, lbLastFocus = null;
 
+  /* The archive photographs are static HTML (the players' names belong in the
+     page, not in a script), so the lightbox reads them back off the DOM. */
+  function initArchiveLightbox() {
+    var buttons = $$(".plate-visual.has-photo[data-lb-src]");
+    if (!buttons.length) return;
+
+    var set = buttons.map(function (b) {
+      return {
+        src: b.getAttribute("data-lb-src"),
+        alt: (b.querySelector("img") || {}).alt || "Llangwm RFC",
+        date: b.getAttribute("data-lb-date") || "",
+        title: b.getAttribute("data-lb-title") || "",
+        note: b.getAttribute("data-lb-note") || "",
+        link: b.getAttribute("data-lb-link") || ""
+      };
+    });
+
+    buttons.forEach(function (b, i) {
+      b.addEventListener("click", function () {
+        lbItems = set;
+        openLightbox(i);
+      });
+    });
+  }
+
   function renderGallery() {
     var mount = $("#gallery-mount");
     if (!mount) return;
@@ -336,8 +361,6 @@
       '</button>';
     }).join("") + '</div>';
 
-    lbItems = photos;
-
     $$(".gal-filter", mount).forEach(function (btn) {
       btn.addEventListener("click", function () {
         var cat = btn.getAttribute("data-cat");
@@ -353,6 +376,7 @@
 
     $$(".gal-item", mount).forEach(function (item) {
       item.addEventListener("click", function () {
+        lbItems = photos;
         openLightbox(Number(item.getAttribute("data-i")));
       });
     });
@@ -380,7 +404,21 @@
     if (!p) return;
     var img = $("#lb-img"), cap = $("#lb-cap");
     if (img) { img.src = p.src; img.alt = p.alt || "Llangwm RFC"; }
-    if (cap) cap.textContent = [p.category, p.alt].filter(Boolean).join(" — ");
+    if (!cap) return;
+
+    if (p.title || p.note) {
+      /* An archive plate: date, caption, the names, and the credit. */
+      cap.innerHTML =
+        (p.date ? '<strong class="lb-date">' + esc(p.date) + "</strong> " : "") +
+        esc(p.title) +
+        (p.note ? '<span class="lb-note">' + p.note + "</span>" : "") +
+        (p.link
+          ? '<a class="lb-source" href="' + esc(p.link) + '" target="_blank" rel="noopener noreferrer">' +
+            "Llangwm Local History Society</a>"
+          : "");
+    } else {
+      cap.textContent = [p.category, p.alt].filter(Boolean).join(" — ");
+    }
     var multi = lbItems.length > 1;
     ["#lb-prev", "#lb-next"].forEach(function (s) {
       var b = $(s);
@@ -775,6 +813,7 @@
     renderContact();
     initMap();
     initLightbox();
+    initArchiveLightbox();
     initNav();
     initScroll();
     initCounters();

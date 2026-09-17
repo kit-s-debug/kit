@@ -163,7 +163,7 @@ section[id],[id="top"]{scroll-margin-top:96px}
 .btn-amber:hover{color:var(--ink);border-color:var(--white)}
 
 .btn-sm{padding:11px 18px;font-size:.7rem;letter-spacing:.12em}
-.btn-arrow::after{content:"→";font-weight:400;transition:transform .3s var(--ease)}
+.btn-arrow::after{content:"→";margin-left:.55em;font-weight:400;transition:transform .3s var(--ease)}
 .btn:hover .btn-arrow::after,.btn-arrow:hover::after{transform:translateX(4px)}
 
 /* --------------------------------------------------------------------------
@@ -722,7 +722,9 @@ section[id],[id="top"]{scroll-margin-top:96px}
 /* --------------------------------------------------------------------------
    Archive plates
    -------------------------------------------------------------------------- */
-.plates{display:grid;gap:clamp(12px,1.8vw,18px);grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+/* align-items:start so a card with a long name list does not stretch every
+   other card in its row to match. Ragged rows, no hollow cards. */
+.plates{display:grid;gap:clamp(12px,1.8vw,18px);grid-template-columns:repeat(auto-fill,minmax(270px,1fr));align-items:start}
 .plate{
   position:relative;display:flex;flex-direction:column;
   background:var(--ink-2);border:1px solid var(--line);
@@ -730,31 +732,65 @@ section[id],[id="top"]{scroll-margin-top:96px}
   transition:border-color .4s var(--ease),transform .4s var(--ease);
 }
 .plate:hover{border-color:var(--amber-line);transform:translateY(-4px)}
+
+/* Index cards (the caption survives, the photograph does not) keep a plate. */
 .plate-visual{
   position:relative;aspect-ratio:16/9;overflow:hidden;
   background:var(--ink-3);display:grid;place-items:center;
 }
-.plate-visual img{width:100%;height:100%;object-fit:cover;filter:sepia(.3) grayscale(.55) contrast(1.06);transition:transform .8s var(--ease),filter .5s}
-.plate:hover .plate-visual img{transform:scale(1.05);filter:sepia(.1) grayscale(.15)}
+/* A real photograph is shown whole. These are rows of faces, and cropping one
+   to a tidy rectangle takes somebody's head off. */
+.plate-visual.has-photo{
+  aspect-ratio:auto;display:block;width:100%;padding:0;border:0;
+  background:var(--ink-3);cursor:zoom-in;
+}
+.plate-visual img{
+  width:100%;height:auto;display:block;
+  filter:sepia(.18) grayscale(.28) contrast(1.04);
+  transition:transform .8s var(--ease),filter .5s;
+}
+.plate-visual:not(.has-photo) img.plate-ghost{width:26%;max-width:78px;height:auto}
+.plate:hover .plate-visual img{transform:scale(1.03);filter:none}
 /* Each plate gets its own stripe angle so the grid never looks tiled. */
-.plate-visual::before{
+.plate-visual:not(.has-photo)::before{
   content:"";position:absolute;inset:0;
   background:repeating-linear-gradient(var(--ang,116deg),rgba(255,180,0,.09) 0 22px,transparent 22px 56px);
 }
-.plate-visual::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -60px 60px -40px rgba(0,0,0,.8)}
-.plate-ghost{position:relative;width:26%;max-width:78px;opacity:.34;transition:opacity .4s var(--ease),transform .4s var(--ease)}
-.plate:hover .plate-ghost{opacity:.4;transform:scale(1.06)}
+.plate-visual:not(.has-photo)::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -60px 60px -40px rgba(0,0,0,.8)}
+.plate-ghost{position:relative;opacity:.34;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.plate:hover .plate-ghost{opacity:.5;transform:scale(1.06)}
 .plate-stamp{
   position:absolute;left:14px;top:14px;z-index:2;
   background:var(--amber);color:var(--ink);
   padding:6px 11px;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  box-shadow:0 4px 14px rgba(0,0,0,.45);
 }
-.plate-body{padding:20px clamp(16px,2vw,22px) 22px;display:flex;flex-direction:column;flex:1}
+.plate-body{padding:20px clamp(16px,2vw,22px) 22px;display:flex;flex-direction:column;flex:1;text-align:left}
 .plate-title{font-size:1.08rem;line-height:1.08;margin-bottom:10px}
 .plate-note{font-size:.85rem;color:var(--mist-dim);margin:0 0 18px;flex:1}
-.plate-link{font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:inline-flex;gap:.5em;align-items:center}
+/* A full team's names makes a card enormous, and one long caption stretches
+   its whole row. Clamp every card: the names stay in the markup — which is
+   what search engines, and anybody looking for a grandfather, actually read —
+   and the full list is in the lightbox, or on the Society's page for the four
+   cards whose photograph is missing. */
+.plate-note{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;
+  overflow:hidden;
+}
+.plate-link{
+  font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber);display:inline-flex;gap:.5em;align-items:center;
+  align-self:flex-start;text-decoration:none;padding-block:9px;
+}
 .plate-link::after{content:"↗";transition:transform .3s var(--ease)}
 .plate:hover .plate-link::after{transform:translate(3px,-3px)}
+
+/* The two nobody can date yet. */
+.undated{margin-top:clamp(40px,5vw,68px);padding-top:clamp(32px,4vw,52px);border-top:1px solid var(--line)}
+.undated-title{font-size:clamp(1.3rem,2.4vw,1.9rem);margin-bottom:14px}
+.undated-lede{max-width:62ch;color:var(--mist);margin-bottom:clamp(22px,3vw,32px)}
+.undated .plates{grid-template-columns:repeat(auto-fill,minmax(290px,1fr));margin-bottom:26px}
+.undated .plate-stamp{background:transparent;color:var(--amber);border:1px solid var(--amber);box-shadow:none}
 
 .credit{
   margin-top:clamp(30px,4vw,48px);padding:clamp(22px,3vw,32px);
@@ -806,8 +842,16 @@ section[id],[id="top"]{scroll-margin-top:96px}
 .lb[hidden]{display:none}
 .lb.is-open{opacity:1}
 .lb-fig{margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;gap:14px}
-.lb-fig img{max-width:100%;max-height:78vh;width:auto;object-fit:contain;margin-inline:auto;border:1px solid var(--line)}
-.lb-cap{font-size:.86rem;color:var(--mist);text-align:center}
+.lb-fig img{max-width:100%;max-height:70vh;width:auto;object-fit:contain;margin-inline:auto;border:1px solid var(--line)}
+.lb-cap{font-size:.9rem;color:var(--mist);text-align:center;max-width:78ch;margin-inline:auto}
+.lb-date{color:var(--amber);font-family:var(--display);font-weight:400;font-size:1.05rem;letter-spacing:.02em;margin-right:.4em}
+.lb-note{display:block;margin-top:8px;font-size:.82rem;color:var(--mist-dim);line-height:1.6}
+.lb-source{
+  display:inline-block;margin-top:12px;padding-block:6px;
+  font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber);text-decoration:none;border-bottom:1px solid var(--amber-line);
+}
+.lb-source:hover{border-color:var(--amber)}
 .lb-btn{
   position:absolute;width:48px;height:48px;display:grid;place-items:center;
   border:1px solid var(--line);color:var(--white);font-size:1.3rem;
