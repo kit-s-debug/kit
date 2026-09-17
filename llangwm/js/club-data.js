@@ -220,8 +220,14 @@ window.LLANGWM = {
      the button becomes an "ask the club" link rather than a dead link.
      ---------------------------------------------------------------------- */
   shop: [
-    { name: "RCS",       blurb: "Official playing kit and training wear.", url: "" }, // CHECK
-    { name: "KJ Prints", blurb: "Clubwear and supporter clothing.",        url: "" }  // CHECK
+    // Club shop supplied by the club.
+    { name: "RCS",       blurb: "Official playing kit and training wear.",
+      url: "https://rcs-teamwear.com/llangwm-rfc/" },
+
+    // CHECK — no shop link yet, so this one shows an "Ask the club" button
+    // that goes to the contact section. Add a url here and it becomes a
+    // "Visit shop" link like the one above.
+    { name: "KJ Prints", blurb: "Clubwear and supporter clothing.", url: "" }
   ],
 
   /* ----------------------------------------------------------------------
