@@ -529,9 +529,13 @@
      here with the club's say-so. The credit block under the grid names
      both. Tapping a photograph opens it full size with its names.
 
-     One card (1958-59) has no photograph and links to the Society instead.
-     To add it: drop the file into assets/photos/archive/ and copy the
-     shape of any dated card above it.
+     The 1958-59 card is a PLACEHOLDER: a real but undated Llangwm photograph
+     standing in for the missing original, flagged on the card and in its
+     caption. To finish it, overwrite
+     assets/photos/archive/1958-59-placeholder.jpg with the real photograph
+     (rename it too, in the two data-lb-src / src attributes), drop the
+     "Placeholder image" span, and delete the placeholder sentence from the
+     start of the caption.
      ====================================================================== -->
 <section class="sec sec-deep" id="archive" aria-labelledby="archive-title">
   <div class="shell">
@@ -541,8 +545,8 @@
       <p class="sec-lede">
         First XVs, cup-winning sides and schoolboys going back to 1909, with the
         players named wherever the record names them. Tap any photograph to open
-        it full size. One season survives as a caption alone — that card links
-        to the Society's own page instead.
+        it full size. One card (1958–59) carries a stand-in photograph, flagged
+        as such, until the original turns up.
       </p>
     </header>
 
@@ -788,14 +792,18 @@
         </div>
       </article>
       <article class="plate reveal" style="--d:60ms">
-        <span class="plate-visual" style="--ang:122deg">
-          <span class="plate-stamp">1958&ndash;59</span>
-          <img class="plate-ghost" src="assets/brand/llangwm-rfc-icon.png" alt="" width="180" height="180" loading="lazy">
-        </span>
+        <button class="plate-visual has-photo" type="button"
+                data-lb-src="assets/photos/archive/1958-59-placeholder.jpg"
+                data-lb-date="1958&ndash;59" data-lb-title="Pembrokeshire Junior K.O. Cup winners"
+                data-lb-note="<strong>Placeholder photograph</strong> &mdash; an undated Llangwm side standing in until the 1958&ndash;59 original is found. It may or may not be this team. The caption is the recorded one: (Back row) Mr T.E. Phillips (Hon. Sec.), M. Edgar, J. Skyrme, B. John, John Brock, K. Roberts, D. Hughes, D. Harvard, T. Philpin. (Front row) M. Jones, J. Brock, M. Hughes, Ald. J. John (President), Mr R. V. Palmer (Chairman), Mel Scale (Captain), T. Morgan, K. Laugharne, D. Cole." data-lb-link="https://llangwmlocalhistorysociety.org.uk/llangwmrfc100years2.html"
+                aria-label="Open full size: Placeholder: an undated Llangwm RFC team photograph">
+          <span class="plate-stamp">1958&ndash;59</span><span class="plate-flag">Placeholder image</span>
+          <img src="assets/photos/archive/1958-59-placeholder.jpg" alt="Placeholder: an undated Llangwm RFC team photograph"
+               width="800" height="459" loading="lazy" decoding="async">
+        </button>
         <div class="plate-body">
           <h3 class="plate-title">Pembrokeshire Junior K.O. Cup winners</h3>
-          <p class="plate-note">(Back row) Mr T.E. Phillips (Hon. Sec.), M. Edgar, J. Skyrme, B. John, John Brock, K. Roberts, D. Hughes, D. Harvard, T. Philpin. (Front row) M. Jones, J. Brock, M. Hughes, Ald. J. John (President), Mr R. V. Palmer (Chairman), Mel Scale (Captain), T. Morgan, K. Laugharne, D. Cole.</p>
-          <a class="plate-link" href="https://llangwmlocalhistorysociety.org.uk/llangwmrfc100years2.html" target="_blank" rel="noopener noreferrer">View at the History Society</a>
+          <p class="plate-note"><strong>Placeholder photograph</strong> &mdash; an undated Llangwm side standing in until the 1958&ndash;59 original is found. It may or may not be this team. The caption is the recorded one: (Back row) Mr T.E. Phillips (Hon. Sec.), M. Edgar, J. Skyrme, B. John, John Brock, K. Roberts, D. Hughes, D. Harvard, T. Philpin. (Front row) M. Jones, J. Brock, M. Hughes, Ald. J. John (President), Mr R. V. Palmer (Chairman), Mel Scale (Captain), T. Morgan, K. Laugharne, D. Cole.</p>
         </div>
       </article>
       <article class="plate reveal" style="--d:120ms">
