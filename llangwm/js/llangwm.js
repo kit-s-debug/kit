@@ -138,13 +138,29 @@
   /* ----------------------------------------------------------------------
      Fixtures
      ---------------------------------------------------------------------- */
+  function startOfToday() {
+    var t = new Date();
+    t.setHours(0, 0, 0, 0);
+    return t;
+  }
+
   function fixtureRow(f) {
     var d = parseDate(f.date);
     var home = String(f.venue || "").toLowerCase() === "home";
     var meta = [f.competition, f.ground].filter(Boolean).join(" · ");
-    var end = f.result
-      ? '<span class="fx-res">' + esc(f.result) + '</span>'
-      : (f.kickOff ? esc(f.kickOff) : "");
+    /* The end column must never be blank. A fixture the club has not given a
+       kick-off time for says so; one whose date has gone without a score
+       says that instead of inventing one. */
+    var end;
+    if (f.result) {
+      end = '<span class="fx-res">' + esc(f.result) + '</span>';
+    } else if (f.kickOff) {
+      end = esc(f.kickOff);
+    } else if (d && d < startOfToday()) {
+      end = '<span class="fx-tbc">Result to follow</span>';
+    } else {
+      end = '<span class="fx-tbc">Kick-off TBC</span>';
+    }
 
     return '<li class="fx-row reveal">' +
       '<time class="fx-when"' + (d ? ' datetime="' + esc(f.date) + '"' : "") + '>' +
@@ -173,8 +189,7 @@
     /* What a supporter wants first is the next game, not the season's first.
        Anything played (it has a result, or its date has gone) drops into
        results underneath, most recent first. */
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
+    var today = startOfToday();
 
     var upcoming = [], played = [];
     list.forEach(function (f) {

@@ -623,6 +623,11 @@ section[id],[id="top"]{scroll-margin-top:96px}
 .fx-meta{font-size:.78rem;color:var(--mist-dim);margin:0}
 .fx-end{text-align:right;font-family:var(--display);font-size:1.15rem;color:var(--white);white-space:nowrap}
 .fx-end .fx-res{color:var(--amber)}
+/* Set in the body face so an absent kick-off reads as a note, not a score. */
+.fx-end .fx-tbc{
+  font-family:var(--body);font-weight:700;font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mist-dim);
+}
 @media (max-width:640px){
   .fx-row{grid-template-columns:auto auto 1fr;row-gap:12px}
   .fx-end{grid-column:1/-1;text-align:left}
