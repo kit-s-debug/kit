@@ -209,9 +209,11 @@ change the date at the top.
 
 ## Deploying
 
-The site is live on **GitHub Pages** at:
+The site is live on **GitHub Pages**, on the club's own domain:
 
-    https://kit-s-debug.github.io/kit/
+    https://llangwmrfc.com
+
+The GitHub address, https://kit-s-debug.github.io/kit/, redirects to it.
 
 ### How it is wired up
 
@@ -254,14 +256,18 @@ Put the domain in **Settings → Pages → Custom domain**, then add the DNS
 records GitHub shows you at whoever the domain was bought from. Tick **Enforce
 HTTPS** once it becomes available — the certificate is free.
 
-**One trap worth knowing.** Setting a custom domain makes GitHub commit a file
-called `CNAME` to the `gh-pages` branch. Rebuilding that branch, as above,
-wipes it, and the domain silently stops working. To make it survive, put the
-file in the source folder instead so every rebuild carries it:
+**The domain is set from `llangwm/CNAME`**, a one-line file containing
+`llangwmrfc.com`. That is deliberate. Setting a custom domain through the
+GitHub settings screen makes GitHub commit that file to `gh-pages` instead,
+where rebuilding the branch wipes it and the domain silently stops working.
+Keeping it in the source folder means every rebuild carries it.
 
-    echo "your-domain.co.uk" > llangwm/CNAME
+Do not delete it, and do not set the domain through the settings screen.
+To change domains, edit that file and rebuild.
 
-Then rebuild and push as usual.
+The DNS records live at Wix, where the domain was bought: four A records on
+`@` pointing at GitHub's addresses, and a CNAME on `www` pointing at
+`kit-s-debug.github.io`.
 
 The address also appears in three files that need an absolute URL, and they
 have to be changed by hand:

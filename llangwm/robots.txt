@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Change this line if the club moves to its own domain.
-Sitemap: https://kit-s-debug.github.io/kit/sitemap.xml
+Sitemap: https://llangwmrfc.com/sitemap.xml
