@@ -95,31 +95,32 @@ window.LLANGWM = {
     /* Admiral Men's National Leagues, Division 4 West A, 2026/27 — as
        published by the WRU. Nine home, nine away.
 
-       Kick-off times are NOT on the WRU list, so they are left empty rather
-       than guessed; the site shows "Kick-off TBC" until you fill one in.
+       Kick-off is 14:30, confirmed by the club. Change a single fixture by
+       editing its kickOff; clear it to "" and that fixture reads
+       "Kick-off TBC" instead.
 
        When a game has been played, add the score to that fixture — e.g.
          result: "W 24-17"
        — and it moves itself out of Next up and into Recent results. */
     firstXV: [
-      { date: "2026-09-12", venue: "away", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-09-19", venue: "home", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-09-26", venue: "away", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-10-10", venue: "home", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-10-17", venue: "away", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-10-31", venue: "home", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-11-21", venue: "away", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-11-28", venue: "home", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-12-05", venue: "home", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-12-12", venue: "away", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2026-12-19", venue: "home", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-01-02", venue: "home", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-01-09", venue: "away", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-01-16", venue: "home", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-01-23", venue: "away", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-01-30", venue: "home", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-02-27", venue: "away", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "", result: "" },
-      { date: "2027-03-20", venue: "away", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "", result: "" },
+      { date: "2026-09-12", venue: "away", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-09-19", venue: "home", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-09-26", venue: "away", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-10-10", venue: "home", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-10-17", venue: "away", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-10-31", venue: "home", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-11-21", venue: "away", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-11-28", venue: "home", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-12-05", venue: "home", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-12-12", venue: "away", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-12-19", venue: "home", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-01-02", venue: "home", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-01-09", venue: "away", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-01-16", venue: "home", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-01-23", venue: "away", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-01-30", venue: "home", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-02-27", venue: "away", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2027-03-20", venue: "away", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "14:30", result: "" },
     ],
 
     /* Llangwm Minis and Junior Fixtures 2026-2027, as issued by the club.
@@ -156,8 +157,19 @@ window.LLANGWM = {
       { date: "2026-11-15", venue: "home", opponent: "Haverfordwest",       competition: "U12–U15 · Cup prelims", kickOff: "", result: "" },
       { date: "2026-11-22", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "", result: "" },
       { date: "2026-11-22", venue: "away", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "", result: "" },
-      { date: "2026-11-29", venue: "away", opponent: "Fishguard",           competition: "U7–U11 · Cup quarter finals", kickOff: "", result: "" },
-      { date: "2026-11-29", venue: "home", opponent: "Fishguard",           competition: "U12–U15 · Cup quarter finals", kickOff: "", result: "" },
+      { date: "2026-11-29", venue: "away", opponent: "Fishguard",           competition: "U7–U11", kickOff: "", result: "" },
+
+      /* Cup quarter finals, 29 November, from the knockout draw. These
+         replace the blanket U12-U15 line on the club's fixture sheet: the
+         draw gives Llangwm a different opponent in each age group. Llangwm
+         are not in the U16 quarter finals.
+
+         The U15 opponent is whoever wins the Haverfordwest v Crymych
+         preliminary tie, so it is named as both until that is played. */
+      { date: "2026-11-29", venue: "home", opponent: "Pembroke",             competition: "U12 · Cup quarter final", kickOff: "", result: "" },
+      { date: "2026-11-29", venue: "away", opponent: "St Davids",            competition: "U13 · Cup quarter final", kickOff: "", result: "" },
+      { date: "2026-11-29", venue: "away", opponent: "Crymych",              competition: "U14 · Cup quarter final", kickOff: "", result: "" },
+      { date: "2026-11-29", venue: "home", opponent: "Haverfordwest or Crymych", competition: "U15 · Cup quarter final", kickOff: "", result: "" },
       { date: "2026-12-06", venue: "home", opponent: "Pembroke",            competition: "U7–U11", kickOff: "", result: "" },
       { date: "2026-12-06", venue: "away", opponent: "Pembroke",            competition: "U12–U15", kickOff: "", result: "" },
       { date: "2026-12-13", venue: "away", opponent: "St Davids",           competition: "U7–U11", kickOff: "", result: "" },
@@ -340,8 +352,7 @@ window.LLANGWM = {
   /* ----------------------------------------------------------------------
      11. ACCREDITATION
      --------------------------------------------------------------------------
-     CHECK — set `show` to true only once the club's current WRU accreditation
-     level is confirmed. Nothing is displayed while this is false.
+     Gold, confirmed by the club. Set `show` to false to hide the section.
      The official WRU accreditation badge artwork is not included here; add it
      as assets/brand/wru-accreditation.png and set `badge` to that path once
      the club has the approved file.
