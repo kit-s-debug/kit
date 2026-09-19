@@ -545,14 +545,29 @@
       return;
     }
 
-    mount.innerHTML = '<div class="partners">' + list.map(function (s) {
+    function tile(s) {
       var inner = s.logo
         ? '<img src="' + esc(s.logo) + '" alt="' + esc(s.name) + '" loading="lazy">'
         : '<span>' + esc(s.name) + '</span>';
       return s.url
         ? '<a class="partner" href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>'
         : '<div class="partner">' + inner + '</div>';
-    }).join("") + '</div>';
+    }
+
+    /* The club sponsors its players separately from its shirt, so a partner
+       may carry a `group`. Keep the order the data is written in rather than
+       sorting: the club decides who comes first. */
+    var order = [], groups = {};
+    list.forEach(function (s) {
+      var g = s.group || "";
+      if (!groups[g]) { groups[g] = []; order.push(g); }
+      groups[g].push(s);
+    });
+
+    mount.innerHTML = order.map(function (g) {
+      return (g ? '<h3 class="fx-group">' + esc(g) + '</h3>' : '') +
+        '<div class="partners">' + groups[g].map(tile).join("") + '</div>';
+    }).join("");
   }
 
   function renderAccreditation() {
