@@ -311,42 +311,44 @@ window.LLANGWM = {
   /* ----------------------------------------------------------------------
      10. PARTNERS & SPONSORS
      --------------------------------------------------------------------------
-       { name: "Business name", logo: "assets/sponsors/name.svg",
+       { group: "Player sponsors", name: "Business name",
+         logo: "assets/sponsors/business-name.jpg",
          url: "https://example.co.uk" },
-     Leave logo as "" and the partner's name is set in type instead.
-     ---------------------------------------------------------------------- */
-  /* `group` puts a heading above a set of partners. Leave it off and the
-     partner sits in an unlabelled row at the top.
 
-     No logo files were supplied, so each name is set in type instead. To use
-     a logo, drop the file into assets/sponsors/ and put its path in `logo`.
-     Only add a `url` you have actually been given — a wrong address is worse
-     than none, and the button becomes plain text when `url` is "". */
+     `group` puts a heading above a set of partners. Leave it off and the
+     partner sits in an unlabelled row at the top. Leave `logo` as "" and the
+     partner's name is set in type instead.
+
+     Every logo below was supplied by the club and carries the business's own
+     wordmark, so `name` is what a screen reader announces rather than what is
+     read on screen. Three are marked CHECK: the logo and the club's sponsor
+     board disagree, and the logo was followed.
+
+     Only add a `url` you have actually been given. The two below are printed
+     on the logos themselves. */
   sponsors: [
     // CHECK — Loche Bros is the front-of-shirt sponsor on the club's current
-    // playing kit, read from the shirt itself. Confirm the wording.
+    // playing kit, read from the shirt itself. No logo file supplied, so the
+    // name is set in type.
     { group: "Front of shirt", name: "Loche Bros", logo: "", url: "" },
 
-    // Player sponsors, from the club's own sponsor board on Instagram.
-    // Website addresses were not given for these, apart from Laser Shot,
-    // whose logo carries one. Add the others as you get them.
-    { group: "Player sponsors", name: "Allpipes Civils Ltd",                            logo: "", url: "" },
-    { group: "Player sponsors", name: "Pembrokeshire Building & Plumbing Supplies Ltd", logo: "", url: "" },
-    { group: "Player sponsors", name: "Rachel's Florist",                               logo: "", url: "" },
-    { group: "Player sponsors", name: "Lashed by Leah",                                 logo: "", url: "" },
-    { group: "Player sponsors", name: "Poyston West Farm",                              logo: "", url: "" },
-    { group: "Player sponsors", name: "VIP Barber & Co.",                               logo: "", url: "" },
-    { group: "Player sponsors", name: "Hardwood Drinks Co",                             logo: "", url: "" },
-    { group: "Player sponsors", name: "Phoenix Bowl",                                   logo: "", url: "" },
-    { group: "Player sponsors", name: "The Bearded Chefs",                              logo: "", url: "" },
-    { group: "Player sponsors", name: "K.O.",                                           logo: "", url: "" },
-    { group: "Player sponsors", name: "J14 Coaching & Fitness",                         logo: "", url: "" },
-    { group: "Player sponsors", name: "Laser Shot Ltd",                                 logo: "", url: "https://lasershotltd.co.uk" },
-    { group: "Player sponsors", name: "Jeff Clout Inflatables",                         logo: "", url: "" },
-    { group: "Player sponsors", name: "King David Tyres Ltd",                           logo: "", url: "" },
-    { group: "Player sponsors", name: "DJM Services Pembs Ltd",                         logo: "", url: "" },
-    { group: "Player sponsors", name: "Jim Chimney Sweep",                              logo: "", url: "" },
-    { group: "Player sponsors", name: "Cleddau Electrical Services",                    logo: "", url: "" },
+    { group: "Player sponsors", name: "Allpipes Civils Ltd",                            logo: "assets/sponsors/allpipes-civils.jpg", url: "" },
+    { group: "Player sponsors", name: "Pembrokeshire Building & Plumbing Supplies Ltd", logo: "assets/sponsors/pembrokeshire-building-plumbing.jpg", url: "https://www.pembrokeshirebuildingsupplies.co.uk" },  // address printed on the logo
+    { group: "Player sponsors", name: "Rachel's Florist",                               logo: "assets/sponsors/rachels-florist.jpg", url: "" },
+    { group: "Player sponsors", name: "Lashesbylank",                                   logo: "assets/sponsors/lashes-by-lank.jpg", url: "" },  // CHECK spelling
+    { group: "Player sponsors", name: "Poyston Vestey Farm",                            logo: "assets/sponsors/poyston-vestey.jpg", url: "" },
+    { group: "Player sponsors", name: "VIP Barber & Co.",                               logo: "assets/sponsors/vip-barber.jpg", url: "" },
+    { group: "Player sponsors", name: "Hardwood Drinks Co",                             logo: "assets/sponsors/hardwood-drinks.jpg", url: "" },
+    { group: "Player sponsors", name: "Phoenix Bowl",                                   logo: "assets/sponsors/phoenix-bowl.jpg", url: "" },
+    { group: "Player sponsors", name: "The Bearded Crew",                               logo: "assets/sponsors/the-bearded-crew.jpg", url: "" },
+    { group: "Player sponsors", name: "The K.O.",                                       logo: "assets/sponsors/the-ko.jpg", url: "" },
+    { group: "Player sponsors", name: "J14 Coaching & Fitness",                         logo: "assets/sponsors/j14-coaching.jpg", url: "" },
+    { group: "Player sponsors", name: "Laser Shot Ltd",                                 logo: "assets/sponsors/laser-shot.jpg", url: "https://lasershotltd.co.uk" },  // address printed on the logo
+    { group: "Player sponsors", name: "Jeff Clout Inflatables",                         logo: "assets/sponsors/jeff-clout-inflatables.jpg", url: "" },
+    { group: "Player sponsors", name: "King David Tyes Ltd",                            logo: "assets/sponsors/king-david-tyes.jpg", url: "" },  // CHECK spelling
+    { group: "Player sponsors", name: "DJM Pembrokeshire Ltd",                          logo: "assets/sponsors/djm-pembrokeshire.jpg", url: "" },  // CHECK trading name
+    { group: "Player sponsors", name: "Jim Chimney Sweep",                              logo: "assets/sponsors/jim-chimney-sweep.jpg", url: "" },
+    { group: "Player sponsors", name: "Cleddau Electrical Services",                    logo: "assets/sponsors/cleddau-electrical.jpg", url: "" },
   ],
 
   /* ----------------------------------------------------------------------
