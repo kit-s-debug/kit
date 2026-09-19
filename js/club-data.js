@@ -122,7 +122,73 @@ window.LLANGWM = {
       { date: "2027-03-20", venue: "away", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "", result: "" },
     ],
 
-    juniors: []
+    /* Llangwm Minis and Junior Fixtures 2026-2027, as issued by the club.
+       Sundays. Each date has two entries because the two age bands often
+       play different venues on the same day — the band is shown under the
+       opponent's name.
+
+       Byes, winter breaks, Remembrance Day, Mother's Day and Easter Sunday
+       are not listed: there is no fixture to show. The club's sheet also
+       notes that fixtures are subject to change, and that not all clubs
+       have teams in every age group.
+
+       Dates from the same sheet, not listed here as they are not Llangwm
+       fixtures: Minis End of Season County Festivals 25 April, Junior Plate
+       Finals 30 April, Junior Cup Finals Day 2 May. */
+    juniors: [
+      { date: "2026-09-13", venue: "home", opponent: "Aberystwyth",         competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-09-13", venue: "away", opponent: "Aberystwyth",         competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-09-20", venue: "away", opponent: "Tenby",               competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-09-20", venue: "home", opponent: "Tenby",               competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-09-27", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-09-27", venue: "away", opponent: "Whitland",            competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-10-04", venue: "home", opponent: "Neyland",             competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-10-04", venue: "away", opponent: "Neyland",             competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-10-11", venue: "away", opponent: "Crymych",             competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-10-11", venue: "home", opponent: "Crymych",             competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-10-18", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-10-18", venue: "away", opponent: "Pem Dock Quins",      competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-10-25", venue: "away", opponent: "Aberaeron",           competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-10-25", venue: "home", opponent: "Aberaeron",           competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-11-01", venue: "home", opponent: "Cardigan",            competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-11-01", venue: "away", opponent: "Cardigan",            competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-11-15", venue: "away", opponent: "Haverfordwest",       competition: "U7–U11 · Cup prelims", kickOff: "", result: "" },
+      { date: "2026-11-15", venue: "home", opponent: "Haverfordwest",       competition: "U12–U15 · Cup prelims", kickOff: "", result: "" },
+      { date: "2026-11-22", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-11-22", venue: "away", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-11-29", venue: "away", opponent: "Fishguard",           competition: "U7–U11 · Cup quarter finals", kickOff: "", result: "" },
+      { date: "2026-11-29", venue: "home", opponent: "Fishguard",           competition: "U12–U15 · Cup quarter finals", kickOff: "", result: "" },
+      { date: "2026-12-06", venue: "home", opponent: "Pembroke",            competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-12-06", venue: "away", opponent: "Pembroke",            competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2026-12-13", venue: "away", opponent: "St Davids",           competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2026-12-13", venue: "home", opponent: "St Davids",           competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-01-10", venue: "home", opponent: "Narberth",            competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-01-10", venue: "away", opponent: "Narberth",            competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-01-24", venue: "away", opponent: "Aberystwyth",         competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-01-24", venue: "home", opponent: "Aberystwyth",         competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-01-31", venue: "home", opponent: "Tenby",               competition: "U7–U11 · Cup and Plate semi finals", kickOff: "", result: "" },
+      { date: "2027-01-31", venue: "away", opponent: "Tenby",               competition: "U12–U15 · Cup and Plate semi finals", kickOff: "", result: "" },
+      { date: "2027-02-07", venue: "away", opponent: "Whitland",            competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-02-07", venue: "home", opponent: "Whitland",            competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-02-14", venue: "away", opponent: "Neyland",             competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-02-14", venue: "home", opponent: "Neyland",             competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-02-21", venue: "home", opponent: "Crymych",             competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-02-21", venue: "away", opponent: "Crymych",             competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-02-28", venue: "away", opponent: "Pem Dock Quins",      competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-02-28", venue: "home", opponent: "Pem Dock Quins",      competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-03-14", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-03-14", venue: "away", opponent: "Aberaeron",           competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-03-21", venue: "away", opponent: "Cardigan",            competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-03-21", venue: "home", opponent: "Cardigan",            competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-04-04", venue: "home", opponent: "Haverfordwest",       competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-04-04", venue: "away", opponent: "Haverfordwest",       competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-04-11", venue: "away", opponent: "Milford Haven",       competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-04-11", venue: "home", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-04-18", venue: "home", opponent: "Fishguard",           competition: "U7–U11", kickOff: "", result: "" },
+      { date: "2027-04-18", venue: "away", opponent: "Fishguard",           competition: "U12–U15", kickOff: "", result: "" },
+      { date: "2027-04-25", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11 · End of season county festivals", kickOff: "", result: "" },
+      { date: "2027-04-25", venue: "home", opponent: "Pembroke",            competition: "U12–U15", kickOff: "", result: "" },
+    ]
   },
 
   /* ----------------------------------------------------------------------
@@ -237,11 +303,38 @@ window.LLANGWM = {
          url: "https://example.co.uk" },
      Leave logo as "" and the partner's name is set in type instead.
      ---------------------------------------------------------------------- */
+  /* `group` puts a heading above a set of partners. Leave it off and the
+     partner sits in an unlabelled row at the top.
+
+     No logo files were supplied, so each name is set in type instead. To use
+     a logo, drop the file into assets/sponsors/ and put its path in `logo`.
+     Only add a `url` you have actually been given — a wrong address is worse
+     than none, and the button becomes plain text when `url` is "". */
   sponsors: [
     // CHECK — Loche Bros is the front-of-shirt sponsor on the club's current
-    // playing kit. Add their website and a logo file when you have them, and
-    // add the rest of the season's partners in the same shape.
-    { name: "Loche Bros", logo: "", url: "" }
+    // playing kit, read from the shirt itself. Confirm the wording.
+    { group: "Front of shirt", name: "Loche Bros", logo: "", url: "" },
+
+    // Player sponsors, from the club's own sponsor board on Instagram.
+    // Website addresses were not given for these, apart from Laser Shot,
+    // whose logo carries one. Add the others as you get them.
+    { group: "Player sponsors", name: "Allpipes Civils Ltd",                            logo: "", url: "" },
+    { group: "Player sponsors", name: "Pembrokeshire Building & Plumbing Supplies Ltd", logo: "", url: "" },
+    { group: "Player sponsors", name: "Rachel's Florist",                               logo: "", url: "" },
+    { group: "Player sponsors", name: "Lashed by Leah",                                 logo: "", url: "" },
+    { group: "Player sponsors", name: "Poyston West Farm",                              logo: "", url: "" },
+    { group: "Player sponsors", name: "VIP Barber & Co.",                               logo: "", url: "" },
+    { group: "Player sponsors", name: "Hardwood Drinks Co",                             logo: "", url: "" },
+    { group: "Player sponsors", name: "Phoenix Bowl",                                   logo: "", url: "" },
+    { group: "Player sponsors", name: "The Bearded Chefs",                              logo: "", url: "" },
+    { group: "Player sponsors", name: "K.O.",                                           logo: "", url: "" },
+    { group: "Player sponsors", name: "J14 Coaching & Fitness",                         logo: "", url: "" },
+    { group: "Player sponsors", name: "Laser Shot Ltd",                                 logo: "", url: "https://lasershotltd.co.uk" },
+    { group: "Player sponsors", name: "Jeff Clout Inflatables",                         logo: "", url: "" },
+    { group: "Player sponsors", name: "King David Tyres Ltd",                           logo: "", url: "" },
+    { group: "Player sponsors", name: "DJM Services Pembs Ltd",                         logo: "", url: "" },
+    { group: "Player sponsors", name: "Jim Chimney Sweep",                              logo: "", url: "" },
+    { group: "Player sponsors", name: "Cleddau Electrical Services",                    logo: "", url: "" },
   ],
 
   /* ----------------------------------------------------------------------
