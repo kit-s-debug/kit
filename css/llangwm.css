@@ -996,16 +996,33 @@ section[id],[id="top"]{scroll-margin-top:96px}
 /* Flex rather than grid: a group with one partner in it (the shirt sponsor)
    would otherwise leave the rest of the grid row as a dead panel. */
 .partners{display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border:1px solid var(--line)}
+/* Sponsor logos arrive with their own backgrounds baked in — some white,
+   some black, one a blue gradient. There is no filter that flatters all of
+   them, and greyscaling would turn a Welsh dragon and a set of rainbow pipes
+   into grey mush. So the board is light and every logo is shown in its own
+   colours, as its owner drew it. */
 .partner{
-  flex:1 1 180px;background:var(--ink);min-height:128px;
-  display:grid;place-items:center;padding:24px;text-align:center;text-decoration:none;
-  transition:background-color .3s var(--ease);
+  flex:1 1 190px;background:#fff;min-height:142px;
+  display:grid;place-items:center;padding:20px 18px;text-align:center;text-decoration:none;
+  transition:transform .3s var(--ease);
 }
-.partner:hover{background:var(--ink-3)}
-.partner img{max-height:58px;width:auto;object-fit:contain;filter:grayscale(1) brightness(1.7);opacity:.7;transition:filter .35s,opacity .35s}
-.partner:hover img{filter:none;opacity:1}
-.partner span{font-family:var(--display);font-size:1.1rem;color:var(--mist);transition:color .3s}
-.partner:hover span{color:var(--amber)}
+.partner img{max-height:78px;width:auto;max-width:100%;object-fit:contain}
+/* A partner with no logo file carries its name instead, so it is set at a
+   size that holds its own against the artwork beside it. */
+.partner span{
+  font-family:var(--display);font-size:clamp(1.3rem,2.4vw,2rem);
+  line-height:1;letter-spacing:.01em;color:var(--ink);transition:color .3s;
+}
+/* Lift rather than tint: a colour change would fight the logo underneath. */
+.partner[href]:hover{transform:translateY(-3px)}
+.partner[href]:hover span{color:#9a6a00}
+.partner[href]:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
+/* One logo per row on a phone would make the board scroll for pages, so the
+   tiles halve. Two across stays legible; three does not. */
+@media (max-width:640px){
+  .partner{flex:1 1 42%;min-height:112px;padding:14px 10px}
+  .partner img{max-height:54px}
+}
 
 .accred{
   display:flex;flex-wrap:wrap;align-items:center;gap:clamp(20px,3vw,40px);
