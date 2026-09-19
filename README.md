@@ -122,49 +122,41 @@ than the rest; if better copies turn up, overwrite them under the same names.
 
 These are marked `// CHECK` in `club-data.js`:
 
-1. **The 1958-59 card is a placeholder.** Its photograph was never found, so
-   it currently shows a real but undated Llangwm side, flagged "Placeholder
-   image" on the card and called out at the top of its caption. To finish it:
-   put the real photograph in `assets/photos/archive/`, point the card's two
-   image paths at it (`data-lb-src` and `src`), delete the
-   `<span class="plate-flag">` and delete the placeholder sentence from the
-   start of the caption. Everything else on that card is already correct.
-2. **Team photographs.** The six headshots were cropped from the club's own
+1. **Team photographs.** The six headshots were cropped from the club's own
    "Meet the Team" graphic, which is the only copy available here. They look
    fine at card size, but if the original photographs still exist, replacing
    the files in `assets/photos/` with them will sharpen the section
    noticeably. Same filenames, same 4:5 shape, and nothing else changes.
-3. **The clubhouse address and phone number.** Both match the club's public
+2. **The clubhouse address and phone number.** Both match the club's public
    Google listing. The playing ground is recorded separately from the
    clubhouse (Pill Parks Way), so decide which address supporters should be
    given for matchdays and update `club.mapQuery` to match.
-4. **Opening hours.** `club.openingHours` is empty, because no hours are
-   published on the club's Google listing and guessing them would be worse
-   than leaving them out. Add them as a list of lines and a row appears under
-   Find Us automatically.
-5. **The Facebook page.** Confirm it is the club's own, or set
+3. **The Facebook page.** Confirm it is the club's own, or set
    `social.facebook` to `""` to remove every Facebook link.
-6. **Sponsors.** Only Loche Bros is listed, taken from the front of the
-   current playing shirt. Add the rest of the season's partners, and a logo
-   file and website for each, in `sponsors`.
-7. **WRU accreditation.** `accreditation.show` is `true` and the level is set
-   to Gold. Confirm the club's current level, and add the official WRU badge
-   artwork as `assets/brand/wru-accreditation.png` (set `accreditation.badge`
-   to that path). Set `show: false` to hide the section entirely.
-8. **The KJ Prints shop URL.** RCS is linked. Until KJ Prints has a `url`,
+4. **Sponsor logos and websites.** Loche Bros and the seventeen player
+   sponsors are listed by name. No logo files were supplied, so each name is
+   set in type; drop a file into `assets/sponsors/` and put its path in
+   `logo` to use artwork instead. Only Laser Shot has a website, which was
+   printed on its logo — add the others to `url` as you get them, and never
+   a guessed address.
+5. **The WRU accreditation badge.** The level (Gold) is confirmed. The
+   official badge artwork is not included; add it as
+   `assets/brand/wru-accreditation.png` and set `accreditation.badge` to that
+   path to show it in place of the plain amber block.
+6. **The KJ Prints shop URL.** RCS is linked. Until KJ Prints has a `url`,
    its button sends people to the contact section rather than nowhere.
-9. **Gallery photographs.** The gallery is built and empty. Matchday, junior
+7. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
-10. **An email address for privacy enquiries.** The privacy policy currently
+8. **An email address for privacy enquiries.** The privacy policy currently
    gives the clubhouse phone number and postal address as the route for
    privacy questions, which is honest but slow. If the club has an address it
    is happy to publish, there is a commented-out block in `privacy.html` marking
    exactly where it goes.
-11. **Next season's fixtures.** Both the First XV league season and the minis
+9. **Next season's fixtures.** Both the First XV league season and the minis
    and junior season run to spring 2027. When the new fixtures are published,
    replace the lists; old ones can be deleted or left, as played fixtures no
    longer show.
-12. **News.** `news` ships empty. It was previously seeded from the club's old
+10. **News.** `news` ships empty. It was previously seeded from the club's old
    website, which this site replaces, so it needs filling in here.
 
 ## Historical material

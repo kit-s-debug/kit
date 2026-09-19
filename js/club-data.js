@@ -43,11 +43,8 @@ window.LLANGWM = {
     // Leave "" to hide the email row entirely.
     email: "",
 
-    // Clubhouse opening hours. One line per row, e.g.
-    //   openingHours: ["Friday 19:00 - late", "Saturday 12:00 - late"]
-    // No hours are published on the club's Google listing, so this is left
-    // empty rather than guessed. Fill it in and the rows appear under Find Us.
-    openingHours: [],
+    // The clubhouse has no fixed opening hours — they vary week to week —
+    // so none are listed. What is open when goes out on the club's socials.
 
     // CHECK — the playing ground is recorded separately from the clubhouse.
     // Confirm which address supporters should be given for matchdays, then
