@@ -31,6 +31,16 @@ import { sessionStore, type SessionError } from '@/lib/store/session-store';
 /** How much recent text the rhyme engine reads. Roughly the last two bars. */
 const CONTEXT_CHARS = 140;
 const TICK_MS = 200;
+/**
+ * Grace period after a bar flips before the rhyme anchor is taken.
+ *
+ * Transcription lags the voice by a couple of hundred milliseconds, so reading
+ * the transcript the instant the bar turns over would miss the very word the
+ * rapper just landed on. Waiting lets it arrive. Overshooting slightly is
+ * cheap: bars nearly always open on a function word, and `findAnchor` walks
+ * back past those anyway.
+ */
+const BAR_SETTLE_MS = 300;
 
 export type FinishReason = 'timer' | 'manual' | 'error';
 
@@ -64,6 +74,9 @@ export class FreestyleController {
   private lastFinalMs = 0;
   private topicsSeen = new Set<TopicId>();
 
+  /** Pending bar-boundary sample; suggestions refresh once per bar, not per word. */
+  private barSampleTimer: ReturnType<typeof setTimeout> | null = null;
+
   /** Watchdog state: is transcription actually producing anything? */
   private heardAnything = false;
   private micActiveMs = 0;
@@ -87,6 +100,7 @@ export class FreestyleController {
         }),
       onBar: (bar) => {
         sessionStore.setState({ currentBar: bar });
+        this.scheduleBarSample();
       },
     });
 
@@ -341,7 +355,6 @@ export class FreestyleController {
     if (text && this.phraseStartMs === null) this.phraseStartMs = this.elapsedMs();
     this.interim = text;
     sessionStore.setState({ interim: text });
-    this.pushSuggestions();
   }
 
   private handleFinal(text: string, confidence: number) {
@@ -370,10 +383,29 @@ export class FreestyleController {
     if (reading.topic) this.topicsSeen.add(reading.topic);
 
     sessionStore.setState({ chunks: this.chunks, interim: '' });
-    this.pushSuggestions();
+  }
+
+  /**
+   * Rhymes refresh once per bar, anchored on the word the rapper ended that
+   * bar with, and hold for the whole of the next one.
+   *
+   * Re-anchoring on every word — which is what this used to do — makes the
+   * panel unreadable while performing: the words churn faster than you can
+   * glance at them, and the suggestion you were aiming for is gone by the time
+   * you reach it. Holding for a bar is also what you actually want musically,
+   * since the rhyme you are setting up lands at the end of the *next* bar.
+   */
+  private scheduleBarSample() {
+    if (this.finished) return;
+    if (this.barSampleTimer) clearTimeout(this.barSampleTimer);
+    this.barSampleTimer = setTimeout(() => {
+      this.barSampleTimer = null;
+      this.pushSuggestions();
+    }, BAR_SETTLE_MS);
   }
 
   private pushSuggestions() {
+    if (this.finished) return;
     const text = this.recentText();
     if (text.length < 3) return;
     const barMs = barDurationMs(this.beat?.bpm ?? 90);
@@ -384,6 +416,8 @@ export class FreestyleController {
 
   async pause(): Promise<void> {
     if (this.finished) return;
+    if (this.barSampleTimer) clearTimeout(this.barSampleTimer);
+    this.barSampleTimer = null;
     sessionStore.setState({ paused: true });
     await this.beatEngine.pause();
     this.speech?.stop();
@@ -429,6 +463,8 @@ export class FreestyleController {
 
     if (this.ticker) clearInterval(this.ticker);
     this.ticker = null;
+    if (this.barSampleTimer) clearTimeout(this.barSampleTimer);
+    this.barSampleTimer = null;
 
     sessionStore.setState({ phase: 'finishing' });
 
@@ -541,6 +577,8 @@ export class FreestyleController {
     this.finished = true;
     if (this.ticker) clearInterval(this.ticker);
     this.ticker = null;
+    if (this.barSampleTimer) clearTimeout(this.barSampleTimer);
+    this.barSampleTimer = null;
     this.speech?.abort();
     this.speech = null;
     this.mic.stop();
