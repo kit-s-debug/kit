@@ -73,10 +73,10 @@ window.LLANGWM = {
   /* ----------------------------------------------------------------------
      3. FIXTURES
      --------------------------------------------------------------------------
-     Add fixtures here and they appear on the site automatically, newest
-     first. While a list is empty the site shows a short panel pointing
-     supporters at the official fixture list instead — so nothing ever looks
-     broken or out of date.
+     Add fixtures here and they appear on the site automatically, soonest
+     first, and drop off once they have been played. While a list is empty
+     the site shows a short panel pointing supporters at the club's social
+     media instead — so nothing ever looks broken or out of date.
 
      Copy this block for each new fixture:
 
@@ -85,10 +85,13 @@ window.LLANGWM = {
          opponent: "Narberth RFC Athletic",
          venue: "home",             // "home" or "away"
          kickOff: "14:30",
-         ground: "The Green, Llangwm",
-         competition: "League",     // optional
-         result: ""                 // "" until played, then e.g. "W 24-17"
+         ground: "The Green, Llangwm",   // optional
+         competition: "League"           // optional
        },
+
+     A fixture disappears from the site the day after it is played. The club
+     does not publish results here, so there is nothing to add afterwards —
+     just delete old fixtures whenever you are tidying up, or leave them.
      ---------------------------------------------------------------------- */
   fixtures: {
 
@@ -99,28 +102,26 @@ window.LLANGWM = {
        editing its kickOff; clear it to "" and that fixture reads
        "Kick-off TBC" instead.
 
-       When a game has been played, add the score to that fixture — e.g.
-         result: "W 24-17"
-       — and it moves itself out of Next up and into Recent results. */
+       Fixtures drop off the site the day after they are played. */
     firstXV: [
-      { date: "2026-09-12", venue: "away", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-09-19", venue: "home", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-09-26", venue: "away", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-10-10", venue: "home", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-10-17", venue: "away", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-10-31", venue: "home", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-11-21", venue: "away", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-11-28", venue: "home", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-12-05", venue: "home", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-12-12", venue: "away", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2026-12-19", venue: "home", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-01-02", venue: "home", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-01-09", venue: "away", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-01-16", venue: "home", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-01-23", venue: "away", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-01-30", venue: "home", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-02-27", venue: "away", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "14:30", result: "" },
-      { date: "2027-03-20", venue: "away", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "14:30", result: "" },
+      { date: "2026-09-12", venue: "away", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-09-19", venue: "home", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-09-26", venue: "away", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-10-10", venue: "home", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-10-17", venue: "away", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-10-31", venue: "home", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-11-21", venue: "away", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-11-28", venue: "home", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-12-05", venue: "home", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-12-12", venue: "away", opponent: "Llanybydder RFC",               competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2026-12-19", venue: "home", opponent: "St Davids RFC",                 competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-01-02", venue: "home", opponent: "Pembroke Dock Harlequins RFC",  competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-01-09", venue: "away", opponent: "Narberth RFC Athletic",         competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-01-16", venue: "home", opponent: "Newcastle Emlyn RFC Athletic",  competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-01-23", venue: "away", opponent: "Tenby United RFC Athletic",     competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-01-30", venue: "home", opponent: "Pembroke RFC",                  competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-02-27", venue: "away", opponent: "Aberystwyth RFC Athletic",      competition: "Division 4 West A", kickOff: "14:30" },
+      { date: "2027-03-20", venue: "away", opponent: "Crymych RFC Athletic",          competition: "Division 4 West A", kickOff: "14:30" },
     ],
 
     /* Llangwm Minis and Junior Fixtures 2026-2027, as issued by the club.
@@ -139,27 +140,27 @@ window.LLANGWM = {
        fixtures: Minis End of Season County Festivals 25 April, Junior Plate
        Finals 30 April, Junior Cup Finals Day 2 May. */
     juniors: [
-      { date: "2026-09-13", venue: "home", opponent: "Aberystwyth",         competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-09-13", venue: "away", opponent: "Aberystwyth",         competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-09-20", venue: "away", opponent: "Tenby",               competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-09-20", venue: "home", opponent: "Tenby",               competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-09-27", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-09-27", venue: "away", opponent: "Whitland",            competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-10-04", venue: "home", opponent: "Neyland",             competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-10-04", venue: "away", opponent: "Neyland",             competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-10-11", venue: "away", opponent: "Crymych",             competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-10-11", venue: "home", opponent: "Crymych",             competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-10-18", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-10-18", venue: "away", opponent: "Pem Dock Quins",      competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-10-25", venue: "away", opponent: "Aberaeron",           competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-10-25", venue: "home", opponent: "Aberaeron",           competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-11-01", venue: "home", opponent: "Cardigan",            competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-11-01", venue: "away", opponent: "Cardigan",            competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-11-15", venue: "away", opponent: "Haverfordwest",       competition: "U7–U11 · Cup prelims", kickOff: "14:30", result: "" },
-      { date: "2026-11-15", venue: "home", opponent: "Haverfordwest",       competition: "U12–U15 · Cup prelims", kickOff: "14:30", result: "" },
-      { date: "2026-11-22", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-11-22", venue: "away", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-11-29", venue: "away", opponent: "Fishguard",           competition: "U7–U11", kickOff: "14:30", result: "" },
+      { date: "2026-09-13", venue: "home", opponent: "Aberystwyth",         competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-09-13", venue: "away", opponent: "Aberystwyth",         competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-09-20", venue: "away", opponent: "Tenby",               competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-09-20", venue: "home", opponent: "Tenby",               competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-09-27", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-09-27", venue: "away", opponent: "Whitland",            competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-10-04", venue: "home", opponent: "Neyland",             competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-10-04", venue: "away", opponent: "Neyland",             competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-10-11", venue: "away", opponent: "Crymych",             competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-10-11", venue: "home", opponent: "Crymych",             competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-10-18", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-10-18", venue: "away", opponent: "Pem Dock Quins",      competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-10-25", venue: "away", opponent: "Aberaeron",           competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-10-25", venue: "home", opponent: "Aberaeron",           competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-11-01", venue: "home", opponent: "Cardigan",            competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-11-01", venue: "away", opponent: "Cardigan",            competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-11-15", venue: "away", opponent: "Haverfordwest",       competition: "U7–U11 · Cup prelims", kickOff: "14:30" },
+      { date: "2026-11-15", venue: "home", opponent: "Haverfordwest",       competition: "U12–U15 · Cup prelims", kickOff: "14:30" },
+      { date: "2026-11-22", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-11-22", venue: "away", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-11-29", venue: "away", opponent: "Fishguard",           competition: "U7–U11", kickOff: "14:30" },
 
       /* Cup quarter finals, 29 November, from the knockout draw. These
          replace the blanket U12-U15 line on the club's fixture sheet: the
@@ -168,40 +169,40 @@ window.LLANGWM = {
 
          The U15 opponent is whoever wins the Haverfordwest v Crymych
          preliminary tie, so it is named as both until that is played. */
-      { date: "2026-11-29", venue: "home", opponent: "Pembroke",             competition: "U12 · Cup quarter final", kickOff: "14:30", result: "" },
-      { date: "2026-11-29", venue: "away", opponent: "St Davids",            competition: "U13 · Cup quarter final", kickOff: "14:30", result: "" },
-      { date: "2026-11-29", venue: "away", opponent: "Crymych",              competition: "U14 · Cup quarter final", kickOff: "14:30", result: "" },
-      { date: "2026-11-29", venue: "home", opponent: "Haverfordwest or Crymych", competition: "U15 · Cup quarter final", kickOff: "14:30", result: "" },
-      { date: "2026-12-06", venue: "home", opponent: "Pembroke",            competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-12-06", venue: "away", opponent: "Pembroke",            competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2026-12-13", venue: "away", opponent: "St Davids",           competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2026-12-13", venue: "home", opponent: "St Davids",           competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-01-10", venue: "home", opponent: "Narberth",            competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-01-10", venue: "away", opponent: "Narberth",            competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-01-24", venue: "away", opponent: "Aberystwyth",         competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-01-24", venue: "home", opponent: "Aberystwyth",         competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-01-31", venue: "home", opponent: "Tenby",               competition: "U7–U11 · Cup and Plate semi finals", kickOff: "14:30", result: "" },
-      { date: "2027-01-31", venue: "away", opponent: "Tenby",               competition: "U12–U15 · Cup and Plate semi finals", kickOff: "14:30", result: "" },
-      { date: "2027-02-07", venue: "away", opponent: "Whitland",            competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-02-07", venue: "home", opponent: "Whitland",            competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-02-14", venue: "away", opponent: "Neyland",             competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-02-14", venue: "home", opponent: "Neyland",             competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-02-21", venue: "home", opponent: "Crymych",             competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-02-21", venue: "away", opponent: "Crymych",             competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-02-28", venue: "away", opponent: "Pem Dock Quins",      competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-02-28", venue: "home", opponent: "Pem Dock Quins",      competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-03-14", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-03-14", venue: "away", opponent: "Aberaeron",           competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-03-21", venue: "away", opponent: "Cardigan",            competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-03-21", venue: "home", opponent: "Cardigan",            competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-04-04", venue: "home", opponent: "Haverfordwest",       competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-04-04", venue: "away", opponent: "Haverfordwest",       competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-04-11", venue: "away", opponent: "Milford Haven",       competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-04-11", venue: "home", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-04-18", venue: "home", opponent: "Fishguard",           competition: "U7–U11", kickOff: "14:30", result: "" },
-      { date: "2027-04-18", venue: "away", opponent: "Fishguard",           competition: "U12–U15", kickOff: "14:30", result: "" },
-      { date: "2027-04-25", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11 · End of season county festivals", kickOff: "14:30", result: "" },
-      { date: "2027-04-25", venue: "home", opponent: "Pembroke",            competition: "U12–U15", kickOff: "14:30", result: "" },
+      { date: "2026-11-29", venue: "home", opponent: "Pembroke",             competition: "U12 · Cup quarter final", kickOff: "14:30" },
+      { date: "2026-11-29", venue: "away", opponent: "St Davids",            competition: "U13 · Cup quarter final", kickOff: "14:30" },
+      { date: "2026-11-29", venue: "away", opponent: "Crymych",              competition: "U14 · Cup quarter final", kickOff: "14:30" },
+      { date: "2026-11-29", venue: "home", opponent: "Haverfordwest or Crymych", competition: "U15 · Cup quarter final", kickOff: "14:30" },
+      { date: "2026-12-06", venue: "home", opponent: "Pembroke",            competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-12-06", venue: "away", opponent: "Pembroke",            competition: "U12–U15", kickOff: "14:30" },
+      { date: "2026-12-13", venue: "away", opponent: "St Davids",           competition: "U7–U11", kickOff: "14:30" },
+      { date: "2026-12-13", venue: "home", opponent: "St Davids",           competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-01-10", venue: "home", opponent: "Narberth",            competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-01-10", venue: "away", opponent: "Narberth",            competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-01-24", venue: "away", opponent: "Aberystwyth",         competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-01-24", venue: "home", opponent: "Aberystwyth",         competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-01-31", venue: "home", opponent: "Tenby",               competition: "U7–U11 · Cup and Plate semi finals", kickOff: "14:30" },
+      { date: "2027-01-31", venue: "away", opponent: "Tenby",               competition: "U12–U15 · Cup and Plate semi finals", kickOff: "14:30" },
+      { date: "2027-02-07", venue: "away", opponent: "Whitland",            competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-02-07", venue: "home", opponent: "Whitland",            competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-02-14", venue: "away", opponent: "Neyland",             competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-02-14", venue: "home", opponent: "Neyland",             competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-02-21", venue: "home", opponent: "Crymych",             competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-02-21", venue: "away", opponent: "Crymych",             competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-02-28", venue: "away", opponent: "Pem Dock Quins",      competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-02-28", venue: "home", opponent: "Pem Dock Quins",      competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-03-14", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-03-14", venue: "away", opponent: "Aberaeron",           competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-03-21", venue: "away", opponent: "Cardigan",            competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-03-21", venue: "home", opponent: "Cardigan",            competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-04-04", venue: "home", opponent: "Haverfordwest",       competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-04-04", venue: "away", opponent: "Haverfordwest",       competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-04-11", venue: "away", opponent: "Milford Haven",       competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-04-11", venue: "home", opponent: "Milford Haven",       competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-04-18", venue: "home", opponent: "Fishguard",           competition: "U7–U11", kickOff: "14:30" },
+      { date: "2027-04-18", venue: "away", opponent: "Fishguard",           competition: "U12–U15", kickOff: "14:30" },
+      { date: "2027-04-25", venue: "away", opponent: "Minis Festivals",     competition: "U7–U11 · End of season county festivals", kickOff: "14:30" },
+      { date: "2027-04-25", venue: "home", opponent: "Pembroke",            competition: "U12–U15", kickOff: "14:30" },
     ]
   },
 

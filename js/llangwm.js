@@ -148,19 +148,12 @@
     var d = parseDate(f.date);
     var home = String(f.venue || "").toLowerCase() === "home";
     var meta = [f.competition, f.ground].filter(Boolean).join(" · ");
-    /* The end column must never be blank. A fixture the club has not given a
-       kick-off time for says so; one whose date has gone without a score
-       says that instead of inventing one. */
-    var end;
-    if (f.result) {
-      end = '<span class="fx-res">' + esc(f.result) + '</span>';
-    } else if (f.kickOff) {
-      end = esc(f.kickOff);
-    } else if (d && d < startOfToday()) {
-      end = '<span class="fx-tbc">Result to follow</span>';
-    } else {
-      end = '<span class="fx-tbc">Kick-off TBC</span>';
-    }
+    /* The end column must never be blank: a fixture the club has not given a
+       kick-off time for says so. The club does not publish results here, so
+       there is nothing else this column can carry. */
+    var end = f.kickOff
+      ? esc(f.kickOff)
+      : '<span class="fx-tbc">Kick-off TBC</span>';
 
     return '<li class="fx-row reveal">' +
       '<time class="fx-when"' + (d ? ' datetime="' + esc(f.date) + '"' : "") + '>' +
@@ -182,38 +175,32 @@
     if (!list || !list.length) {
       return emptyPanel(
         label + " fixtures",
-        "The season's fixtures will be listed here, home and away, with kick-off times, venues and results. Until they are, team news and matchday updates go out on Instagram.",
+        "The season's fixtures will be listed here, home and away, with kick-off times and venues. Until they are, team news and matchday updates go out on Instagram.",
         extLink(SOCIAL.instagram, "Team news on Instagram", true) + extLink(SOCIAL.facebook, "Facebook")
       );
     }
-    /* What a supporter wants first is the next game, not the season's first.
-       Anything played (it has a result, or its date has gone) drops into
-       results underneath, most recent first. */
+    /* The club does not publish results on the site, so this is a list of
+       what is still to come. A fixture drops off it the day after it is
+       played rather than lingering with nothing to say. */
     var today = startOfToday();
-
-    var upcoming = [], played = [];
-    list.forEach(function (f) {
+    var upcoming = list.filter(function (f) {
       var d = parseDate(f.date);
-      if (f.result || (d && d < today)) played.push(f);
-      else upcoming.push(f);
+      return !d || d >= today;
+    }).sort(function (a, b) {
+      var da = parseDate(a.date), db = parseDate(b.date);
+      return (da ? da.getTime() : 0) - (db ? db.getTime() : 0);
     });
 
-    var byDate = function (dir) {
-      return function (a, b) {
-        var da = parseDate(a.date), db = parseDate(b.date);
-        return dir * ((da ? da.getTime() : 0) - (db ? db.getTime() : 0));
-      };
-    };
-    upcoming.sort(byDate(1));
-    played.sort(byDate(-1));
+    /* Every fixture played: say so, rather than render an empty list. */
+    if (!upcoming.length) {
+      return emptyPanel(
+        label + " fixtures",
+        "That is the season's fixtures played. Next season's will be listed here as soon as they are published.",
+        extLink(SOCIAL.instagram, "Club news on Instagram", true) + extLink(SOCIAL.facebook, "Facebook")
+      );
+    }
 
-    var group = function (title, rows) {
-      if (!rows.length) return "";
-      return '<h3 class="fx-group">' + esc(title) + '</h3>' +
-        '<ul class="fx-list">' + rows.map(fixtureRow).join("") + '</ul>';
-    };
-
-    return group("Next up", upcoming) + group("Recent results", played);
+    return '<ul class="fx-list">' + upcoming.map(fixtureRow).join("") + '</ul>';
   }
 
   function renderFixtures() {

@@ -622,7 +622,6 @@ section[id],[id="top"]{scroll-margin-top:96px}
 .fx-opp{font-size:clamp(1rem,1.5vw,1.28rem);line-height:1.1;margin-bottom:5px}
 .fx-meta{font-size:.78rem;color:var(--mist-dim);margin:0}
 .fx-end{text-align:right;font-family:var(--display);font-size:1.15rem;color:var(--white);white-space:nowrap}
-.fx-end .fx-res{color:var(--amber)}
 /* Set in the body face so an absent kick-off reads as a note, not a score. */
 .fx-end .fx-tbc{
   font-family:var(--body);font-weight:700;font-size:.68rem;

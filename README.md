@@ -34,7 +34,7 @@ You can edit:
 |---|---|
 | Address, phone, links | `club` |
 | Instagram / Facebook | `social` |
-| Fixtures and results | `fixtures.firstXV` / `fixtures.juniors` |
+| Fixtures | `fixtures.firstXV` / `fixtures.juniors` |
 | News and match reports | `news` |
 | Coaches and committee | `team` |
 | Photographs | `gallery` |
@@ -62,14 +62,14 @@ fixtures: {
       venue: "home",             // "home" or "away"
       kickOff: "14:30",
       ground: "The Green, Llangwm",
-      competition: "League",
-      result: ""                 // "" until played, then e.g. "W 24-17"
+      competition: "League"
     }
   ],
 ```
 
-Upcoming games appear under **Next up**; once a fixture has a `result`, or
-its date has passed, it moves down into **Recent results** automatically.
+Fixtures are listed soonest first, and drop off the site the day after they
+are played. The club does not publish results here, so there is nothing to
+add to a fixture afterwards.
 
 This is the club's own fixture list now — there is no other site to fall back
 to — so it is worth keeping up to date. While it is empty the section shows a
@@ -160,14 +160,11 @@ These are marked `// CHECK` in `club-data.js`:
    privacy questions, which is honest but slow. If the club has an address it
    is happy to publish, there is a commented-out block in `privacy.html` marking
    exactly where it goes.
-11. **Kick-off times and results.** The full 2026/27 First XV league season is
-   in, from the WRU's Division 4 West A fixture list. Kick-off times are not
-   on that list, so every fixture reads "Kick-off TBC" until a `kickOff` is
-   added. Games whose date has passed read "Result to follow" until a
-   `result` is added; no score is ever invented.
-12. **Mini and junior fixtures.** `fixtures.juniors` is empty, so that tab
-   still shows its placeholder panel.
-13. **News.** `news` ships empty. It was previously seeded from the club's old
+11. **Next season's fixtures.** Both the First XV league season and the minis
+   and junior season run to spring 2027. When the new fixtures are published,
+   replace the lists; old ones can be deleted or left, as played fixtures no
+   longer show.
+12. **News.** `news` ships empty. It was previously seeded from the club's old
    website, which this site replaces, so it needs filling in here.
 
 ## Historical material
@@ -237,7 +234,7 @@ through Jekyll. Do not delete it.
 Editing the working branch is not enough on its own — `gh-pages` has to be
 rebuilt, or the live site will not change:
 
-    git add llangwm && git commit -m "Add Saturday's result"
+    git add llangwm && git commit -m "Update fixtures"
     git push
 
     git branch -D gh-pages
