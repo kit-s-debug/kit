@@ -1002,11 +1002,11 @@ section[id],[id="top"]{scroll-margin-top:96px}
    into grey mush. So the board is light and every logo is shown in its own
    colours, as its owner drew it. */
 .partner{
-  flex:1 1 190px;background:#fff;min-height:142px;
-  display:grid;place-items:center;padding:20px 18px;text-align:center;text-decoration:none;
+  flex:1 1 190px;background:#fff;min-height:152px;
+  display:grid;place-items:center;padding:18px 16px;text-align:center;text-decoration:none;
   transition:transform .3s var(--ease);
 }
-.partner img{max-height:78px;width:auto;max-width:100%;object-fit:contain}
+.partner img{max-height:94px;width:auto;max-width:100%;object-fit:contain}
 /* A partner with no logo file carries its name instead, so it is set at a
    size that holds its own against the artwork beside it. */
 .partner span{
@@ -1020,8 +1020,8 @@ section[id],[id="top"]{scroll-margin-top:96px}
 /* One logo per row on a phone would make the board scroll for pages, so the
    tiles halve. Two across stays legible; three does not. */
 @media (max-width:640px){
-  .partner{flex:1 1 42%;min-height:112px;padding:14px 10px}
-  .partner img{max-height:54px}
+  .partner{flex:1 1 42%;min-height:124px;padding:12px 10px}
+  .partner img{max-height:68px}
 }
 
 .accred{
