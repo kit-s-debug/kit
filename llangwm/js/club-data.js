@@ -321,8 +321,8 @@ window.LLANGWM = {
 
      Every logo below was supplied by the club and carries the business's own
      wordmark, so `name` is what a screen reader announces rather than what is
-     read on screen. Three are marked CHECK: the logo and the club's sponsor
-     board disagree, and the logo was followed.
+     read on screen. Two are still marked CHECK, where the logo and the club's
+     sponsor board disagree and the logo was followed for now.
 
      Only add a `url` you have actually been given. The two below are printed
      on the logos themselves. */
@@ -346,7 +346,7 @@ window.LLANGWM = {
     { group: "Player sponsors", name: "Laser Shot Ltd",                                 logo: "assets/sponsors/laser-shot.jpg", url: "https://lasershotltd.co.uk" },  // address printed on the logo
     { group: "Player sponsors", name: "Jeff Clout Inflatables",                         logo: "assets/sponsors/jeff-clout-inflatables.jpg", url: "" },
     { group: "Player sponsors", name: "King David Tyes Ltd",                            logo: "assets/sponsors/king-david-tyes.jpg", url: "" },  // CHECK spelling
-    { group: "Player sponsors", name: "DJM Pembrokeshire Ltd",                          logo: "assets/sponsors/djm-pembrokeshire.jpg", url: "" },  // CHECK trading name
+    { group: "Player sponsors", name: "DJM Pembroke Ltd",                               logo: "assets/sponsors/djm-pembrokeshire.jpg", url: "" },
     { group: "Player sponsors", name: "Jim Chimney Sweep",                              logo: "assets/sponsors/jim-chimney-sweep.jpg", url: "" },
     { group: "Player sponsors", name: "Cleddau Electrical Services",                    logo: "assets/sponsors/cleddau-electrical.jpg", url: "" },
   ],
