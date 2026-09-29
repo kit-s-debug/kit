@@ -49,7 +49,7 @@
   function stepIcon(step, label, opts) {
     const info = TYPE_INFO[step.type] || TYPE_INFO.junction;
     const small = step.type === "via";
-    const cls = "step-pin" + (small ? " via" : "") + (opts && opts.selected ? " selected" : "") + (opts && opts.flagged ? " flagged" : "");
+    const cls = "step-pin" + (small ? " via" : "") + (opts && opts.selected ? " selected" : "") + (opts && opts.flagged ? " flagged" : "") + (opts && opts.check ? " check" : "");
     const size = small ? 14 : 28;
     return L.divIcon({
       className: "",
@@ -70,18 +70,18 @@
       L.polyline(route.path, { color: "#0f2a47", weight: 9, opacity: 0.35, interactive: false }).addTo(map);
       layers.line = L.polyline(route.path, { color: "#2f7df6", weight: 5, opacity: 0.95, interactive: false }).addTo(map);
       pts = route.path.slice();
-    } else if (route.steps.length > 1) {
+    } else if (route.steps.filter(PD.isPlaced).length > 1) {
       // No road line yet: say so by drawing a dashed straight connector.
-      layers.line = L.polyline(route.steps.map((s) => [s.lat, s.lng]), {
+      layers.line = L.polyline(route.steps.filter(PD.isPlaced).map((s) => [s.lat, s.lng]), {
         color: "#7a8591", weight: 3, dashArray: "6 8", interactive: false,
       }).addTo(map);
     }
     let n = 0;
     route.steps.forEach((s, i) => {
-      if (s.type === "via" && !opts.showVia) return;
       const label = s.type === "via" ? "" : s.type === "start" ? "S" : s.type === "end" ? "F" : String(++n);
+      if ((s.type === "via" && !opts.showVia) || !PD.isPlaced(s)) return;
       const m = L.marker([s.lat, s.lng], {
-        icon: stepIcon(s, label, { selected: opts.selected === i, flagged: opts.flagged && opts.flagged(i) }),
+        icon: stepIcon(s, label, { selected: opts.selected === i, flagged: opts.flagged && opts.flagged(i), check: s.placement === "auto" && opts.showVia }),
         draggable: !!opts.draggable,
         keyboard: false,
         zIndexOffset: s.type === "via" ? 0 : 500,

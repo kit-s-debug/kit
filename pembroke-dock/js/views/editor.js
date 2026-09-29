@@ -13,6 +13,7 @@
     let selected = route.steps.length ? 0 : null;
     let adding = route.steps.length === 0;
     let map, layers, searchMarker;
+    let placing = null; // index of a step waiting for a tap on the map
 
     root.innerHTML =
       '<div class="route-head">' +
@@ -29,6 +30,8 @@
       '<button class="btn" id="ed-add" aria-pressed="false"></button>' +
       '<button class="btn btn-ghost" id="ed-snap">Snap to roads</button>' +
       "</div>" +
+      '<div class="map-tools"><button class="btn btn-ghost" id="ed-find">Find junctions</button></div>' +
+      '<div class="place-report" id="ed-report"></div>' +
       '<p class="fineprint" id="ed-line-note"></p>' +
       "</div>" +
       '<div class="editor-side">' +
@@ -84,6 +87,7 @@
         onDragEnd: (i, ll) => {
           route.steps[i].lat = ll.lat;
           route.steps[i].lng = ll.lng;
+          route.steps[i].placement = "manual";
           geometryChanged();
           save();
           renderAll();
@@ -99,10 +103,21 @@
       else note.textContent = route.steps.length > 1 ? "Grey dashes are straight lines between points, not roads. Press Snap to roads to follow the real roads." : "";
     }
     map.on("click", (e) => {
+      if (placing != null) {
+        const s = route.steps[placing];
+        s.lat = e.latlng.lat;
+        s.lng = e.latlng.lng;
+        s.placement = "manual";
+        placing = null;
+        geometryChanged();
+        save();
+        renderAll();
+        return;
+      }
       if (!adding) return;
       const at = selected == null ? route.steps.length : selected + 1;
       const type = route.steps.length === 0 ? "start" : "junction";
-      route.steps.splice(at, 0, { lat: e.latlng.lat, lng: e.latlng.lng, type, instruction: "", road: "", lane: "", note: "" });
+      route.steps.splice(at, 0, { lat: e.latlng.lat, lng: e.latlng.lng, type, instruction: "", road: "", onto: "", lane: "", note: "", placement: "manual" });
       geometryChanged();
       selected = at;
       save();
@@ -135,7 +150,10 @@
           return (
             '<li class="ed-step' + (open ? " open" : "") + '" data-i="' + i + '">' +
             '<button class="ed-step-head" data-sel="' + i + '"><span class="step-pin' + (s.type === "via" ? " via" : "") + '" style="--pin:' + info.color + '">' + (s.type === "via" ? "" : esc(labels[i])) + "</span>" +
-            "<span>" + (s.instruction ? esc(s.instruction) : '<i class="muted">' + esc(info.label) + (s.type === "via" ? "" : " · no wording yet") + "</i>") + "</span></button>" +
+            "<span>" + (s.instruction ? esc(s.instruction) : '<i class="muted">' + esc(info.label) + (s.type === "via" ? "" : " · no wording yet") + "</i>") +
+            (s.onto ? ' <span class="muted">onto ' + esc(s.onto) + "</span>" : "") +
+            (!PD.isPlaced(s) ? ' <b class="unplaced">· not on map</b>' : s.placement === "auto" ? ' <b class="unplaced">· check pin</b>' : "") +
+            "</span></button>" +
             (open
               ? '<div class="ed-step-body">' +
                 '<label class="field"><span>Type</span><select data-f="type">' +
@@ -144,16 +162,23 @@
                 (s.type === "via"
                   ? '<p class="fineprint">Shape points only steer the road line onto the right road. They are not shown as directions.</p>'
                   : '<label class="field"><span>Direction (as your source words it)</span><input type="text" data-f="instruction" value="' + esc(s.instruction) + '" placeholder="e.g. At the roundabout take the 2nd exit"></label>' +
-                    '<label class="field"><span>Road</span><input type="text" data-f="road" value="' + esc(s.road) + '" placeholder="Road name from the source"></label>' +
+                    '<label class="field"><span>Road you\'re on</span><input type="text" data-f="road" value="' + esc(s.road) + '" placeholder="Road name from the source"></label>' +
+                    '<label class="field"><span>Road you turn onto</span><input type="text" data-f="onto" value="' + esc(s.onto || "") + '" placeholder="Next road from the source"></label>' +
                     '<label class="field"><span>Lane (optional)</span><input type="text" data-f="lane" value="' + esc(s.lane) + '" placeholder="e.g. Right-hand lane"></label>' +
                     '<label class="field"><span>Extra detail (optional)</span><input type="text" data-f="note" value="' + esc(s.note) + '"></label>') +
                 '<div class="row-btns">' +
+                (placing === i
+                  ? '<button class="btn btn-small btn-on" data-act="place">Tap the map now…</button>'
+                  : '<button class="btn btn-small' + (PD.isPlaced(s) ? " btn-ghost" : "") + '" data-act="place">' + (PD.isPlaced(s) ? "Move pin" : "Place on map") + "</button>") +
+                (s.placement === "auto" ? '<button class="btn btn-small" data-act="confirm">Pin is right</button>' : "") +
+                "</div>" +
+                '<div class="row-btns">' +
                 '<button class="btn btn-small btn-ghost" data-act="up"' + (i === 0 ? " disabled" : "") + ">Move up</button>" +
                 '<button class="btn btn-small btn-ghost" data-act="down"' + (i === route.steps.length - 1 ? " disabled" : "") + ">Move down</button>" +
-                '<a class="btn btn-small btn-ghost" target="_blank" rel="noopener" href="' + PD.streetViewLink(s.lat, s.lng, PD.approachHeading(route, i)) + '">Check in Street View &#8599;</a>' +
+                (PD.isPlaced(s) ? '<a class="btn btn-small btn-ghost" target="_blank" rel="noopener" href="' + PD.streetViewLink(s.lat, s.lng, PD.approachHeading(route, i)) + '">Check in Street View &#8599;</a>' : "") +
                 '<button class="btn btn-small btn-danger" data-act="delete">Delete</button>' +
                 "</div>" +
-                '<p class="fineprint">Drag the pin on the map to adjust its position.</p>' +
+                (PD.isPlaced(s) ? '<p class="fineprint">Drag the pin on the map to adjust its position.</p>' : "") +
                 "</div>"
               : "") +
             "</li>"
@@ -165,8 +190,9 @@
         b.addEventListener("click", () => {
           const i = Number(b.dataset.sel);
           const s = route.steps[i];
+          placing = null;
           select(i === selected ? null : i);
-          map.panTo([s.lat, s.lng]);
+          if (PD.isPlaced(s)) map.panTo([s.lat, s.lng]);
         })
       );
       const li = list.querySelector(".ed-step.open");
@@ -187,6 +213,19 @@
       li.querySelectorAll("[data-act]").forEach((b) =>
         b.addEventListener("click", () => {
           const act = b.dataset.act;
+          if (act === "place") {
+            placing = placing === i ? null : i;
+            adding = false;
+            renderAll();
+            if (placing != null) PD.toast("Tap the map where this happens");
+            return;
+          }
+          if (act === "confirm") {
+            route.steps[i].placement = "manual";
+            save();
+            renderAll();
+            return;
+          }
           if (act === "delete") {
             route.steps.splice(i, 1);
             selected = route.steps.length ? Math.min(i, route.steps.length - 1) : null;
@@ -246,6 +285,60 @@
         b.disabled = false;
         b.textContent = "Snap to roads";
       }
+    });
+
+    $("#ed-find").addEventListener("click", async () => {
+      const b = $("#ed-find");
+      const report = $("#ed-report");
+      const todo = route.steps.map((s, i) => i).filter((i) => !PD.isPlaced(route.steps[i]) && route.steps[i].type !== "via");
+      if (!todo.length) return PD.toast("Every direction is already on the map.");
+      b.disabled = true;
+      const lines = [];
+      let placedCount = 0;
+      for (let k = 0; k < todo.length; k++) {
+        const i = todo[k];
+        const s = route.steps[i];
+        const labels = PDMaps.stepLabels(route);
+        b.textContent = "Finding " + (k + 1) + " of " + todo.length + "…";
+        if (!s.onto) {
+          lines.push('<span class="bad">' + esc(labels[i]) + ": no road to turn onto, so place it by hand.</span>");
+          continue;
+        }
+        try {
+          const found = await PD.findJunctions(s.road, s.onto);
+          if (!found.length) {
+            lines.push('<span class="bad">' + esc(labels[i]) + ": couldn't find where " + esc(s.road) + " meets " + esc(s.onto) + ". Place it by hand.</span>");
+          } else {
+            // Several matches: take the one nearest the previous placed direction.
+            let pick = found[0];
+            const prev = route.steps.slice(0, i).reverse().find(PD.isPlaced);
+            if (found.length > 1 && prev) {
+              pick = found.reduce((best, f) => (PD.distanceM([f.lat, f.lng], [prev.lat, prev.lng]) < PD.distanceM([best.lat, best.lng], [prev.lat, prev.lng]) ? f : best));
+            }
+            s.lat = pick.lat;
+            s.lng = pick.lng;
+            s.placement = "auto";
+            placedCount++;
+            lines.push(esc(labels[i]) + ": " + esc(pick.from) + " / " + esc(pick.to) + (found.length > 1 ? ' <span class="bad">(' + found.length + " possible places, picked the nearest to the last one)</span>" : ""));
+          }
+        } catch (err) {
+          lines.push('<span class="bad">' + err.message + "</span>");
+          break;
+        }
+        report.innerHTML = lines.map((l) => "<span>" + l + "</span>").join("");
+        // Be gentle with the free Overpass server.
+        await new Promise((r) => setTimeout(r, 1100));
+      }
+      report.innerHTML = lines.map((l) => "<span>" + l + "</span>").join("");
+      if (placedCount) {
+        geometryChanged();
+        save();
+        fitted = false;
+      }
+      renderAll();
+      b.disabled = false;
+      b.textContent = "Find junctions";
+      PD.toast(placedCount + " placed. Check each orange-ringed pin, then press Snap to roads.");
     });
 
     $("#ed-title").addEventListener("input", (e) => {

@@ -11,7 +11,7 @@
 
   // Notes are keyed by position, so they stay with a junction even if steps
   // are inserted or reordered in the editor.
-  const stepKey = (s) => s.lat.toFixed(5) + "," + s.lng.toFixed(5);
+  const stepKey = PD.noteKey;
   function loadNotes(id) {
     return PD.store.get("notes." + id, { general: "", steps: {} });
   }
@@ -26,7 +26,7 @@
     const dirs = PD.directionSteps(route);
     const notes = loadNotes(id);
     const flagged = (i) => {
-      const n = notes.steps[stepKey(route.steps[i])];
+      const n = notes.steps[stepKey(Object.assign({ index: i }, route.steps[i]))];
       return !!(n && n.difficult);
     };
 
@@ -60,6 +60,15 @@
       root.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
       PDMaps.destroyAll();
       body.innerHTML = "";
+      if (name !== "overview" && name !== "notes" && !PD.hasMap(route)) {
+        body.innerHTML =
+          '<div class="empty-state"><h2>Not on the map yet</h2><p>' + dirs.length + " directions are written down for this route, but none have been placed on the map. " +
+          "Open the editor and press <b>Find junctions</b> to place them, then check each pin.</p>" +
+          '<div class="row-btns" style="justify-content:center"><a class="btn" href="#/edit/' + id + '">Open route editor</a>' +
+          '<button class="btn btn-ghost" data-go="overview">See the directions</button></div></div>';
+        body.querySelector("[data-go]").addEventListener("click", () => show("overview"));
+        return;
+      }
       if (name !== "map" && !dirs.length) {
         body.innerHTML =
           '<div class="empty-state"><h2>No directions yet</h2><p>This route has a line on the map but no junction-by-junction directions. Add them in the route editor.</p>' +
@@ -75,7 +84,7 @@
       return (
         '<div class="pop"><b>' + esc(label) + ". " + esc(PDMaps.TYPE_INFO[s.type].label) + "</b>" +
         (s.instruction ? "<p>" + esc(s.instruction) + "</p>" : "") +
-        (s.road ? '<p class="muted">' + esc(s.road) + "</p>" : "") +
+        (s.road || s.onto ? '<p class="muted">' + roadLine(s) + "</p>" : "") +
         '<a class="btn btn-small" target="_blank" rel="noopener" href="' + PD.streetViewLink(s.lat, s.lng, h) + '">Street View &#8599;</a></div>'
       );
     }
@@ -86,6 +95,8 @@
         '<div class="map-wrap"><div class="map" id="route-map"></div>' +
         '<div class="map-legend">' + legend() + "</div></div>" +
         '<p class="fineprint">' + lineNote(route) + " Tap a numbered pin for its direction, or tap any road to open Street View there.</p>";
+      const unplaced = dirs.filter((d) => !PD.isPlaced(d)).length;
+      if (unplaced) body.insertAdjacentHTML("afterbegin", '<p class="notice">' + unplaced + " of " + dirs.length + ' directions aren\'t on the map yet. <a href="#/edit/' + id + '">Place them in the editor</a>.</p>');
       const map = PDMaps.makeMap(document.getElementById("route-map"));
       const layers = PDMaps.drawRoute(map, route, { popup: stepPopup, flagged });
       PDMaps.fitRoute(map, layers);
@@ -118,17 +129,21 @@
         [c.feature || 0, "road features"],
       ];
       if (km) stats.push([km + " km", route.pathSource === "gpx" ? "track length" : "road distance"]);
+      const placed = dirs.filter(PD.isPlaced).length;
+      if (placed < dirs.length) stats.push([placed + " of " + dirs.length, "on the map"]);
       if (route.estimatedMinutes) stats.push([route.estimatedMinutes + " min", "from source"]);
       else if (route.osrmMinutes) stats.push([route.osrmMinutes + " min", "OSRM, no traffic"]);
 
       body.innerHTML =
         '<div class="overview">' +
         '<div class="stats">' + stats.map((s) => '<div class="stat"><b>' + esc(s[0]) + "</b><span>" + esc(s[1]) + "</span></div>").join("") + "</div>" +
-        '<div class="overview-map map" id="ov-map"></div>' +
-        '<ol class="steps">' + dirs.map(stepRow).join("") + "</ol></div>";
+        (PD.hasMap(route) ? '<div class="overview-map map" id="ov-map"></div>' : "") +
+        '<div class="steps-col">' + glossary(dirs) + '<ol class="steps">' + dirs.map(stepRow).join("") + "</ol></div></div>";
 
-      const map = PDMaps.makeMap(document.getElementById("ov-map"), { scrollWheelZoom: false });
-      PDMaps.fitRoute(map, PDMaps.drawRoute(map, route, { popup: stepPopup, flagged }));
+      if (PD.hasMap(route)) {
+        const map = PDMaps.makeMap(document.getElementById("ov-map"), { scrollWheelZoom: false });
+        PDMaps.fitRoute(map, PDMaps.drawRoute(map, route, { popup: stepPopup, flagged }));
+      }
 
       body.querySelectorAll("[data-show]").forEach((b) =>
         b.addEventListener("click", () => {
@@ -149,20 +164,29 @@
         '<div class="step-text">' +
         '<span class="type">' + esc(info.label) + (n && n.difficult ? ' · <b class="flag">Marked difficult</b>' : "") + "</span>" +
         "<p>" + (s.instruction ? esc(s.instruction) : '<i class="muted">No instruction given</i>') + "</p>" +
-        (s.road ? '<p class="muted">' + esc(s.road) + "</p>" : "") +
+        (s.road || s.onto ? '<p class="muted">' + roadLine(s) + "</p>" : "") +
         (s.lane ? '<p class="lane">Lane: ' + esc(s.lane) + "</p>" : "") +
         (s.note ? '<p class="muted">' + esc(s.note) + "</p>" : "") +
         (n && n.note ? '<p class="my-note">Your note: ' + esc(n.note) + "</p>" : "") +
-        '<div class="step-btns">' +
-        '<button class="btn btn-small btn-ghost" data-show="' + i + '">Show on map</button>' +
-        '<a class="btn btn-small btn-ghost" target="_blank" rel="noopener" href="' + PD.streetViewLink(s.lat, s.lng, h) + '">Street View &#8599;</a>' +
-        "</div></div></li>"
+        (PD.isPlaced(s)
+          ? '<div class="step-btns">' +
+            '<button class="btn btn-small btn-ghost" data-show="' + i + '">Show on map</button>' +
+            '<a class="btn btn-small btn-ghost" target="_blank" rel="noopener" href="' + PD.streetViewLink(s.lat, s.lng, h) + '">Street View &#8599;</a>' +
+            "</div>"
+          : '<p class="unplaced">Not on the map yet</p>') +
+        "</div></li>"
       );
     }
 
     // ---------- Street View ----------
     let svIndex = 0;
+    const svDirs = dirs.filter(PD.isPlaced);
     function streetTab() {
+      const dirs = svDirs;
+      if (!dirs.length) {
+        body.innerHTML = '<div class="empty-state"><h2>No directions on the map yet</h2><p>Street View needs each direction placed on the map first.</p><a class="btn" href="#/edit/' + id + '">Open route editor</a></div>';
+        return;
+      }
       const s = dirs[svIndex];
       const h = PD.approachHeading(route, s.index);
       const embed = PD.streetViewEmbed(s.lat, s.lng, h);
@@ -184,7 +208,7 @@
         '<div class="sv-detail"><span class="step-pin" style="--pin:' + info.color + '">' + esc(labels[s.index]) + "</span><div>" +
         '<span class="type">' + esc(info.label) + "</span>" +
         "<p>" + esc(s.instruction || "") + "</p>" +
-        (s.road ? '<p class="muted">' + esc(s.road) + "</p>" : "") +
+        (s.road || s.onto ? '<p class="muted">' + roadLine(s) + "</p>" : "") +
         (s.lane ? '<p class="lane">Lane: ' + esc(s.lane) + "</p>" : "") +
         (embed ? '<p><a target="_blank" rel="noopener" href="' + PD.streetViewLink(s.lat, s.lng, h) + '">Open in Google Maps &#8599;</a></p>' : "") +
         "</div></div>" +
@@ -192,7 +216,7 @@
         "</div>";
       body.querySelectorAll("[data-sv]").forEach((b) =>
         b.addEventListener("click", () => {
-          svIndex = Math.max(0, Math.min(dirs.length - 1, svIndex + Number(b.dataset.sv)));
+          svIndex = Math.max(0, Math.min(svDirs.length - 1, svIndex + Number(b.dataset.sv)));
           streetTab();
         })
       );
@@ -206,7 +230,7 @@
         selected: s.index,
         flagged,
         onStepClick: (i) => {
-          const k = dirs.findIndex((d) => d.index === i);
+          const k = svDirs.findIndex((d) => d.index === i);
           if (k >= 0) {
             svIndex = k;
             streetTab();
@@ -289,6 +313,22 @@
 
     show(tab);
   };
+
+  // "From Pier Rd onto London Rd", using only what the source gives.
+  function roadLine(s) {
+    if (s.road && s.onto) return "From " + esc(s.road) + " onto " + esc(s.onto);
+    if (s.onto) return "Onto " + esc(s.onto);
+    return esc(s.road || "");
+  }
+
+  // Explain driving-instructor shorthand used in the source, if any.
+  function glossary(dirs) {
+    const text = dirs.map((d) => d.instruction).join(" ");
+    const terms = [];
+    if (/\bEOR\b/.test(text)) terms.push("<b>EOR</b> end of road");
+    if (/\bDTC\b/.test(dirs.map((d) => d.road).join(" "))) terms.push("<b>DTC</b> driving test centre");
+    return terms.length ? '<p class="glossary">' + terms.join(" · ") + "</p>" : "";
+  }
 
   function legend() {
     return ["start", "junction", "roundabout", "traffic-lights", "feature", "end"]

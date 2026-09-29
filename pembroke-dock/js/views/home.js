@@ -41,7 +41,7 @@
       "</section>";
 
     routes.forEach((r) => {
-      if (!PD.hasData(r)) return;
+      if (!PD.hasMap(r)) return;
       const el = root.querySelector('[data-preview="' + r.id + '"]');
       const map = PDMaps.makeMap(el, { interactive: false });
       const layers = PDMaps.drawRoute(map, r);
@@ -58,8 +58,10 @@
       '<article class="route-card' + (has ? "" : " empty") + '">' +
       '<a class="card-link" href="' + href + '" aria-label="' + esc(r.title) + (has ? "" : ", no directions yet, add them") + '"></a>' +
       '<div class="card-top"><span class="route-num">' + r.id + "</span>" + statusChip(r) + "</div>" +
-      (has
+      (PD.hasMap(r)
         ? '<div class="preview" data-preview="' + r.id + '"></div>'
+        : has
+        ? '<div class="preview placeholder"><span>Directions added</span><span class="muted">Not on the map yet</span></div>'
         : '<div class="preview placeholder"><span>No directions yet</span><span class="btn btn-small">Add route</span></div>') +
       '<div class="card-body">' +
       "<h2>" + esc(r.title) + "</h2>" +

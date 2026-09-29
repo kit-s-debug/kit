@@ -54,6 +54,18 @@
   function hasData(route) {
     return route.steps.length > 0 || route.path.length > 0;
   }
+  // A step can be written down before anyone has put it on the map.
+  function isPlaced(s) {
+    return s.lat != null && s.lng != null && isFinite(s.lat) && isFinite(s.lng);
+  }
+  function hasMap(route) {
+    return route.path.length > 1 || route.steps.some(isPlaced);
+  }
+  // Notes key: position in the route plus the road, so a note survives the
+  // step being placed or nudged on the map.
+  function noteKey(s) {
+    return s.index + "|" + (s.road || "");
+  }
   function directionSteps(route) {
     // Steps that are real directions (not line-shaping "via" points), with
     // their index in route.steps kept for linking back.
@@ -103,6 +115,7 @@
   // up to it. Uses the road line when there is one, else the next step.
   function approachHeading(route, stepIndex) {
     const s = route.steps[stepIndex];
+    if (!isPlaced(s)) return 0;
     const here = [s.lat, s.lng];
     if (route.path.length > 1) {
       const i = nearestIndex(route.path, here);
@@ -113,9 +126,9 @@
       if (i + 1 < route.path.length) return bearing(route.path[i], route.path[i + 1]);
     }
     const prev = route.steps[stepIndex - 1];
-    if (prev) return bearing([prev.lat, prev.lng], here);
+    if (prev && isPlaced(prev)) return bearing([prev.lat, prev.lng], here);
     const next = route.steps[stepIndex + 1];
-    if (next) return bearing(here, [next.lat, next.lng]);
+    if (next && isPlaced(next)) return bearing(here, [next.lat, next.lng]);
     return 0;
   }
 
@@ -141,8 +154,9 @@
   }
 
   // ---------- OSRM: snap the route's points to real roads ----------
-  async function snapToRoads(steps) {
-    if (steps.length < 2) throw new Error("Add at least two points first.");
+  async function snapToRoads(allSteps) {
+    const steps = allSteps.filter(isPlaced);
+    if (steps.length < 2) throw new Error("Put at least two directions on the map first.");
     if (steps.length > 90) throw new Error("OSRM takes up to 90 points; this route has " + steps.length + ".");
     const coords = steps.map((s) => s.lng.toFixed(6) + "," + s.lat.toFixed(6)).join(";");
     const url = C.OSRM_URL + coords + "?overview=full&geometries=geojson&continue_straight=true";
@@ -162,6 +176,71 @@
       path: r.geometry.coordinates.map((c) => [c[1], c[0]]),
       minutes: Math.round(r.duration / 60),
     };
+  }
+
+  // ---------- find where two named roads meet (OpenStreetMap Overpass) ----------
+  const ABBR = { rd: "Road", st: "Street", ln: "Lane", dr: "Drive", ave: "Avenue", tce: "Terrace", cl: "Close", sq: "Square", hl: "Hill" };
+  // "A4075 Holyland Rd" -> "Holyland Road". "North St / Bufferland Terrace" -> both names.
+  function roadNames(text) {
+    return String(text || "")
+      .split("/")
+      .map((n) =>
+        n
+          .replace(/\b[ABM]\d{1,4}\b/gi, "")
+          .trim()
+          .split(/\s+/)
+          .map((w) => ABBR[w.toLowerCase().replace(/\.$/, "")] || w)
+          .join(" ")
+          .trim()
+      )
+      .filter(Boolean);
+  }
+  // Loose pattern: ignores case and doubled letters, so a spelling slip
+  // ("Brittania") still matches the map's name ("Britannia").
+  function namePattern(name) {
+    const esc = (c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const letters = name.toLowerCase().replace(/[^a-z0-9 ]/g, "").replace(/(.)\1+/g, "$1");
+    return "^" + letters.split("").map((c) => (c === " " ? " +" : esc(c) + "+")).join("") + "$";
+  }
+  async function overpass(query) {
+    let res;
+    try {
+      res = await fetch(C.OVERPASS_URL, { method: "POST", body: "data=" + encodeURIComponent(query) });
+    } catch (e) {
+      throw new Error("Couldn't reach the OpenStreetMap junction finder. Check your connection.");
+    }
+    if (!res.ok) throw new Error("The junction finder is busy (" + res.status + "). Try again in a minute.");
+    return res.json();
+  }
+  // Candidate points where a road from `fromText` meets a road from `toText`.
+  // Returns clusters of nodes, each as { lat, lng, spread } (spread in metres).
+  async function findJunctions(fromText, toText) {
+    const a = roadNames(fromText);
+    const b = roadNames(toText);
+    if (!a.length || !b.length) return [];
+    // The turn happens at the end of the last-named stretch, onto the first-named one.
+    const from = a[a.length - 1];
+    const to = b[0];
+    const bb = C.JUNCTION_BBOX.join(",");
+    const q =
+      "[out:json][timeout:25];" +
+      'way["highway"]["name"~"' + namePattern(from) + '",i](' + bb + ")->.a;" +
+      'way["highway"]["name"~"' + namePattern(to) + '",i](' + bb + ")->.b;" +
+      "node(w.a)->.na;node(w.b)->.nb;node.na.nb;out;";
+    const json = await overpass(q);
+    const nodes = (json.elements || []).map((n) => [n.lat, n.lon]);
+    // Group nodes within 80 m (a roundabout is several shared nodes).
+    const clusters = [];
+    nodes.forEach((p) => {
+      const c = clusters.find((cl) => distanceM(cl.pts[0], p) < 80);
+      if (c) c.pts.push(p);
+      else clusters.push({ pts: [p] });
+    });
+    return clusters.map((c) => {
+      const lat = c.pts.reduce((t, p) => t + p[0], 0) / c.pts.length;
+      const lng = c.pts.reduce((t, p) => t + p[1], 0) / c.pts.length;
+      return { lat, lng, count: c.pts.length, from, to };
+    });
   }
 
   // ---------- GPX import ----------
@@ -185,17 +264,18 @@
   function cleanRoute(id, raw) {
     if (!raw || typeof raw !== "object") throw new Error("That isn't a route file.");
     const steps = Array.isArray(raw.steps) ? raw.steps : [];
-    const clean = steps.map((s, i) => {
-      const lat = Number(s.lat);
-      const lng = Number(s.lng);
-      if (!isFinite(lat) || !isFinite(lng)) throw new Error("Step " + (i + 1) + " has no valid position.");
+    const clean = steps.map((s) => {
+      const placed = s.lat != null && s.lng != null && isFinite(Number(s.lat)) && isFinite(Number(s.lng));
       return {
-        lat, lng,
+        lat: placed ? Number(s.lat) : null,
+        lng: placed ? Number(s.lng) : null,
         type: TYPES.includes(s.type) ? s.type : "junction",
         instruction: String(s.instruction || ""),
         road: String(s.road || ""),
+        onto: String(s.onto || ""),
         lane: String(s.lane || ""),
         note: String(s.note || ""),
+        placement: placed && ["auto", "manual"].includes(s.placement) ? s.placement : placed ? "manual" : null,
       };
     });
     const path = Array.isArray(raw.path)
@@ -241,7 +321,8 @@
   }
 
   window.PD = {
-    store, getRoute, allRoutes, saveDraft, discardDraft, hasData, directionSteps,
+    store, getRoute, allRoutes, saveDraft, discardDraft, hasData, hasMap, isPlaced, noteKey, directionSteps,
+    roadNames, findJunctions,
     distanceM, bearing, pathLengthM, nearestIndex, approachHeading,
     embedKey, streetViewLink, streetViewEmbed, snapToRoads, parseGpx, cleanRoute,
     TYPES, esc, download, toast,

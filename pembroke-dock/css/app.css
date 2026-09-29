@@ -256,3 +256,16 @@ textarea { resize: vertical; }
   .brand span { font-size: 0.9rem; }
   .tabs button { font-size: 0.82rem; }
 }
+
+/* directions written down but not yet placed on the map */
+.unplaced { margin-top: 6px; font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+.glossary { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+.steps-col { min-width: 0; }
+.step-pin.check { box-shadow: 0 0 0 3px #fff, 0 0 0 5px #c77700; }
+.notice a { font-weight: 600; }
+.place-report { display: grid; gap: 4px; font-size: 0.88rem; margin-top: 8px; }
+.place-report .bad { color: var(--red); }
+@media (min-width: 900px) {
+  .overview .steps-col { grid-column: 1; }
+  .overview:not(:has(#ov-map)) .steps-col { grid-column: 1 / -1; }
+}

@@ -33,5 +33,10 @@ window.PD_CONFIG = {
   // Search is limited to this box around Pembroke Dock: west, north, east, south.
   SEARCH_VIEWBOX: [-5.05, 51.75, -4.8, 51.63],
 
+  // Overpass (OpenStreetMap data), used by the editor's "Find junctions".
+  OVERPASS_URL: "https://overpass-api.de/api/interpreter",
+  // Junction search area covering Pembroke Dock and Pembroke: south, west, north, east.
+  JUNCTION_BBOX: [51.64, -5.0, 51.72, -4.86],
+
   ROUTE_COUNT: 15,
 };
