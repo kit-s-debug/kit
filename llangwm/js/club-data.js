@@ -64,7 +64,12 @@ window.LLANGWM = {
 
     // CHECK — listed publicly as "Llangwm Rugby Club | Official Page".
     // Confirm with the club, or set to "" to remove the Facebook links.
-    facebook: "https://www.facebook.com/p/Llangwm-Rugby-Club-100046941897028/"
+    facebook: "https://www.facebook.com/p/Llangwm-Rugby-Club-100046941897028/",
+
+    // The mini and junior section runs its own account. Set to "" and the
+    // junior section falls back to the club's main Instagram.
+    juniorsInstagramHandle: "@llangwmrfcminisandjuniors",
+    juniorsInstagram: "https://www.instagram.com/llangwmrfcminisandjuniors/"
   },
 
   /* ----------------------------------------------------------------------
@@ -284,7 +289,11 @@ window.LLANGWM = {
      instead.
      ---------------------------------------------------------------------- */
   juniors: {
-    ageGroups: ["Under 8s", "Under 9s", "Under 10s", "Under 11s", "Under 12s", "Under 14s", "Under 16s"], // CHECK
+    // The club has no youth team, so the section runs to Under 15s. The lower
+    // end comes from the club's own fixture sheet, whose minis band is U7-U11;
+    // U12 to U15 each appear by name in the knockout cup draw.
+    ageGroups: ["Under 7s", "Under 8s", "Under 9s", "Under 10s", "Under 11s",
+                "Under 12s", "Under 13s", "Under 14s", "Under 15s"],
     trainingTimes: "",   // e.g. "Sunday mornings, 10:00–11:30 at The Green"
     contactName: "",
     contactEmail: "",
