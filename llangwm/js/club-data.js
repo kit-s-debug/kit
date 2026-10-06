@@ -294,18 +294,17 @@ window.LLANGWM = {
   /* ----------------------------------------------------------------------
      9. CLUB SHOP
      --------------------------------------------------------------------------
-     Paste the real shop URLs in when they are confirmed. While a url is ""
-     the button becomes an "ask the club" link rather than a dead link.
+     Both shops are linked. If one ever moves, clear its url rather than
+     leaving a dead address: the button then sends people to the contact
+     section instead.
      ---------------------------------------------------------------------- */
   shop: [
     // Club shop supplied by the club.
     { name: "RCS",       blurb: "Official playing kit and training wear.",
       url: "https://rcs-teamwear.com/llangwm-rfc/" },
 
-    // CHECK — no shop link yet, so this one shows an "Ask the club" button
-    // that goes to the contact section. Add a url here and it becomes a
-    // "Visit shop" link like the one above.
-    { name: "KJ Prints", blurb: "Clubwear and supporter clothing.", url: "" }
+    { name: "KJ Prints", blurb: "Clubwear and supporter clothing.",
+      url: "https://kjprints.co.uk/rugby-clubs" }
   ],
 
   /* ----------------------------------------------------------------------
