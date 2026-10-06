@@ -48,7 +48,9 @@
      ---------------------------------------------------------------------- */
   var LINKS = {
     instagram: SOCIAL.instagram,
-    facebook: SOCIAL.facebook
+    facebook: SOCIAL.facebook,
+    /* The junior section has its own account; fall back to the club's. */
+    juniorsInstagram: SOCIAL.juniorsInstagram || SOCIAL.instagram
   };
   var TEXTS = {
     instagramHandle: SOCIAL.instagramHandle,
