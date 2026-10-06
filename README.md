@@ -143,20 +143,18 @@ These are marked `// CHECK` in `club-data.js`:
    official badge artwork is not included; add it as
    `assets/brand/wru-accreditation.png` and set `accreditation.badge` to that
    path to show it in place of the plain amber block.
-6. **The KJ Prints shop URL.** RCS is linked. Until KJ Prints has a `url`,
-   its button sends people to the contact section rather than nowhere.
-7. **Gallery photographs.** The gallery is built and empty. Matchday, junior
+6. **Gallery photographs.** The gallery is built and empty. Matchday, junior
    section and clubhouse pictures all drop straight in.
-8. **An email address for privacy enquiries.** The privacy policy currently
+7. **An email address for privacy enquiries.** The privacy policy currently
    gives the clubhouse phone number and postal address as the route for
    privacy questions, which is honest but slow. If the club has an address it
    is happy to publish, there is a commented-out block in `privacy.html` marking
    exactly where it goes.
-9. **Next season's fixtures.** Both the First XV league season and the minis
+8. **Next season's fixtures.** Both the First XV league season and the minis
    and junior season run to spring 2027. When the new fixtures are published,
    replace the lists; old ones can be deleted or left, as played fixtures no
    longer show.
-10. **News.** `news` ships empty. It was previously seeded from the club's old
+9. **News.** `news` ships empty. It was previously seeded from the club's old
    website, which this site replaces, so it needs filling in here.
 
 ## Historical material
