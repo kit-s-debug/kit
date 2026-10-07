@@ -53,9 +53,9 @@ let js = only(".js");
 for (const asset of readdirSync(join(tmp, "work"))) {
   js = js.replaceAll(`/work/${asset}`, dataUri(join(tmp, "work", asset)));
 }
-/* Neither the Eddie Rocks site nor the privacy notice is a single file, so
-   neither can travel inside one. Say so rather than pretending. */
-const external = ["/eddie-rocks/", "/privacy/"].filter((p) => js.includes(p));
+/* The privacy notice is not a single file, so it cannot travel inside one.
+   Say so rather than pretending. */
+const external = ["/privacy/"].filter((p) => js.includes(p));
 if (external.length) {
   console.warn(`note: ${external.join(" and ")} need the deployed build, not this single file`);
 }

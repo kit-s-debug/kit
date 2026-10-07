@@ -48,8 +48,6 @@ export const HERO = {
   sub: "Pubs, restaurants, trades, shops and salons across West Wales.",
   primary: { label: "See the work", href: "#work" },
   secondary: CTA,
-  /* A caption for the frame beside it, not a second headline. */
-  proof: "On screen: Eddie Rocks, a site I designed and built",
 };
 
 export const STRIP = {
@@ -76,38 +74,10 @@ export type Project = {
   image: string;
   aspect?: string;
   liveUrl?: string;
-  /* Marks a piece that is not a client engagement. Eddie Rocks has no status
-     because it is live; anything with one is labelled on the card and in the
-     case study, so nothing here can be mistaken for work that shipped. */
+  /* Marks a piece that is not a client engagement. A project with no status is
+     live work; anything with one is labelled on the card and in the case
+     study, so nothing here can be mistaken for work that shipped. */
   status?: string;
-};
-
-/* The flagship. Real work, real venue, and the case study links to the site
-   itself, which is served from /eddie-rocks/ alongside this one. */
-export const FEATURED = {
-  slug: "eddie-rocks",
-  name: "Eddie Rocks",
-  sector: "Nightclub",
-  town: "Haverfordwest",
-  role: "Design and build",
-  headline: "Three floors, drawn in the browser.",
-  summary:
-    "A nightclub on Quay Street, and a site that had to make you feel the room before you reached the door.",
-  body: [
-    "A night out sells on atmosphere, and atmosphere does not survive a list of opening times. The site had to carry the feeling of the room, explain a building most people only half know, and take private hire without a phone call.",
-    "So the venue is not photographed, it is modelled. The building and every room inside it are drawn live in WebGL, lit the way they are actually lit. Around that sit the things a Saturday night needs: door times, a countdown to opening, the line up, and an enquiry form.",
-  ],
-  facts: [
-    { k: "Role", v: "Design and build" },
-    { k: "Built with", v: "WebGL, Three.js, vanilla JS" },
-    { k: "Pages", v: "Main site and Labyrinth" },
-    { k: "Framework", v: "None" },
-  ],
-  outcome: "A building that used to need explaining now explains itself.",
-  video: "/work/eddies-scroll.webm",
-  poster: "/work/eddies-poster.jpg",
-  liveUrl: "/eddie-rocks/",
-  cta: { label: "Get one like this", href: "#contact" },
 };
 
 /* EDIT: concept builds. Replace the copy and drop a real screenshot into
@@ -266,7 +236,7 @@ export const ABOUT = {
      the first paragraph and the rest still stands on its own. */
   body: [
     "I am eighteen. I have been making things on a screen since well before I was any good at it, and design is the part I kept chasing: why one page feels expensive and the next one does not, why people stop scrolling at one thing and slide past another.",
-    "The nightclub at the top of this page is in the same town as my desk. That is roughly the point. I would rather build for somewhere I can walk into and stand in than for a brief that arrives in an inbox.",
+    "Every business on this page is in the same part of the world as my desk. That is roughly the point. I would rather build for somewhere I can walk into and stand in than for a brief that arrives in an inbox.",
     "The advantage of hiring someone at the start of this is simple enough. I am not juggling twelve other jobs, I have not learned to cut corners, and I do not intend to.",
   ],
   /* EDIT: say these in your own words. They exist to be the things a business

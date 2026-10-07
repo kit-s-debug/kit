@@ -4,4 +4,3 @@ dist/
 *.local
 *.tsbuildinfo
 dist-standalone/
-public/eddie-rocks/

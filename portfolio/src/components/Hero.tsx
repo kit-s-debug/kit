@@ -1,9 +1,8 @@
 "use client";
-import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import { FEATURED, HERO, SITE } from "../content";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
+import { HERO, SITE } from "../content";
 import { EASE } from "../lib/motion";
-import { SitePreview } from "./primitives/SitePreview";
 import { Cta } from "./primitives/Cta";
 import { WordReveal } from "./primitives/WordReveal";
 import { Terrain } from "./Terrain";
@@ -14,38 +13,9 @@ export function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const copyY = useTransform(scrollYProgress, [0, 1], [0, -80]);
   const fade = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-  const frameY = useTransform(scrollYProgress, [0, 1], [0, -180]);
-
-  /* The frame leans a few degrees toward the cursor. Motion values only, so
-     the pointer never re-renders the tree. */
-  const px = useMotionValue(0.5);
-  const py = useMotionValue(0.5);
-  const ry = useSpring(useTransform(px, [0, 1], [-17, -7]), { stiffness: 120, damping: 22 });
-  const rx = useSpring(useTransform(py, [0, 1], [9, 1]), { stiffness: 120, damping: 22 });
-
-  /* The lean is a desktop idea. On a phone the frame is the whole width and a
-     fixed rotation just reads as a skewed image. */
-  const [tilt, setTilt] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
-    const on = () => setTilt(mq.matches);
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
 
   return (
-    <section
-      ref={ref}
-      id="top"
-      data-surface="dark"
-      className="s-dark relative min-h-[100dvh] overflow-hidden"
-      onPointerMove={(e) => {
-        if (reduce) return;
-        px.set(e.clientX / window.innerWidth);
-        py.set(e.clientY / window.innerHeight);
-      }}
-    >
+    <section ref={ref} id="top" data-surface="dark" className="s-dark relative min-h-[100dvh] overflow-hidden">
       <Terrain mode="drift" className="absolute inset-0 h-full w-full" />
       <div
         aria-hidden
@@ -56,7 +26,7 @@ export function Hero() {
       <div className="u-wide relative grid min-h-[100dvh] grid-cols-12 items-center gap-y-14 pt-28 pb-16 md:pt-24 md:pb-20">
         <motion.div
           style={reduce ? undefined : { y: copyY, opacity: fade }}
-          className="col-span-12 lg:col-span-7 xl:col-span-6"
+          className="col-span-12 max-w-[42rem]"
         >
           <motion.p
             className="u-label"
@@ -103,43 +73,6 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* The work is in the hero, not two screens below it. */}
-        <motion.div
-          className="col-span-12 lg:col-span-5 xl:col-span-6"
-          style={reduce ? undefined : { y: frameY }}
-          initial={reduce ? false : { opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.1, delay: 0.7, ease: EASE }}
-        >
-          <div className="lg:-mr-[14vw] xl:-mr-[10vw]" style={{ perspective: 1400 }}>
-            <motion.div
-              style={tilt && !reduce ? { rotateY: ry, rotateX: rx, transformStyle: "preserve-3d" } : undefined}
-              /* No cursor on a phone to lean toward, so the frame gets a small,
-                 slow, ambient tilt of its own instead — just enough to read as
-                 a floating object rather than a flat, static screenshot. Kept
-                 small on purpose: this is full-bleed width at this size, and a
-                 rotation big enough to notice reads as a skewed image rather
-                 than a dimensional one. */
-              animate={
-                !tilt && !reduce
-                  ? { rotateY: [-2.5, 2.5, -2.5], rotateX: [1, -1, 1] }
-                  : undefined
-              }
-              transition={!tilt && !reduce ? { duration: 9, repeat: Infinity, ease: "easeInOut" } : undefined}
-              className="origin-left"
-            >
-              <SitePreview
-                url="eddierocks.co.uk"
-                src={FEATURED.video}
-                poster={FEATURED.poster}
-                alt={`A scroll through the ${FEATURED.name} website`}
-                priority
-                frameClassName="shadow-[0_50px_120px_-30px_rgba(0,0,0,0.85)]"
-              />
-            </motion.div>
-          </div>
-        </motion.div>
-
         <motion.p
           className="col-span-12 text-[0.8rem] tracking-[0.02em] text-[var(--fg-2)]"
           initial={reduce ? false : { opacity: 0 }}
@@ -147,8 +80,6 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 1.4 }}
         >
           <span className="u-accent">{SITE.place}</span>
-          <span className="mx-3 opacity-40">/</span>
-          {HERO.proof}
         </motion.p>
       </div>
     </section>

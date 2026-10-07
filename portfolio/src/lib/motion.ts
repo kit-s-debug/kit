@@ -12,8 +12,8 @@ export const spring: Transition = { type: "spring", stiffness: 140, damping: 18,
 export const viewportOnce = { once: true, amount: 0.25 } as const;
 
 /* A section's heading drifts a little as it passes through the viewport —
-   the same trick Hero and the Eddie Rocks case study already used on their
-   own, pulled out so every section can share it. It is what makes the page
+   the same trick Hero already used on its own, pulled out so every section
+   can share it. It is what makes the page
    feel like one continuous piece of ground rather than a stack of separate
    cards that happen to sit end to end: nothing about the alternating light
    and dark grounds changes, only how the content sitting on each one moves.

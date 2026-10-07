@@ -72,26 +72,8 @@ for (const l of links) {
 H("MEDIA");
 const media = await page.evaluate(() => ({
   imgs: [...document.images].map((i) => ({ src: i.currentSrc.split("/").pop(), ok: i.complete && i.naturalWidth > 0 })),
-  vids: [...document.querySelectorAll("video")].map((v) => ({ src: (v.currentSrc || "").split("/").pop(), ready: v.readyState, loop: v.loop, muted: v.muted })),
-  previews: document.querySelectorAll("[data-preview]").length,
 }));
 for (const i of media.imgs) say(i.ok, `image ${i.src}`);
-for (const v of media.vids) say(v.ready >= 3 && v.loop && v.muted, `video ${v.src} ready=${v.ready} loop=${v.loop} muted=${v.muted}`);
-say(media.vids.length >= 2, `${media.vids.length} self-scrolling previews`);
-
-H("AUTOPLAY / IN VIEW");
-await page.evaluate(() => scrollTo(0, 0)); await page.waitForTimeout(1600);
-say(await page.evaluate(() => { const v = document.querySelector("video"); return v && !v.paused && v.currentTime > 0; }), "hero preview plays by itself");
-await page.evaluate(() => scrollTo(0, innerHeight * 3)); await page.waitForTimeout(1400);
-say(await page.evaluate(() => document.querySelector("video").paused), "hero preview pauses when off screen");
-const played = await page.evaluate(async () => {
-  const vs = [...document.querySelectorAll("video")];
-  const v = vs[vs.length - 1];
-  v.scrollIntoView({ block: "center" });
-  await new Promise((r) => setTimeout(r, 1800));
-  return !v.paused && v.currentTime > 0;
-});
-say(played, "featured preview plays when scrolled to");
 
 H("ONE WORK SECTION");
 const order = await page.$$eval("section[id]", (s) => s.map((x) => x.id).join(", "));
@@ -161,12 +143,6 @@ H("NO DEAD PLACEHOLDER LINKS");
       .filter((h) => /^https?:\/\/(www\.)?ryderdesigns\.co\.uk\/?$|^https?:\/\/(www\.)?(instagram\.com\/ryderdesigns|linkedin\.com\/company\/ryderdesigns|github\.com\/ryderdesigns)\/?$|^#$|^$/.test(h)),
   );
   say(bad.length === 0, bad.length ? `placeholder links rendered: ${bad.join(", ")}` : "no unset placeholder is rendered as a link");
-}
-
-H("EDDIE ROCKS ROUTE");
-for (const r of ["/eddie-rocks/", "/eddie-rocks/css/styles.css", "/eddie-rocks/js/main.js", "/work/eddies-scroll.webm"]) {
-  const res = await page.request.get(BASE + r);
-  say(res.status() === 200, `${r} -> ${res.status()}`);
 }
 
 H("INTERACTIONS");
@@ -243,7 +219,6 @@ for (const pct of [0, 0.25, 0.5, 0.75, 1]) {
 H("MOBILE");
 const m = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
 await land(m); await m.waitForTimeout(1400);
-say(await m.evaluate(() => { const v = document.querySelector("video"); return !v || (!v.paused && v.currentTime > 0); }), "hero preview autoplays on mobile");
 await m.click('button[aria-label="Open menu"]');
 say(await waitFor(m, () => Boolean(document.querySelector('[data-menu="mobile"]'))), "mobile menu opens");
 await m.click('button[aria-label="Close menu"]');
@@ -260,16 +235,9 @@ for (const w of [320, 390, 768, 1024, 1440, 1920]) {
 H("FALLBACKS");
 const rm = await b.newContext({ reducedMotion: "reduce", viewport: { width: 1440, height: 900 } });
 const rp = await rm.newPage(); await land(rp); await walk(rp);
-const rmS = await rp.evaluate(() => ({ v: document.querySelectorAll("video").length, img: [...document.images].filter((i) => /eddies-poster/.test(i.currentSrc)).length, hidden: [...document.querySelectorAll("main *")].filter((e) => getComputedStyle(e).opacity === "0" && getComputedStyle(e).pointerEvents !== "none").length }));
-say(rmS.v === 0 && rmS.img >= 2, `reduced motion: ${rmS.v} videos, ${rmS.img} still frames`);
+const rmS = await rp.evaluate(() => ({ hidden: [...document.querySelectorAll("main *")].filter((e) => getComputedStyle(e).opacity === "0" && getComputedStyle(e).pointerEvents !== "none").length }));
 say(rmS.hidden === 0, `reduced motion: ${rmS.hidden} elements stuck hidden`);
 await rm.close();
-const nw = await newPage();
-await nw.addInitScript(() => { HTMLMediaElement.prototype.canPlayType = () => ""; });
-await land(nw); await walk(nw);
-const nwS = await nw.evaluate(() => ({ v: document.querySelectorAll("video").length, img: [...document.images].filter((i) => /eddies-poster/.test(i.currentSrc)).length }));
-say(nwS.v === 0 && nwS.img >= 2, `no WebM: ${nwS.v} videos, ${nwS.img} still frames`);
-await nw.close();
 const ng = await newPage();
 const gErr = [];
 ng.on("pageerror", (e) => gErr.push(String(e)));

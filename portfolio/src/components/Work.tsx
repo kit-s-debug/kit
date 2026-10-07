@@ -1,13 +1,11 @@
 "use client";
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { useRef, useState, type ReactNode } from "react";
-import { FEATURED, PROJECTS, type Project } from "../content";
+import { PROJECTS, type Project } from "../content";
 import { EASE, useDrift, viewportOnce } from "../lib/motion";
 import { ProjectOverlay } from "./ProjectOverlay";
-import { Cta } from "./primitives/Cta";
 import { Reveal } from "./primitives/Reveal";
-import { SitePreview } from "./primitives/SitePreview";
 import { WordReveal } from "./primitives/WordReveal";
 
 function Block({ children, delay = 0 }: { children: ReactNode; delay?: number }) {
@@ -89,87 +87,6 @@ function Meta({ project, size = "lg" }: { project: Project; size?: "lg" | "sm" }
   );
 }
 
-/* One work section. Eddie Rocks leads it at full width because it is the real
-   build and the strongest thing here; the rest follow in three different
-   shapes so the composition keeps changing as you read down. */
-function Lead() {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
-
-  return (
-    <div ref={ref}>
-      <div className="grid items-end gap-6 md:grid-cols-12">
-        <div className="md:col-span-7">
-          <h3 className="u-display text-[clamp(1.9rem,3.4vw,2.9rem)]">{FEATURED.headline}</h3>
-          <p className="u-fg2 mt-3 text-[0.92rem]">
-            <span className="text-[var(--fg)]">{FEATURED.name}</span>, {FEATURED.sector.toLowerCase()} in{" "}
-            {FEATURED.town}
-          </p>
-        </div>
-        <div className="md:col-span-4 md:col-start-9">
-          <p className="u-body text-[0.96rem]">{FEATURED.summary}</p>
-        </div>
-      </div>
-
-      <motion.div style={reduce ? undefined : { y }} className="mt-[clamp(1.75rem,4vh,2.75rem)]">
-        <SitePreview
-          url="eddierocks.co.uk"
-          src={FEATURED.video}
-          poster={FEATURED.poster}
-          alt={`A scroll through the ${FEATURED.name} website`}
-          frameClassName="shadow-[0_50px_120px_-45px_rgba(12,13,16,0.45)]"
-        />
-      </motion.div>
-
-      <div className="mt-[clamp(1.75rem,4vh,2.75rem)] grid gap-9 md:grid-cols-12">
-        <dl className="md:col-span-4">
-          {FEATURED.facts.map((f) => (
-            <div key={f.k} className="u-line-t flex items-baseline justify-between gap-6 py-3">
-              <dt className="text-[0.76rem] tracking-[0.14em] text-[var(--fg-2)] uppercase">{f.k}</dt>
-              <dd className="text-right text-[0.9rem]">{f.v}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="md:col-span-6 md:col-start-7">
-          {FEATURED.body.map((p, i) => (
-            <Reveal key={p.slice(0, 20)} delay={0.06 * i} className="mb-4 last:mb-0">
-              <p className="u-body max-w-[58ch] text-[0.98rem]">{p}</p>
-            </Reveal>
-          ))}
-          <Reveal delay={0.16}>
-            <p className="mt-6 max-w-[46ch] text-[1.05rem] leading-[1.5]">{FEATURED.outcome}</p>
-          </Reveal>
-          <Reveal delay={0.22}>
-            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4">
-              <Cta href={FEATURED.cta.href}>{FEATURED.cta.label}</Cta>
-              <a
-                href={FEATURED.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center gap-2 text-[0.95rem]"
-              >
-                <span className="relative">
-                  View the live site
-                  <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[var(--accent-graphic)] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:scale-x-100" />
-                </span>
-                <ArrowUpRight
-                  size={16}
-                  weight="regular"
-                  aria-hidden
-                  className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function Work() {
   const [open, setOpen] = useState<Project | null>(null);
   const headingRef = useRef<HTMLDivElement>(null);
@@ -184,19 +101,15 @@ export function Work() {
             <p className="u-label">The work</p>
             <WordReveal text="Selected work" className="u-h2 mt-4" />
           </motion.div>
-          {/* Says plainly which of these shipped. The live one is worth more when
-             it is not sitting in a row of five things that all look equally real. */}
+          {/* Plain about what these are: concept builds, not client engagements.
+             Each one is labelled on its own card and case study too. */}
           <p className="u-fg2 max-w-[36ch] text-[0.95rem] leading-[1.6]">
-            Eddie Rocks is live, and it is in my town. The four under it are concept builds: the same
-            process, run on the kinds of business I want to work with.
+            Concept builds, run through the same process on the kinds of business I want to work
+            with.
           </p>
         </div>
 
         <div className="mt-[clamp(2.25rem,5vh,3.5rem)]">
-          <Lead />
-        </div>
-
-        <div className="u-line-t mt-[clamp(3rem,7vh,4.5rem)] pt-[clamp(2.25rem,5vh,3.5rem)]">
           <div className="flex flex-col gap-[clamp(2.25rem,5vh,3.5rem)]">
             <div className="grid gap-x-10 gap-y-[clamp(2.25rem,5vh,3.5rem)] md:grid-cols-2">
               {[PROJECTS[0], PROJECTS[1]].map((p, i) => (

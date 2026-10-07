@@ -1,7 +1,5 @@
-# Netlify. The base is the portfolio folder, but the build has to run from a
-# checkout of the whole repo: the prebuild step copies the Eddie Rocks site in
-# from the repository root, and that is what makes the case study's
-# "View the live site" a real link rather than a dead button.
+# Netlify. The site lives in the portfolio folder; everything else builds
+# and deploys from there.
 
 [build]
   base = "portfolio"

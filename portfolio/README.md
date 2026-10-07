@@ -46,12 +46,6 @@ up for those two hosts. For Cloudflare Pages or anything else:
 | Output directory | `portfolio/dist` |
 | Node version | 22 |
 
-**Point the host at the whole repository, not just the `portfolio` folder.**
-The build's `prebuild` step copies the Eddie Rocks site in from the repository
-root, and that is what makes the case study's "View the live site" a real link
-instead of a dead button. If `/eddie-rocks/` 404s on your deployed site, this
-is why.
-
 Environment variables to set on the host:
 
 | Variable | What it does | Unset |
@@ -85,29 +79,16 @@ The things to change first:
 | Domain | `VITE_SITE_URL` on your host, nowhere else |
 | Page title, description | `index.html` (title, meta, JSON-LD) |
 
-### The featured build
+### The projects
 
-Eddie Rocks is real work and the case study links to the real thing.
-`scripts/link-eddies.mjs` copies the site from the repo root into
-`public/eddie-rocks/` before dev and before build, so "View the live site"
-goes somewhere. The copy is gitignored, so the site is never duplicated in
-version control.
-
-The scroll-through video was recorded from that site with Playwright and
-encoded to VP8 (`public/work/eddies-scroll.webm`, 640kB, 16s). On a pointer
-device the scroll scrubs it, eased in a frame loop so a fast flick does not
-become a stack of seeks. On touch it plays as an ordinary muted loop,
-because seeking by finger is unreliable on iOS. Without WebM support the
-poster image renders instead of a dead video element.
-
-### The other projects
-
-The other five projects are **placeholders**. The businesses are invented and the
-previews are design concepts, not client work. Replace them as you ship real
-sites: change the copy in `PROJECTS`, and drop a screenshot into `public/work/`
-using the same file name. Set `aspect` to whatever ratio you export ("3 / 2"
-by default) and the grid and the case study both follow it. Add `liveUrl` and
-a "Visit live site" link appears in the case study.
+All five are **placeholders**. The businesses are invented and the previews
+are design concepts, not client work — each is labelled `Concept` on its card
+and in its case study. Replace them as you ship real sites: change the copy
+in `PROJECTS`, and drop a screenshot into `public/work/` using the same file
+name. Set `aspect` to whatever ratio you export ("3 / 2" by default) and the
+grid and the case study both follow it. Add `liveUrl` and a "Visit live site"
+link appears in the case study, and delete `status` once a project is real
+work rather than a concept.
 
 ### The contact form
 
