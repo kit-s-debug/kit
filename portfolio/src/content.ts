@@ -72,12 +72,36 @@ export type Project = {
   outcome: string;
   tech: string[];
   image: string;
+  /* A second image for the case study only, for a project with more than
+     one screen worth showing. Not rendered on the grid card. */
+  secondaryImage?: string;
   aspect?: string;
   liveUrl?: string;
-  /* Marks a piece that is not a client engagement. A project with no status is
-     live work; anything with one is labelled on the card and in the case
-     study, so nothing here can be mistaken for work that shipped. */
+  /* Marks a piece that is not a client engagement. A project with no status
+     is real work, not a concept; anything with one is labelled on the card
+     and in the case study, so nothing here can be mistaken for work that
+     shipped. */
   status?: string;
+};
+
+/* Real work, not a concept, so it carries no status. The club runs the site
+   itself from one plain-language file, which is the actual brief this was
+   built against: a volunteer committee with no developer to call. */
+export const LLANGWM: Project = {
+  slug: "llangwm-rfc",
+  name: "Llangwm RFC",
+  sector: "Rugby club",
+  town: "Llangwm",
+  role: "Design and build",
+  summary: "A hundred and forty years of a village rugby club, and a site the committee can keep current themselves.",
+  challenge:
+    "The old site needed its builder to change anything on it, so fixtures and news went stale the moment that person moved on. A hundred and forty years of history, kept alive by a local history society's own records, had nowhere to live online.",
+  approach:
+    "One file the club edits directly: fixtures, news, sponsors, junior age groups, all in plain language with no CMS login and no developer needed to change a date. The history and archive photographs are credited properly to the Llangwm Local History Society rather than just lifted.",
+  outcome: "The committee updates the site themselves, and the club's history finally has a proper home.",
+  tech: ["HTML", "CSS", "JavaScript"],
+  image: "/work/llangwm-hero.jpg",
+  secondaryImage: "/work/llangwm-history.jpg",
 };
 
 /* EDIT: concept builds. Replace the copy and drop a real screenshot into

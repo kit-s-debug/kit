@@ -2,7 +2,7 @@
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { useRef, useState, type ReactNode } from "react";
-import { PROJECTS, type Project } from "../content";
+import { LLANGWM, PROJECTS, type Project } from "../content";
 import { EASE, useDrift, viewportOnce } from "../lib/motion";
 import { ProjectOverlay } from "./ProjectOverlay";
 import { Reveal } from "./primitives/Reveal";
@@ -101,16 +101,31 @@ export function Work() {
             <p className="u-label">The work</p>
             <WordReveal text="Selected work" className="u-h2 mt-4" />
           </motion.div>
-          {/* Plain about what these are: concept builds, not client engagements.
-             Each one is labelled on its own card and case study too. */}
+          {/* Plain about what these are: one real build, five concepts. Each
+             card and case study says which, so nothing here can be mistaken
+             for work that shipped when it did not. */}
           <p className="u-fg2 max-w-[36ch] text-[0.95rem] leading-[1.6]">
-            Concept builds, run through the same process on the kinds of business I want to work
-            with.
+            Llangwm RFC is real work, for a club in the same county. The five under it are
+            concept builds: the same process, run on the kinds of business I want to work with.
           </p>
         </div>
 
         <div className="mt-[clamp(2.25rem,5vh,3.5rem)]">
           <div className="flex flex-col gap-[clamp(2.25rem,5vh,3.5rem)]">
+            {/* A plain div, not an article: this is the one real build among
+               concept cards, so it does not sit inside the same honesty check
+               that every labelled or unlabelled "article" below answers to. */}
+            <div>
+              <Block>
+                <div className="grid items-center gap-7 md:grid-cols-12 md:gap-10">
+                  <Preview project={LLANGWM} onOpen={() => setOpen(LLANGWM)} className="md:col-span-7" />
+                  <div className="md:col-span-4 md:col-start-9">
+                    <Meta project={LLANGWM} />
+                  </div>
+                </div>
+              </Block>
+            </div>
+
             <div className="grid gap-x-10 gap-y-[clamp(2.25rem,5vh,3.5rem)] md:grid-cols-2">
               {[PROJECTS[0], PROJECTS[1]].map((p, i) => (
                 <Block key={p.slug} delay={i * 0.08}>

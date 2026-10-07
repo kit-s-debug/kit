@@ -113,6 +113,14 @@ export function ProjectOverlay({ project, onClose }: { project: Project | null; 
                     <p className="mt-3 text-[1rem] leading-[1.72] text-[var(--fg)]/90">{v}</p>
                   </div>
                 ))}
+                {project.secondaryImage && (
+                  <img
+                    src={project.secondaryImage}
+                    alt={`A second screen from the ${project.name} website`}
+                    style={{ aspectRatio: project.aspect ?? "16 / 9" }}
+                    className="w-full object-cover"
+                  />
+                )}
               </div>
 
               <div className="md:col-span-4 md:col-start-9">
