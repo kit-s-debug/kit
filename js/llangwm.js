@@ -535,12 +535,15 @@
     }
 
     function tile(s) {
+      /* A partner with no logo file is set in type, and gets the club's amber
+         so it reads as a sponsor panel rather than a blank space. */
+      var cls = 'partner' + (s.logo ? '' : ' partner-name');
       var inner = s.logo
         ? '<img src="' + esc(s.logo) + '" alt="' + esc(s.name) + '" loading="lazy">'
         : '<span>' + esc(s.name) + '</span>';
       return s.url
-        ? '<a class="partner" href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>'
-        : '<div class="partner">' + inner + '</div>';
+        ? '<a class="' + cls + '" href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>'
+        : '<div class="' + cls + '">' + inner + '</div>';
     }
 
     /* The club sponsors its players separately from its shirt, so a partner

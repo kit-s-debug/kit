@@ -1016,6 +1016,7 @@ section[id],[id="top"]{scroll-margin-top:96px}
 /* Lift rather than tint: a colour change would fight the logo underneath. */
 .partner[href]:hover{transform:translateY(-3px)}
 .partner[href]:hover span{color:#9a6a00}
+.partner-name{background:var(--amber)}
 .partner[href]:focus-visible{outline:3px solid var(--amber);outline-offset:-3px}
 /* One logo per row on a phone would make the board scroll for pages, so the
    tiles halve. Two across stays legible; three does not. */
