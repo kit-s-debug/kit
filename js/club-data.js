@@ -336,10 +336,9 @@ window.LLANGWM = {
      Only add a `url` you have actually been given. The two below are printed
      on the logos themselves. */
   sponsors: [
-    // CHECK — Loche Bros is the front-of-shirt sponsor on the club's current
-    // playing kit, read from the shirt itself. No logo file supplied, so the
-    // name is set in type.
-    { group: "Front of shirt", name: "Loche Bros", logo: "", url: "" },
+    // Locke Brothers, the front-of-shirt sponsor, as the club spells it. No
+    // logo file supplied, so the name is set in type.
+    { group: "Front of shirt", name: "Locke Brothers", logo: "", url: "" },
 
     { group: "Player sponsors", name: "Allpipes Civils Ltd",                            logo: "assets/sponsors/allpipes-civils.jpg", url: "" },
     { group: "Player sponsors", name: "Pembrokeshire Building & Plumbing Supplies Ltd", logo: "assets/sponsors/pembrokeshire-building-plumbing.jpg", url: "https://www.pembrokeshirebuildingsupplies.co.uk" },  // address printed on the logo

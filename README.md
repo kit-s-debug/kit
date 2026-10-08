@@ -133,7 +133,7 @@ These are marked `// CHECK` in `club-data.js`:
    given for matchdays and update `club.mapQuery` to match.
 3. **The Facebook page.** Confirm it is the club's own, or set
    `social.facebook` to `""` to remove every Facebook link.
-4. **Sponsor logos and websites.** Loche Bros and the seventeen player
+4. **Sponsor logos and websites.** Locke Brothers and the seventeen player
    sponsors are listed by name. No logo files were supplied, so each name is
    set in type; drop a file into `assets/sponsors/` and put its path in
    `logo` to use artwork instead. Only Laser Shot has a website, which was
