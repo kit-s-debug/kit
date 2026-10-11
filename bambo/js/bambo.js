@@ -162,7 +162,7 @@
       if (s === "price-desc") list = [...list].sort((a, b) => pr(b, -1) - pr(a, -1));
       if (s === "new") list = [...list].sort((a, b) => b.added - a.added);
       countEl.textContent = `${list.length} ${list.length === 1 ? "product" : "products"}`;
-      $("#cat-title").textContent = cat === "all" ? "The full range" : catLabel(cat);
+      $("#cat-title").textContent = cat === "all" ? "Everything" : catLabel(cat);
       grid.innerHTML = list.length ? list.map(cardHTML).join("") : `<p class="empty">Nothing here yet. Ask in store, we can usually order it in.</p>`;
       wireCards(grid); observe(grid);
     };
