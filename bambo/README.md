@@ -21,39 +21,35 @@ collection list), `visit.html` (hours, directions, Challenge 25, recycling, FAQ)
 - **One typeface:** Archivo variable (self-hosted, OFL). Headlines are set at 112–125% width
   and 860–900 weight, in uppercase. Body copy is set at normal width.
 - **One motif, the "slot":** a vertical red pill, taken from the window on a pod. It's the
-  logo mark, list bullets, the shape behind the hero products and the favicon.
+  logo mark, list bullets and the favicon. On the hero and visit pages, the shop photo is framed inside it.
 - **Motion:** the hero lines rise into place and the red slot grows upward. Images reveal
   with a clip-path, red rules draw themselves in, and buttons fill with charcoal on hover.
   All of it switches off under `prefers-reduced-motion`.
 
-## Before going live: replace the placeholders
+## Photography
 
-These are stand-ins, not facts about the shop:
+All imagery is real shop photography. The originals are in `photos/originals/`.
+`photos/crops.py` cuts them into the web images in `assets/photos/`: the hero, the category
+tiles, the gallery and one 4:5 card per product. To add or swap a photo, drop it in
+`photos/originals/`, add or edit a line in `CROPS`, then run `python3 photos/crops.py`.
 
-- **Product photography.** Every image in `assets/img/` is a 3D studio render made in
-  `tools/product-studio/`, not a photo of real stock. Swap in real photography at the same
-  aspect ratios: 4:5 for products, 1:1 for category tiles, 1100×1400 for the hero. Use a
-  plain light background so the photos match `--grey`.
-- **Products, prices and offers** in `js/products.js`, including product names, the "3 for
-  £10" nic salt offer and the specs.
-- **Address and opening hours** in `index.html` and `visit.html`. The `data-open` and
-  `data-close` attributes drive the "Open now" status. The directions link is a Google Maps
-  search for "Bambo Vape Shop Haverfordwest".
-- **Service claims:** free coil fitting, set-up in store and recycling drop-off. Keep only
-  the ones the shop actually offers.
+The crops avoid the green LED strips and leave out paraphernalia (bongs, grinders, CBD) so
+that the site stays on brand.
+
+## Before going live: check these
+
+- **Prices and offers** in `js/products.js` were read off shelf labels in the photos. Lines
+  with `price: null` show "Ask in store".
+- **Address and opening hours** in `index.html` and `visit.html` are placeholders. The
+  `data-open` and `data-close` attributes drive the "Open now" status. The directions link
+  is a Google Maps search for "Bambo Vape Shop Haverfordwest".
 
 ## Compliance notes (UK)
 
 - An 18+ age check runs on first visit, and the Challenge 25 notice appears on every page.
-- No disposable vapes are listed (single-use vapes have been banned in the UK since 1 June 2025).
+- Single-use vapes have been banned in the UK since 1 June 2025. Confirm that every kit listed is a compliant rechargeable version.
 - Nicotine-containing products show the statutory nicotine warning. Copy is factual product
   information rather than promotion. Have the final wording checked against the TRPR
   advertising rules.
 - There is no online checkout. The collection list is stored in the visitor's browser and
   shared with the shop via the share sheet or clipboard.
-
-## Re-rendering product images
-
-`tools/product-studio/` builds the products in three.js and photographs them in headless Chromium:
-`npm i three@0.160.0 playwright`, then `node shoot.mjs [shot-name ...]`. This writes 2× PNGs to `out/`.
-Downscale them to WebP into `assets/img/`.

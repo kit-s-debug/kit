@@ -12,7 +12,7 @@
     arrow: '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
     close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
   };
-  const money = (n) => "£" + n.toFixed(2);
+  const money = (n) => (n == null ? "Ask in store" : "£" + (Number.isInteger(n) ? n : n.toFixed(2)));
 
   /* ---------- page entrance ---------- */
   const markLoaded = () => requestAnimationFrame(() => document.documentElement.classList.add("is-loaded"));
@@ -87,44 +87,27 @@
   const onShop = Boolean($("#catalogue"));
 
   function cardHTML(p, i = 0) {
-    const v = p.variants[0];
-    const swatches = p.variants.length > 1
-      ? `<div class="swatches" role="group" aria-label="Colour">${p.variants.map((s, j) => `<button class="swatch" type="button" style="background:${s.hex}" aria-label="${s.label}" aria-pressed="${j === 0}" data-swatch="${s.id}"></button>`).join("")}</div>`
-      : "";
     return `
       <article class="card" data-id="${p.id}" style="--d:${Math.min(i, 8) * 0.05}s">
         <div class="card-media reveal-img" style="--d:${(i % 4) * 0.08}s">
           ${p.badge ? `<span class="card-badge${p.badgeRed ? " card-badge--red" : ""}">${p.badge}</span>` : ""}
-          <img src="${v.img}" alt="${p.name}${p.variants.length > 1 ? ", " + v.label : ""}" width="1000" height="1250" loading="lazy" decoding="async">
+          <img src="${p.img}" alt="${p.name} on the shelf at Bambo" width="800" height="1000" loading="lazy" decoding="async">
           <button class="card-quick" type="button" data-quick="${p.id}">Quick view</button>
         </div>
         <div class="card-body">
           <span class="card-cat">${catLabel(p.cat)}</span>
           <h3 class="card-name"><a href="shop.html?p=${p.id}" data-open="${p.id}">${p.name}</a></h3>
           <span class="card-spec">${p.spec}</span>
-          <div class="card-foot">
-            <span class="price">${money(p.price)}${p.was ? `<s>${money(p.was)}</s>` : ""}</span>
-            ${swatches}
-          </div>
+          <div class="card-foot"><span class="price${p.price == null ? " price--ask" : ""}">${money(p.price)}</span></div>
         </div>
       </article>`;
   }
 
   function wireCards(root) {
-    $$("[data-swatch]", root).forEach((b) => b.addEventListener("click", (e) => {
-      e.preventDefault();
-      const card = b.closest(".card"), p = byId(card.dataset.id), v = p.variants.find((x) => x.id === b.dataset.swatch);
-      $$("[data-swatch]", card).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      const img = $(".card-media img", card);
-      img.style.opacity = 0;
-      setTimeout(() => { img.src = v.img; img.alt = `${p.name}, ${v.label}`; img.onload = () => (img.style.opacity = 1); }, 180);
-    }));
     if (!onShop) return; // on other pages, the link simply goes to the shop
     $$("[data-open], [data-quick]", root).forEach((a) => a.addEventListener("click", (e) => {
       e.preventDefault();
-      const id = a.dataset.open || a.dataset.quick;
-      const pressed = $(`.card[data-id="${id}"] [data-swatch][aria-pressed="true"]`);
-      openProduct(id, pressed && pressed.dataset.swatch);
+      openProduct(a.dataset.open || a.dataset.quick);
     }));
   }
 
@@ -151,8 +134,9 @@
     const render = () => {
       let list = PRODUCTS.filter((p) => cat === "all" || p.cat === cat);
       const s = sortEl.value;
-      if (s === "price-asc") list = [...list].sort((a, b) => a.price - b.price);
-      if (s === "price-desc") list = [...list].sort((a, b) => b.price - a.price);
+      const pr = (p, dflt) => (p.price == null ? dflt : p.price);
+      if (s === "price-asc") list = [...list].sort((a, b) => pr(a, Infinity) - pr(b, Infinity));
+      if (s === "price-desc") list = [...list].sort((a, b) => pr(b, -1) - pr(a, -1));
       if (s === "new") list = [...list].sort((a, b) => b.added - a.added);
       countEl.textContent = `${list.length} ${list.length === 1 ? "product" : "products"}`;
       $("#cat-title").textContent = cat === "all" ? "The full range" : catLabel(cat);
@@ -177,20 +161,18 @@
   }
 
   /* ---------- product detail ---------- */
-  function openProduct(id, variantId) {
+  function openProduct(id) {
     const dlg = $("#product"); const p = byId(id); if (!dlg || !p) return;
-    let v = p.variants.find((x) => x.id === variantId) || p.variants[0];
     let strength = p.strengths ? p.strengths[p.strengths.length - 1] : null;
     dlg.innerHTML = `
       <button class="dlg-close" type="button" aria-label="Close" data-close>${icon.close}</button>
       <div class="pd">
-        <div class="pd-media"><img src="${v.img}" alt="${p.name}" width="1000" height="1250"></div>
+        <div class="pd-media"><img src="${p.img}" alt="${p.name} on the shelf at Bambo" width="800" height="1000"></div>
         <div class="pd-body">
           <span class="label">${catLabel(p.cat)}</span>
           <h2 class="display">${p.name}</h2>
-          <div class="pd-price">${money(p.price)}${p.was ? ` <s style="color:var(--ink-3);font-weight:400;font-size:1rem">${money(p.was)}</s>` : ""}</div>
+          <div class="pd-price">${money(p.price)}${p.badge ? ` <span class="card-badge card-badge--red" style="position:static;vertical-align:4px;margin-left:.4rem">${p.badge}</span>` : ""}</div>
           <p>${p.desc}</p>
-          ${p.variants.length > 1 ? `<div class="opt-group"><span class="label">Colour · <b data-vlabel>${v.label}</b></span><div class="opts">${p.variants.map((x) => `<button class="opt" type="button" data-v="${x.id}" aria-pressed="${x.id === v.id}"><span class="dot" style="background:${x.hex}"></span>${x.label}</button>`).join("")}</div></div>` : ""}
           ${p.strengths ? `<div class="opt-group"><span class="label">Nicotine strength</span><div class="opts">${p.strengths.map((s) => `<button class="opt" type="button" data-s="${s}" aria-pressed="${s === strength}">${s}/ml</button>`).join("")}</div></div>` : ""}
           <ul class="specs">${p.specs.map((s) => `<li><span class="slot"></span>${s}</li>`).join("")}</ul>
           ${p.nicotine ? `<div class="nic-warning">This product contains nicotine which is a highly addictive substance.</div>` : ""}
@@ -198,20 +180,12 @@
           <a class="text-link" href="visit.html">Pay and collect at the shop in Haverfordwest</a>
         </div>
       </div>`;
-    const img = $(".pd-media img", dlg);
-    $$("[data-v]", dlg).forEach((b) => b.addEventListener("click", () => {
-      v = p.variants.find((x) => x.id === b.dataset.v);
-      $$("[data-v]", dlg).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      $("[data-vlabel]", dlg).textContent = v.label;
-      img.style.transition = "opacity .2s"; img.style.opacity = 0;
-      setTimeout(() => { img.src = v.img; img.onload = () => (img.style.opacity = 1); }, 180);
-    }));
     $$("[data-s]", dlg).forEach((b) => b.addEventListener("click", () => {
       strength = b.dataset.s;
       $$("[data-s]", dlg).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
     }));
     $("[data-add]", dlg).addEventListener("click", (e) => {
-      addToBag({ id: p.id, v: v.id, s: strength });
+      addToBag({ id: p.id, s: strength });
       const btn = e.currentTarget;
       btn.innerHTML = "Added to your list";
       setTimeout(() => dlg.close(), 650);
@@ -227,7 +201,8 @@
   // No checkout: you build a list, then show it at the counter or send it to the shop.
   let bag = store.get("bambo-bag", []).filter((b) => byId(b.id));
   const fab = $("#bag-fab");
-  const bagTotal = () => bag.reduce((t, b) => t + byId(b.id).price, 0);
+  const bagTotal = () => bag.reduce((t, b) => t + (byId(b.id).price || 0), 0);
+  const bagHasAsk = () => bag.some((b) => byId(b.id).price == null);
   const syncFab = (bump) => {
     if (!fab) return;
     $(".bag-count", fab).textContent = bag.length;
@@ -236,9 +211,9 @@
   };
   function addToBag(item) { bag.push(item); store.set("bambo-bag", bag); syncFab(true); }
   const bagText = () => ["My Bambo collection list:", ...bag.map((b) => {
-    const p = byId(b.id), v = p.variants.find((x) => x.id === b.v) || p.variants[0];
-    return `- ${p.name}${p.variants.length > 1 ? ` (${v.label})` : ""}${b.s ? ` ${b.s}` : ""}: ${money(p.price)}`;
-  }), `Total: ${money(bagTotal())}`].join("\n");
+    const p = byId(b.id);
+    return `- ${p.name}${b.s ? ` ${b.s}` : ""}: ${money(p.price)}`;
+  }), `Total: ${money(bagTotal())}${bagHasAsk() ? " plus items priced in store" : ""}`].join("\n");
 
   function openBag() {
     const dlg = $("#bag"); if (!dlg) return;
@@ -249,11 +224,11 @@
           <span class="label">Collection list</span>
           <h2 class="display">Ready when you are</h2>
           ${bag.length ? `<ul class="bag-list">${bag.map((b, i) => {
-            const p = byId(b.id), v = p.variants.find((x) => x.id === b.v) || p.variants[0];
-            return `<li><img src="${v.img}" alt=""><div><strong>${p.name}</strong><div class="meta">${[p.variants.length > 1 ? v.label : "", b.s].filter(Boolean).join(" · ") || p.spec}</div></div><div style="text-align:right"><div class="price">${money(p.price)}</div><button type="button" data-rm="${i}">Remove</button></div></li>`;
+            const p = byId(b.id);
+            return `<li><img src="${p.img}" alt=""><div><strong>${p.name}</strong><div class="meta">${b.s || p.spec}</div></div><div style="text-align:right"><div class="price">${money(p.price)}</div><button type="button" data-rm="${i}">Remove</button></div></li>`;
           }).join("")}</ul>
-          <div class="bag-total"><span>Estimated total</span><span>${money(bagTotal())}</span></div>
-          <p class="bag-note">Show this list at the counter, or send it to us and we'll have it bagged up. You pay in store, and we'll check ID if you look under 25.</p>
+          <div class="bag-total"><span>Estimated total${bagHasAsk() ? " (some items priced in store)" : ""}</span><span>${money(bagTotal())}</span></div>
+          <p class="bag-note">Show this list at the counter. Multi-buy offers are applied when you pay in store, and we'll check ID if you look under 25.</p>
           <button class="btn btn--block" type="button" data-share>Send or copy my list ${icon.arrow}</button>`
           : `<p class="bag-note">Your list is empty. Add products from the shop and they'll appear here.</p>`}
         </div>`;

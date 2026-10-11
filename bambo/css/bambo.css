@@ -237,17 +237,25 @@ button { font: inherit; color: inherit; }
   border-radius: var(--radius);
   overflow: hidden;
 }
+/* the shop, seen through the brand's slot */
 .hero-stage .big-slot {
-  position: absolute; left: 50%; top: 9%;
-  width: 34%; height: 82%;
-  translate: -50% 0;
+  position: absolute; left: 50%; top: 5%;
+  width: 66%; height: 86%;
+  translate: -40% 0;
   border-radius: 999px;
   background: var(--red);
   transform-origin: bottom;
 }
-.hero-stage picture, .hero-stage img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center 70%;
+.hero-stage .slot-photo {
+  position: absolute; left: 50%; top: 9%;
+  width: 66%; height: 86%;
+  translate: -58% 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--grey-2);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .45);
 }
+.hero-stage .slot-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
 .hero-stage .tag {
   position: absolute; left: 1.1rem; bottom: 1.1rem;
   background: var(--white); border-radius: 99px;
@@ -266,14 +274,14 @@ button { font: inherit; color: inherit; }
 .js .hero h1 .line > span { transform: translateY(105%); }
 .js .hero .lede, .js .hero-actions { opacity: 0; transform: translateY(14px); }
 .js .hero-stage .big-slot { transform: scaleY(0); }
-.js .hero-stage img { opacity: 0; transform: translateY(24px) scale(.98); }
+.js .hero-stage .slot-photo { clip-path: inset(100% 0 0 0 round 999px); }
 .is-loaded .hero h1 .line > span { transform: none; transition: transform 1.05s var(--ease); }
 .is-loaded .hero h1 .line:nth-child(2) > span { transition-delay: .08s; }
 .is-loaded .hero h1 .line:nth-child(3) > span { transition-delay: .16s; }
 .is-loaded .hero .lede, .is-loaded .hero-actions { opacity: 1; transform: none; transition: opacity .8s var(--ease) .35s, transform .8s var(--ease) .35s; }
 .is-loaded .hero-actions { transition-delay: .45s; }
 .is-loaded .hero-stage .big-slot { transform: none; transition: transform 1.2s var(--ease) .15s; }
-.is-loaded .hero-stage img { opacity: 1; transform: none; transition: opacity 1s var(--ease) .5s, transform 1.2s var(--ease) .5s; }
+.is-loaded .hero-stage .slot-photo { clip-path: inset(0 0 0 0 round 999px); transition: clip-path 1.3s var(--ease-in-out) .35s; }
 
 /* ---------- ticker of facts (static, not a marquee) ---------- */
 .facts { border-block: 1px solid var(--line); }
@@ -300,41 +308,58 @@ button { font: inherit; color: inherit; }
 /* ---------- category bento ---------- */
 .bento { display: grid; gap: 14px; }
 .tile {
-  position: relative; overflow: hidden;
-  display: flex; flex-direction: column; justify-content: space-between;
-  min-height: 380px; padding: 1.5rem;
+  position: relative; overflow: hidden; isolation: isolate;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 440px; padding: 12px;
   border-radius: var(--radius);
   background: var(--grey);
   text-decoration: none;
-  isolation: isolate;
 }
-.tile img {
-  position: absolute; z-index: -1;
-  right: -2%; bottom: -4%; width: 64%;
-  transition: transform .9s var(--ease);
+.tile > img {
+  position: absolute; inset: 0; z-index: -1;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.2s var(--ease);
 }
-.tile:hover img { transform: translateY(-10px) scale(1.03); }
-.tile h3 { margin: 0; font-size: clamp(1.8rem, 3.4vw, 2.8rem); }
-.tile p { margin: .5rem 0 0; color: var(--ink-2); max-width: 18em; font-size: .95rem; }
+.tile:hover > img { transform: scale(1.05); }
+.tile-card {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+  background: var(--white); color: var(--ink);
+  border-radius: 10px; padding: 1.15rem 1.15rem 1.15rem 1.3rem;
+}
+.tile h3 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.5rem); }
+.tile p { margin: .4rem 0 0; color: var(--ink-2); max-width: 22em; font-size: .92rem; }
 .tile .go {
-  align-self: flex-start;
+  flex: none;
   width: 48px; height: 48px; border-radius: 50%;
   display: grid; place-items: center;
-  background: var(--white); color: var(--ink);
-  transition: background .35s var(--ease), color .35s var(--ease), transform .45s var(--ease);
+  background: var(--red); color: var(--white);
+  transition: background .35s var(--ease), transform .45s var(--ease);
 }
-.tile:hover .go { background: var(--red); color: var(--white); transform: rotate(-45deg); }
+.tile:hover .go { background: var(--ink); transform: rotate(-45deg); }
 .tile .go svg { width: 20px; height: 20px; }
-.tile--feature { background: var(--red); color: var(--white); min-height: 440px; }
-.tile--feature p { color: rgba(255, 255, 255, .82); }
-.tile--feature img { width: 88%; right: -4%; bottom: 2%; }
-.tile--feature:hover .go { background: var(--ink); }
+.tile--feature .tile-card { background: var(--red); color: var(--white); }
+.tile--feature p { color: rgba(255, 255, 255, .85); }
+.tile--feature .go { background: var(--white); color: var(--red); }
+.tile--feature:hover .go { background: var(--ink); color: var(--white); }
 @media (min-width: 900px) {
   .bento { grid-template-columns: 1.25fr 1fr; grid-template-rows: 1fr 1fr; }
-  .tile--feature { grid-row: span 2; min-height: 640px; }
-  .tile { min-height: 313px; }
-  .tile img { width: 58%; right: -2%; }
-  .tile--feature img { width: 84%; right: -4%; bottom: 3%; }
+  .tile--feature { grid-row: span 2; min-height: 700px; }
+  .tile { min-height: 343px; }
+}
+
+/* ---------- gallery ---------- */
+.gallery { display: grid; grid-auto-flow: column; grid-auto-columns: 78%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+.gallery::-webkit-scrollbar { display: none; }
+.gallery figure { margin: 0; scroll-snap-align: start; }
+.gallery .frame { aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; background: var(--grey); }
+.gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.gallery figure:hover img { transform: scale(1.04); }
+.gallery figcaption { display: flex; gap: .6rem; align-items: baseline; margin-top: .8rem; font-size: .88rem; font-weight: 600; }
+.gallery figcaption .slot { font-size: .8rem; }
+@media (min-width: 900px) {
+  .gallery { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); gap: 20px; overflow: visible; margin: 0; padding: 0; }
+  .gallery figure:nth-child(2) { margin-top: 5rem; }
+  .gallery figure:nth-child(3) { margin-top: 2.5rem; }
 }
 
 /* ---------- product card ---------- */
@@ -390,6 +415,7 @@ button { font: inherit; color: inherit; }
 .card-spec { font-size: .86rem; color: var(--ink-2); }
 .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: .35rem; }
 .price { font-weight: 750; font-size: 1.02rem; font-variant-numeric: tabular-nums; }
+.price--ask { color: var(--ink-2); font-weight: 600; font-size: .9rem; }
 .price s { color: var(--ink-3); font-weight: 400; margin-left: .35rem; font-size: .88rem; }
 .swatches { display: flex; gap: 6px; position: relative; z-index: 1; }
 .swatch {
@@ -515,7 +541,7 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
 @keyframes fade-in { from { opacity: 0; } }
 .pd { display: grid; }
 .pd-media { background: var(--grey); aspect-ratio: 4 / 4; overflow: hidden; }
-.pd-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
+.pd-media img { width: 100%; height: 100%; object-fit: cover; }
 .pd-body { padding: 1.75rem 1.5rem 1.5rem; display: grid; gap: 1rem; align-content: start; }
 .pd-body h2 { margin: 0; font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
 .pd-body p { margin: 0; color: var(--ink-2); }
@@ -659,7 +685,8 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
-  .js .reveal, .js .hero .lede, .js .hero-actions, .js .hero-stage img { opacity: 1; transform: none; }
+  .js .reveal, .js .hero .lede, .js .hero-actions { opacity: 1; transform: none; }
+  .js .hero-stage .slot-photo { clip-path: none; }
   .js .hero h1 .line > span, .js .hero-stage .big-slot, .js .rule { transform: none; }
   .js .reveal-img img { clip-path: none; }
 }
