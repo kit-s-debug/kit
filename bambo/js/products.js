@@ -8,6 +8,7 @@ window.BAMBO_CATEGORIES = [
   { id: "nic-salts", label: "Nic salts" },
   { id: "pouches", label: "Nicotine pouches" },
   { id: "shisha", label: "Shisha" },
+  { id: "accessories", label: "Accessories" },
 ];
 
 const KIT_SPECS = ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml", "Dozens of flavours on the shelf"];
@@ -180,6 +181,39 @@ window.BAMBO_PRODUCTS = [
     desc: "A clear glass base with a polished gold stem, wide tray and a two-port head. On display in our window.",
     specs: ["Clear glass base", "Gold stem and tray", "Hose included"],
     img: "assets/photos/hookah-blue.webp",
+    added: 0,
+  },
+  {
+    id: "rolling-papers",
+    name: "Rolling Papers",
+    cat: "accessories",
+    price: null,
+    spec: "RAW Classic and Black, OCB",
+    desc: "RAW Classic and RAW Black rolling papers, OCB and Swan filters.",
+    specs: ["RAW Classic", "RAW Black", "OCB", "Swan filters"],
+    img: "assets/photos/rolling-papers.webp",
+    added: 0,
+  },
+  {
+    id: "clipper-lighters",
+    name: "Clipper Lighters",
+    cat: "accessories",
+    price: null,
+    spec: "Refillable · Dozens of designs",
+    desc: "Refillable Clipper lighters in dozens of designs, on the stand by the till.",
+    specs: ["Refillable", "Lots of designs", "On the stand by the till"],
+    img: "assets/photos/lighters.webp",
+    added: 0,
+  },
+  {
+    id: "grinders",
+    name: "Grinders",
+    cat: "accessories",
+    price: null,
+    spec: "Metal and acrylic · Pocket and full size",
+    desc: "Metal and acrylic grinders, pocket-sized and full-sized, in a range of colours.",
+    specs: ["Metal or acrylic", "Pocket and full size", "Over-18s only"],
+    img: "assets/photos/grinders.webp",
     added: 0,
   },
 ];

@@ -37,6 +37,9 @@ CROPS = {
     "elux-nic-salts":     ("elux-salts-wall.jpg",     (420, 200, 780, 650),   800),
     "pixl-hayati-salts":  ("salts-wall.jpg",          (420, 300, 780, 750),   800),
     "nicotine-pouches":   ("elux-display-sims.jpg",   (490, 500, 762, 840),   800),
+    "grinders":           ("counter-accessories.jpg", (370, 240, 710, 665),   800),
+    "rolling-papers":     ("counter-accessories.jpg", (560, 560, 832, 900),   800),
+    "lighters":           ("counter-accessories.jpg", (220, 470, 540, 870),   800),
     "hookah":             ("hookah-gold.jpg",         (170, 100, 1010, 1150), 800),
     "hookah-blue":        ("hookah-blue.jpg",         (240, 150, 1000, 1100), 800),
 }
