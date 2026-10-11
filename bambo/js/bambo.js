@@ -52,6 +52,29 @@
   const observe = (root = document) => $$(".reveal, .reveal-img, .rule", root).forEach((el) => io ? io.observe(el) : el.classList.add("in"));
   observe();
 
+  /* ---------- walk-through video ---------- */
+  // Plays muted while on screen; never autoplays for reduced-motion visitors.
+  $$("video[data-autoplay]").forEach((video) => {
+    const btn = video.parentElement.querySelector("[data-video-toggle]");
+    let userPaused = reduceMotion;
+    const sync = () => {
+      const paused = video.paused;
+      btn.classList.toggle("is-paused", paused);
+      btn.setAttribute("aria-label", paused ? "Play video" : "Pause video");
+    };
+    video.addEventListener("play", sync); video.addEventListener("pause", sync);
+    btn.addEventListener("click", () => {
+      if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+      else { userPaused = true; video.pause(); }
+    });
+    sync();
+    if (!("IntersectionObserver" in window)) return;
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !userPaused) { video.preload = "auto"; video.play().catch(sync); }
+      else if (!e.isIntersecting) video.pause();
+    }, { threshold: 0.35 }).observe(video);
+  });
+
   /* ---------- opening hours ---------- */
   // Each row: <tr data-day="1" data-open="09:30" data-close="17:30"> (0 = Sunday). No times = closed.
   const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };

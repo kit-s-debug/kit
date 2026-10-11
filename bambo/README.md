@@ -36,6 +36,18 @@ tiles, the gallery and one 4:5 card per product. To add or swap a photo, drop it
 The crops avoid the green LED strips and leave out paraphernalia (bongs, grinders, CBD) so
 that the site stays on brand.
 
+## Video
+
+`assets/video/walkthrough.{webm,mp4}` is a muted, looping 22-second walk-through from the
+shop (`photos/originals/walkthrough.mov`) and the first tile in the "Inside Bambo" gallery.
+It plays only while on screen, has a pause button, and doesn't autoplay for visitors who
+prefer reduced motion. To re-encode it:
+
+```
+ffmpeg -i photos/originals/walkthrough.mov -an -c:v libx264 -crf 31 -preset veryslow -movflags +faststart assets/video/walkthrough.mp4
+ffmpeg -i photos/originals/walkthrough.mov -an -c:v libvpx-vp9 -crf 46 -b:v 0 assets/video/walkthrough.webm
+```
+
 ## Before going live: check these
 
 - **Prices and offers** in `js/products.js` were read off shelf labels in the photos. Lines
