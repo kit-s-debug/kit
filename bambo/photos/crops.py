@@ -22,6 +22,9 @@ CROPS = {
     "gallery-salts":      ("salts-wall.jpg",          (370, 160, 900, 822),   900),
     "gallery-lost-mary":  ("lost-mary-pixl-wall.jpg", (290, 590, 890, 1340),  900),
     "gallery-hayati":     ("hayati-wall.jpg",         (170, 270, 900, 1180),  900),
+    "shopfront-wide":     ("shopfront.jpg",           (0, 470, 1170, 1180),   1600),
+    "shopfront":          ("shopfront.jpg",           (50, 200, 1122, 1540),  1000),
+    "doorway":            ("doorway.jpg",             (300, 380, 1000, 1255), 900),
     # product cards (4:5)
     "ivg-pro-10k":        ("ivg-wall.jpg",            (440, 400, 800, 850),   800),
     "lost-mary-bm6000":   ("lost-mary-pixl-wall.jpg", (420, 620, 780, 1070),  800),
@@ -34,7 +37,8 @@ CROPS = {
     "elux-nic-salts":     ("elux-salts-wall.jpg",     (420, 200, 780, 650),   800),
     "pixl-hayati-salts":  ("salts-wall.jpg",          (420, 300, 780, 750),   800),
     "nicotine-pouches":   ("elux-display-sims.jpg",   (490, 500, 762, 840),   800),
-    "hookah":             ("hookah-window.jpg",       (130, 160, 1030, 1285), 800),
+    "hookah":             ("hookah-gold.jpg",         (170, 100, 1010, 1150), 800),
+    "hookah-blue":        ("hookah-blue.jpg",         (240, 150, 1000, 1100), 800),
 }
 
 def main():

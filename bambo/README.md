@@ -40,7 +40,7 @@ that the site stays on brand.
 
 - **Prices and offers** in `js/products.js` were read off shelf labels in the photos. Lines
   with `price: null` show "Ask in store".
-- **Address and opening hours** in `index.html` and `visit.html` are placeholders. The
+- **Address and opening hours** in `index.html` and `visit.html` are placeholders. The doorway photo shows the shop is No. 3, but the street name still needs confirming. The
   `data-open` and `data-close` attributes drive the "Open now" status. The directions link
   is a Google Maps search for "Bambo Vape Shop Haverfordwest".
 
