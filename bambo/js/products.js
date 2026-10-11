@@ -1,5 +1,6 @@
 /* The catalogue. Edit this one file to change what's on the shelf.
    Prices and multi-buy offers are copied from the shelf labels in store;
+   flavours are suggestions in the order form (customers can type any flavour);
    price: null shows "Ask in store". Images come from photos/crops.py. */
 
 window.BAMBO_CATEGORIES = [
@@ -16,6 +17,8 @@ const KIT_SPECS = ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to
 window.BAMBO_PRODUCTS = [
   {
     id: "ivg-pro-10k",
+    brand: "IVG",
+    flavours: ["Lemon Fizz", "Tobacco"],
     name: "IVG Pro 10K",
     cat: "pod-kits",
     price: 7,
@@ -30,6 +33,8 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "lost-mary-bm6000",
+    brand: "Lost Mary",
+    flavours: ["Triple Mango", "Blue Razz Cherry", "Double Apple", "Latte"],
     name: "Lost Mary BM6000",
     cat: "pod-kits",
     price: 7,
@@ -44,6 +49,8 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "pixl-8000",
+    brand: "Pixl",
+    flavours: ["Strawberry Burst", "Mango Ice", "Watermelon Ice", "Hawaiian Oasis", "Purple Dream", "Blueberry Sour Raspberry"],
     name: "Pixl 8000 & Duo 12",
     cat: "pod-kits",
     price: 7,
@@ -58,6 +65,7 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "hayati-pro-max-plus",
+    brand: "Hayati",
     name: "Hayati Pro Max+ 6000",
     cat: "pod-kits",
     price: 10,
@@ -71,6 +79,7 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "hayati-30k-shisha",
+    brand: "Hayati",
     name: "Hayati Pro Ultra 30K Shisha",
     cat: "pod-kits",
     price: 16.99,
@@ -84,6 +93,7 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "hayati-ultra-25k",
+    brand: "Hayati",
     name: "Hayati Pro Ultra+ 25K",
     cat: "pod-kits",
     price: null,
@@ -96,6 +106,8 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "ske-crystal",
+    brand: "SKE",
+    flavours: ["Kiwi Passion Fruit Guava", "Lemon & Lime", "Blueberry Sour Raspberry"],
     name: "SKE Crystal",
     cat: "pod-kits",
     price: 11,
@@ -109,6 +121,8 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "elux-legend-15k",
+    brand: "Elux",
+    flavours: ["Fizzy Cherry", "Blueberry Sour Raspberry", "Banana Ice", "Gummy Bear", "Fresh Mint", "Grape", "Mr Blue", "Rainbow", "Menthol"],
     name: "Elux Legend 15K",
     cat: "pod-kits",
     price: null,
@@ -121,6 +135,8 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "elux-nic-salts",
+    brand: "Elux",
+    flavours: ["Apple Peach", "Triple Melon", "Straight Tobacco", "Menthol", "Banana Ice"],
     name: "Elux Nic Salts",
     cat: "nic-salts",
     price: 3,
@@ -136,6 +152,8 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "pixl-hayati-salts",
+    brand: "Pixl / Hayati",
+    flavours: ["Cherry Sour Raspberry", "Fizzy Cherry", "Banana Ice", "Blue Razz Lemonade"],
     name: "Pixl & Hayati Nic Salts",
     cat: "nic-salts",
     price: 3,
@@ -185,6 +203,7 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "rolling-papers",
+    brand: "RAW / OCB",
     name: "Rolling Papers",
     cat: "accessories",
     price: null,
@@ -196,6 +215,7 @@ window.BAMBO_PRODUCTS = [
   },
   {
     id: "clipper-lighters",
+    brand: "Clipper",
     name: "Clipper Lighters",
     cat: "accessories",
     price: null,

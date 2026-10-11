@@ -109,6 +109,32 @@
   const byId = (id) => PRODUCTS.find((p) => p.id === id);
   const onShop = Boolean($("#catalogue"));
 
+  /* ---------- basket ---------- */
+  // Items: { id, s (strength), f (flavour), qty }. Same id + strength + flavour stacks.
+  const CONFIG = window.BAMBO_CONFIG || {};
+  const needsFlavour = (p) => ["pod-kits", "nic-salts", "pouches"].includes(p.cat);
+  let bag = store.get("bambo-basket", []).filter((b) => byId(b.id) && b.qty > 0);
+  const saveBag = () => { store.set("bambo-basket", bag); syncCounts(); };
+  const bagCount = () => bag.reduce((n, b) => n + b.qty, 0);
+  const bagTotal = () => bag.reduce((t, b) => t + (byId(b.id).price || 0) * b.qty, 0);
+  const bagHasAsk = () => bag.some((b) => byId(b.id).price == null);
+  const fab = $("#bag-fab");
+  function syncCounts(bump) {
+    $$("[data-bag-count]").forEach((el) => { el.textContent = bagCount(); el.hidden = bagCount() === 0; });
+    if (!fab) return;
+    fab.classList.toggle("is-visible", bagCount() > 0);
+    if (bump) { fab.classList.remove("bump"); void fab.offsetWidth; fab.classList.add("bump"); }
+  }
+  function addToBag(item) {
+    const same = bag.find((b) => b.id === item.id && b.s === item.s && (b.f || "").toLowerCase() === (item.f || "").toLowerCase());
+    same ? (same.qty += item.qty) : bag.push(item);
+    saveBag(); syncCounts(true);
+  }
+  syncCounts();
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const lineLabel = (b) => [b.f, b.s && `${b.s}/ml`].filter(Boolean).join(" · ");
+
+
   function cardHTML(p, i = 0) {
     return `
       <article class="card" data-id="${p.id}" style="--d:${Math.min(i, 8) * 0.05}s">
@@ -187,88 +213,175 @@
   function openProduct(id) {
     const dlg = $("#product"); const p = byId(id); if (!dlg || !p) return;
     let strength = p.strengths ? p.strengths[p.strengths.length - 1] : null;
+    let qty = 1;
+    const fl = needsFlavour(p);
     dlg.innerHTML = `
       <button class="dlg-close" type="button" aria-label="Close" data-close>${icon.close}</button>
       <div class="pd">
         <div class="pd-media"><img src="${p.img}" alt="${p.name} on the shelf at Bambo" width="800" height="1000"></div>
-        <div class="pd-body">
+        <form class="pd-body" novalidate>
           <span class="label">${catLabel(p.cat)}</span>
           <h2 class="display">${p.name}</h2>
           <div class="pd-price">${money(p.price)}${p.badge ? ` <span class="card-badge card-badge--red" style="position:static;vertical-align:4px;margin-left:.4rem">${p.badge}</span>` : ""}</div>
           <p>${p.desc}</p>
+          <label class="field">
+            <span class="label">${fl ? "Flavour" : "Colour or notes (optional)"}</span>
+            <input type="text" name="f" list="fl-${p.id}" autocomplete="off" placeholder="${fl ? (p.flavours ? "e.g. " + p.flavours[0] : "Type the flavour you want") : "e.g. gold"}" ${fl ? "required" : ""}>
+            ${p.flavours ? `<datalist id="fl-${p.id}">${p.flavours.map((f) => `<option value="${esc(f)}">`).join("")}</datalist>` : ""}
+            ${fl ? `<span class="field-hint">Any flavour on the shelf. If it's sold out we'll message you before you come in.</span>` : ""}
+            <span class="field-error">Tell us which flavour you'd like.</span>
+          </label>
           ${p.strengths ? `<div class="opt-group"><span class="label">Nicotine strength</span><div class="opts">${p.strengths.map((s) => `<button class="opt" type="button" data-s="${s}" aria-pressed="${s === strength}">${s}/ml</button>`).join("")}</div></div>` : ""}
-          <ul class="specs">${p.specs.map((s) => `<li><span class="slot"></span>${s}</li>`).join("")}</ul>
+          <div class="opt-group"><span class="label">Quantity</span>
+            <div class="stepper"><button type="button" data-q="-1" aria-label="One fewer">−</button><output data-qty>1</output><button type="button" data-q="1" aria-label="One more">+</button></div>
+          </div>
           ${p.nicotine ? `<div class="nic-warning">This product contains nicotine which is a highly addictive substance.</div>` : ""}
-          <button class="btn btn--block" type="button" data-add>Add to collection list ${icon.arrow}</button>
-          <a class="text-link" href="visit.html">Pay and collect at the shop in Haverfordwest</a>
-        </div>
+          <button class="btn btn--block" type="submit">Add to basket ${icon.arrow}</button>
+          <ul class="specs">${p.specs.map((s) => `<li><span class="slot"></span>${s}</li>`).join("")}</ul>
+        </form>
       </div>`;
+    const form = $("form", dlg), input = form.elements.f;
     $$("[data-s]", dlg).forEach((b) => b.addEventListener("click", () => {
       strength = b.dataset.s;
       $$("[data-s]", dlg).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
     }));
-    $("[data-add]", dlg).addEventListener("click", (e) => {
-      addToBag({ id: p.id, s: strength });
-      const btn = e.currentTarget;
-      btn.innerHTML = "Added to your list";
-      setTimeout(() => dlg.close(), 650);
+    $$("[data-q]", dlg).forEach((b) => b.addEventListener("click", () => {
+      qty = Math.min(20, Math.max(1, qty + Number(b.dataset.q)));
+      $("[data-qty]", dlg).textContent = qty;
+    }));
+    input.addEventListener("input", () => input.closest(".field").classList.remove("is-invalid"));
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = input.value.trim();
+      if (fl && !f) { input.closest(".field").classList.add("is-invalid"); input.focus(); return; }
+      addToBag({ id: p.id, s: strength, f, qty });
+      const btn = $("[type=submit]", form);
+      btn.outerHTML = `<div class="added"><span>Added to your basket</span><a class="btn" href="checkout.html">Checkout ${icon.arrow}</a><button class="btn btn--ghost" type="button" data-close>Keep shopping</button></div>`;
+      $$("[data-close]", dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
     });
-    $("[data-close]", dlg).addEventListener("click", () => dlg.close());
+    $$("[data-close]", dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
     dlg.onclick = (e) => { if (e.target === dlg) dlg.close(); };
     dlg.onclose = () => { const url = new URL(location.href); url.searchParams.delete("p"); history.replaceState(null, "", url); };
     const url = new URL(location.href); url.searchParams.set("p", p.id); history.replaceState(null, "", url);
     dlg.showModal();
   }
 
-  /* ---------- collection list ("reserve") ---------- */
-  // No checkout: you build a list, then show it at the counter or send it to the shop.
-  let bag = store.get("bambo-bag", []).filter((b) => byId(b.id));
-  const fab = $("#bag-fab");
-  const bagTotal = () => bag.reduce((t, b) => t + (byId(b.id).price || 0), 0);
-  const bagHasAsk = () => bag.some((b) => byId(b.id).price == null);
-  const syncFab = (bump) => {
-    if (!fab) return;
-    $(".bag-count", fab).textContent = bag.length;
-    fab.classList.toggle("is-visible", bag.length > 0);
-    if (bump) { fab.classList.remove("bump"); void fab.offsetWidth; fab.classList.add("bump"); }
-  };
-  function addToBag(item) { bag.push(item); store.set("bambo-bag", bag); syncFab(true); }
-  const bagText = () => ["My Bambo collection list:", ...bag.map((b) => {
-    const p = byId(b.id);
-    return `- ${p.name}${b.s ? ` ${b.s}` : ""}: ${money(p.price)}`;
-  }), `Total: ${money(bagTotal())}${bagHasAsk() ? " plus items priced in store" : ""}`].join("\n");
+  /* ---------- checkout (click & collect) ---------- */
+  const co = $("#checkout");
+  if (co) {
+    $$("[data-hold]").forEach((el) => (el.textContent = CONFIG.holdHours || 48));
+    const listEl = $("#co-items"), totalEl = $("#co-total"), form = $("#co-form"), done = $("#co-done");
+    const dateEl = form.elements.day;
+    // collection days: next 7 days that have opening hours in the table on this page
+    const hoursRows = $$("#co-hours tr[data-day]");
+    const openDays = new Set(hoursRows.filter((r) => r.dataset.open).map((r) => Number(r.dataset.day)));
+    const fmt = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long" });
+    for (let i = 0, added = 0; i < 10 && added < 6; i++) {
+      const d = new Date(); d.setDate(d.getDate() + i);
+      if (!openDays.has(d.getDay())) continue;
+      if (i === 0) { const r = hoursRows.find((x) => Number(x.dataset.day) === d.getDay()); const [h, m] = r.dataset.close.split(":").map(Number); if (new Date().getHours() * 60 + new Date().getMinutes() > h * 60 + m - 60) continue; }
+      const o = document.createElement("option");
+      o.value = d.toISOString().slice(0, 10);
+      o.textContent = (i === 0 ? "Today, " : i === 1 ? "Tomorrow, " : "") + fmt.format(d);
+      dateEl.append(o); added++;
+    }
 
-  function openBag() {
-    const dlg = $("#bag"); if (!dlg) return;
     const draw = () => {
-      dlg.innerHTML = `
-        <button class="dlg-close" type="button" aria-label="Close" data-close>${icon.close}</button>
-        <div class="bag-inner">
-          <span class="label">Collection list</span>
-          <h2 class="display">Ready when you are</h2>
-          ${bag.length ? `<ul class="bag-list">${bag.map((b, i) => {
-            const p = byId(b.id);
-            return `<li><img src="${p.img}" alt=""><div><strong>${p.name}</strong><div class="meta">${b.s || p.spec}</div></div><div style="text-align:right"><div class="price">${money(p.price)}</div><button type="button" data-rm="${i}">Remove</button></div></li>`;
-          }).join("")}</ul>
-          <div class="bag-total"><span>Estimated total${bagHasAsk() ? " (some items priced in store)" : ""}</span><span>${money(bagTotal())}</span></div>
-          <p class="bag-note">Show this list at the counter. Multi-buy offers are applied when you pay in store, and we'll check ID if you look under 25.</p>
-          <button class="btn btn--block" type="button" data-share>Send or copy my list ${icon.arrow}</button>`
-          : `<p class="bag-note">Your list is empty. Add products from the shop and they'll appear here.</p>`}
-        </div>`;
-      $("[data-close]", dlg).addEventListener("click", () => dlg.close());
-      $$("[data-rm]", dlg).forEach((b) => b.addEventListener("click", () => { bag.splice(Number(b.dataset.rm), 1); store.set("bambo-bag", bag); syncFab(); draw(); }));
-      const share = $("[data-share]", dlg);
-      share && share.addEventListener("click", async () => {
-        const text = bagText();
-        try {
-          if (navigator.share) await navigator.share({ title: "Bambo collection list", text });
-          else { await navigator.clipboard.writeText(text); share.textContent = "Copied, paste it into a message to us"; }
-        } catch { /* share sheet dismissed */ }
-      });
+      co.classList.toggle("is-empty", bag.length === 0);
+      listEl.innerHTML = bag.map((b, i) => {
+        const p = byId(b.id);
+        return `<li>
+          <img src="${p.img}" alt="" width="80" height="100">
+          <div class="co-line"><strong>${p.name}</strong><span class="meta">${esc(lineLabel(b)) || p.spec}</span>
+            <div class="stepper stepper--sm"><button type="button" data-dq="${i}" data-d="-1" aria-label="One fewer ${p.name}">−</button><output>${b.qty}</output><button type="button" data-dq="${i}" data-d="1" aria-label="One more ${p.name}">+</button></div>
+          </div>
+          <div class="co-price"><span class="price">${p.price == null ? "Ask in store" : money(p.price * b.qty)}</span><button type="button" class="link-btn" data-rm="${i}">Remove</button></div>
+        </li>`;
+      }).join("");
+      totalEl.textContent = money(bagTotal()) + (bagHasAsk() ? " + items priced in store" : "");
+      $$("[data-dq]", listEl).forEach((btn) => btn.addEventListener("click", () => {
+        const b = bag[Number(btn.dataset.dq)]; b.qty += Number(btn.dataset.d);
+        if (b.qty < 1) bag.splice(Number(btn.dataset.dq), 1);
+        b.qty = Math.min(b.qty, 20); saveBag(); draw();
+      }));
+      $$("[data-rm]", listEl).forEach((btn) => btn.addEventListener("click", () => { bag.splice(Number(btn.dataset.rm), 1); saveBag(); draw(); }));
     };
     draw();
-    dlg.onclick = (e) => { if (e.target === dlg) dlg.close(); };
-    dlg.showModal();
+
+    const orderText = (o) => [
+      `New click & collect order ${o.ref}`,
+      `${o.name} · ${o.phone}${o.email ? " · " + o.email : ""}`,
+      `Collecting: ${o.dayLabel}`,
+      "",
+      ...o.items.map((it) => `${it.qty} × ${it.name}${it.option ? " (" + it.option + ")" : ""}: ${it.price == null ? "price in store" : money(it.price * it.qty)}`),
+      "",
+      `Estimated total: ${o.total}`,
+      o.notes ? `Notes: ${o.notes}` : "",
+      "Customer confirmed they are 18 or over.",
+    ].filter((l, i, a) => l !== "" || a[i - 1] !== "").join("\n");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      $$(".field", form).forEach((f) => f.classList.remove("is-invalid"));
+      let bad = null;
+      ["name", "phone", "day", "adult"].forEach((n) => {
+        const el = form.elements[n];
+        const ok = el.type === "checkbox" ? el.checked : n === "phone" ? /^[0-9 +()-]{10,}$/.test(el.value.trim()) : el.value.trim();
+        if (!ok) { el.closest(".field").classList.add("is-invalid"); bad = bad || el; }
+      });
+      if (!bag.length) return;
+      if (bad) { bad.focus(); return; }
+
+      const ref = "BMB-" + Date.now().toString(36).slice(-4).toUpperCase() + Math.floor(Math.random() * 90 + 10);
+      const order = {
+        ref,
+        name: form.elements.name.value.trim(),
+        phone: form.elements.phone.value.trim(),
+        email: form.elements.email.value.trim(),
+        day: dateEl.value,
+        dayLabel: dateEl.selectedOptions[0].textContent,
+        notes: form.elements.notes.value.trim(),
+        items: bag.map((b) => { const p = byId(b.id); return { id: p.id, name: p.name, option: lineLabel(b), qty: b.qty, price: p.price }; }),
+        total: money(bagTotal()) + (bagHasAsk() ? " + items priced in store" : ""),
+        createdAt: new Date().toISOString(),
+      };
+      const text = orderText(order);
+      const submit = $("[type=submit]", form);
+      submit.disabled = true; submit.textContent = "Sending…";
+
+      let mode = "preview";
+      try {
+        if (CONFIG.orderEndpoint) {
+          const res = await fetch(CONFIG.orderEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ ...order, summary: text }) });
+          if (!res.ok) throw new Error(res.status);
+          mode = "sent";
+        } else if (CONFIG.orderWhatsApp) {
+          window.open(`https://wa.me/${CONFIG.orderWhatsApp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+          mode = "whatsapp";
+        } else if (CONFIG.orderEmail) {
+          location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent("Click & collect order " + ref)}&body=${encodeURIComponent(text)}`;
+          mode = "email";
+        }
+      } catch {
+        submit.disabled = false; submit.innerHTML = `Place order ${icon.arrow}`;
+        $("#co-error").hidden = false;
+        return;
+      }
+
+      store.set("bambo-last-order", order);
+      bag = []; saveBag();
+      co.classList.add("is-done");
+      $("#co-ref").textContent = ref;
+      $("#co-when").textContent = order.dayLabel;
+      $("#co-summary").textContent = text;
+      $("#co-mode").textContent = {
+        sent: "Your order has been sent to the shop.",
+        whatsapp: "Press send in WhatsApp to get your order to us. We'll reply when it's ready.",
+        email: "Press send in your email app to get your order to us. We'll reply when it's ready.",
+        preview: "Preview only: this order wasn't sent anywhere. Online orders switch on once the shop's WhatsApp number or email is added in js/config.js.",
+      }[mode];
+      done.hidden = false;
+      scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
   }
-  if (fab) { fab.addEventListener("click", openBag); syncFab(); }
 })();

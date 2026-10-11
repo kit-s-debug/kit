@@ -36,6 +36,39 @@ tiles, the gallery and one 4:5 card per product. To add or swap a photo, drop it
 The crops avoid the green LED strips and leave out paraphernalia (bongs, grinders, CBD) so
 that the site stays on brand.
 
+## Online orders (click & collect)
+
+Customers add products to a basket, choosing a flavour, strength and quantity. On
+`checkout.html` they give their name, mobile and collection day, confirm they're 18+, and
+place the order. They pay and show ID at the counter. The basket lives in the
+visitor's browser.
+
+**Switching it on:** in `js/config.js`, fill in one of the following. Until you do, checkout
+runs in preview mode, and orders aren't sent anywhere.
+
+- `orderWhatsApp`: the shop's mobile number (e.g. `447700900123`). Pressing "Place order"
+  opens WhatsApp with the order typed out, and the customer presses send.
+- `orderEmail`: the order opens in the customer's email app, addressed to the shop.
+- `orderEndpoint`: a form service (e.g. Formspree) that emails each order to the shop
+  automatically, without the customer pressing send. This is the most reliable option.
+  It needs a free account.
+
+`holdHours` sets how long orders are held (shown at checkout). Collection days come from
+the opening-hours table in `checkout.html`, so keep it in step with the other pages.
+
+## Moving to delivery (Shopify)
+
+`node tools/shopify-export.mjs https://your-live-site > shopify-products.csv` writes
+every product as a Shopify import file, with one variant per flavour and strength.
+Unpriced products are exported as drafts. To take nicotine orders for delivery you also
+need:
+
+- a vape-friendly card provider (Shopify Payments, Stripe and PayPal don't allow vapes)
+- an age-verification app at checkout
+- a delivery option where the courier checks ID
+
+Gas lighters can't be posted, so keep them collection-only.
+
 ## Video
 
 `assets/video/walkthrough.{webm,mp4}` is a muted, looping 22-second walk-through from the

@@ -25,6 +25,7 @@
       <a href="shop.html?cat=nic-salts">Nic salts</a>
       <a href="visit.html">Visit</a>
     </nav>
+    <a class="basket-link" href="checkout.html" aria-label="Basket">Basket <span class="bag-count" data-bag-count hidden>0</span></a>
     <a class="btn btn--sm header-cta" href="visit.html">Find the shop</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav"><span>Menu</span><i></i></button>
   </div>
@@ -43,7 +44,7 @@
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Shop</span></nav>
       <h1 class="display">Shop</h1>
-      <p class="lede">Prices as on the shelf labels. Pay and collect in store.</p>
+      <p class="lede">Order online, collect from 3 Castle Square and pay in store. Prices as on the shelf labels.</p>
     </div>
   </section>
 
@@ -126,9 +127,9 @@
 </dialog>
 
 <dialog id="product" aria-label="Product details"></dialog>
-<dialog class="bag" id="bag" aria-label="Collection list"></dialog>
-<button class="btn bag-fab" id="bag-fab" type="button">Collection list <span class="bag-count">0</span></button>
+<a class="btn bag-fab" id="bag-fab" href="checkout.html">Basket <span class="bag-count" data-bag-count>0</span></a>
 
+<script src="js/config.js"></script>
 <script src="js/products.js"></script>
 <script src="js/bambo.js"></script>
 </body>
