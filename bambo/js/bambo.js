@@ -78,6 +78,7 @@
   /* ---------- opening hours ---------- */
   // Each row: <tr data-day="1" data-open="09:30" data-close="17:30"> (0 = Sunday). No times = closed.
   const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+  const say = (t) => { const [h, m] = t.split(":").map(Number); if (h % 24 === 0 && !m) return h ? "midnight" : "midnight"; const hh = h % 12 || 12; return `${hh}${m ? ":" + String(m).padStart(2, "0") : ""}${h < 12 ? "am" : "pm"}`; };
   $$("[data-hours]").forEach((table) => {
     const now = new Date(), day = now.getDay(), mins = now.getHours() * 60 + now.getMinutes();
     const row = $(`tr[data-day="${day}"]`, table);
@@ -89,8 +90,8 @@
     const isOpen = open && close && mins >= toMin(open) && mins < toMin(close);
     status.classList.toggle("is-open", Boolean(isOpen));
     status.querySelector("span").textContent = isOpen
-      ? `Open now until ${close}`
-      : open && mins < toMin(open) ? `Closed, opens today at ${open}` : "Closed now";
+      ? `Open now until ${say(close)}`
+      : open && mins < toMin(open) ? `Closed, opens today at ${say(open)}` : "Closed now";
   });
 
   /* ---------- age check ---------- */
