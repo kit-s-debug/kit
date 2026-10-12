@@ -40,6 +40,7 @@ CROPS = {
     "lost-mary-bm600":    ("lm600-shisha-shelves.jpg",       b(80, 330, 560, 930),    800),
     "pixl-8000":          ("lost-mary-pixl-shelves.jpg",     b(450, 1120, 1050, 1870), 800),
     "hayati-pro-max-plus":("hayati-promax-shelves.jpg",      b(0, 340, 760, 1290),    800),
+    "enjoy-ultra-9000":   ("lm600-shisha-shelves.jpg",       b(430, 735, 800, 1198),  800),
     "hayati-30k-shisha":  ("lm600-shisha-shelves.jpg",       b(980, 940, 1450, 1528), 800),
     "hayati-ultra-25k":   ("ske-hayati25k-shelves.jpg",      b(60, 680, 760, 1555),   800),
     "ske-crystal":        ("ske-bloody-novamax-shelves.jpg", b(90, 1110, 790, 1985),  800),
