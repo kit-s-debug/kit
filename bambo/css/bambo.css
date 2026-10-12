@@ -1009,25 +1009,39 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
 }
 @media (prefers-reduced-motion: reduce) { .doodle svg { animation: none; } }
 
-/* vapour puffs */
+/* vapour clouds: white billows with a soft silver edge so they read on white too */
 .vapour {
   position: absolute; width: var(--sz); height: var(--sz); margin: calc(var(--sz) / -2) 0 0 calc(var(--sz) / -2);
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, rgba(150, 150, 158, .75), rgba(160, 160, 168, .3) 45%, transparent 70%);
-  filter: blur(4px);
-  animation: vapour-rise var(--t) cubic-bezier(.2, .6, .3, 1) forwards;
+  animation: vapour-rise var(--t) cubic-bezier(.22, .61, .36, 1) forwards;
 }
-.vapour--big { animation-name: vapour-bank; background: radial-gradient(circle at 50% 50%, rgba(175, 175, 182, .45), rgba(185, 185, 192, .16) 50%, transparent 72%); filter: blur(12px); }
-.deals .vapour { background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, .45), rgba(255, 255, 255, .14) 45%, transparent 70%); }
-.section--grey .vapour { background: radial-gradient(circle at 40% 40%, rgba(150, 150, 156, .5), rgba(150, 150, 156, .15) 45%, transparent 70%); }
+.vapour b {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%, #fff 0 36%, rgba(250, 250, 252, .96) 50%, rgba(196, 200, 212, .75) 64%, rgba(196, 200, 212, 0) 74%);
+  filter: blur(1.2px) drop-shadow(0 6px 14px rgba(110, 116, 134, .3));
+  animation: billow calc(var(--t) * .55) ease-in-out infinite alternate;
+}
+.vapour b:nth-child(1) { inset: 8% 18% 22% 6%; }
+.vapour b:nth-child(2) { inset: 0 2% 30% 34%; animation-delay: -.4s; animation-duration: calc(var(--t) * .45); }
+.vapour b:nth-child(3) { inset: 34% 12% 0 22%; animation-delay: -.9s; animation-duration: calc(var(--t) * .6); }
+@keyframes billow {
+  0% { transform: translate(0, 0) scale(.92); }
+  100% { transform: translate(6%, -8%) scale(1.12); }
+}
 @keyframes vapour-rise {
-  0% { opacity: 0; transform: translate(0, 0) scale(.3); }
-  18% { opacity: 1; }
-  60% { opacity: .85; }
-  100% { opacity: 0; transform: translate(var(--dx), calc(var(--rise) * -1)) scale(3); }
+  0% { opacity: 0; transform: translate(0, 0) rotate(0) scale(.25); }
+  14% { opacity: 1; }
+  45% { transform: translate(calc(var(--dx) * -.35), calc(var(--rise) * -.45)) rotate(calc(var(--spin) * .5)) scale(1.6); }
+  70% { opacity: .9; }
+  100% { opacity: 0; transform: translate(var(--dx), calc(var(--rise) * -1)) rotate(var(--spin)) scale(3.4); }
 }
+.vapour--big { animation-name: vapour-bank; }
+.vapour--big b { filter: blur(5px) drop-shadow(0 8px 20px rgba(110, 116, 134, .24)); }
 @keyframes vapour-bank {
-  0% { opacity: 0; transform: translate(0, 0) scale(.6); }
-  30% { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--dx), calc(var(--rise) * -1)) scale(1.8); }
+  0% { opacity: 0; transform: translate(0, 0) scale(.5); }
+  25% { opacity: .95; }
+  60% { transform: translate(calc(var(--dx) * .5), calc(var(--rise) * -.5)) rotate(calc(var(--spin) * .4)) scale(1.4); }
+  100% { opacity: 0; transform: translate(var(--dx), calc(var(--rise) * -1)) rotate(calc(var(--spin) * .6)) scale(2.1); }
 }
+.deals .vapour b { background: radial-gradient(circle at 42% 38%, rgba(255, 255, 255, .85) 0 30%, rgba(255, 255, 255, .45) 50%, rgba(255, 255, 255, 0) 72%); filter: blur(2px); }
+.vapour-front { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.vapour-front .vapour { opacity: .92; }

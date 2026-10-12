@@ -79,21 +79,27 @@
           <svg viewBox="0 0 48 48" style="--r:${it.r}deg;--dur:${7 + (n % 5) * 1.3}s;--delay:${-(n % 7)}s">${S[it.t]}</svg></span>`;
       }).join("");
       sec.prepend(layer);
+      const front = document.createElement("div");
+      front.className = "vapour-front";
+      front.setAttribute("aria-hidden", "true");
+      sec.append(front);
     });
   });
 
   /* ---------- vapour clouds on scroll ---------- */
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const MAX = 40;
+  const MAX = 34;
   let live = 0;
   const puff = (layer, x, y, size, opts = {}) => {
     if (live >= MAX) return;
     live++;
     const p = document.createElement("i");
     p.className = "vapour" + (opts.big ? " vapour--big" : "");
-    const dx = (Math.random() - 0.5) * (opts.big ? 160 : 60);
-    const rise = opts.big ? 50 + Math.random() * 50 : 110 + Math.random() * 80;
-    p.style.cssText = `left:${x}px;top:${y}px;--sz:${size}px;--dx:${dx.toFixed(0)}px;--rise:${rise.toFixed(0)}px;--t:${(opts.big ? 4.5 : 2.2) + Math.random()}s`;
+    // three blobs that billow independently make each cloud swirl as it rises
+    p.innerHTML = "<b></b><b></b><b></b>";
+    const dx = (Math.random() - 0.5) * (opts.big ? 220 : 110);
+    const rise = opts.big ? 70 + Math.random() * 70 : 170 + Math.random() * 110;
+    p.style.cssText = `left:${x}px;top:${y}px;--sz:${size}px;--dx:${dx.toFixed(0)}px;--rise:${rise.toFixed(0)}px;--t:${(opts.big ? 5.5 : 3.2) + Math.random() * 1.2}s;--spin:${(Math.random() < 0.5 ? -1 : 1) * (20 + Math.random() * 40)}deg`;
     layer.appendChild(p);
     p.addEventListener("animationend", () => { p.remove(); live--; }, { once: true });
   };
@@ -104,7 +110,8 @@
     const y = r.top - lr.top + r.height * (d.dataset.emit === "hookah" ? 0.12 : 0.08);
     if (y < 190) return; // too close to the section's top edge: the cloud would be cut off
     const n = 2 + Math.round(Math.random());
-    for (let i = 0; i < n; i++) setTimeout(() => puff(layer, x + (Math.random() - 0.5) * 10, y, 26 + Math.random() * 26), i * 140);
+    const front = layer.parentElement.querySelector(":scope > .vapour-front") || layer;
+    for (let i = 0; i < n; i++) setTimeout(() => puff(front, x + (Math.random() - 0.5) * 14, y, 48 + Math.random() * 46), i * 140);
   };
   const emitters = [...document.querySelectorAll(".doodle[data-emit]")];
   const onScreen = (el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0 && getComputedStyle(el).display !== "none"; };
@@ -128,7 +135,7 @@
       const layer = e.target.querySelector(":scope > .doodles"); if (!layer) return;
       const w = layer.clientWidth, h = layer.clientHeight;
       const left = Math.random() < 0.5;
-      for (let i = 0; i < 5; i++) setTimeout(() => puff(layer, (left ? 0.04 : 0.8) * w + Math.random() * w * 0.16, h * (0.4 + Math.random() * 0.3), 70 + Math.random() * 70, { big: true }), i * 180);
+      for (let i = 0; i < 5; i++) setTimeout(() => puff(layer, (left ? 0.04 : 0.8) * w + Math.random() * w * 0.16, h * (0.4 + Math.random() * 0.3), 150 + Math.random() * 120, { big: true }), i * 180);
     }), { threshold: 0.25 });
     document.querySelectorAll(".has-doodles").forEach((s) => io.observe(s));
   }
