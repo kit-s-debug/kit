@@ -337,8 +337,10 @@
       const del = isDelivery();
       $("#co-delivery").hidden = !del;
       $("[data-day-label]").textContent = del ? "Delivery day" : "Collection day";
+      $("[data-email-label]").textContent = del ? "Email" : "Email (optional)";
+      $("[data-email-hint]").hidden = !del;
       howEl.innerHTML = (del
-        ? ["We check stock and call or message you to confirm the delivery time.", "Pay the driver by cash or card when it arrives.", "Our driver will check photo ID before handing it over."]
+        ? ["We check stock and email you the delivery charge and time to confirm.", "Pay the driver by cash or card when it arrives.", "Our driver will check photo ID before handing it over."]
         : [`We bag it up and message you when it's ready. We hold it for ${CONFIG.holdHours || 48} hours.`, "Pay at the counter by cash or card.", "We'll check ID if you look under 25."]
       ).map((t) => `<li>${t}</li>`).join("");
       $$(".choice-opt", form).forEach((l) => l.classList.toggle("is-on", $("input", l).checked));
@@ -374,6 +376,7 @@
       o.method === "delivery" ? `Deliver to: ${o.address}, ${o.postcode}` : "Collecting from the shop",
       `${o.method === "delivery" ? "Delivery" : "Collection"} day: ${o.dayLabel}`,
       o.method === "delivery" ? `Paying by: ${o.payment} on delivery` : "Paying in store",
+      o.method === "delivery" ? "Delivery charge: to confirm. Reply to the customer's email with the price (10-mile radius)." : "",
       "",
       o.written ? "Their order (written):" : "",
       o.written,
@@ -397,6 +400,7 @@
         if (!form.elements.address.value.trim()) bads.push(invalid(form.elements.address));
         if (!/^[A-Za-z]{1,2}\d[A-Za-z\d]?\s*\d[A-Za-z]{2}$/.test(form.elements.postcode.value.trim())) bads.push(invalid(form.elements.postcode));
         if (!form.elements.payment.value) bads.push(invalid(form.elements.payment[0]));
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.elements.email.value.trim())) bads.push(invalid(form.elements.email));
       }
       if (!form.elements.name.value.trim()) bads.push(invalid(form.elements.name));
       if (!/^[0-9 +()-]{10,}$/.test(form.elements.phone.value.trim())) bads.push(invalid(form.elements.phone));
@@ -462,7 +466,7 @@
       co.classList.add("is-done");
       $("#co-ref").textContent = ref;
       $("#co-next").innerHTML = order.method === "delivery"
-        ? `We'll deliver to <strong>${esc(order.address)}, ${esc(order.postcode)}</strong> on <strong>${esc(order.dayLabel)}</strong>. Pay the driver by <strong>${order.payment.toLowerCase()}</strong>. Have your photo ID ready.`
+        ? `We'll email <strong>${esc(order.email)}</strong> with your delivery charge to confirm, then deliver to <strong>${esc(order.address)}, ${esc(order.postcode)}</strong> on <strong>${esc(order.dayLabel)}</strong>. Pay the driver by <strong>${order.payment.toLowerCase()}</strong>. Have your photo ID ready.`
         : `Collect from <strong>3 Castle Square, Haverfordwest</strong> on <strong>${esc(order.dayLabel)}</strong>. Pay when you collect, and bring ID if you look under 25.`;
       $("#co-summary").textContent = text;
       $("#co-mode").textContent = {

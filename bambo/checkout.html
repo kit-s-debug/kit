@@ -80,10 +80,11 @@
         <h2 class="display">Delivery or collect?</h2>
         <div class="choice" role="radiogroup" aria-label="Delivery or collection">
           <label class="choice-opt"><input type="radio" name="method" value="collect" checked><span><b>Collect in shop</b>Pay when you pick up</span></label>
-          <label class="choice-opt"><input type="radio" name="method" value="delivery"><span><b>Delivery</b>Pay cash or card on delivery</span></label>
+          <label class="choice-opt"><input type="radio" name="method" value="delivery"><span><b>Delivery</b>Within 10 miles · cash or card</span></label>
         </div>
 
         <div class="co-delivery" id="co-delivery" hidden>
+          <p class="co-area"><b>We deliver within 10 miles of Bambo Shop.</b> The delivery charge depends on how far you are. We'll email you the price to confirm before we set off.</p>
           <label class="field"><span class="label">Delivery address</span><textarea name="address" rows="2" autocomplete="street-address" placeholder="House number, street, town"></textarea><span class="field-error">Add the address to deliver to.</span></label>
           <label class="field"><span class="label">Postcode</span><input name="postcode" autocomplete="postal-code" autocapitalize="characters" placeholder="SA61 …"><span class="field-error">Add a postcode.</span></label>
           <div class="field">
@@ -100,7 +101,7 @@
         <h2 class="co-sub">Your details</h2>
         <label class="field"><span class="label">Name</span><input name="name" autocomplete="name" required><span class="field-error">Add your name.</span></label>
         <label class="field"><span class="label">Mobile</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required><span class="field-hint">We'll message you to confirm.</span><span class="field-error">Add a mobile number we can reach you on.</span></label>
-        <label class="field"><span class="label">Email (optional)</span><input name="email" type="email" autocomplete="email"></label>
+        <label class="field"><span class="label" data-email-label>Email (optional)</span><input name="email" type="email" autocomplete="email"><span class="field-hint" data-email-hint hidden>We'll send your delivery charge here.</span><span class="field-error">Add your email so we can send your delivery charge.</span></label>
         <label class="field"><span class="label" data-day-label>Collection day</span><select name="day" required></select><span class="field-error">Pick a day.</span></label>
         <label class="field"><span class="label">Notes (optional)</span><textarea name="notes" rows="2" placeholder="e.g. a backup flavour if yours is sold out"></textarea></label>
         <label class="field field--check"><input type="checkbox" name="adult" required><span>I'm 18 or over, and I'll show photo ID if asked.</span><span class="field-error">You need to be 18 or over to order.</span></label>
