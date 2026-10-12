@@ -79,16 +79,13 @@
           <svg viewBox="0 0 48 48" style="--r:${it.r}deg;--dur:${7 + (n % 5) * 1.3}s;--delay:${-(n % 7)}s">${S[it.t]}</svg></span>`;
       }).join("");
       sec.prepend(layer);
-      const front = document.createElement("div");
-      front.className = "vapour-front";
-      front.setAttribute("aria-hidden", "true");
-      sec.append(front);
+
     });
   });
 
   /* ---------- vapour clouds on scroll ---------- */
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const MAX = 34;
+  const MAX = 18;
   let live = 0;
   const puff = (layer, x, y, size, opts = {}) => {
     if (live >= MAX) return;
@@ -97,8 +94,8 @@
     p.className = "vapour" + (opts.big ? " vapour--big" : "");
     // three blobs that billow independently make each cloud swirl as it rises
     p.innerHTML = "<b></b><b></b><b></b>";
-    const dx = (Math.random() - 0.5) * (opts.big ? 220 : 110);
-    const rise = opts.big ? 70 + Math.random() * 70 : 170 + Math.random() * 110;
+    const dx = (Math.random() - 0.5) * (opts.big ? 140 : 60);
+    const rise = opts.big ? 40 + Math.random() * 40 : 90 + Math.random() * 60;
     p.style.cssText = `left:${x}px;top:${y}px;--sz:${size}px;--dx:${dx.toFixed(0)}px;--rise:${rise.toFixed(0)}px;--t:${(opts.big ? 5.5 : 3.2) + Math.random() * 1.2}s;--spin:${(Math.random() < 0.5 ? -1 : 1) * (20 + Math.random() * 40)}deg`;
     layer.appendChild(p);
     p.addEventListener("animationend", () => { p.remove(); live--; }, { once: true });
@@ -109,9 +106,8 @@
     const x = r.left - lr.left + r.width * 0.5;
     const y = r.top - lr.top + r.height * (d.dataset.emit === "hookah" ? 0.12 : 0.08);
     if (y < 190) return; // too close to the section's top edge: the cloud would be cut off
-    const n = 2 + Math.round(Math.random());
-    const front = layer.parentElement.querySelector(":scope > .vapour-front") || layer;
-    for (let i = 0; i < n; i++) setTimeout(() => puff(front, x + (Math.random() - 0.5) * 14, y, 48 + Math.random() * 46), i * 140);
+    const n = 1 + Math.round(Math.random());
+    for (let i = 0; i < n; i++) setTimeout(() => puff(layer, x + (Math.random() - 0.5) * 10, y, 26 + Math.random() * 20), i * 160);
   };
   const emitters = [...document.querySelectorAll(".doodle[data-emit]")];
   const onScreen = (el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0 && getComputedStyle(el).display !== "none"; };
@@ -119,11 +115,11 @@
   addEventListener("scroll", () => {
     const now = performance.now();
     const speed = Math.abs(scrollY - lastY);
-    if (now - last < 130 || speed < 6) return;
+    if (now - last < 220 || speed < 6) return;
     last = now; lastY = scrollY;
     const vis = emitters.filter((d) => onScreen(d) && d.getBoundingClientRect().top - d.parentElement.getBoundingClientRect().top > 190);
     if (!vis.length) return;
-    const bursts = Math.min(vis.length, speed > 120 ? 3 : speed > 40 ? 2 : 1);
+    const bursts = Math.min(vis.length, speed > 120 ? 2 : 1);
     for (let i = 0; i < bursts; i++) fromDoodle(vis[Math.floor(Math.random() * vis.length)]);
   }, { passive: true });
 
@@ -135,7 +131,7 @@
       const layer = e.target.querySelector(":scope > .doodles"); if (!layer) return;
       const w = layer.clientWidth, h = layer.clientHeight;
       const left = Math.random() < 0.5;
-      for (let i = 0; i < 5; i++) setTimeout(() => puff(layer, (left ? 0.04 : 0.8) * w + Math.random() * w * 0.16, h * (0.4 + Math.random() * 0.3), 150 + Math.random() * 120, { big: true }), i * 180);
+      for (let i = 0; i < 3; i++) setTimeout(() => puff(layer, (left ? 0.04 : 0.8) * w + Math.random() * w * 0.16, h * (0.4 + Math.random() * 0.3), 80 + Math.random() * 60, { big: true }), i * 180);
     }), { threshold: 0.25 });
     document.querySelectorAll(".has-doodles").forEach((s) => io.observe(s));
   }
