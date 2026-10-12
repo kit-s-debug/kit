@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Market Tavern Haverfordwest</title>
+<meta name="description" content="The Market Tavern, Market Street, Haverfordwest. Core of the Poodle beers, craft keg and wood-fired pizza in a restored Victorian building.">
+<meta name="theme-color" content="#140c09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{--bg:#140c09;--bg-2:#1c120d;--card:#21160f;--ink:#f3e7d6;--muted:#a8927c;--dim:#6d5947;--ember:#e8762e;--ember-2:#ffb066;--hop:#a7b56a;--line:rgba(243,231,214,.08);--line-2:rgba(243,231,214,.15);
+--spring:cubic-bezier(.32,.72,0,1);--serif:'Young Serif',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--ember);color:var(--bg)}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+section{padding-block:clamp(96px,13vw,170px);position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;background:rgba(232,118,46,.08);box-shadow:inset 0 0 0 1px rgba(232,118,46,.24);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ember-2);font-weight:600}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.02em}
+em{font-style:normal;color:var(--ember-2)}
+.nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(28,18,13,.62);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);box-shadow:inset 0 0 0 1px var(--line-2),0 20px 50px -20px rgba(0,0,0,.7)}
+.mark{font-family:var(--serif);font-size:18px;padding:0 16px 0 18px}
+.mark em{font-size:.8em}
+.links{display:flex}.links a{font-size:13.5px;color:var(--muted);padding:9px 14px;border-radius:999px;transition:color .5s var(--spring),background .5s var(--spring)}
+.links a:hover{color:var(--ink);background:rgba(243,231,214,.05)}
+.call{display:inline-flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;border-radius:999px;background:var(--ember);color:#1a0f08;font-size:13.5px;font-weight:600;transition:transform .6s var(--spring)}
+.call:active{transform:scale(.97)}.call i{width:26px;height:26px;border-radius:50%;background:#1a0f08;color:var(--ember-2);display:grid;place-items:center;transition:transform .6s var(--spring)}
+.call:hover i{transform:translate(2px,-1px) scale(1.06)}
+.burger{display:none;width:42px;height:42px;border-radius:50%;background:rgba(243,231,214,.06);border:0;position:relative;cursor:pointer}
+.burger span{position:absolute;left:13px;right:13px;height:1.5px;background:var(--ink);transition:transform .6s var(--spring),top .6s var(--spring)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:24px}
+.menu-open .burger span:nth-child(1){top:20.5px;transform:rotate(45deg)}.menu-open .burger span:nth-child(2){top:20.5px;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:0;z-index:55;background:rgba(20,12,9,.9);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;padding:0 32px;opacity:0;pointer-events:none;transition:opacity .6s var(--spring)}
+.sheet a{font-family:var(--serif);font-size:clamp(44px,12vw,78px);line-height:1.15;transform:translateY(40px);opacity:0;transition:transform .8s var(--spring),opacity .8s var(--spring)}
+.sheet a:nth-child(2){transition-delay:.06s}.sheet a:nth-child(3){transition-delay:.12s}.sheet a:nth-child(4){transition-delay:.18s;color:var(--ember-2)}
+.menu-open .sheet{opacity:1;pointer-events:auto}.menu-open .sheet a{transform:none;opacity:1}
+.btn{display:inline-flex;align-items:center;gap:14px;padding:8px 8px 8px 26px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .6s var(--spring),background .6s var(--spring),box-shadow .6s var(--spring)}
+.btn:active{transform:scale(.98)}.btn i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;transition:transform .6s var(--spring)}
+.btn:hover i{transform:translate(3px,-2px) scale(1.06)}
+.btn-solid{background:var(--ember);color:#1a0f08}.btn-solid i{background:#1a0f08;color:var(--ember-2)}.btn-solid:hover{box-shadow:0 0 50px -8px rgba(232,118,46,.7)}
+.btn-ghost{box-shadow:inset 0 0 0 1px var(--line-2)}.btn-ghost i{background:rgba(243,231,214,.07)}.btn-ghost:hover{background:rgba(243,231,214,.04)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+
+.hero{min-height:100dvh;display:flex;align-items:center;padding:140px 0 80px;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;left:58%;bottom:-30%;width:1000px;height:900px;border-radius:50%;background:radial-gradient(closest-side,rgba(232,118,46,.32),rgba(232,118,46,.08) 50%,transparent);z-index:-1;animation:flicker 5s ease-in-out infinite alternate}
+@keyframes flicker{0%{opacity:.8;transform:scale(1)}30%{opacity:1}55%{opacity:.85;transform:scale(1.04)}100%{opacity:1;transform:scale(.98)}}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;font-size:13.5px;color:var(--muted);margin-bottom:30px}
+.status b{color:var(--ink);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.status.open .dot{background:var(--ember);box-shadow:0 0 14px var(--ember);animation:glow 2s infinite alternate}
+@keyframes glow{to{box-shadow:0 0 4px var(--ember)}}
+.pre{font-family:var(--serif);font-size:clamp(22px,2.4vw,34px);color:var(--muted);display:block;margin-bottom:6px}
+h1{font-size:clamp(76px,11vw,170px);line-height:.88;letter-spacing:-.035em}
+.lede{color:var(--muted);font-size:clamp(16px,1.4vw,18.5px);max-width:44ch;margin:32px 0 42px;font-weight:300}
+.lede b{color:var(--ink);font-weight:500}
+.window-shell{justify-self:center;padding:8px;border-radius:999px 999px 30px 30px;background:rgba(243,231,214,.03);box-shadow:inset 0 0 0 1px var(--line-2)}
+.window{width:clamp(280px,30vw,400px);aspect-ratio:3/4.2;border-radius:999px 999px 23px 23px;overflow:hidden;position:relative;background:linear-gradient(180deg,#2a1b12,#170e0a);box-shadow:inset 0 1px 1px rgba(255,255,255,.06)}
+.window svg{position:absolute;inset:0;width:100%;height:100%}
+.flame{transform-origin:200px 430px;animation:dance 1.6s ease-in-out infinite alternate}
+.flame.f2{animation-duration:2.1s;animation-delay:-.6s}
+@keyframes dance{0%{transform:scale(1,1) skewX(0)}50%{transform:scale(1.04,.94) skewX(2deg)}100%{transform:scale(.97,1.06) skewX(-2deg)}}
+.since{position:absolute;left:50%;top:15%;transform:translateX(-50%);text-align:center;font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.since b{display:block;font-family:var(--serif);font-weight:400;font-size:36px;letter-spacing:-.02em;color:var(--ink);text-transform:none;margin-top:4px}
+
+.marquee{border-block:1px solid var(--line);padding:24px 0;overflow:hidden;background:var(--bg-2)}
+.marquee-track{display:flex;width:max-content;animation:marq 40s linear infinite}
+.marquee span{font-family:var(--serif);font-size:clamp(26px,3.2vw,40px);padding-right:44px;display:inline-flex;align-items:center;gap:44px;white-space:nowrap}
+.marquee span:nth-child(even){color:var(--ember-2)}
+.marquee span::after{content:"✺";font-size:.5em;color:var(--dim)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;margin-bottom:64px}
+h2{font-size:clamp(48px,6.4vw,98px);line-height:.95;margin-top:22px}
+.head p{color:var(--muted);max-width:44ch;font-weight:300;font-size:17px}
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.shell{padding:7px;border-radius:30px;background:rgba(243,231,214,.025);box-shadow:inset 0 0 0 1px var(--line)}
+.core{height:100%;border-radius:23px;background:linear-gradient(180deg,#22170f,#190f0b);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);padding:34px;display:flex;flex-direction:column;position:relative;overflow:hidden;min-height:270px}
+.b1{grid-column:span 7}.b2{grid-column:span 5}.b3{grid-column:span 5}.b4{grid-column:span 7}
+.ico{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--ember-2);box-shadow:inset 0 0 0 1px rgba(232,118,46,.28);margin-bottom:auto}
+.core h3{font-size:clamp(30px,2.8vw,42px);line-height:1;margin:48px 0 12px}
+.core p{color:var(--muted);font-weight:300;font-size:15.5px;max-width:44ch}
+.big-n{font-family:var(--serif);font-size:clamp(90px,10vw,150px);line-height:.8;color:var(--ember-2);margin-bottom:auto}
+.b1 .core{background:radial-gradient(80% 90% at 100% 100%,rgba(232,118,46,.22),transparent 60%),linear-gradient(180deg,#24180f,#180f0a)}
+.b4 .core{background:radial-gradient(70% 100% at 0% 100%,rgba(167,181,106,.14),transparent 60%),linear-gradient(180deg,#22170f,#190f0b)}
+.taps{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.taps i{width:14px;height:46px;border-radius:7px;background:linear-gradient(180deg,var(--ember-2),var(--ember));box-shadow:inset 0 -6px 0 rgba(0,0,0,.25)}
+.taps i.k{background:linear-gradient(180deg,#5e4a39,#3b2c21)}
+
+.story{background:var(--bg-2);border-block:1px solid var(--line)}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,110px);align-items:start}
+.story p.big{font-family:var(--serif);font-size:clamp(28px,3.2vw,46px);line-height:1.18;letter-spacing:-.02em;margin-top:28px}
+.timeline{list-style:none;border-left:1px solid var(--line-2);margin-top:12px}
+.timeline li{position:relative;padding:0 0 40px 34px}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{content:"";position:absolute;left:-5px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--bg-2);box-shadow:0 0 0 1px var(--ember)}
+.timeline li:last-child::before{background:var(--ember);box-shadow:0 0 14px var(--ember)}
+.timeline b{display:block;font-family:var(--serif);font-weight:400;font-size:24px;margin-bottom:6px}
+.timeline span{color:var(--muted);font-weight:300}
+
+.visit-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:14px}
+.hours{list-style:none;margin-top:24px}
+.hours li{display:flex;justify-content:space-between;padding:17px 2px;border-bottom:1px solid var(--line);color:var(--muted);font-size:16px}
+.hours li:last-child{border-bottom:0}
+.hours li span:last-child{color:var(--ink);font-variant-numeric:tabular-nums}
+.hours li.shut span:last-child{color:var(--dim)}
+.hours li.today{color:var(--ink)}
+.hours li.today span:first-child::after{content:"Tonight";margin-left:12px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ember-2);padding:3px 9px;border-radius:999px;background:rgba(232,118,46,.14)}
+.visit .core h3{font-size:clamp(40px,4.4vw,64px);margin:0 0 6px}
+.vaddr{font-size:19px;font-weight:300;line-height:1.5;margin:24px 0 10px}
+.vnote{color:var(--muted);font-weight:300;margin-bottom:34px}
+footer{border-top:1px solid var(--line);padding:36px 0 44px;color:var(--dim);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.js .rv{opacity:0;transform:translateY(48px);filter:blur(8px);transition:opacity 1s var(--spring),transform 1.1s var(--spring),filter 1s var(--spring)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+.d1{transition-delay:.08s!important}.d2{transition-delay:.16s!important}.d3{transition-delay:.24s!important}
+@media (max-width:960px){.hero-grid,.head,.story-grid,.visit-grid{grid-template-columns:1fr}.bento{grid-template-columns:1fr}.b1,.b2,.b3,.b4{grid-column:span 1}}
+@media (max-width:767px){.wrap{width:calc(100% - 32px)}.nav{left:16px;right:16px;transform:none;justify-content:space-between}.links,.call{display:none}.burger{display:block}.hero{padding-top:120px}.core{padding:26px}.window{width:min(320px,80vw)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a href="#top" class="mark">The Market Tavern</a>
+  <div class="links"><a href="#drink">Drink &amp; eat</a><a href="#story">Story</a><a href="#visit">Hours</a></div>
+  <a href="#visit" class="call">Find us <i><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+  <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+</nav>
+<div class="sheet" aria-hidden="true"><a href="#drink">Drink &amp; eat</a><a href="#story">Story</a><a href="#visit">Hours</a><a href="#visit">Find us</a></div>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="status rv" id="status"><span class="dot"></span><span id="status-text">Market Street, Haverfordwest</span></div>
+        <h1 class="rv d1"><span class="pre">The</span>Market<br><em>Tavern.</em></h1>
+        <p class="lede rv d2">A crumbling Victorian building on Market Street, brought back to life. <b>Core of the Poodle</b> beers on tap, craft keg, wood-fired pizza and a fire burning in the hearth.</p>
+        <div class="ctas rv d3">
+          <a href="#visit" class="btn btn-solid">Opening hours <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5"/></svg></i></a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Market+Tavern+26+Market+Street+Haverfordwest+SA61+1NH" target="_blank" rel="noopener" class="btn btn-ghost">Directions <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+        </div>
+      </div>
+      <div class="window-shell rv d2" aria-hidden="true"><div class="window">
+        <svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="80%" r="60%"><stop offset="0" stop-color="#ff9a4a" stop-opacity=".55"/><stop offset="1" stop-color="#ff9a4a" stop-opacity="0"/></radialGradient>
+            <linearGradient id="fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffcf7a"/><stop offset=".5" stop-color="#ff8a3a"/><stop offset="1" stop-color="#e2502a" stop-opacity="0"/></linearGradient>
+          </defs>
+          <rect width="400" height="560" fill="url(#glow)"/>
+          <g stroke="rgba(243,231,214,.12)" fill="none"><path d="M60 560V330a140 140 0 0 1 280 0v230"/><path d="M40 300h320M40 300v-16h320v16"/></g>
+          <g stroke="rgba(243,231,214,.06)"><path d="M60 360h280M60 400h280M60 440h280M60 480h280M60 520h280"/><path d="M110 360v40M200 360v40M290 360v40M150 400v40M250 400v40M110 440v40M200 440v40M290 440v40M150 480v40M250 480v40"/></g>
+          <rect x="110" y="380" width="180" height="140" rx="70" fill="#0d0705"/>
+          <g class="flame"><path d="M200 520c-48 0-62-40-40-80 10-18 18-34 14-60 22 16 30 34 30 50 8-10 10-24 6-40 30 22 46 52 40 84-6 30-24 46-50 46z" fill="url(#fl)"/></g>
+          <g class="flame f2" opacity=".85"><path d="M200 520c-24 0-32-22-20-44 6-10 10-20 8-34 14 10 18 20 18 30 6-6 8-14 6-24 16 14 22 30 18 46-4 16-14 26-30 26z" fill="#ffe0a0"/></g>
+          <path d="M140 520h120" stroke="#3b2618" stroke-width="10" stroke-linecap="round"/>
+        </svg>
+        <div class="since">Market Street<b>Est. 2025</b></div>
+      </div></div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track">
+    <span>Core of the Poodle</span><span>wood-fired pizza</span><span>Craft keg</span><span>log fire</span><span>Market Street</span><span>restored Victorian</span>
+    <span>Core of the Poodle</span><span>wood-fired pizza</span><span>Craft keg</span><span>log fire</span><span>Market Street</span><span>restored Victorian</span>
+  </div></div>
+
+  <section id="drink">
+    <div class="wrap">
+      <div class="head">
+        <div class="rv"><span class="eyebrow">Drink &amp; eat</span><h2>Good beer.<br><em>Proper pizza.</em></h2></div>
+        <p class="rv d1">Small and characterful, built for a pint by the fire. Brewed just next door and baked in a wood-fired oven.</p>
+      </div>
+      <div class="bento">
+        <div class="shell b1 rv"><div class="core">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M6 6h10v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zM16 9h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M6 6c0-2 2-3 5-3s5 1 5 3"/></svg></div>
+          <h3>Core of the Poodle,<br>on tap</h3>
+          <p>Normally two of the brewery's own beers on cask, poured a few steps from where they're made.</p>
+          <div class="taps"><i></i><i></i><i class="k"></i><i class="k"></i><i class="k"></i><i class="k"></i><i class="k"></i><i class="k"></i></div>
+        </div></div>
+        <div class="shell b2 rv d1"><div class="core">
+          <span class="big-n">+6</span>
+          <h3>Craft keg</h3><p>Up to six more beers on keg, rotating so there's always something new.</p>
+        </div></div>
+        <div class="shell b3 rv"><div class="core">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1.2"/><circle cx="14" cy="8.5" r="1"/><circle cx="14.5" cy="14" r="1.3"/><circle cx="9.5" cy="15" r="1"/></svg></div>
+          <h3>Wood-fired pizza</h3><p>Blistered, smoky bases straight from the oven. Made for sharing over a pint.</p>
+        </div></div>
+        <div class="shell b4 rv d1"><div class="core">
+          <div class="ico" style="color:var(--hop);box-shadow:inset 0 0 0 1px rgba(167,181,106,.3)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M12 3c-4 6-6 9-6 12a6 6 0 0 0 12 0c0-3-2-6-6-12z"/><path d="M12 21v-7"/></svg></div>
+          <h3>A fire in the hearth</h3><p>A big fireplace and log burner, stone walls and a room that feels like it's always been here.</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <div class="wrap story-grid">
+      <div class="rv">
+        <span class="eyebrow">The story</span>
+        <p class="big">Two years of work turned a crumbling Victorian storehouse into somewhere Haverfordwest can gather again.</p>
+      </div>
+      <ul class="timeline rv d1">
+        <li><b>The building</b><span>Tucked behind the Core of the Poodle record shop on historic Market Street, a stone's throw from the Palace Cinema.</span></li>
+        <li><b>The restoration</b><span>A two-year project led by Malcolm and Cheryl Herbert, part of their Core of the Poodle venture.</span></li>
+        <li><b>Doors open</b><span>The Market Tavern opened in September 2025: craft beer, wood-fired pizza and a real community room.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit-grid">
+      <div class="shell visit rv"><div class="core">
+        <h3>Come<br>in from<br>the cold.</h3>
+        <p class="vaddr">The Market Tavern<br>26 Market Street, Haverfordwest<br>SA61 1NH</p>
+        <p class="vnote">Behind the Core of the Poodle record shop.</p>
+        <div class="ctas" style="margin-top:auto"><a href="https://www.google.com/maps/search/?api=1&query=Market+Tavern+26+Market+Street+Haverfordwest+SA61+1NH" target="_blank" rel="noopener" class="btn btn-solid">Get directions <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a></div>
+      </div></div>
+      <div class="shell rv d1"><div class="core">
+        <span class="eyebrow" style="align-self:flex-start">Opening hours</span>
+        <ul class="hours" id="hours-list">
+          <li data-d="1" class="shut"><span>Monday</span><span>Closed</span></li>
+          <li data-d="2" class="shut"><span>Tuesday</span><span>Closed</span></li>
+          <li data-d="3"><span>Wednesday</span><span>4pm – 8:30pm</span></li>
+          <li data-d="4"><span>Thursday</span><span>4pm – 8:30pm</span></li>
+          <li data-d="5"><span>Friday</span><span>4pm – 9pm</span></li>
+          <li data-d="6"><span>Saturday</span><span>4pm – 9pm</span></li>
+          <li data-d="0" class="shut"><span>Sunday</span><span>Closed</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© <span id="yr">2026</span> The Market Tavern · 26 Market Street, Haverfordwest</span><span>Part of the Core of the Poodle family</span></div></footer>
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});els.forEach(function(el){io.observe(el)})}else els.forEach(function(el){el.classList.add('in')});
+  var b=document.querySelector('.burger'),root=document.documentElement,sh=document.querySelector('.sheet');
+  function t(o){root.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o);sh.setAttribute('aria-hidden',!o)}
+  b.addEventListener('click',function(){t(!root.classList.contains('menu-open'))});sh.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){t(false)})});
+  var H={3:[16,20.5],4:[16,20.5],5:[16,21],6:[16,21]};
+  function fmt(h){var hr=Math.floor(h),m=h%1?':30':'';return (hr>12?hr-12:hr)+m+'pm'}
+  try{
+    var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
+    var g=function(t){return (p.find(function(x){return x.type===t})||{}).value};
+    var d=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(g('weekday')),now=+g('hour')+(+g('minute'))/60;
+    var li=document.querySelector('#hours-list li[data-d="'+d+'"]');if(li&&H[d])li.classList.add('today');
+    var st=document.getElementById('status'),tx=document.getElementById('status-text');
+    if(H[d]&&now>=H[d][0]&&now<H[d][1]){st.classList.add('open');tx.innerHTML='<b>Open now</b> · until '+fmt(H[d][1])}
+    else if(H[d]&&now<H[d][0]){tx.innerHTML='<b>Open tonight</b> · from 4pm'}
+    else{var n=d;for(var i=1;i<8;i++){n=(d+i)%7;if(H[n])break}tx.innerHTML='<b>Closed</b> · next open '+['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][n]+' at 4pm'}
+  }catch(e){}
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
