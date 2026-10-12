@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zizo Barbers Haverfordwest</title>
+<meta name="description" content="Zizo Barbers, Cambrian Place, Haverfordwest. Haircuts from £17, skin fades from £19, kids from £12.">
+<meta name="theme-color" content="#ece7dd">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --bg:#ece7dd; --paper:#f6f3ec; --ink:#11201a; --soft:#56635c; --faint:#97a097;
+  --green:#1d4a37; --green-2:#2c6a50; --tan:#d9662b; --tan-2:#f08a52; --line:rgba(17,32,26,.1); --line-2:rgba(17,32,26,.18);
+  --spring:cubic-bezier(.32,.72,0,1); --sans:'Bricolage Grotesque',system-ui,sans-serif; --serif:'Instrument Serif',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--tan);color:var(--paper)}
+.wrap{width:min(1240px,100% - 56px);margin-inline:auto}
+section{padding-block:clamp(96px,13vw,170px);position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;background:rgba(29,74,55,.08);box-shadow:inset 0 0 0 1px rgba(29,74,55,.18);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--green);font-weight:600}
+.serif{font-family:var(--serif);font-weight:400;font-style:italic;letter-spacing:-.01em}
+
+.nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(246,243,236,.72);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:inset 0 0 0 1px var(--line),0 24px 50px -28px rgba(17,32,26,.4)}
+.mark{font-weight:800;font-size:19px;letter-spacing:-.03em;padding:0 16px 0 18px}
+.mark span{color:var(--tan)}
+.links{display:flex}
+.links a{font-size:13.5px;color:var(--soft);padding:9px 14px;border-radius:999px;transition:color .5s var(--spring),background .5s var(--spring)}
+.links a:hover{color:var(--ink);background:rgba(17,32,26,.05)}
+.call{display:inline-flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;border-radius:999px;background:var(--green);color:var(--paper);font-size:13.5px;font-weight:500;transition:transform .6s var(--spring)}
+.call:active{transform:scale(.97)}
+.call i{width:26px;height:26px;border-radius:50%;background:rgba(246,243,236,.15);display:grid;place-items:center;transition:transform .6s var(--spring)}
+.call:hover i{transform:translate(2px,-1px) scale(1.06)}
+.burger{display:none;width:42px;height:42px;border-radius:50%;background:rgba(17,32,26,.06);border:0;position:relative;cursor:pointer}
+.burger span{position:absolute;left:13px;right:13px;height:1.5px;background:var(--ink);transition:transform .6s var(--spring),top .6s var(--spring)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:24px}
+.menu-open .burger span:nth-child(1){top:20.5px;transform:rotate(45deg)}.menu-open .burger span:nth-child(2){top:20.5px;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:0;z-index:55;background:rgba(236,231,221,.9);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;padding:0 32px;opacity:0;pointer-events:none;transition:opacity .6s var(--spring)}
+.sheet a{font-weight:800;font-size:clamp(46px,13vw,80px);letter-spacing:-.04em;line-height:1.08;transform:translateY(40px);opacity:0;transition:transform .8s var(--spring),opacity .8s var(--spring)}
+.sheet a:nth-child(2){transition-delay:.06s}.sheet a:nth-child(3){transition-delay:.12s}.sheet a:nth-child(4){transition-delay:.18s;color:var(--tan)}
+.menu-open .sheet{opacity:1;pointer-events:auto}.menu-open .sheet a{transform:none;opacity:1}
+
+.btn{display:inline-flex;align-items:center;gap:14px;padding:8px 8px 8px 26px;border-radius:999px;font-weight:500;font-size:15px;transition:transform .6s var(--spring),background .6s var(--spring)}
+.btn:active{transform:scale(.98)}
+.btn i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;transition:transform .6s var(--spring)}
+.btn:hover i{transform:translate(3px,-2px) scale(1.06)}
+.btn-solid{background:var(--green);color:var(--paper)}.btn-solid i{background:rgba(246,243,236,.14)}.btn-solid:hover{background:var(--green-2)}
+.btn-tan{background:var(--tan);color:#fff}.btn-tan i{background:rgba(255,255,255,.18)}.btn-tan:hover{background:var(--tan-2)}
+.btn-ghost{box-shadow:inset 0 0 0 1px var(--line-2)}.btn-ghost i{background:rgba(17,32,26,.06)}.btn-ghost:hover{background:rgba(17,32,26,.03)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+
+/* hero */
+.hero{min-height:100dvh;padding:150px 0 80px;display:flex;align-items:center;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.where{display:inline-flex;align-items:center;gap:10px;font-size:13.5px;color:var(--soft);margin-bottom:26px}
+.where svg{color:var(--tan)}
+h1{font-weight:800;font-size:clamp(96px,17vw,260px);line-height:.78;letter-spacing:-.06em;color:var(--green)}
+h1 .o{display:inline-block;color:var(--tan)}
+.hero h2{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(34px,4vw,60px);line-height:1;letter-spacing:-.01em;margin:22px 0 26px}
+.hero p{color:var(--soft);font-size:17px;max-width:40ch;margin-bottom:38px}
+
+/* ticket cascade */
+.tickets{position:relative;height:clamp(440px,48vw,580px)}
+.tk{position:absolute;width:min(320px,80%);padding:7px;border-radius:30px;background:rgba(246,243,236,.6);box-shadow:inset 0 0 0 1px var(--line),0 40px 70px -40px rgba(17,32,26,.5);transition:transform .9s var(--spring)}
+.tk .in{border-radius:23px;padding:26px 28px 24px;position:relative;overflow:hidden;box-shadow:inset 0 1px 1px rgba(255,255,255,.5)}
+.tk .lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;opacity:.75}
+.tk .nm{font-weight:700;font-size:28px;letter-spacing:-.03em;margin:6px 0 30px;line-height:1.05}
+.tk .pr{display:flex;align-items:baseline;gap:8px;border-top:1px dashed currentColor;padding-top:16px}
+.tk .pr small{font-size:12px;opacity:.7}
+.tk .pr b{font-weight:800;font-size:52px;letter-spacing:-.05em;line-height:1}
+.tk .in::before,.tk .in::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:var(--bg);top:calc(100% - 96px)}
+.tk .in::before{left:-11px}.tk .in::after{right:-11px}
+.t1{left:2%;top:4%;transform:rotate(-6deg);z-index:1}.t1 .in{background:var(--green);color:var(--paper)}
+.t2{right:0;top:22%;transform:rotate(4deg);z-index:2}.t2 .in{background:var(--paper);color:var(--ink)}
+.t3{left:14%;bottom:0;transform:rotate(-2deg);z-index:3}.t3 .in{background:var(--tan);color:#fff}
+.tickets:hover .t1{transform:rotate(-9deg) translate(-12px,-8px)}
+.tickets:hover .t2{transform:rotate(7deg) translate(12px,-6px)}
+.tickets:hover .t3{transform:rotate(0deg) translateY(6px)}
+
+/* strip */
+.strip{background:var(--green);color:var(--paper);padding:0;overflow:hidden}
+.strip-track{display:flex;width:max-content;animation:marq 34s linear infinite;padding:26px 0}
+.strip span{font-weight:700;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.03em;padding-right:40px;display:inline-flex;align-items:center;gap:40px;white-space:nowrap}
+.strip span:nth-child(even){font-family:var(--serif);font-style:italic;font-weight:400;color:var(--tan-2)}
+.strip span::after{content:"✦";font-size:.5em;color:rgba(246,243,236,.4)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* price list */
+.price-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,7vw,110px);align-items:start}
+.price-grid h2{font-weight:800;font-size:clamp(52px,6.8vw,104px);line-height:.9;letter-spacing:-.05em;margin-top:24px}
+.price-grid h2 .serif{color:var(--tan);font-size:1.08em}
+.price-grid .intro{color:var(--soft);font-size:17px;max-width:38ch;margin-top:26px}
+.shell{padding:7px;border-radius:32px;background:rgba(246,243,236,.55);box-shadow:inset 0 0 0 1px var(--line)}
+.core{border-radius:25px;background:var(--paper);box-shadow:inset 0 1px 1px #fff,0 30px 60px -40px rgba(17,32,26,.35);padding:clamp(24px,3.4vw,48px)}
+.item{display:grid;grid-template-columns:1fr auto;gap:6px 18px;align-items:baseline;padding:24px 0;border-bottom:1px solid var(--line)}
+.item:first-child{padding-top:4px}.item:last-of-type{border-bottom:0}
+.item h3{font-weight:700;font-size:clamp(22px,2.2vw,28px);letter-spacing:-.03em;display:flex;align-items:baseline;gap:14px}
+.item h3::after{content:"";flex:1;min-width:30px;border-bottom:1.5px dotted var(--line-2);transform:translateY(-6px)}
+.item .p{font-weight:800;font-size:clamp(26px,2.6vw,34px);letter-spacing:-.04em;color:var(--green)}
+.item .p small{font-weight:500;font-size:12px;color:var(--faint);letter-spacing:0;margin-right:6px}
+.item p{grid-column:1/-1;color:var(--soft);font-size:15px}
+.fine{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--faint)}
+
+/* steps bento */
+.steps{background:var(--paper);border-block:1px solid var(--line)}
+.steps h2{font-weight:800;font-size:clamp(48px,6vw,92px);letter-spacing:-.05em;line-height:.92;margin:24px 0 64px;max-width:14ch}
+.steps h2 .serif{color:var(--green-2)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sgrid .shell{background:rgba(236,231,221,.6)}
+.sgrid .core{min-height:300px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:inset 0 1px 1px #fff}
+.sgrid .num{font-family:var(--serif);font-style:italic;font-size:88px;line-height:.8;color:var(--tan)}
+.sgrid h3{font-weight:700;font-size:28px;letter-spacing:-.03em;margin-bottom:8px}
+.sgrid p{color:var(--soft);font-size:15.5px}
+.sgrid .shell:nth-child(2){transform:translateY(40px)}
+.sgrid .shell:nth-child(2) .core{background:var(--green);color:var(--paper)}
+.sgrid .shell:nth-child(2) p{color:rgba(246,243,236,.7)}
+.sgrid .shell:nth-child(2) .num{color:var(--tan-2)}
+
+/* visit */
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.big-card .core{background:var(--green);color:var(--paper);min-height:520px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.big-card h2{font-weight:800;font-size:clamp(56px,7vw,110px);letter-spacing:-.06em;line-height:.85}
+.big-card h2 .serif{color:var(--tan-2)}
+.big-card .addr{font-size:20px;line-height:1.45;color:rgba(246,243,236,.82);margin:28px 0 36px}
+.big-card .ring{position:absolute;right:-120px;top:-120px;width:380px;height:380px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(246,243,236,.12),0 0 0 40px rgba(246,243,236,.03),0 0 0 80px rgba(246,243,236,.02)}
+.big-card .btn-solid{background:var(--paper);color:var(--green)}.big-card .btn-solid i{background:rgba(29,74,55,.1)}
+.big-card .btn-ghost{box-shadow:inset 0 0 0 1px rgba(246,243,236,.25);color:var(--paper)}.big-card .btn-ghost i{background:rgba(246,243,236,.1)}
+.info .core{height:100%;display:flex;flex-direction:column;gap:0}
+.info .row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;border-bottom:1px solid var(--line)}
+.info .row:first-child{padding-top:0}.info .row:last-child{border-bottom:0}
+.info .row span{color:var(--soft);font-size:14.5px}
+.info .row b{font-weight:600;font-size:17px;text-align:right}
+.info .badge{margin-top:auto;border-radius:20px;background:var(--bg);padding:26px;display:flex;align-items:center;gap:20px}
+.info .badge .b{font-weight:800;font-size:44px;letter-spacing:-.05em;color:var(--tan);line-height:1}
+.info .badge p{color:var(--soft);font-size:14.5px}
+
+footer{padding:40px 0 48px;font-size:13px;color:var(--faint)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+
+.js .rv{opacity:0;transform:translateY(48px);filter:blur(8px);transition:opacity 1s var(--spring),transform 1.1s var(--spring),filter 1s var(--spring)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+.js .sgrid .shell.rv.in:nth-child(2){transform:translateY(40px)}
+.d1{transition-delay:.08s!important}.d2{transition-delay:.16s!important}.d3{transition-delay:.24s!important}
+
+@media (max-width:960px){
+  .hero-grid,.price-grid,.visit-grid{grid-template-columns:1fr}
+  .sgrid{grid-template-columns:1fr}
+  .sgrid .shell:nth-child(2),.js .sgrid .shell.rv.in:nth-child(2){transform:none}
+}
+@media (max-width:767px){
+  .wrap{width:calc(100% - 32px)}
+  .nav{left:16px;right:16px;transform:none;justify-content:space-between}
+  .links,.call{display:none}.burger{display:block}
+  .hero{padding-top:124px}
+  .tickets{height:auto;display:grid;gap:14px;margin-top:20px}
+  .tk{position:relative;inset:auto;width:100%;transform:none!important}
+  .big-card .core{min-height:0}
+  .sgrid .core{min-height:220px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <a href="#top" class="mark">ZIZO<span>.</span></a>
+  <div class="links"><a href="#prices">Prices</a><a href="#how">The chair</a><a href="#visit">Find us</a></div>
+  <a href="https://www.facebook.com/p/Zizo-Barbers-100008528016335/" target="_blank" rel="noopener" class="call">Message us <i><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+  <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+</nav>
+<div class="sheet" aria-hidden="true">
+  <a href="#prices">Prices</a><a href="#how">The chair</a><a href="#visit">Find us</a><a href="https://www.facebook.com/p/Zizo-Barbers-100008528016335/" target="_blank" rel="noopener">Message us</a>
+</div>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="where rv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cambrian Place, Haverfordwest</div>
+        <h1 class="rv d1">Ziz<span class="o">o</span></h1>
+        <h2 class="rv d2">Good cuts, fair prices.</h2>
+        <p class="rv d2">A proper local barbers on Cambrian Place. Clean skin fades, classic cuts and kids' trims, without the town-centre price tag.</p>
+        <div class="ctas rv d3">
+          <a href="#prices" class="btn btn-tan">See prices <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5"/></svg></i></a>
+          <a href="#visit" class="btn btn-ghost">Find the shop <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+        </div>
+      </div>
+      <div class="tickets rv d2" aria-label="Prices">
+        <div class="tk t1"><div class="in"><div class="lbl">No. 01</div><div class="nm">Haircut</div><div class="pr"><small>from</small><b>£17</b></div></div></div>
+        <div class="tk t2"><div class="in"><div class="lbl">No. 02</div><div class="nm">Skin fade</div><div class="pr"><small>from</small><b>£19</b></div></div></div>
+        <div class="tk t3"><div class="in"><div class="lbl">No. 03 · Under 10s</div><div class="nm">Kids cut</div><div class="pr"><small>from</small><b>£12</b></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true"><div class="strip-track">
+    <span>Skin fades</span><span>sharp lines</span><span>Classic cuts</span><span>kids welcome</span><span>Cambrian Place</span><span>fair prices</span>
+    <span>Skin fades</span><span>sharp lines</span><span>Classic cuts</span><span>kids welcome</span><span>Cambrian Place</span><span>fair prices</span>
+  </div></div>
+
+  <section id="prices">
+    <div class="wrap price-grid">
+      <div class="rv">
+        <span class="eyebrow">Price list</span>
+        <h2>Straight-up <span class="serif">prices.</span></h2>
+        <p class="intro">No surprises at the till. Pick your cut, take a seat and leave looking sharp.</p>
+      </div>
+      <div class="shell rv d1"><div class="core">
+        <div class="item"><h3>Haircut</h3><span class="p"><small>from</small>£17</span><p>Clipper or scissor cut, styled the way you like it.</p></div>
+        <div class="item"><h3>Skin fade</h3><span class="p"><small>from</small>£19</span><p>Taken down to the skin and blended up clean.</p></div>
+        <div class="item"><h3>Kids cut</h3><span class="p"><small>from</small>£12</span><p>For under 10s. Patient, quick and no fuss.</p></div>
+        <p class="fine">Prices are starting prices. Longer or more detailed cuts may cost a little more. Just ask.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="steps" id="how">
+    <div class="wrap">
+      <span class="eyebrow rv">In the chair</span>
+      <h2 class="rv d1">Every cut, the <span class="serif">same care.</span></h2>
+      <div class="sgrid">
+        <div class="shell rv"><div class="core"><span class="num">01</span><div><h3>Talk it through</h3><p>Tell us what you're after, or show us a photo. We'll tell you straight what will work.</p></div></div></div>
+        <div class="shell rv d1"><div class="core"><span class="num">02</span><div><h3>Take your time</h3><p>Blended properly, not rushed. A fade is only as good as its blend.</p></div></div></div>
+        <div class="shell rv d2"><div class="core"><span class="num">03</span><div><h3>Sharp finish</h3><p>Clean neckline, crisp edges and styled before you're out the door.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit-grid">
+      <div class="shell big-card rv"><div class="core">
+        <span class="ring" aria-hidden="true"></span>
+        <div>
+          <span class="eyebrow" style="color:var(--tan-2);background:rgba(246,243,236,.08);box-shadow:inset 0 0 0 1px rgba(246,243,236,.18)">Find us</span>
+          <h2 style="margin-top:26px">Cambrian <span class="serif">Place.</span></h2>
+          <p class="addr">Zizo Barbers<br>Cambrian Place, Haverfordwest<br>Pembrokeshire SA61 1TN</p>
+        </div>
+        <div class="ctas">
+          <a href="https://www.google.com/maps/search/?api=1&query=Zizo+Barbers+Cambrian+Place+Haverfordwest+SA61+1TN" target="_blank" rel="noopener" class="btn btn-solid">Get directions <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+          <a href="https://www.facebook.com/p/Zizo-Barbers-100008528016335/" target="_blank" rel="noopener" class="btn btn-ghost">Facebook <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+        </div>
+      </div></div>
+      <div class="shell info rv d1"><div class="core">
+        <div class="row"><span>Where</span><b>Cambrian Place, SA61 1TN</b></div>
+        <div class="row"><span>Haircut</span><b>from £17</b></div>
+        <div class="row"><span>Skin fade</span><b>from £19</b></div>
+        <div class="row"><span>Kids under 10</span><b>from £12</b></div>
+        <div class="badge"><span class="b">Z.</span><p>Message us on Facebook for today's opening times and availability.</p></div>
+      </div></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>© <span id="yr">2026</span> Zizo Barbers · Cambrian Place, Haverfordwest</span><span>Skin fades · Classic cuts · Kids</span></div></footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});els.forEach(function(el){io.observe(el)})}else els.forEach(function(el){el.classList.add('in')});
+  var b=document.querySelector('.burger'),root=document.documentElement,sh=document.querySelector('.sheet');
+  function t(o){root.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o);sh.setAttribute('aria-hidden',!o)}
+  b.addEventListener('click',function(){t(!root.classList.contains('menu-open'))});
+  sh.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){t(false)})});
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
