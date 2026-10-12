@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Snippers Haverfordwest</title>
+<meta name="description" content="Snippers hairdressing, 57 Portfield, Haverfordwest. Cuts, colour, balayage, extensions, blow-dries and kids' cuts. Call 01437 762114.">
+<meta name="theme-color" content="#e9f4ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;900&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{--bg:#e9f4ef;--paper:#f8fcfa;--ink:#0f2a28;--soft:#4f6763;--faint:#93a8a3;--teal:#0d8a86;--teal-2:#52c1b6;--sun:#ffc94a;--coral:#ff8a6b;--line:rgba(15,42,40,.09);--line-2:rgba(15,42,40,.17);
+--spring:cubic-bezier(.32,.72,0,1);--display:'Gabarito',system-ui,sans-serif;--sans:'Figtree',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--sun);color:var(--ink)}
+.wrap{width:min(1240px,100% - 56px);margin-inline:auto}
+section{padding-block:clamp(64px,8vw,108px);position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:600}
+h1,h2,h3{font-family:var(--display);font-weight:900;letter-spacing:-.035em}
+.tl{color:var(--teal)}
+.hl{background:linear-gradient(transparent 58%,var(--sun) 58% 90%,transparent 90%);padding:0 .06em}
+.nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(248,252,250,.76);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:inset 0 0 0 1px var(--line),0 24px 50px -28px rgba(15,42,40,.4)}
+.mark{font-family:var(--display);font-weight:900;font-size:19px;padding:0 16px 0 18px;letter-spacing:-.04em;display:flex;align-items:center;gap:8px}
+.mark svg{color:var(--teal)}
+.links{display:flex}.links a{font-size:14px;color:var(--soft);padding:9px 14px;border-radius:999px;transition:color .5s var(--spring),background .5s var(--spring)}
+.links a:hover{color:var(--ink);background:rgba(15,42,40,.05)}
+.call{display:inline-flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;border-radius:999px;background:var(--teal);color:#fff;font-size:14px;font-weight:600;transition:transform .6s var(--spring)}
+.call:active{transform:scale(.97)}.call i{width:26px;height:26px;border-radius:50%;background:var(--sun);color:var(--ink);display:grid;place-items:center;transition:transform .6s var(--spring)}
+.call:hover i{transform:translate(2px,-1px) scale(1.06)}
+.burger{display:none;width:42px;height:42px;border-radius:50%;background:rgba(15,42,40,.06);border:0;position:relative;cursor:pointer}
+.burger span{position:absolute;left:13px;right:13px;height:1.5px;background:var(--ink);transition:transform .6s var(--spring),top .6s var(--spring)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:24px}
+.menu-open .burger span:nth-child(1){top:20.5px;transform:rotate(45deg)}.menu-open .burger span:nth-child(2){top:20.5px;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:0;z-index:55;background:rgba(233,244,239,.92);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;padding:0 32px;opacity:0;pointer-events:none;transition:opacity .6s var(--spring)}
+.sheet a{font-family:var(--display);font-weight:900;font-size:clamp(46px,13vw,80px);letter-spacing:-.04em;line-height:1.08;transform:translateY(40px);opacity:0;transition:transform .8s var(--spring),opacity .8s var(--spring)}
+.sheet a:nth-child(2){transition-delay:.06s}.sheet a:nth-child(3){transition-delay:.12s;color:var(--teal)}
+.menu-open .sheet{opacity:1;pointer-events:auto}.menu-open .sheet a{transform:none;opacity:1}
+.btn{display:inline-flex;align-items:center;gap:14px;padding:8px 8px 8px 26px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .6s var(--spring),background .6s var(--spring),box-shadow .6s var(--spring)}
+.btn:active{transform:scale(.98)}.btn i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;transition:transform .6s var(--spring)}
+.btn:hover i{transform:translate(3px,-2px) scale(1.06) rotate(-8deg)}
+.btn-solid{background:var(--teal);color:#fff;box-shadow:0 16px 34px -16px rgba(13,138,134,.7)}.btn-solid i{background:var(--sun);color:var(--ink)}.btn-solid:hover{background:#0a7672}
+.btn-ghost{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}.btn-ghost i{background:var(--bg)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+
+.hero{padding:140px 0 70px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;font-size:13.5px;color:var(--soft);margin-bottom:24px;padding:7px 14px 7px 10px;border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.status b{color:var(--ink);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--faint)}
+.status.open .dot{background:#22b07d;box-shadow:0 0 10px #22b07d}
+h1{font-size:clamp(66px,10vw,160px);line-height:.86}
+.lede{color:var(--soft);font-size:clamp(17px,1.5vw,19px);max-width:42ch;margin:28px 0 38px}
+.lede b{color:var(--ink);font-weight:600}
+.tiles{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:14px}
+.tile{padding:7px;border-radius:30px;background:rgba(248,252,250,.6);box-shadow:inset 0 0 0 1px var(--line),0 30px 60px -40px rgba(15,42,40,.45);transition:transform .8s var(--spring)}
+.tile>div{border-radius:23px;height:100%;padding:24px;display:flex;flex-direction:column;justify-content:space-between;min-height:170px}
+.tile:hover{transform:translateY(-8px) rotate(-1.5deg)}
+.tile:nth-child(2):hover{transform:translateY(-8px) rotate(1.5deg)}
+.tile b{font-family:var(--display);font-weight:900;font-size:28px;letter-spacing:-.04em;line-height:1}
+.tile small{font-size:13px;opacity:.75}
+.tA{grid-row:span 2}.tA>div{background:var(--teal);color:#fff;min-height:360px}
+.tA svg{width:70%;height:auto;align-self:center}
+.tB>div{background:var(--sun)}
+.tC>div{background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.snip{transform-origin:50% 50%;animation:snip 2.4s var(--spring) infinite}
+.snip2{animation-direction:reverse}
+@keyframes snip{0%,60%,100%{transform:rotate(0)}30%{transform:rotate(14deg)}}
+
+.ribbon{background:var(--ink);color:var(--paper);overflow:hidden}
+.ribbon-track{display:flex;width:max-content;animation:marq 34s linear infinite;padding:22px 0}
+.ribbon span{font-family:var(--display);font-weight:900;font-size:clamp(26px,3.4vw,42px);letter-spacing:-.03em;padding-right:42px;display:inline-flex;align-items:center;gap:42px;white-space:nowrap}
+.ribbon span:nth-child(even){color:var(--teal-2)}
+.ribbon span::after{content:"✂";font-size:.6em;color:var(--sun)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.head{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;margin-bottom:44px}
+h2{font-size:clamp(46px,6vw,92px);line-height:.92;margin-top:20px}
+.head p{color:var(--soft);max-width:44ch;font-size:17.5px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.shell{padding:7px;border-radius:30px;background:rgba(248,252,250,.6);box-shadow:inset 0 0 0 1px var(--line)}
+.core{height:100%;border-radius:23px;background:var(--paper);box-shadow:inset 0 1px 1px #fff,0 30px 60px -45px rgba(15,42,40,.4);padding:30px;display:flex;flex-direction:column;position:relative;overflow:hidden;min-height:220px}
+.c1{grid-column:span 6;grid-row:span 2}.c2,.c3{grid-column:span 6}.c4,.c5,.c6{grid-column:span 4}
+.ico{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:var(--bg);color:var(--teal);margin-bottom:auto}
+.core h3{font-size:clamp(26px,2.4vw,36px);line-height:1;margin:34px 0 10px}
+.core p{color:var(--soft);font-size:16px;max-width:44ch}
+.c1 .core{background:linear-gradient(160deg,#0d8a86,#0b6d6a);color:#fff;justify-content:flex-end}
+.c1 .core p{color:rgba(255,255,255,.82)}
+.c1 h3{font-size:clamp(42px,4.8vw,72px)}
+.c1 .ico{position:absolute;top:30px;left:30px;background:rgba(255,255,255,.14);color:#fff}
+.c1 .sw{position:absolute;right:30px;top:30px;display:flex;gap:-10px}
+.c1 .sw i{width:46px;height:46px;border-radius:50%;margin-left:-12px;box-shadow:0 0 0 3px #0c7c79}
+.c3 .core{background:var(--sun)}
+.c3 .ico{background:rgba(255,255,255,.5);color:var(--ink)}
+.c6 .core{background:var(--coral);color:#fff}.c6 .core p{color:rgba(255,255,255,.85)}.c6 .ico{background:rgba(255,255,255,.2);color:#fff}
+
+.team{background:var(--paper);border-block:1px solid var(--line)}
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,100px);align-items:center}
+.team blockquote{font-family:var(--display);font-weight:900;font-size:clamp(34px,4.2vw,62px);line-height:1;letter-spacing:-.04em}
+.team p{color:var(--soft);font-size:17.5px;margin-top:20px;max-width:46ch}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.person .core{align-items:center;text-align:center;justify-content:center;gap:14px;min-height:240px}
+.avatar{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:40px;color:#fff;transition:transform .7s var(--spring)}
+.person:hover .avatar{transform:scale(1.08) rotate(-6deg)}
+.person b{font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:-.03em}
+.person span{color:var(--soft);font-size:14px}
+
+.visit-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px}
+.visit .core{padding:40px}
+.visit h2{margin:20px 0 20px}
+.vaddr{font-size:19px;line-height:1.5}
+.phone{font-family:var(--display);font-weight:900;font-size:clamp(34px,3.6vw,52px);letter-spacing:-.04em;color:var(--teal);display:inline-block;margin:20px 0 30px;white-space:nowrap}
+.hours{list-style:none;margin-top:18px}
+.hours li{display:flex;justify-content:space-between;padding:14px 4px;border-bottom:1px solid var(--line);color:var(--soft);font-size:16px;transition:background .4s var(--spring),padding .5s var(--spring);border-radius:10px}
+.hours li:hover{background:var(--bg);padding-left:12px;padding-right:12px}
+.hours li:last-child{border-bottom:0}
+.hours li span:last-child{color:var(--ink);font-weight:600}
+.hours li.shut span:last-child{color:var(--faint);font-weight:400}
+.hours li.today{color:var(--ink);font-weight:600}
+.hours li.today span:first-child::after{content:"Today";margin-left:10px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:var(--sun);color:var(--ink);padding:2px 9px;border-radius:999px}
+footer{padding:32px 0 40px;color:var(--faint);font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.js .rv{opacity:0;transform:translateY(48px);filter:blur(8px);transition:opacity 1s var(--spring),transform 1.1s var(--spring),filter 1s var(--spring)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+.d1{transition-delay:.08s!important}.d2{transition-delay:.16s!important}.d3{transition-delay:.24s!important}
+@media (max-width:960px){.hero-grid,.head,.team-grid,.visit-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.c1,.c2,.c3,.c4,.c5,.c6{grid-column:span 1;grid-row:auto}.c1 .core{min-height:380px}}
+@media (max-width:767px){.wrap{width:calc(100% - 32px)}.nav{left:16px;right:16px;transform:none;justify-content:space-between}.links,.call{display:none}.burger{display:block}.hero{padding-top:120px}.core{padding:26px}.visit .core{padding:28px}.tA>div{min-height:300px}.people{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none;filter:none}}
+
+/* hover polish */
+.core{transition:transform .7s var(--spring),box-shadow .7s var(--spring)}
+.ico,.emo,.sw{transition:transform .7s var(--spring)}
+@media (hover:hover){
+  .shell:hover>.core{transform:translateY(-6px)}
+  .shell:hover .ico,.shell:hover .emo{transform:scale(1.1) rotate(-8deg)}
+  .shell:hover .sw{transform:translateX(6px)}
+}
+@media (prefers-reduced-motion:reduce){.shell:hover>.core,.shell:hover .ico,.shell:hover .emo,.shell:hover .sw{transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a href="#top" class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></svg>Snippers</a>
+  <div class="links"><a href="#services">Services</a><a href="#team">Team</a><a href="#visit">Visit</a></div>
+  <a href="tel:+441437762114" class="call">Book now <i><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+  <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+</nav>
+<div class="sheet" aria-hidden="true"><a href="#services">Services</a><a href="#team">Team</a><a href="tel:+441437762114">Book now</a></div>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="status rv" id="status"><span class="dot"></span><span id="status-text">57 Portfield, Haverfordwest</span></div>
+        <h1 class="rv d1">Snip,<br><span class="tl">style,</span><br><span class="hl">smile.</span></h1>
+        <p class="lede rv d2"><b>Snippers</b> on Portfield is a friendly local salon for the whole family. Cuts, colour, balayage, extensions and blow-dries, from a team people keep coming back to.</p>
+        <div class="ctas rv d3">
+          <a href="tel:+441437762114" class="btn btn-solid">Call 01437 762114 <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+          <a href="#services" class="btn btn-ghost">Services <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5"/></svg></i></a>
+        </div>
+      </div>
+      <div class="tiles rv d2" aria-hidden="true">
+        <div class="tile tA"><div>
+          <small>Portfield · Haverfordwest</small>
+          <svg viewBox="0 0 120 120"><g stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"><g class="snip"><circle cx="34" cy="86" r="14"/><path d="M44 76 100 20"/></g><g class="snip snip2"><circle cx="86" cy="86" r="14"/><path d="M76 76 20 20"/></g></g><circle cx="60" cy="60" r="4" fill="#ffc94a"/></svg>
+          <b>Cuts for<br>all ages</b>
+        </div></div>
+        <div class="tile tB"><div><small>Colour</small><b>Balayage</b></div></div>
+        <div class="tile tC"><div><small>Length &amp; volume</small><b>Extensions</b></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ribbon" aria-hidden="true"><div class="ribbon-track">
+    <span>Cuts</span><span>Colour</span><span>Balayage</span><span>Extensions</span><span>Blow-dries</span><span>Kids' cuts</span>
+    <span>Cuts</span><span>Colour</span><span>Balayage</span><span>Extensions</span><span>Blow-dries</span><span>Kids' cuts</span>
+  </div></div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="head">
+        <div class="rv"><span class="eyebrow">Services</span><h2>Something for<br><span class="tl">everyone.</span></h2></div>
+        <p class="rv d1">From a quick trim for the kids to a full colour transformation, every appointment is tailored to you.</p>
+      </div>
+      <div class="grid">
+        <div class="shell c1 rv"><div class="core">
+          <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3c3 4 6 7 6 11a6 6 0 0 1-12 0c0-4 3-7 6-11z"/></svg></span>
+          <span class="sw" aria-hidden="true"><i style="background:#f3d9a4"></i><i style="background:#c98a4b"></i><i style="background:#7a4a2a"></i><i style="background:#2b1a12"></i></span>
+          <h3>Colour &amp;<br>balayage</h3>
+          <p>Hand-painted balayage, highlights and all-over colour. Soft and natural or bold and bright.</p>
+        </div></div>
+        <div class="shell c2 rv d1"><div class="core"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.1 8.1 20 20M8.1 15.9 20 4"/></svg></span><h3>Cuts &amp; restyles</h3><p>Regular trims or a whole new look, shaped to suit you.</p></div></div>
+        <div class="shell c3 rv d2"><div class="core"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 20c0-10 3-16 7-16s7 6 7 16"/><path d="M9 20c0-6 1-10 3-10s3 4 3 10"/></svg></span><h3>Hair extensions</h3><p>Extra length and volume that blends beautifully.</p></div></div>
+        <div class="shell c4 rv"><div class="core"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 9h11a4 4 0 0 1 0 8H4zM15 13h5"/></svg></span><h3>Blow-dries</h3><p>Leave with bounce and shine.</p></div></div>
+        <div class="shell c5 rv d1"><div class="core"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg></span><h3>Treatments</h3><p>Conditioning care for healthy hair.</p></div></div>
+        <div class="shell c6 rv d2"><div class="core"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M5 21c1-4 4-6 7-6s6 2 7 6"/></svg></span><h3>Kids' cuts</h3><p>Patient, quick and fuss-free.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team" id="team">
+    <div class="wrap team-grid">
+      <div class="rv">
+        <span class="eyebrow">The team</span>
+        <blockquote style="margin-top:22px">Friendly faces, <span class="tl">skilled hands.</span></blockquote>
+        <p>Clients regularly mention the friendly, professional welcome and the personal service. Sarah and Melanie get a special mention for their skill.</p>
+      </div>
+      <div class="people rv d1">
+        <div class="shell person"><div class="core"><span class="avatar" style="background:var(--teal)">S</span><b>Sarah</b><span>Snippers team</span></div></div>
+        <div class="shell person"><div class="core"><span class="avatar" style="background:var(--coral)">M</span><b>Melanie</b><span>Snippers team</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit-grid">
+      <div class="shell visit rv"><div class="core">
+        <span class="eyebrow" style="align-self:flex-start">Visit</span>
+        <h2>On <span class="tl">Portfield.</span></h2>
+        <p class="vaddr">Snippers<br>57 Portfield, Haverfordwest<br>Pembrokeshire SA61 1BS</p>
+        <a class="phone" href="tel:+441437762114">01437 762114</a>
+        <div class="ctas">
+          <a href="https://www.google.com/maps/search/?api=1&query=Snippers+57+Portfield+Haverfordwest" target="_blank" rel="noopener" class="btn btn-solid">Get directions <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+          <a href="https://www.facebook.com/p/Snippers-Hairdressing-Salons-100063592809616/" target="_blank" rel="noopener" class="btn btn-ghost">Facebook <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+        </div>
+      </div></div>
+      <div class="shell rv d1"><div class="core" style="padding:36px">
+        <span class="eyebrow" style="align-self:flex-start">Opening hours</span>
+        <ul class="hours" id="hours-list">
+          <li data-d="1" class="shut"><span>Monday</span><span>Closed</span></li>
+          <li data-d="2"><span>Tuesday</span><span>9:00 – 17:30</span></li>
+          <li data-d="3"><span>Wednesday</span><span>9:00 – 17:30</span></li>
+          <li data-d="4"><span>Thursday</span><span>9:00 – 17:30</span></li>
+          <li data-d="5"><span>Friday</span><span>9:00 – 17:30</span></li>
+          <li data-d="6"><span>Saturday</span><span>9:00 – 15:00</span></li>
+          <li data-d="0" class="shut"><span>Sunday</span><span>Closed</span></li>
+        </ul>
+      </div></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© <span id="yr">2026</span> Snippers · 57 Portfield, Haverfordwest</span><span>Hair for the whole family</span></div></footer>
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});els.forEach(function(el){io.observe(el)})}else els.forEach(function(el){el.classList.add('in')});
+  var b=document.querySelector('.burger'),root=document.documentElement,sh=document.querySelector('.sheet');
+  function t(o){root.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o);sh.setAttribute('aria-hidden',!o)}
+  b.addEventListener('click',function(){t(!root.classList.contains('menu-open'))});sh.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){t(false)})});
+  var H={2:[9,17.5],3:[9,17.5],4:[9,17.5],5:[9,17.5],6:[9,15]};
+  try{
+    var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date());
+    var g=function(t){return (p.find(function(x){return x.type===t})||{}).value};
+    var d=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(g('weekday')),now=+g('hour')+(+g('minute'))/60;
+    var li=document.querySelector('#hours-list li[data-d="'+d+'"]');if(li)li.classList.add('today');
+    var st=document.getElementById('status'),tx=document.getElementById('status-text');
+    if(H[d]&&now>=H[d][0]&&now<H[d][1]){st.classList.add('open');tx.innerHTML='<b>Open now</b> · until '+(H[d][1]===15?'3pm':'5:30pm')}
+    else{var when=(H[d]&&now<H[d][0])?'today':(d===6||d===0||d===1)?'Tuesday':'tomorrow';tx.innerHTML='<b>Closed</b> · opens '+when+' at 9am'}
+  }catch(e){}
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

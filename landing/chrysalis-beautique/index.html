@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Chrysalis Beautique</title>
+<meta name="description" content="The Chrysalis Beautique, Dew Street, Haverfordwest. Lash lifts, brow lamination, HD brows, semi-permanent brows, facials, nails, tanning and more. Rated 5.0.">
+<meta name="theme-color" content="#f6f1f6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{--bg:#f6f1f6;--pearl:#fdfbfd;--ink:#2a1c31;--soft:#6c5d73;--faint:#a597ab;--plum:#6d3b7c;--lilac:#c8a8e0;--peach:#f5c2b0;--mint:#bfe5d8;--line:rgba(42,28,49,.08);--line-2:rgba(42,28,49,.15);
+--iri:linear-gradient(120deg,#c8a8e0,#f5c2b0 40%,#f7e3b5 60%,#bfe5d8 85%);
+--spring:cubic-bezier(.32,.72,0,1);--serif:'Bodoni Moda',Georgia,serif;--sans:'Jost',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--lilac);color:var(--ink)}
+.wrap{width:min(1200px,100% - 56px);margin-inline:auto}
+section{padding-block:clamp(64px,8vw,108px);position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;padding:6px 16px;border-radius:999px;background:var(--pearl);box-shadow:inset 0 0 0 1px var(--line),0 6px 20px -10px rgba(109,59,124,.3);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--plum);font-weight:500}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.02em}
+em{font-style:italic;color:var(--plum)}
+.iri{background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(253,251,253,.72);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);box-shadow:inset 0 0 0 1px var(--line),0 24px 50px -28px rgba(109,59,124,.45)}
+.mark{font-family:var(--serif);font-style:italic;font-size:19px;padding:0 16px 0 18px;white-space:nowrap}
+.links{display:flex}.links a{font-size:14px;color:var(--soft);padding:9px 14px;border-radius:999px;transition:color .5s var(--spring),background .5s var(--spring)}
+.links a:hover{color:var(--ink);background:rgba(42,28,49,.04)}
+.call{display:inline-flex;align-items:center;gap:8px;padding:8px 8px 8px 18px;border-radius:999px;background:var(--ink);color:var(--pearl);font-size:14px;font-weight:400;transition:transform .6s var(--spring)}
+.call:active{transform:scale(.97)}.call i{width:26px;height:26px;border-radius:50%;background:var(--iri);color:var(--ink);display:grid;place-items:center;transition:transform .6s var(--spring)}
+.call:hover i{transform:translate(2px,-1px) scale(1.06)}
+.burger{display:none;width:42px;height:42px;border-radius:50%;background:rgba(42,28,49,.05);border:0;position:relative;cursor:pointer}
+.burger span{position:absolute;left:13px;right:13px;height:1.5px;background:var(--ink);transition:transform .6s var(--spring),top .6s var(--spring)}
+.burger span:nth-child(1){top:17px}.burger span:nth-child(2){top:24px}
+.menu-open .burger span:nth-child(1){top:20.5px;transform:rotate(45deg)}.menu-open .burger span:nth-child(2){top:20.5px;transform:rotate(-45deg)}
+.sheet{position:fixed;inset:0;z-index:55;background:rgba(246,241,246,.9);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;padding:0 32px;opacity:0;pointer-events:none;transition:opacity .6s var(--spring)}
+.sheet a{font-family:var(--serif);font-size:clamp(44px,12vw,78px);line-height:1.14;transform:translateY(40px);opacity:0;transition:transform .8s var(--spring),opacity .8s var(--spring)}
+.sheet a:nth-child(2){transition-delay:.06s}.sheet a:nth-child(3){transition-delay:.12s}.sheet a:nth-child(4){transition-delay:.18s;font-style:italic;color:var(--plum)}
+.menu-open .sheet{opacity:1;pointer-events:auto}.menu-open .sheet a{transform:none;opacity:1}
+.btn{display:inline-flex;align-items:center;gap:14px;padding:8px 8px 8px 26px;border-radius:999px;font-weight:400;font-size:15.5px;letter-spacing:.01em;transition:transform .6s var(--spring),box-shadow .6s var(--spring),background .6s var(--spring)}
+.btn:active{transform:scale(.98)}.btn i{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;transition:transform .6s var(--spring)}
+.btn:hover i{transform:translate(3px,-2px) scale(1.06)}
+.btn-solid{background:var(--ink);color:var(--pearl);box-shadow:0 18px 40px -18px rgba(42,28,49,.6)}.btn-solid i{background:var(--iri);color:var(--ink)}
+.btn-ghost{background:var(--pearl);box-shadow:inset 0 0 0 1px var(--line),0 1px 2px rgba(42,28,49,.04)}.btn-ghost i{background:var(--bg)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+
+.hero{min-height:0;display:flex;align-items:center;padding:150px 0 90px;overflow:hidden;isolation:isolate;text-align:center}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);z-index:-1;opacity:.75;animation:drift 16s var(--spring) infinite alternate}
+.b-a{width:520px;height:520px;background:#e4cff3;left:-120px;top:10%}
+.b-b{width:460px;height:460px;background:#fbd9cc;right:-100px;top:4%;animation-delay:-5s}
+.b-c{width:420px;height:420px;background:#d3efe5;left:40%;bottom:-160px;animation-delay:-9s}
+@keyframes drift{to{transform:translate(60px,-40px) scale(1.08)}}
+.fly{width:clamp(120px,14vw,170px);margin:0 auto 26px;display:block}
+.fly .wl{transform-origin:100px 80px;animation:flapL 3.2s var(--spring) infinite}
+.fly .wr{transform-origin:100px 80px;animation:flapR 3.2s var(--spring) infinite}
+@keyframes flapL{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.55)}}
+@keyframes flapR{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.55)}}
+.hero .kick{font-size:12px;letter-spacing:.38em;text-transform:uppercase;color:var(--soft);margin-bottom:18px}
+h1{font-size:clamp(60px,9.4vw,148px);line-height:.95}
+h1 em{display:block}
+.hero p{color:var(--soft);font-size:clamp(17px,1.5vw,19.5px);max-width:46ch;margin:30px auto 42px}
+.hero .ctas{justify-content:center}
+.award{display:inline-flex;align-items:center;gap:12px;margin-top:46px;padding:10px 20px 10px 10px;border-radius:999px;background:var(--pearl);box-shadow:inset 0 0 0 1px var(--line),0 14px 40px -24px rgba(109,59,124,.5);font-size:13.5px;color:var(--soft)}
+.award i{width:32px;height:32px;border-radius:50%;background:var(--iri);display:grid;place-items:center;color:var(--ink)}
+.award b{color:var(--ink);font-weight:500}
+
+.menu-band{background:var(--ink);color:var(--pearl);overflow:hidden}
+.mb-track{display:flex;width:max-content;animation:marq 40s linear infinite;padding:26px 0}
+.mb-track span{font-family:var(--serif);font-size:clamp(26px,3.2vw,40px);padding-right:44px;display:inline-flex;align-items:center;gap:44px;white-space:nowrap}
+.mb-track span:nth-child(even){font-style:italic;background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mb-track span::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--iri)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.head{text-align:center;max-width:760px;margin:0 auto 44px}
+h2{font-size:clamp(46px,6vw,92px);line-height:1;margin-top:22px}
+.head p{color:var(--soft);font-size:17.5px;margin-top:22px}
+.treat{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.shell{padding:7px;border-radius:34px;background:rgba(253,251,253,.55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.9),0 30px 70px -45px rgba(109,59,124,.45)}
+.core{height:100%;border-radius:27px;background:var(--pearl);box-shadow:inset 0 0 0 1px var(--line);padding:36px;display:flex;flex-direction:column;position:relative;overflow:hidden;min-height:280px}
+.t1{grid-column:span 7;grid-row:span 2}.t2,.t3{grid-column:span 5}.t4,.t5,.t6{grid-column:span 4}
+.n{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--faint);margin-bottom:auto}
+.core h3{font-size:clamp(28px,2.6vw,40px);line-height:1.04;margin:44px 0 10px}
+.core p{color:var(--soft);font-size:16px;max-width:44ch}
+.price{display:inline-flex;align-items:baseline;gap:8px;margin-top:20px;font-family:var(--serif);font-size:30px}
+.price small{font-family:var(--sans);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.t1 .core{justify-content:flex-end;background:radial-gradient(70% 60% at 85% 15%,#ecdaf6,transparent 70%),radial-gradient(60% 60% at 15% 100%,#fde3d8,transparent 70%),var(--pearl)}
+.t1 h3{font-size:clamp(44px,5vw,76px)}
+.t1 .n{position:absolute;top:36px;left:36px}
+.eye{position:absolute;right:34px;top:40px;width:min(52%,300px);height:auto}
+.eye .lash{stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset 1.6s var(--spring)}
+.in .eye .lash{stroke-dashoffset:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chips span{font-size:13px;padding:7px 14px;border-radius:999px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line)}
+.t3 .core{background:var(--ink);color:var(--pearl)}
+.t3 .core p{color:rgba(253,251,253,.7)}
+.t3 .n{color:rgba(253,251,253,.45)}
+.t3 .price{color:#f5c2b0}
+
+.parties{background:var(--pearl);border-block:1px solid var(--line)}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,110px);align-items:center}
+.p-grid blockquote{font-family:var(--serif);font-size:clamp(34px,4.2vw,62px);line-height:1.08}
+.p-grid p{color:var(--soft);font-size:17.5px;margin:24px 0 36px;max-width:42ch}
+.rating{display:flex;flex-direction:column;align-items:center;text-align:center;padding:50px 30px;border-radius:999px 999px 34px 34px;background:radial-gradient(80% 60% at 50% 20%,#f1e4f8,transparent 70%),var(--bg);box-shadow:inset 0 0 0 1px var(--line)}
+.rating b{font-family:var(--serif);font-weight:400;font-size:clamp(110px,13vw,180px);line-height:.85}
+.rating .st{letter-spacing:6px;color:#d3a24b;font-size:20px;margin:16px 0 10px}
+.rating span{color:var(--soft);font-size:14.5px}
+
+.visit-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+.visit .core{padding:44px;min-height:440px}
+.visit h2{margin:22px 0 22px}
+.vaddr{font-size:20px;line-height:1.5}
+.phone{font-family:var(--serif);font-size:clamp(34px,3.6vw,50px);color:var(--plum);display:block;margin:22px 0 2px;white-space:nowrap}
+.phone2{display:block;color:var(--soft);margin-bottom:34px}
+.cocoon .core{align-items:center;justify-content:center;background:radial-gradient(60% 60% at 50% 45%,#efe0f7,transparent 70%),var(--pearl)}
+.cocoon svg{width:min(70%,320px);height:auto}
+footer{padding:36px 0 44px;color:var(--faint);font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.js .rv{opacity:0;transform:translateY(48px);filter:blur(8px);transition:opacity 1s var(--spring),transform 1.1s var(--spring),filter 1s var(--spring)}
+.js .rv.in{opacity:1;transform:none;filter:none}
+.d1{transition-delay:.08s!important}.d2{transition-delay:.16s!important}.d3{transition-delay:.24s!important}
+@media (max-width:960px){.p-grid,.visit-grid{grid-template-columns:1fr}.treat{grid-template-columns:1fr}.t1,.t2,.t3,.t4,.t5,.t6{grid-column:span 1;grid-row:auto}.t1 .core{min-height:460px}.cocoon .core{min-height:340px}}
+@media (max-width:767px){.wrap{width:calc(100% - 32px)}.nav{left:16px;right:16px;transform:none;justify-content:space-between}.links,.call{display:none}.burger{display:block}.hero{padding-top:124px}.core{padding:28px}.visit .core{padding:28px;min-height:0}.hero .kick{letter-spacing:.24em}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none;filter:none}.eye .lash{stroke-dashoffset:0}}
+
+/* hover polish */
+.core{transition:transform .7s var(--spring),box-shadow .7s var(--spring)}
+.ico,.emo,.sw{transition:transform .7s var(--spring)}
+@media (hover:hover){
+  .shell:hover>.core{transform:translateY(-6px)}
+  .shell:hover .ico,.shell:hover .emo{transform:scale(1.1) rotate(-8deg)}
+  .shell:hover .sw{transform:translateX(6px)}
+}
+@media (prefers-reduced-motion:reduce){.shell:hover>.core,.shell:hover .ico,.shell:hover .emo,.shell:hover .sw{transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main">
+  <a href="#top" class="mark">The Chrysalis Beautique</a>
+  <div class="links"><a href="#treatments">Treatments</a><a href="#parties">Pamper parties</a><a href="#visit">Visit</a></div>
+  <a href="https://www.treatwell.co.uk/place/the-chrysalis-beautique/" target="_blank" rel="noopener" class="call">Book online <i><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+  <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+</nav>
+<div class="sheet" aria-hidden="true"><a href="#treatments">Treatments</a><a href="#parties">Pamper parties</a><a href="#visit">Visit</a><a href="https://www.treatwell.co.uk/place/the-chrysalis-beautique/" target="_blank" rel="noopener">Book online</a></div>
+
+<main id="top">
+  <section class="hero">
+    <span class="blob b-a"></span><span class="blob b-b"></span><span class="blob b-c"></span>
+    <div class="wrap">
+      <svg class="fly rv" viewBox="0 0 200 160" aria-hidden="true"><defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8a8e0"/><stop offset=".45" stop-color="#f5c2b0"/><stop offset=".7" stop-color="#f7e3b5"/><stop offset="1" stop-color="#bfe5d8"/></linearGradient></defs>
+        <g class="wl"><path d="M100 80C80 30 30 10 18 34c-10 22 20 44 82 46z" fill="url(#wg)" opacity=".9"/><path d="M100 82c-40 4-66 22-58 42 8 18 40 8 58-42z" fill="url(#wg)" opacity=".75"/></g>
+        <g class="wr"><path d="M100 80c20-50 70-70 82-46 10 22-20 44-82 46z" fill="url(#wg)" opacity=".9"/><path d="M100 82c40 4 66 22 58 42-8 18-40 8-58-42z" fill="url(#wg)" opacity=".75"/></g>
+        <path d="M100 56v64" stroke="#2a1c31" stroke-width="3" stroke-linecap="round"/><path d="M100 58c-4-10-10-16-16-18M100 58c4-10 10-16 16-18" stroke="#2a1c31" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+      <div class="kick rv d1">Beauty · Dew Street · Haverfordwest</div>
+      <h1 class="rv d1">The Chrysalis<em class="iri">Beautique</em></h1>
+      <p class="rv d2">Lashes, brows, skin and nails in a calm little salon in the heart of Haverfordwest. Come in for an hour, leave feeling transformed.</p>
+      <div class="ctas rv d3">
+        <a href="https://www.treatwell.co.uk/place/the-chrysalis-beautique/" target="_blank" rel="noopener" class="btn btn-solid">Book online <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+        <a href="#treatments" class="btn btn-ghost">View treatments <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M6 2v8M2.5 6.5 6 10l3.5-3.5"/></svg></i></a>
+      </div>
+      <div class="award rv d3"><i><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></svg></i><span><b>Finalist</b> · UK Hair &amp; Beauty Awards</span></div>
+    </div>
+  </section>
+
+  <div class="menu-band" aria-hidden="true"><div class="mb-track">
+    <span>Lash lift</span><span>brow lamination</span><span>HD brows</span><span>facials</span><span>Nails</span><span>tanning</span><span>Waxing</span><span>make-up</span>
+    <span>Lash lift</span><span>brow lamination</span><span>HD brows</span><span>facials</span><span>Nails</span><span>tanning</span><span>Waxing</span><span>make-up</span>
+  </div></div>
+
+  <section id="treatments">
+    <div class="wrap">
+      <div class="head rv"><span class="eyebrow">Treatments</span><h2>Small changes,<br><em>big difference.</em></h2><p>From a quick brow tidy to a full pamper, every treatment is done with care and a lot of attention to detail.</p></div>
+      <div class="treat">
+        <div class="shell t1 rv"><div class="core">
+          <span class="n">i.</span>
+          <svg class="eye" viewBox="0 0 300 160" aria-hidden="true"><g fill="none" stroke="#6d3b7c" stroke-linecap="round"><path d="M20 90c60-60 200-60 260 0" stroke-width="2"/><path d="M20 90c60 40 200 40 260 0" stroke-width="1.2" opacity=".5"/><circle cx="150" cy="92" r="24" stroke-width="1.2" opacity=".6"/>
+            <path class="lash" d="M50 66l-14-22M80 50l-8-26M115 40l-4-28M150 37V8M185 40l4-28M220 50l8-26M250 66l14-22" stroke-width="2"/></g></svg>
+          <h3>Lashes<br>&amp; brows</h3>
+          <p>The treatments clients come back for: lash lifts, brow lamination and HD Brows, plus semi-permanent brows for low-maintenance mornings.</p>
+          <div class="chips"><span>Lash lift</span><span>Brow lamination</span><span>HD Brows</span><span>Semi-permanent brows</span></div>
+        </div></div>
+        <div class="shell t2 rv d1"><div class="core"><span class="n">ii.</span><h3>Facials</h3><p>Skin treatments to cleanse, calm and bring back your glow.</p></div></div>
+        <div class="shell t3 rv d2"><div class="core"><span class="n">iii.</span><h3>Semi-permanent brows</h3><p>Fuller, defined brows that last.</p><div class="price"><small>from</small>£70</div></div></div>
+        <div class="shell t4 rv"><div class="core"><span class="n">iv.</span><h3>Nails</h3><p>Neat, polished and long-lasting.</p></div></div>
+        <div class="shell t5 rv d1"><div class="core"><span class="n">v.</span><h3>Tanning &amp; waxing</h3><p>Smooth, sun-kissed and ready for anything.</p></div></div>
+        <div class="shell t6 rv d2"><div class="core"><span class="n">vi.</span><h3>Make-up</h3><p>For weddings, parties and big nights out.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="parties" id="parties">
+    <div class="wrap p-grid">
+      <div class="rv">
+        <span class="eyebrow">Pamper parties</span>
+        <blockquote style="margin-top:26px">Bring your <em>favourite people.</em></blockquote>
+        <p>Birthdays, hen dos or just because. Book a pamper party and make an occasion of it together.</p>
+        <a href="tel:+441437840895" class="btn btn-solid">Ask about parties <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+      </div>
+      <div class="rating rv d1"><b>5.0</b><div class="st">★★★★★</div><span>Average rating on Treatwell</span></div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit-grid">
+      <div class="shell visit rv"><div class="core">
+        <span class="eyebrow" style="align-self:flex-start">Visit</span>
+        <h2>Your hour<br><em>of calm.</em></h2>
+        <p class="vaddr">The Chrysalis Beautique<br>15 Dew Street, Haverfordwest<br>Pembrokeshire SA61 1ST</p>
+        <a class="phone" href="tel:+441437840895">01437 840895</a>
+        <a class="phone2" href="tel:+447935980126">or 07935 980126</a>
+        <div class="ctas" style="margin-top:auto">
+          <a href="https://www.treatwell.co.uk/place/the-chrysalis-beautique/" target="_blank" rel="noopener" class="btn btn-solid">Book online <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+          <a href="https://www.facebook.com/thechrysalisbeautique/" target="_blank" rel="noopener" class="btn btn-ghost">Facebook <i><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9 9 3M4 3h5v5"/></svg></i></a>
+        </div>
+      </div></div>
+      <div class="shell cocoon rv d1"><div class="core">
+        <svg viewBox="0 0 200 240" aria-hidden="true"><defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8a8e0"/><stop offset=".5" stop-color="#f5c2b0"/><stop offset="1" stop-color="#bfe5d8"/></linearGradient></defs>
+          <path d="M100 10v24" stroke="#6d3b7c" stroke-width="1.4"/><path d="M100 34c34 0 50 40 50 90s-20 100-50 100-50-50-50-100 16-90 50-90z" fill="url(#cg)" opacity=".85"/>
+          <g fill="none" stroke="#fdfbfd" stroke-width="1.2" opacity=".8"><path d="M60 80c26 10 54 10 80 0M54 110c30 12 62 12 92 0M54 140c30 12 62 12 92 0M60 170c26 10 54 10 80 0M70 198c20 8 40 8 60 0"/></g></svg>
+      </div></div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© <span id="yr">2026</span> The Chrysalis Beautique · Dew Street, Haverfordwest</span><span>Lashes · Brows · Skin · Nails</span></div></footer>
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});els.forEach(function(el){io.observe(el)})}else els.forEach(function(el){el.classList.add('in')});
+  var b=document.querySelector('.burger'),root=document.documentElement,sh=document.querySelector('.sheet');
+  function t(o){root.classList.toggle('menu-open',o);b.setAttribute('aria-expanded',o);sh.setAttribute('aria-hidden',!o)}
+  b.addEventListener('click',function(){t(!root.classList.contains('menu-open'))});sh.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){t(false)})});
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
