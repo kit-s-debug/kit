@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haverfordwest Landing Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2efe8;--card:#fffdf8;--ink:#1b1d1a;--soft:#62655e;--line:rgba(27,29,26,.1);--spring:cubic-bezier(.32,.72,0,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif;padding:56px 24px 64px}
+.wrap{max-width:1180px;margin:0 auto}
+h1{font-size:clamp(40px,6vw,76px);font-weight:800;letter-spacing:-.04em;line-height:.95}
+p.sub{color:var(--soft);margin:14px 0 36px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+a{display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:22px;background:var(--card);box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;color:inherit;transition:transform .6s var(--spring),box-shadow .6s var(--spring);position:relative;overflow:hidden}
+a::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+a:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 24px 40px -24px rgba(27,29,26,.35)}
+a b{font-size:20px;letter-spacing:-.02em}
+a span{color:var(--soft);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Haverfordwest<br>landing pages</h1>
+<p class="sub">19 pitch pages, one per business. Click any card to open it.</p>
+<div class="grid">
+<a href="k1-barbers/" style="--c:#c9a46a"><b>K1 Barbers</b><span>45 High Street</span></a>
+<a href="alys-and-co/" style="--c:#b5806f"><b>Alys &amp; Co</b><span>St Thomas Green</span></a>
+<a href="zizo-barbers/" style="--c:#1d4a37"><b>Zizo Barbers</b><span>Cambrian Place</span></a>
+<a href="hair-by-shan/" style="--c:#ff6b57"><b>Hair by Shan</b><span>St Thomas Green</span></a>
+<a href="snippers/" style="--c:#0d8a86"><b>Snippers</b><span>57 Portfield</span></a>
+<a href="chrysalis-beautique/" style="--c:#c8a8e0"><b>The Chrysalis Beautique</b><span>Dew Street</span></a>
+<a href="fix-a-fone/" style="--c:#9cc22e"><b>Fix A Fone</b><span>13 Bridge Street</span></a>
+<a href="fone-care/" style="--c:#2f6bff"><b>Fone Care</b><span>34 Bridge Street</span></a>
+<a href="market-tavern/" style="--c:#e8762e"><b>The Market Tavern</b><span>26 Market Street</span></a>
+<a href="spice-box/" style="--c:#f4a62a"><b>The Spice Box</b><span>27 Dew Street</span></a>
+<a href="fred-hughes-butchers/" style="--c:#a3242a"><b>Fred Hughes &amp; Son</b><span>37 Dew Street</span></a>
+<a href="anannya-stores/" style="--c:#ffb627"><b>Anannya Stores</b><span>37 High Street</span></a>
+<a href="haverfordwest-grocers/" style="--c:#3f7a3a"><b>Haverfordwest Grocers</b><span>Details to confirm</span></a>
+<a href="samuels-sandwiches/" style="--c:#e2502f"><b>Samuel's Quality Sandwiches</b><span>42 Bridge Street</span></a>
+<a href="graze-pembrokeshire/" style="--c:#a9bb8c"><b>Graze Pembrokeshire</b><span>17 Hill Street</span></a>
+<a href="victoria-bookshop/" style="--c:#d6b36a"><b>Victoria Bookshop</b><span>6 Bridge Street</span></a>
+<a href="west-wales-cobblers/" style="--c:#a86b38"><b>West Wales Cobblers</b><span>28 Bridge Street</span></a>
+<a href="stitch-witch/" style="--c:#c8372d"><b>The Stitch Witch</b><span>17 Hill Street</span></a>
+<a href="funky-den/" style="--c:#9b5cff"><b>The Funky Den</b><span>Swan Square</span></a>
+</div>
+</div>
+</body>
+</html>
