@@ -351,17 +351,28 @@
       submit.disabled = true; submit.textContent = "Sending…";
 
       let mode = "preview";
+      const mailto = () => { location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent("Click & collect order " + ref)}&body=${encodeURIComponent(text)}`; };
       try {
         if (CONFIG.orderEndpoint) {
-          const res = await fetch(CONFIG.orderEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify({ ...order, summary: text }) });
-          if (!res.ok) throw new Error(res.status);
-          mode = "sent";
+          try {
+            const res = await fetch(CONFIG.orderEndpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify({ _subject: `Click & collect order ${ref}`, _template: "box", _captcha: "false", ...order, items: text, summary: text }),
+            });
+            const data = await res.json().catch(() => ({}));
+            // FormSubmit answers 200 with success "false" until the shop activates the form
+            if (!res.ok || String(data.success) === "false") throw new Error(data.message || res.status);
+            mode = "sent";
+          } catch (err) {
+            if (!CONFIG.orderEmail) throw err;
+            mailto(); mode = "email";
+          }
         } else if (CONFIG.orderWhatsApp) {
           window.open(`https://wa.me/${CONFIG.orderWhatsApp}?text=${encodeURIComponent(text)}`, "_blank", "noopener");
           mode = "whatsapp";
         } else if (CONFIG.orderEmail) {
-          location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent("Click & collect order " + ref)}&body=${encodeURIComponent(text)}`;
-          mode = "email";
+          mailto(); mode = "email";
         }
       } catch {
         submit.disabled = false; submit.innerHTML = `Place order ${icon.arrow}`;
@@ -376,10 +387,10 @@
       $("#co-when").textContent = order.dayLabel;
       $("#co-summary").textContent = text;
       $("#co-mode").textContent = {
-        sent: "Your order has been sent to the shop.",
+        sent: "Your order has been sent to the shop. We'll message you when it's ready.",
         whatsapp: "Press send in WhatsApp to get your order to us. We'll reply when it's ready.",
         email: "Press send in your email app to get your order to us. We'll reply when it's ready.",
-        preview: "Preview only: this order wasn't sent anywhere. Online orders switch on once the shop's WhatsApp number or email is added in js/config.js.",
+        preview: "Preview only: this order wasn't sent anywhere.",
       }[mode];
       done.hidden = false;
       scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });

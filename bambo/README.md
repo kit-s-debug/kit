@@ -49,7 +49,7 @@ runs in preview mode, and orders aren't sent anywhere.
 - `orderWhatsApp`: the shop's mobile number (e.g. `447700900123`). Pressing "Place order"
   opens WhatsApp with the order typed out, and the customer presses send.
 - `orderEmail`: the order opens in the customer's email app, addressed to the shop.
-- `orderEndpoint`: a form service (e.g. Formspree) that emails each order to the shop
+- `orderEndpoint`: currently FormSubmit (`formsubmit.co/ajax/rajab.ark@gmail.com`), which emails each order to the shop
   automatically, without the customer pressing send. This is the most reliable option.
   It needs a free account.
 
