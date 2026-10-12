@@ -43,8 +43,13 @@
 
 <main>
   <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="hero-word">BAMBO</span>
+      <span class="hero-dots"></span>
+    </div>
     <div class="wrap">
       <div class="hero-copy">
+        <p class="open-now open-now--pill" id="hero-open"><i></i><span>Open today</span></p>
         <h1 class="display">
           <span class="line"><span>Vapes.</span></span>
           <span class="line"><span>Salts.</span></span>
@@ -60,7 +65,29 @@
         <span class="big-slot" aria-hidden="true"></span>
         <div class="slot-photo"><img src="assets/photos/hero-wall.webp" alt="Shelves of Lost Mary and Pixl kits inside Bambo" width="1000" height="1250" fetchpriority="high"></div>
         <span class="tag"><span class="slot"></span>Lost Mary BM6000 · 2 for £12</span>
+        <a class="float-card float-card--a" href="shop.html?p=elux-nic-salts" data-depth="18">
+          <img src="assets/photos/elux-nic-salts.webp" alt="" width="800" height="1000">
+          <span><b>Elux salts</b>£3 · 4 for £10</span>
+        </a>
+        <a class="float-card float-card--b" href="shop.html?p=ske-crystal" data-depth="-14">
+          <img src="assets/photos/ske-crystal.webp" alt="" width="800" height="1000">
+          <span><b>SKE Crystal</b>£5 · 4 for £18</span>
+        </a>
+        <svg class="sticker" viewBox="0 0 120 120" aria-hidden="true">
+          <defs><path id="sticker-ring" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+          <circle cx="60" cy="60" r="58"/>
+          <text><textPath href="#sticker-ring">MULTI-BUYS ON EVERY SHELF · MULTI-BUYS ON EVERY SHELF ·</textPath></text>
+          <rect x="54" y="42" width="12" height="36" rx="6"/>
+        </svg>
       </div>
+    </div>
+    <a class="scroll-cue" href="#marquee" aria-label="Scroll down"><span>Scroll</span><i></i></a>
+  </section>
+
+  <section class="marquee" id="marquee" aria-label="Brands we stock">
+    <div class="marquee-track">
+      <ul><li>Lost Mary</li><li>IVG</li><li>Pixl</li><li>Hayati</li><li>SKE</li><li>Elux</li><li>Elfliq</li><li>Enjoy</li><li>Velo</li><li>Pablo</li><li>RAW</li><li>OCB</li><li>Clipper</li></ul>
+      <ul aria-hidden="true"><li>Lost Mary</li><li>IVG</li><li>Pixl</li><li>Hayati</li><li>SKE</li><li>Elux</li><li>Elfliq</li><li>Enjoy</li><li>Velo</li><li>Pablo</li><li>RAW</li><li>OCB</li><li>Clipper</li></ul>
     </div>
   </section>
 
@@ -75,7 +102,8 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section has-watermark">
+    <span class="watermark" aria-hidden="true" data-drift="-0.12">STOCK</span>
     <div class="wrap">
       <div class="section-head section-head--split">
         <div>
@@ -109,7 +137,34 @@
     </div>
   </section>
 
-  <section class="section" style="padding-top:0">
+  <section class="deals">
+    <span class="deals-word" aria-hidden="true" data-drift="0.1">DEALS</span>
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <h2 class="display h2 reveal">Multi-buys<br>on the shelf</h2>
+        <p class="lede reveal">Mix any flavours. Offers come off at the till.</p>
+      </div>
+      <div class="deal-grid">
+        <a class="deal reveal" href="shop.html?cat=pod-kits"><span class="deal-n">2</span><span class="deal-for">for <b>£<span data-count="12">12</span></b></span><span class="deal-what">Lost Mary, IVG, Pixl &amp; Nera kits</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="deal reveal" style="--d:.08s" href="shop.html?cat=nic-salts"><span class="deal-n">4</span><span class="deal-for">for <b>£<span data-count="10">10</span></b></span><span class="deal-what">Every 10ml nic salt</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="deal reveal" style="--d:.16s" href="shop.html?p=ske-crystal"><span class="deal-n">4</span><span class="deal-for">for <b>£<span data-count="18">18</span></b></span><span class="deal-what">SKE Crystal bars</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="deal reveal" style="--d:.24s" href="shop.html?cat=pouches"><span class="deal-n">2</span><span class="deal-for">for <b>£<span data-count="9">9</span></b></span><span class="deal-what">Velo, Pablo &amp; Killa pouches</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Bambo in numbers">
+    <div class="wrap">
+      <ul>
+        <li class="reveal"><b><span data-count-flavours>300</span>+</b><span>flavours on the shelves</span></li>
+        <li class="reveal" style="--d:.08s"><b><span data-count="7">7</span></b><span>days a week</span></li>
+        <li class="reveal" style="--d:.16s"><b><span data-count="12">12</span>am</b><span>close, Friday &amp; Saturday</span></li>
+        <li class="reveal" style="--d:.24s"><b>£<span data-count="3">3</span></b><span>nic salts</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--grey" style="padding-top:clamp(4rem,9vw,8rem)">
     <div class="wrap">
       <div class="rule" style="margin-bottom:clamp(2.5rem,5vw,4rem)"></div>
       <div class="section-head section-head--split">
@@ -140,21 +195,22 @@
           </div>
           <figcaption><span class="slot"></span>Walk-through</figcaption>
         </figure>
-        <figure class="reveal-img"><div class="frame"><img src="assets/photos/gallery-hayati.webp" alt="Four shelves of Hayati Pro Max+ kits and pods" width="900" height="1125" loading="lazy"></div><figcaption><span class="slot"></span>Hayati Pro Max+</figcaption></figure>
+        <figure class="reveal-img" data-parallax="0.06"><div class="frame"><img src="assets/photos/gallery-hayati.webp" alt="Four shelves of Hayati Pro Max+ kits and pods" width="900" height="1125" loading="lazy"></div><figcaption><span class="slot"></span>Hayati Pro Max+</figcaption></figure>
         <figure class="reveal-img" style="--d:.1s"><div class="frame"><img src="assets/photos/gallery-ivg.webp" alt="Shelves of IVG Pro, Smart Max and 2400 kits" width="900" height="1125" loading="lazy"></div><figcaption><span class="slot"></span>IVG</figcaption></figure>
-        <figure class="reveal-img" style="--d:.2s"><div class="frame"><img src="assets/photos/gallery-papers.webp" alt="RAW, OCB, Elements and Rizla papers on the shelf" width="900" height="1125" loading="lazy"></div><figcaption><span class="slot"></span>Papers &amp; filters</figcaption></figure>
+        <figure class="reveal-img" style="--d:.2s" data-parallax="0.09"><div class="frame"><img src="assets/photos/gallery-papers.webp" alt="RAW, OCB, Elements and Rizla papers on the shelf" width="900" height="1125" loading="lazy"></div><figcaption><span class="slot"></span>Papers &amp; filters</figcaption></figure>
       </div>
     </div>
   </section>
 
 
-  <section class="section drinks" style="padding-top:0">
+  <section class="section drinks has-watermark">
+    <span class="watermark watermark--right" aria-hidden="true" data-drift="0.1">COLD</span>
     <div class="wrap drinks-grid">
       <div class="drinks-copy">
         <h2 class="display h2 reveal">Just came for <span class="red">a drink?</span></h2>
         <p class="lede reveal">Cold drinks in the fridge and crisps on the counter. Grab one on your way past.</p>
       </div>
-      <figure class="drinks-fridge reveal-img"><img src="assets/photos/drinks-fridge.webp" alt="Bambo's three-door drinks fridge stocked with energy drinks, soft drinks and juices" width="900" height="1125" loading="lazy"></figure>
+      <figure class="drinks-fridge reveal-img" data-parallax="0.05"><img src="assets/photos/drinks-fridge.webp" alt="Bambo's three-door drinks fridge stocked with energy drinks, soft drinks and juices" width="900" height="1125" loading="lazy"></figure>
     </div>
   </section>
 
@@ -177,7 +233,7 @@
         <p class="open-now" id="open-now"><i></i><span>Opening hours</span></p>
         <address class="address" style="margin:1rem 0 1.5rem">Bambo Shop<br>3 Castle Square<br>Haverfordwest, Pembrokeshire</address>
         <!-- Opening hours: edit data-open / data-close (24h) and the visible text together. 0 = Sunday. -->
-        <table class="hours" data-hours="#open-now">
+        <table class="hours" data-hours="#open-now, #hero-open">
           <tbody>
             <tr data-day="1" data-open="09:00" data-close="22:00"><th scope="row">Monday</th><td>9am – 10pm</td></tr>
             <tr data-day="2" data-open="09:00" data-close="22:00"><th scope="row">Tuesday</th><td>9am – 10pm</td></tr>

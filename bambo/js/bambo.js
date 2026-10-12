@@ -75,6 +75,48 @@
     }, { threshold: 0.35 }).observe(video);
   });
 
+  /* ---------- count-ups ---------- */
+  const flavourTotal = (window.BAMBO_PRODUCTS || []).reduce((n, p) => n + (p.flavours ? p.flavours.length : 0), 0);
+  $$("[data-count-flavours]").forEach((el) => (el.dataset.count = Math.floor(flavourTotal / 10) * 10));
+  const countUp = (el) => {
+    const to = Number(el.dataset.count); if (!to) return;
+    if (reduceMotion) { el.textContent = to; return; }
+    const t0 = performance.now(), dur = 1400;
+    const tick = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); };
+    el.textContent = 0; requestAnimationFrame(tick);
+  };
+  if ("IntersectionObserver" in window) {
+    const cio = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } }), { threshold: 0.6 });
+    $$("[data-count]").forEach((el) => cio.observe(el));
+  }
+
+  /* ---------- scroll + pointer motion ---------- */
+  if (!reduceMotion) {
+    const par = $$("[data-parallax]"), drift = $$("[data-drift]");
+    let ticking = false;
+    const onMove = () => {
+      ticking = false;
+      const vh = innerHeight;
+      par.forEach((el) => { const r = el.getBoundingClientRect(); const c = (r.top + r.height / 2 - vh / 2); el.style.transform = `translate3d(0, ${(-c * Number(el.dataset.parallax)).toFixed(1)}px, 0)`; });
+      drift.forEach((el) => { const r = el.parentElement.getBoundingClientRect(); el.style.transform = `translate3d(${(r.top * Number(el.dataset.drift)).toFixed(1)}px, 0, 0)`; });
+    };
+    addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(onMove); } }, { passive: true });
+    onMove();
+
+    const stage = $(".hero-stage");
+    if (stage && matchMedia("(hover: hover)").matches) {
+      const layers = $$("[data-depth]", stage);
+      $(".hero").addEventListener("pointermove", (e) => {
+        const x = e.clientX / innerWidth - 0.5, y = e.clientY / innerHeight - 0.5;
+        layers.forEach((l) => (l.style.transform = `translate3d(${x * l.dataset.depth}px, ${y * l.dataset.depth}px, 0)`));
+      });
+    }
+    $$(".tile").forEach((t) => t.addEventListener("pointermove", (e) => {
+      const r = t.getBoundingClientRect();
+      t.style.setProperty("--mx", `${e.clientX - r.left}px`); t.style.setProperty("--my", `${e.clientY - r.top}px`);
+    }));
+  }
+
   /* ---------- opening hours ---------- */
   // Each row: <tr data-day="1" data-open="09:30" data-close="17:30"> (0 = Sunday). No times = closed.
   const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
@@ -84,14 +126,14 @@
     const row = $(`tr[data-day="${day}"]`, table);
     if (!row) return;
     row.classList.add("is-today");
-    const status = $(table.dataset.hours);
-    if (!status) return;
     const { open, close } = row.dataset;
     const isOpen = open && close && mins >= toMin(open) && mins < toMin(close);
-    status.classList.toggle("is-open", Boolean(isOpen));
-    status.querySelector("span").textContent = isOpen
-      ? `Open now until ${say(close)}`
-      : open && mins < toMin(open) ? `Closed, opens today at ${say(open)}` : "Closed now";
+    $$(table.dataset.hours).forEach((status) => {
+      status.classList.toggle("is-open", Boolean(isOpen));
+      status.querySelector("span").textContent = isOpen
+        ? `Open now until ${say(close)}`
+        : open && mins < toMin(open) ? `Closed, opens today at ${say(open)}` : "Closed now";
+    });
   });
 
   /* ---------- age check ---------- */
