@@ -754,7 +754,7 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
 .co-total strong { font-size: 1.4rem; }
 .co-empty { display: none; padding: 2rem 0; color: var(--ink-2); }
 .checkout.is-empty .co-empty { display: block; }
-.checkout.is-empty .co-items, .checkout.is-empty .co-total, .checkout.is-empty .co-basket .bag-note, .checkout.is-empty .co-form { display: none; }
+.checkout.is-empty .co-items, .checkout.is-empty .co-total, .checkout.is-empty .co-basket .bag-note { display: none; }
 .co-form { display: grid; gap: 1.1rem; background: var(--grey); border-radius: var(--radius); padding: 1.5rem; }
 .co-form h2 { margin: 0; font-size: 1.8rem; }
 .co-error { margin: 0; color: var(--red); font-weight: 600; font-size: .9rem; }
@@ -951,3 +951,29 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
   .marquee-track, .hero-word, .float-card, .sticker, .sticker rect, .scroll-cue i::after { animation: none !important; }
   .js .float-card, .js .sticker, .js .open-now--pill { opacity: 1; scale: 1; transform: none; }
 }
+
+/* order page: written order, delivery/collect choice */
+.co-basket { display: grid; gap: 2rem; align-content: start; }
+.co-write textarea { min-height: 170px; font-size: 1rem; line-height: 1.5; }
+.co-sub { margin: .5rem 0 0; font-size: 1rem; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
+.co-basket-list .co-sub { margin-bottom: .75rem; }
+.co-empty { padding: 1rem 0; }
+.choice { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.choice-opt { position: relative; cursor: pointer; }
+.choice-opt input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.choice-opt span {
+  display: grid; gap: .15rem; height: 100%;
+  padding: .9rem 1rem; border-radius: 12px;
+  background: var(--white); border: 1.5px solid var(--line);
+  font-size: .82rem; color: var(--ink-2);
+  transition: border-color .25s, background .25s, color .25s, box-shadow .25s;
+}
+.choice-opt b { font-size: 1rem; color: var(--ink); }
+.choice-opt:hover span { border-color: var(--ink); }
+.choice-opt.is-on span { border-color: var(--red); background: var(--red-tint); box-shadow: 0 0 0 1px var(--red) inset; }
+.choice-opt.is-on b { color: var(--red); }
+.choice-opt input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+.choice--sm .choice-opt span { padding: .7rem 1rem; text-align: center; }
+.co-delivery { display: grid; gap: 1.1rem; padding: 1.1rem; border-radius: 12px; background: var(--white); border: 1px dashed var(--line); animation: card-in .45s var(--ease); }
+.co-delivery[hidden] { display: none; }
+.co-id-note { margin: 0; font-size: .82rem; color: var(--ink-2); border-left: 3px solid var(--red); padding-left: .75rem; }

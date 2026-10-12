@@ -36,7 +36,11 @@ tiles, the gallery and one 4:5 card per product. To add or swap a photo, drop it
 The crops avoid the green LED strips and leave out paraphernalia (bongs, grinders, CBD) so
 that the site stays on brand.
 
-## Online orders (click & collect)
+## Online orders (delivery or collection)
+
+`checkout.html` ("Order" in the nav) lets customers type their order freely and/or add items from the shop, then choose **Collect in shop** (pay in store) or **Delivery** (address, postcode, and cash or card on delivery; the driver checks photo ID). Every order is emailed to the shop.
+
+### Previous notes
 
 Customers add products to a basket, choosing a flavour, strength and quantity. On
 `checkout.html` they give their name, mobile and collection day, confirm they're 18+, and

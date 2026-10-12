@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Basket | Bambo Shop, Haverfordwest</title>
-<meta name="description" content="Click and collect from Bambo Shop, 3 Castle Square, Haverfordwest. Order online, pay in store. Over-18s only.">
+<title>Order | Bambo Shop, Haverfordwest</title>
+<meta name="description" content="Order from Bambo Shop, 3 Castle Square, Haverfordwest, for delivery or collection. Pay cash or card on delivery, or in store. Over-18s only.">
 <meta name="theme-color" content="#c8102e">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin>
@@ -25,7 +25,7 @@
       <a href="shop.html?cat=nic-salts">Nic salts</a>
       <a href="visit.html">Visit</a>
     </nav>
-    <a class="basket-link" href="checkout.html" aria-current="page" aria-label="Basket">Basket <span class="bag-count" data-bag-count hidden>0</span></a>
+    <a class="basket-link" href="checkout.html" aria-current="page" aria-label="Order">Order <span class="bag-count" data-bag-count hidden>0</span></a>
     <a class="btn btn--sm header-cta" href="visit.html">Find the shop</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav"><span>Menu</span><i></i></button>
   </div>
@@ -42,9 +42,9 @@
 <main>
   <section class="page-head">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="shop.html">Shop</a><span>/</span><span>Basket</span></nav>
-      <h1 class="display">Basket</h1>
-      <p class="lede">Click &amp; collect from 3 Castle Square, Haverfordwest. Pay when you pick up.</p>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Order</span></nav>
+      <h1 class="display">Order</h1>
+      <p class="lede">Delivery or collection from 3 Castle Square, Haverfordwest. Type your order, or add items from the <a class="text-link" href="shop.html">shop</a>.</p>
     </div>
   </section>
 
@@ -53,34 +53,60 @@
       <span class="label">Order reference</span>
       <h2 class="display" id="co-ref"></h2>
       <p class="co-mode" id="co-mode"></p>
-      <p>Collect from <strong>3 Castle Square, Haverfordwest</strong> on <strong id="co-when"></strong>. Pay when you collect, and bring ID if you look under 25.</p>
+      <p id="co-next"></p>
       <pre class="co-summary" id="co-summary"></pre>
       <a class="btn" href="shop.html">Back to the shop</a>
     </div>
 
     <div class="co-grid">
       <div class="co-basket">
-        <ul class="co-items" id="co-items"></ul>
-        <p class="co-empty">Your basket is empty. <a class="text-link" href="shop.html">Go to the shop</a></p>
-        <div class="co-total"><span>Estimated total</span><strong id="co-total"></strong></div>
-        <p class="bag-note">Multi-buy offers (like 2 for £12 on kits and 4 for £10 on nic salts) come off when you pay in store.</p>
+        <label class="field co-write">
+          <span class="label">Your order</span>
+          <textarea name="written" form="co-form" rows="6" placeholder="Write what you'd like, e.g.&#10;2 × Lost Mary BM6000, Triple Mango and Blue Razz Cherry&#10;4 × Elux salts 20mg: Apple Peach, Cherry Ice, Cola, Menthol&#10;1 × Red Bull"></textarea>
+          <span class="field-hint">Brand, flavour, strength and how many. We'll confirm prices and stock before we pack it.</span>
+          <span class="field-error">Write your order here, or add items from the shop.</span>
+        </label>
+
+        <div class="co-basket-list">
+          <h2 class="co-sub">From the shop</h2>
+          <ul class="co-items" id="co-items"></ul>
+          <p class="co-empty">Nothing added from the shop yet. <a class="text-link" href="shop.html">Browse the shop</a></p>
+          <div class="co-total"><span>Estimated total</span><strong id="co-total"></strong></div>
+          <p class="bag-note">Multi-buy offers (like 2 for £12 on kits and 4 for £10 on nic salts) come off when you pay.</p>
+        </div>
       </div>
 
       <form class="co-form" id="co-form" novalidate>
-        <h2 class="display">Your details</h2>
+        <h2 class="display">Delivery or collect?</h2>
+        <div class="choice" role="radiogroup" aria-label="Delivery or collection">
+          <label class="choice-opt"><input type="radio" name="method" value="collect" checked><span><b>Collect in shop</b>Pay when you pick up</span></label>
+          <label class="choice-opt"><input type="radio" name="method" value="delivery"><span><b>Delivery</b>Pay cash or card on delivery</span></label>
+        </div>
+
+        <div class="co-delivery" id="co-delivery" hidden>
+          <label class="field"><span class="label">Delivery address</span><textarea name="address" rows="2" autocomplete="street-address" placeholder="House number, street, town"></textarea><span class="field-error">Add the address to deliver to.</span></label>
+          <label class="field"><span class="label">Postcode</span><input name="postcode" autocomplete="postal-code" autocapitalize="characters" placeholder="SA61 …"><span class="field-error">Add a postcode.</span></label>
+          <div class="field">
+            <span class="label">Pay on delivery by</span>
+            <div class="choice choice--sm" role="radiogroup" aria-label="Payment on delivery">
+              <label class="choice-opt"><input type="radio" name="payment" value="Cash"><span><b>Cash</b></span></label>
+              <label class="choice-opt"><input type="radio" name="payment" value="Card"><span><b>Card</b></span></label>
+            </div>
+            <span class="field-error">Choose cash or card.</span>
+          </div>
+          <p class="co-id-note">Our driver checks photo ID on every delivery. Nicotine products can only be handed to the person who ordered, and they must be 18 or over.</p>
+        </div>
+
+        <h2 class="co-sub">Your details</h2>
         <label class="field"><span class="label">Name</span><input name="name" autocomplete="name" required><span class="field-error">Add your name.</span></label>
-        <label class="field"><span class="label">Mobile</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required><span class="field-hint">We'll message you when it's ready.</span><span class="field-error">Add a mobile number we can reach you on.</span></label>
+        <label class="field"><span class="label">Mobile</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" required><span class="field-hint">We'll message you to confirm.</span><span class="field-error">Add a mobile number we can reach you on.</span></label>
         <label class="field"><span class="label">Email (optional)</span><input name="email" type="email" autocomplete="email"></label>
-        <label class="field"><span class="label">Collection day</span><select name="day" required></select><span class="field-error">Pick a day to collect.</span></label>
+        <label class="field"><span class="label" data-day-label>Collection day</span><select name="day" required></select><span class="field-error">Pick a day.</span></label>
         <label class="field"><span class="label">Notes (optional)</span><textarea name="notes" rows="2" placeholder="e.g. a backup flavour if yours is sold out"></textarea></label>
-        <label class="field field--check"><input type="checkbox" name="adult" required><span>I'm 18 or over, and I'll bring photo ID if I look under 25.</span><span class="field-error">You need to be 18 or over to order.</span></label>
+        <label class="field field--check"><input type="checkbox" name="adult" required><span>I'm 18 or over, and I'll show photo ID if asked.</span><span class="field-error">You need to be 18 or over to order.</span></label>
         <p class="co-error" id="co-error" hidden>Your order didn't send. Check your connection and try again, or call in to the shop.</p>
-        <button class="btn btn--block" type="submit">Place order <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <ol class="co-how">
-          <li>We check your items and message you when they're bagged up.</li>
-          <li>We hold your order for <span data-hold>48</span> hours.</li>
-          <li>Pay at the counter. We'll check ID if you look under 25.</li>
-        </ol>
+        <button class="btn btn--block" type="submit">Send order <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <ol class="co-how" id="co-how"></ol>
       </form>
     </div>
     <table hidden id="co-hours"><tbody>

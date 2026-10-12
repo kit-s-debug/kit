@@ -279,7 +279,7 @@
             <div class="stepper"><button type="button" data-q="-1" aria-label="One fewer">−</button><output data-qty>1</output><button type="button" data-q="1" aria-label="One more">+</button></div>
           </div>
           ${p.nicotine ? `<div class="nic-warning">This product contains nicotine which is a highly addictive substance.</div>` : ""}
-          <button class="btn btn--block" type="submit">Add to basket ${icon.arrow}</button>
+          <button class="btn btn--block" type="submit">Add to order ${icon.arrow}</button>
           <ul class="specs">${p.specs.map((s) => `<li><span class="slot"></span>${s}</li>`).join("")}</ul>
         </form>
       </div>`;
@@ -299,7 +299,7 @@
       if (fl && !f) { input.closest(".field").classList.add("is-invalid"); input.focus(); return; }
       addToBag({ id: p.id, s: strength, f, qty });
       const btn = $("[type=submit]", form);
-      btn.outerHTML = `<div class="added"><span>Added to your basket</span><a class="btn" href="checkout.html">Checkout ${icon.arrow}</a><button class="btn btn--ghost" type="button" data-close>Keep shopping</button></div>`;
+      btn.outerHTML = `<div class="added"><span>Added to your order</span><a class="btn" href="checkout.html">View order ${icon.arrow}</a><button class="btn btn--ghost" type="button" data-close>Keep shopping</button></div>`;
       $$("[data-close]", dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
     });
     $$("[data-close]", dlg).forEach((b) => b.addEventListener("click", () => dlg.close()));
@@ -309,25 +309,42 @@
     dlg.showModal();
   }
 
-  /* ---------- checkout (click & collect) ---------- */
+  /* ---------- order: delivery or collection ---------- */
   const co = $("#checkout");
   if (co) {
-    $$("[data-hold]").forEach((el) => (el.textContent = CONFIG.holdHours || 48));
     const listEl = $("#co-items"), totalEl = $("#co-total"), form = $("#co-form"), done = $("#co-done");
+    const written = $('textarea[name="written"]');
     const dateEl = form.elements.day;
-    // collection days: next 7 days that have opening hours in the table on this page
+    const method = () => form.elements.method.value;
+    const isDelivery = () => method() === "delivery";
+
+    // days: the next six days the shop is open (today only if it's more than an hour before close)
     const hoursRows = $$("#co-hours tr[data-day]");
     const openDays = new Set(hoursRows.filter((r) => r.dataset.open).map((r) => Number(r.dataset.day)));
     const fmt = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long" });
     for (let i = 0, added = 0; i < 10 && added < 6; i++) {
       const d = new Date(); d.setDate(d.getDate() + i);
       if (!openDays.has(d.getDay())) continue;
-      if (i === 0) { const r = hoursRows.find((x) => Number(x.dataset.day) === d.getDay()); const [h, m] = r.dataset.close.split(":").map(Number); if (new Date().getHours() * 60 + new Date().getMinutes() > h * 60 + m - 60) continue; }
+      if (i === 0) { const r = hoursRows.find((x) => Number(x.dataset.day) === d.getDay()); if (new Date().getHours() * 60 + new Date().getMinutes() > toMin(r.dataset.close) - 60) continue; }
       const o = document.createElement("option");
       o.value = d.toISOString().slice(0, 10);
       o.textContent = (i === 0 ? "Today, " : i === 1 ? "Tomorrow, " : "") + fmt.format(d);
       dateEl.append(o); added++;
     }
+
+    const howEl = $("#co-how");
+    const syncMethod = () => {
+      const del = isDelivery();
+      $("#co-delivery").hidden = !del;
+      $("[data-day-label]").textContent = del ? "Delivery day" : "Collection day";
+      howEl.innerHTML = (del
+        ? ["We check stock and call or message you to confirm the delivery time.", "Pay the driver by cash or card when it arrives.", "Our driver will check photo ID before handing it over."]
+        : [`We bag it up and message you when it's ready. We hold it for ${CONFIG.holdHours || 48} hours.`, "Pay at the counter by cash or card.", "We'll check ID if you look under 25."]
+      ).map((t) => `<li>${t}</li>`).join("");
+      $$(".choice-opt", form).forEach((l) => l.classList.toggle("is-on", $("input", l).checked));
+    };
+    form.addEventListener("change", syncMethod);
+    syncMethod();
 
     const draw = () => {
       co.classList.toggle("is-empty", bag.length === 0);
@@ -343,64 +360,82 @@
       }).join("");
       totalEl.textContent = money(bagTotal()) + (bagHasAsk() ? " + items priced in store" : "");
       $$("[data-dq]", listEl).forEach((btn) => btn.addEventListener("click", () => {
-        const b = bag[Number(btn.dataset.dq)]; b.qty += Number(btn.dataset.d);
+        const b = bag[Number(btn.dataset.dq)]; b.qty = Math.min(20, b.qty + Number(btn.dataset.d));
         if (b.qty < 1) bag.splice(Number(btn.dataset.dq), 1);
-        b.qty = Math.min(b.qty, 20); saveBag(); draw();
+        saveBag(); draw();
       }));
       $$("[data-rm]", listEl).forEach((btn) => btn.addEventListener("click", () => { bag.splice(Number(btn.dataset.rm), 1); saveBag(); draw(); }));
     };
     draw();
 
     const orderText = (o) => [
-      `New click & collect order ${o.ref}`,
+      `New ${o.method === "delivery" ? "DELIVERY" : "COLLECTION"} order ${o.ref}`,
       `${o.name} · ${o.phone}${o.email ? " · " + o.email : ""}`,
-      `Collecting: ${o.dayLabel}`,
+      o.method === "delivery" ? `Deliver to: ${o.address}, ${o.postcode}` : "Collecting from the shop",
+      `${o.method === "delivery" ? "Delivery" : "Collection"} day: ${o.dayLabel}`,
+      o.method === "delivery" ? `Paying by: ${o.payment} on delivery` : "Paying in store",
       "",
+      o.written ? "Their order (written):" : "",
+      o.written,
+      o.written && o.items.length ? "" : "",
+      o.items.length ? "Added from the shop:" : "",
       ...o.items.map((it) => `${it.qty} × ${it.name}${it.option ? " (" + it.option + ")" : ""}: ${it.price == null ? "price in store" : money(it.price * it.qty)}`),
+      o.items.length ? `Estimated total for shop items: ${o.total}` : "",
       "",
-      `Estimated total: ${o.total}`,
       o.notes ? `Notes: ${o.notes}` : "",
       "Customer confirmed they are 18 or over.",
-    ].filter((l, i, a) => l !== "" || a[i - 1] !== "").join("\n");
+    ].filter((l, i, a) => l !== "" || (a[i - 1] !== "" && i > 0)).join("\n").trim();
 
+    const invalid = (el) => { el.closest(".field").classList.add("is-invalid"); return el; };
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      $$(".field", form).forEach((f) => f.classList.remove("is-invalid"));
-      let bad = null;
-      ["name", "phone", "day", "adult"].forEach((n) => {
-        const el = form.elements[n];
-        const ok = el.type === "checkbox" ? el.checked : n === "phone" ? /^[0-9 +()-]{10,}$/.test(el.value.trim()) : el.value.trim();
-        if (!ok) { el.closest(".field").classList.add("is-invalid"); bad = bad || el; }
-      });
-      if (!bag.length) return;
-      if (bad) { bad.focus(); return; }
+      $$(".field", co).forEach((f) => f.classList.remove("is-invalid"));
+      $("#co-error").hidden = true;
+      const bads = [];
+      if (!written.value.trim() && !bag.length) bads.push(invalid(written));
+      if (isDelivery()) {
+        if (!form.elements.address.value.trim()) bads.push(invalid(form.elements.address));
+        if (!/^[A-Za-z]{1,2}\d[A-Za-z\d]?\s*\d[A-Za-z]{2}$/.test(form.elements.postcode.value.trim())) bads.push(invalid(form.elements.postcode));
+        if (!form.elements.payment.value) bads.push(invalid(form.elements.payment[0]));
+      }
+      if (!form.elements.name.value.trim()) bads.push(invalid(form.elements.name));
+      if (!/^[0-9 +()-]{10,}$/.test(form.elements.phone.value.trim())) bads.push(invalid(form.elements.phone));
+      if (!dateEl.value) bads.push(invalid(dateEl));
+      if (!form.elements.adult.checked) bads.push(invalid(form.elements.adult));
+      if (bads.length) { bads[0].focus(); bads[0].closest(".field").scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" }); return; }
 
       const ref = "BMB-" + Date.now().toString(36).slice(-4).toUpperCase() + Math.floor(Math.random() * 90 + 10);
       const order = {
         ref,
+        method: method(),
         name: form.elements.name.value.trim(),
         phone: form.elements.phone.value.trim(),
         email: form.elements.email.value.trim(),
+        address: isDelivery() ? form.elements.address.value.trim().replace(/\s*\n\s*/g, ", ") : "",
+        postcode: isDelivery() ? form.elements.postcode.value.trim().toUpperCase() : "",
+        payment: isDelivery() ? form.elements.payment.value : "In store",
         day: dateEl.value,
         dayLabel: dateEl.selectedOptions[0].textContent,
+        written: written.value.trim(),
         notes: form.elements.notes.value.trim(),
         items: bag.map((b) => { const p = byId(b.id); return { id: p.id, name: p.name, option: lineLabel(b), qty: b.qty, price: p.price }; }),
         total: money(bagTotal()) + (bagHasAsk() ? " + items priced in store" : ""),
         createdAt: new Date().toISOString(),
       };
       const text = orderText(order);
+      const subject = `${order.method === "delivery" ? "Delivery" : "Collection"} order ${ref} · ${order.name}`;
       const submit = $("[type=submit]", form);
       submit.disabled = true; submit.textContent = "Sending…";
 
       let mode = "preview";
-      const mailto = () => { location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent("Click & collect order " + ref)}&body=${encodeURIComponent(text)}`; };
+      const mailto = () => { location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`; };
       try {
         if (CONFIG.orderEndpoint) {
           try {
             const res = await fetch(CONFIG.orderEndpoint, {
               method: "POST",
               headers: { "Content-Type": "application/json", Accept: "application/json" },
-              body: JSON.stringify({ _subject: `Click & collect order ${ref}`, _template: "box", _captcha: "false", ...order, items: text, summary: text }),
+              body: JSON.stringify({ _subject: subject, _template: "box", _captcha: "false", _replyto: order.email || undefined, order: text }),
             });
             const data = await res.json().catch(() => ({}));
             // FormSubmit answers 200 with success "false" until the shop activates the form
@@ -417,7 +452,7 @@
           mailto(); mode = "email";
         }
       } catch {
-        submit.disabled = false; submit.innerHTML = `Place order ${icon.arrow}`;
+        submit.disabled = false; submit.innerHTML = `Send order ${icon.arrow}`;
         $("#co-error").hidden = false;
         return;
       }
@@ -426,12 +461,14 @@
       bag = []; saveBag();
       co.classList.add("is-done");
       $("#co-ref").textContent = ref;
-      $("#co-when").textContent = order.dayLabel;
+      $("#co-next").innerHTML = order.method === "delivery"
+        ? `We'll deliver to <strong>${esc(order.address)}, ${esc(order.postcode)}</strong> on <strong>${esc(order.dayLabel)}</strong>. Pay the driver by <strong>${order.payment.toLowerCase()}</strong>. Have your photo ID ready.`
+        : `Collect from <strong>3 Castle Square, Haverfordwest</strong> on <strong>${esc(order.dayLabel)}</strong>. Pay when you collect, and bring ID if you look under 25.`;
       $("#co-summary").textContent = text;
       $("#co-mode").textContent = {
-        sent: "Your order has been sent to the shop. We'll message you when it's ready.",
-        whatsapp: "Press send in WhatsApp to get your order to us. We'll reply when it's ready.",
-        email: "Press send in your email app to get your order to us. We'll reply when it's ready.",
+        sent: "Your order has been sent to the shop. We'll be in touch to confirm.",
+        whatsapp: "Press send in WhatsApp to get your order to us. We'll reply to confirm.",
+        email: "Press send in your email app to get your order to us. We'll reply to confirm.",
         preview: "Preview only: this order wasn't sent anywhere.",
       }[mode];
       done.hidden = false;
