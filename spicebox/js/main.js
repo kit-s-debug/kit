@@ -1,15 +1,48 @@
-/* The Spice Box: page behaviour. No dependencies. */
+/* The Spice Box: page behaviour.
+   Motion uses GSAP + ScrollTrigger + Lenis, vendored in js/vendor/. If they fail to load, or the visitor
+   prefers reduced motion, the page is fully usable without them: nothing is hidden by CSS alone. */
 (() => {
   "use strict";
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+  const root = document.documentElement;
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = matchMedia("(pointer: fine)").matches;
+  const gsap = window.gsap;
+  const ST = window.ScrollTrigger;
+  const motion = !!(gsap && ST) && !reduceMotion;
+  if (motion) { root.classList.add("motion"); gsap.registerPlugin(ST); }
+
+  /* ---------- Smooth scroll ---------- */
+  let lenis = null;
+  if (motion && window.Lenis) {
+    lenis = new window.Lenis({ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true });
+    lenis.on("scroll", ST.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+  const scrollToEl = (el) => {
+    if (!el) return;
+    if (lenis) lenis.scrollTo(el, { duration: 1.6, offset: el.id === "top" ? 0 : 0 });
+    else el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+  };
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute("href");
+    if (id.length < 2) return;
+    const el = document.getElementById(id.slice(1));
+    if (!el) return;
+    e.preventDefault();
+    scrollToEl(el);
+    history.replaceState(null, "", id === "#top" ? location.pathname : id);
+  });
 
   /* ---------- Split headings into masked words ---------- */
-  $$("[data-split]").forEach((el) => {
+  const splitWords = (el, cls = "w") => {
     let i = 0;
-    const wrap = (node) => {
+    const walk = (node) => {
       [...node.childNodes].forEach((child) => {
         if (child.nodeType === Node.TEXT_NODE) {
           const frag = document.createDocumentFragment();
@@ -17,7 +50,8 @@
             if (!part) return;
             if (/^\s+$/.test(part)) { frag.append(" "); return; }
             const w = document.createElement("span");
-            w.className = "w";
+            w.className = cls;
+            w.setAttribute("aria-hidden", "true");
             const inner = document.createElement("span");
             inner.textContent = part;
             inner.style.setProperty("--i", i++);
@@ -25,50 +59,39 @@
             frag.append(w);
           });
           child.replaceWith(frag);
-        } else if (child.nodeType === Node.ELEMENT_NODE) {
-          wrap(child);
-        }
+        } else if (child.nodeType === Node.ELEMENT_NODE) walk(child);
       });
     };
     el.setAttribute("aria-label", el.textContent.replace(/\s+/g, " ").trim());
-    wrap(el);
-    $$(".w", el).forEach((w) => w.setAttribute("aria-hidden", "true"));
-  });
-
-  /* ---------- Hero intro ---------- */
-  const hero = $(".hero");
-  const heroImg = $(".hero-img");
-  const startHero = () => {
-    if (hero.classList.contains("is-loaded")) return;
-    requestAnimationFrame(() => hero.classList.add("is-loaded"));
-    setTimeout(() => hero.classList.add("is-settled"), 2400);
+    walk(el);
   };
-  if (heroImg.complete) startHero();
-  else {
-    heroImg.addEventListener("load", startHero, { once: true });
-    heroImg.addEventListener("error", startHero, { once: true });
-    setTimeout(startHero, 1500); // never hold the page back on a slow image
+  if (motion) {
+    $$("[data-split]").forEach((el) => splitWords(el));
+    $$(".ht-line").forEach((el) => splitWords(el));
+    $(".hero-title").setAttribute("aria-label", $(".hero-title").textContent.replace(/\s+/g, " ").trim());
+    $$("[data-words]").forEach((el) => splitWords(el, "mw"));
   }
 
   /* ---------- Navigation ---------- */
   const nav = $("#nav");
   const burger = $(".burger");
   const menu = $("#menu");
-
   const setMenu = (open) => {
     burger.setAttribute("aria-expanded", String(open));
     burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    document.body.classList.toggle("menu-open", open);
+    document.body.classList.toggle("locked", open);
     if (open) {
+      lenis?.stop();
       menu.hidden = false;
       nav.classList.add("is-solid");
+      nav.classList.remove("is-hidden");
       requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add("is-open")));
       $("a", menu).focus({ preventScroll: true });
     } else {
+      lenis?.start();
       menu.classList.remove("is-open");
       const done = () => { if (!menu.classList.contains("is-open")) menu.hidden = true; };
-      reduceMotion ? done() : setTimeout(done, 600);
-      onScroll();
+      reduceMotion ? done() : setTimeout(done, 700);
     }
   };
   burger.addEventListener("click", () => setMenu(burger.getAttribute("aria-expanded") !== "true"));
@@ -76,140 +99,61 @@
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && burger.getAttribute("aria-expanded") === "true") { setMenu(false); burger.focus(); }
   });
-  // Keep keyboard focus inside the open menu (menu links + burger).
   menu.addEventListener("keydown", (e) => {
     if (e.key !== "Tab") return;
-    const items = [...$$("a", menu), burger];
-    const idx = items.indexOf(document.activeElement);
-    if (e.shiftKey && idx === 0) { e.preventDefault(); burger.focus(); }
-    if (!e.shiftKey && idx === items.length - 2) { e.preventDefault(); burger.focus(); }
+    const items = $$("a", menu);
+    if (e.shiftKey && document.activeElement === items[0]) { e.preventDefault(); burger.focus(); }
+    if (!e.shiftKey && document.activeElement === items[items.length - 1]) { e.preventDefault(); burger.focus(); }
   });
   burger.addEventListener("keydown", (e) => {
     if (e.key === "Tab" && !e.shiftKey && burger.getAttribute("aria-expanded") === "true") { e.preventDefault(); $("a", menu).focus(); }
   });
-  matchMedia("(min-width: 1041px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
+  matchMedia("(min-width: 1081px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
 
-  // Highlight the section in view.
+  // Which section is in view
   const navLinks = $$(".nav-links a");
-  const sections = navLinks.map((a) => $(a.getAttribute("href"))).filter(Boolean);
   const sectionIO = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
-      if (!en.isIntersecting) return;
-      navLinks.forEach((a) => a.classList.toggle("is-current", a.getAttribute("href") === "#" + en.target.id));
+      if (en.isIntersecting) navLinks.forEach((a) => a.classList.toggle("is-current", a.getAttribute("href") === "#" + en.target.id));
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  sections.forEach((s) => sectionIO.observe(s));
+  navLinks.forEach((a) => { const s = $(a.getAttribute("href")); if (s) sectionIO.observe(s); });
 
-  /* ---------- Scroll: solid nav + parallax ---------- */
-  const cta = $(".cta");
-  const ctaImg = $(".cta-img");
-  let ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      nav.classList.toggle("is-solid", y > 24 || document.body.classList.contains("menu-open"));
-      if (!reduceMotion) {
-        if (y < innerHeight * 1.2) heroImg.style.setProperty("--py", `${(y * 0.12).toFixed(1)}px`);
-        const r = cta.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < innerHeight) {
-          const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; // -1..1 through the viewport
-          ctaImg.style.setProperty("--py", `${(p * -40).toFixed(1)}px`);
-        }
-      }
-      ticking = false;
-    });
-  }
+  // Solid / hide-on-scroll-down nav, spinning lid logo, progress line
+  const lidLogo = $(".wordmark-lid");
+  const progress = $(".progress");
+  let lastY = 0;
+  const onScroll = () => {
+    const y = window.scrollY;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.setProperty("--p", max > 0 ? (y / max).toFixed(4) : 0);
+    lidLogo.style.setProperty("--spin", `${(y * 0.25).toFixed(1)}deg`);
+    const menuOpen = document.body.classList.contains("locked");
+    nav.classList.toggle("is-solid", y > 24 || menuOpen);
+    if (!menuOpen) nav.classList.toggle("is-hidden", y > innerHeight * 1.2 && y > lastY + 2);
+    if (y < lastY - 2) nav.classList.remove("is-hidden");
+    lastY = y;
+  };
   addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ---------- Scroll reveals ---------- */
-  const revealEls = $$("[data-reveal], [data-split]:not(.hero-title)");
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    revealEls.forEach((el) => el.classList.add("is-in"));
-  } else {
-    // Stagger siblings that reveal together.
-    const groups = new Map();
-    revealEls.forEach((el) => {
-      const list = groups.get(el.parentElement) || [];
-      list.push(el);
-      groups.set(el.parentElement, list);
-    });
-    groups.forEach((list) => list.forEach((el, i) => el.style.setProperty("--d", `${Math.min(i, 5) * 90}ms`)));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
-      });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
-    revealEls.forEach((el) => io.observe(el));
-  }
-
   /* ---------- Data ---------- */
   const STOCK = Array.isArray(window.SPICEBOX_STOCK) ? window.SPICEBOX_STOCK : [];
-  const CATS = $$(".explorer-tabs [role=tab]").map((b) => ({ id: b.dataset.cat, name: b.textContent.replace(/^\d+/, "").trim() }));
+  const CATS = $$(".aisle").map((a) => ({ id: a.dataset.cat, name: $("h3", a).textContent.trim() }));
   const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ");
   const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-  /* ---------- Product explorer ---------- */
-  const tabs = $$(".explorer-tabs [role=tab]");
-  const panel = $("#panel");
-  const copy = $("#cat-copy").content;
-  const mediaImgs = $$(".explorer-media img");
-  // A short, varied sample per category: every nth item so it spans the shelf.
-  const sample = (cat, n = 9) => {
+  /* ---------- Aisle panels: counts and a sample of what's on the shelf ---------- */
+  const sample = (cat, n = 8) => {
     const items = STOCK.filter((r) => r[1] === cat);
     const step = Math.max(1, Math.floor(items.length / n));
     return items.filter((_, i) => i % step === 0).slice(0, n).map((r) => r[0]);
   };
-  let swapTimer;
-  const selectCat = (btn, focus = false) => {
-    const cat = btn.dataset.cat;
-    tabs.forEach((t) => {
-      const on = t === btn;
-      t.setAttribute("aria-selected", String(on));
-      t.tabIndex = on ? 0 : -1;
-    });
-    if (focus) btn.focus();
-    // On small screens the tabs are a horizontal strip: scroll only the strip, never the page.
-    const strip = btn.parentElement;
-    if (strip.scrollWidth > strip.clientWidth) {
-      strip.scrollTo({ left: btn.offsetLeft - strip.offsetLeft - 20, behavior: reduceMotion ? "auto" : "smooth" });
-    }
-    mediaImgs.forEach((img) => {
-      const on = img.dataset.cat === cat;
-      if (on) img.loading = "eager";
-      img.classList.toggle("is-active", on);
-    });
-    panel.setAttribute("aria-labelledby", btn.id);
-    const fill = () => {
-      const count = STOCK.filter((r) => r[1] === cat).length;
-      $("[data-count]", panel).textContent = count;
-      $("[data-title]", panel).textContent = CATS.find((c) => c.id === cat).name;
-      $("[data-desc]", panel).textContent = $(`[data-cat="${cat}"]`, copy).textContent;
-      $("[data-chips]", panel).innerHTML = sample(cat).map((n) => `<li>${esc(n)}</li>`).join("");
-      $("[data-browse]", panel).dataset.cat = cat;
-      panel.classList.remove("is-swapping");
-    };
-    clearTimeout(swapTimer);
-    if (reduceMotion || !panel.dataset.ready) { fill(); panel.dataset.ready = "1"; return; }
-    panel.classList.add("is-swapping");
-    swapTimer = setTimeout(fill, 220);
-  };
-  tabs.forEach((t, i) => {
-    t.addEventListener("click", () => selectCat(t));
-    t.addEventListener("keydown", (e) => {
-      const keys = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 };
-      if (e.key in keys) { e.preventDefault(); selectCat(tabs[(i + keys[e.key] + tabs.length) % tabs.length], true); }
-      if (e.key === "Home") { e.preventDefault(); selectCat(tabs[0], true); }
-      if (e.key === "End") { e.preventDefault(); selectCat(tabs[tabs.length - 1], true); }
-    });
+  $$(".aisle").forEach((a) => {
+    const cat = a.dataset.cat;
+    $("[data-count]", a).textContent = STOCK.filter((r) => r[1] === cat).length;
+    $("[data-chips]", a).innerHTML = sample(cat).map((n) => `<li>${esc(n)}</li>`).join("");
   });
-  selectCat(tabs[0]);
-  // Warm the other category images once the section is near, so switching is instant.
-  new IntersectionObserver((entries, obs) => {
-    if (entries.some((e) => e.isIntersecting)) { mediaImgs.forEach((img) => (img.loading = "eager")); obs.disconnect(); }
-  }, { rootMargin: "400px 0px" }).observe($(".explorer"));
 
   /* ---------- Shelf search ---------- */
   const q = $("#q"), list = $("#list"), count = $("#count"), empty = $("#empty"), filters = $("#filters");
@@ -239,17 +183,16 @@
     }).sort((a, b) => a[0].localeCompare(b[0]));
     list.innerHTML = hits.map(([name, , shelf]) => `<li><span>${highlight(name, words)}</span><small>${esc(shelf)}</small></li>`).join("");
     list.scrollTop = 0;
-    count.textContent = `${hits.length} item${hits.length === 1 ? "" : "s"}`;
+    count.textContent = `${hits.length} item${hits.length === 1 ? "" : "s"} on the list`;
     empty.hidden = hits.length > 0;
     list.hidden = hits.length === 0;
   }
-  let t;
-  q.addEventListener("input", () => { clearTimeout(t); t = setTimeout(render, 80); });
-  $$("[data-try]").forEach((b) => b.addEventListener("click", () => { q.value = b.dataset.try; setFilter("all"); q.focus(); }));
-  $("[data-browse]").addEventListener("click", (e) => {
-    q.value = "";
-    setFilter(e.currentTarget.dataset.cat || "all");
-  });
+  let qt;
+  q.addEventListener("input", () => { clearTimeout(qt); qt = setTimeout(render, 80); });
+  $$("[data-try]").forEach((b) => b.addEventListener("click", () => { q.value = b.dataset.try; setFilter("all"); q.focus({ preventScroll: true }); }));
+  $$("[data-browse]").forEach((a) => a.addEventListener("click", () => { q.value = ""; setFilter(a.dataset.browse); }));
+  list.addEventListener("wheel", (e) => e.stopPropagation(), { passive: true }); // let the list scroll itself under Lenis
+  list.setAttribute("data-lenis-prevent", "");
   render();
 
   /* ---------- Lightbox ---------- */
@@ -258,7 +201,7 @@
   const shots = $$("[data-lightbox]").map((b) => {
     const img = $("img", b);
     const big = (img.getAttribute("srcset") || "").split(",").pop().trim().split(" ")[0] || img.getAttribute("src");
-    return { src: big || img.src, alt: img.alt, cap: b.parentElement.querySelector(".g-cap")?.textContent || "" };
+    return { src: big, alt: img.alt, cap: b.parentElement.querySelector(".g-cap")?.textContent || "" };
   });
   let current = 0, opener = null;
   const show = (i) => {
@@ -269,9 +212,9 @@
   const supportsDialog = typeof lb.showModal === "function";
   $$("[data-lightbox]").forEach((b) => b.addEventListener("click", () => {
     if (!supportsDialog) { window.open(shots[+b.dataset.lightbox].src, "_blank", "noopener"); return; }
-    opener = b; show(+b.dataset.lightbox); lb.showModal(); document.body.classList.add("menu-open");
+    opener = b; show(+b.dataset.lightbox); lb.showModal(); document.body.classList.add("locked"); lenis?.stop();
   }));
-  lb.addEventListener("close", () => { document.body.classList.remove("menu-open"); lbImg.removeAttribute("src"); opener?.focus(); });
+  lb.addEventListener("close", () => { document.body.classList.remove("locked"); lenis?.start(); lbImg.removeAttribute("src"); opener?.focus({ preventScroll: true }); });
   lb.addEventListener("click", (e) => {
     const action = e.target.closest("[data-lb]")?.dataset.lb;
     if (action === "close" || e.target === lb) lb.close();
@@ -301,6 +244,256 @@
     $("#map-ph").replaceWith(frame);
   });
 
-  /* ---------- Footer year ---------- */
   $("#year").textContent = new Date().getFullYear();
+
+  if (!motion) return; /* ======== Everything below is enhancement ======== */
+
+  /* ---------- Cursor ---------- */
+  if (finePointer) {
+    root.classList.add("has-cursor");
+    const cursor = $(".cursor"), label = $(".cursor-label");
+    const pos = { x: innerWidth / 2, y: innerHeight / 2 }, tgt = { ...pos };
+    addEventListener("pointermove", (e) => { tgt.x = e.clientX; tgt.y = e.clientY; }, { passive: true });
+    gsap.ticker.add(() => {
+      pos.x += (tgt.x - pos.x) * 0.22; pos.y += (tgt.y - pos.y) * 0.22;
+      cursor.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+    });
+    document.addEventListener("pointerover", (e) => {
+      const view = e.target.closest("[data-lightbox], .aisle-photo");
+      const link = e.target.closest("a, button, input, .filter");
+      cursor.classList.toggle("is-view", !!view);
+      cursor.classList.toggle("is-link", !view && !!link);
+      label.textContent = view ? (view.matches("[data-lightbox]") ? "View" : "Look") : "";
+    });
+  }
+
+  /* ---------- Magnetic buttons ---------- */
+  if (finePointer) {
+    $$(".magnetic").forEach((el) => {
+      const xTo = gsap.quickTo(el, "x", { duration: 0.5, ease: "power3" });
+      const yTo = gsap.quickTo(el, "y", { duration: 0.5, ease: "power3" });
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        xTo((e.clientX - r.left - r.width / 2) * 0.3);
+        yTo((e.clientY - r.top - r.height / 2) * 0.4);
+      });
+      el.addEventListener("pointerleave", () => { xTo(0); yTo(0); });
+    });
+    // 3D tilt on cards
+    $$(".tilt").forEach((el) => {
+      const rx = gsap.quickTo(el, "rotationX", { duration: 0.6, ease: "power3" });
+      const ry = gsap.quickTo(el, "rotationY", { duration: 0.6, ease: "power3" });
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        ry(((e.clientX - r.left) / r.width - 0.5) * 10);
+        rx(-((e.clientY - r.top) / r.height - 0.5) * 10);
+      });
+      el.addEventListener("pointerleave", () => { rx(0); ry(0); });
+    });
+  }
+
+  /* ---------- Hero: intro, then scroll lifts the lid and dives into the turmeric ---------- */
+  const hero = $(".hero");
+  const dabba = $(".dabba"), lid = $(".dabba-lid"), base = $(".dabba-base");
+  gsap.timeline({ defaults: { ease: "expo.out" } })
+    .from(base, { scale: 0.55, rotation: -80, opacity: 0, duration: 1.8 })
+    .from(lid, { scale: 1.35, rotation: 90, opacity: 0, duration: 1.6 }, 0.15)
+    .from(".ht-line .w > span", { yPercent: 110, duration: 1.2, stagger: 0.06 }, 0.35)
+    .from(".hero-locator", { opacity: 0, y: -12, duration: 1 }, 0.6)
+    .from(".hero-foot > *, .hero-hint", { opacity: 0, y: 24, duration: 1, stagger: 0.1 }, 0.9)
+    .from(".hero .fl", { opacity: 0, scale: 0.4, duration: 1.4, stagger: 0.08 }, 0.6);
+
+  const bowls = $$(".bowls li");
+  const heroTl = gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: {
+      trigger: hero, start: "top top", end: () => "+=" + innerHeight * 2.4,
+      pin: true, scrub: 1, anticipatePin: 1,
+      onUpdate: (self) => hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62),
+    },
+  });
+  heroTl
+    .to(lid, { xPercent: 70, yPercent: -95, rotation: 160, ease: "power2.in", duration: 1 }, 0)
+    .to(".hero-hint, .hero-foot", { opacity: 0, y: 30, duration: 0.4 }, 0)
+    .to(".ht-1", { xPercent: -14, duration: 1.4 }, 0)
+    .to(".ht-2", { xPercent: 14, duration: 1.4 }, 0)
+    .to(base, { rotation: -24, duration: 2.4 }, 0)
+    .to(bowls, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.1, ease: "back.out(2)" }, 0.75)
+    .to(".hero-title, .hero-locator", { opacity: 0, duration: 0.4 }, 1.8)
+    .to(bowls, { opacity: 0, duration: 0.25 }, 1.9)
+    .to(dabba, { scale: () => (innerWidth < 900 ? 11 : 9), duration: 1.3, ease: "power2.in" }, 2)
+    .to(".hero .fl", { scale: 2.4, opacity: 0, duration: 1, stagger: 0.04 }, 2)
+    .to(".hero-flood", { opacity: 1, duration: 0.35 }, 2.95);
+  gsap.set(bowls, { scale: 0.6 });
+
+  /* ---------- Floating spice bits drift with scroll ---------- */
+  $$(".fl").forEach((el) => {
+    if (el.closest(".hero")) return;
+    const speed = parseFloat(el.dataset.speed || "-1");
+    gsap.to(el, {
+      y: speed * 120, rotation: speed * 40, ease: "none",
+      scrollTrigger: { trigger: el.closest("section"), start: "top bottom", end: "bottom top", scrub: true },
+    });
+  });
+
+  /* ---------- Manifesto words light up as you read ---------- */
+  gsap.fromTo(".manifesto .mw > span", { opacity: 0.14 }, {
+    opacity: 1, stagger: 0.08, ease: "none",
+    scrollTrigger: { trigger: ".manifesto", start: "top 65%", end: "bottom 70%", scrub: true },
+  });
+  gsap.from(".manifesto-tag", { opacity: 0, x: -40, rotation: -8, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
+
+  /* ---------- Shelf rail: speeds up and reverses with scroll ---------- */
+  const railTrack = $(".rail-track");
+  let railX = 0, railDir = 1;
+  gsap.ticker.add(() => {
+    const v = lenis ? lenis.velocity : 0;
+    if (v) railDir = v > 0 ? 1 : -1;
+    railX -= (0.6 + Math.min(Math.abs(v) * 0.5, 18)) * railDir;
+    const half = railTrack.scrollWidth / 2;
+    if (railX <= -half) railX += half;
+    if (railX > 0) railX -= half;
+    railTrack.style.transform = `translate3d(${railX}px,0,0) skewX(${gsap.utils.clamp(-8, 8, -v * 0.35)}deg)`;
+  });
+
+  /* ---------- Split headings rise when they enter ---------- */
+  $$("[data-split]").forEach((el) => {
+    gsap.from($$(".w > span", el), {
+      yPercent: 110, rotation: 4, duration: 1.1, stagger: 0.05, ease: "expo.out",
+      scrollTrigger: { trigger: el, start: "top 85%" },
+    });
+  });
+  // General entrances
+  const rise = (targets, trigger, extra = {}) => gsap.from(targets, {
+    opacity: 0, y: 50, duration: 1.1, stagger: 0.1, ease: "expo.out", ...extra,
+    scrollTrigger: { trigger: trigger || targets, start: "top 85%" },
+  });
+  rise(".story-text p, .sign-quote", ".story-text");
+  $$(".eyebrow").forEach((el) => {
+    if (el.closest(".aisles, .gallery")) return; // those enter with their pinned scenes
+    gsap.from(el, { opacity: 0, x: -30, duration: 1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } });
+  });
+
+  /* ---------- Story: photo parallax and hand-drawn notes ---------- */
+  gsap.fromTo(".story-photo img", { scale: 1.25, yPercent: -6 }, {
+    scale: 1.02, yPercent: 6, ease: "none",
+    scrollTrigger: { trigger: ".story-media", start: "top bottom", end: "bottom top", scrub: true },
+  });
+  gsap.from(".story-photo", { clipPath: "inset(100% 0 0 0 round 200px 200px 18px 18px)", duration: 1.6, ease: "expo.inOut", scrollTrigger: { trigger: ".story-media", start: "top 80%" } });
+  $$(".note").forEach((n, i) => {
+    const path = $(".draw", n);
+    const len = path.getTotalLength();
+    gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+    gsap.timeline({ scrollTrigger: { trigger: ".story-media", start: "top 55%" }, delay: 0.6 + i * 0.4 })
+      .from(n, { opacity: 0, scale: 0.6, rotation: i ? -14 : 14, duration: 0.8, ease: "back.out(2)" })
+      .to(path, { strokeDashoffset: 0, duration: 0.9, ease: "power2.out" }, 0.2);
+  });
+
+  /* ---------- Aisles: horizontal shelf on desktop, stacked on mobile ---------- */
+  const mm = gsap.matchMedia();
+  const track = $("#aisles-track");
+  const tag = $(".aisles-tag b"), rail = $(".aisles-rail");
+  mm.add("(min-width: 901px)", () => {
+    const dist = () => track.scrollWidth - innerWidth;
+    const slide = gsap.to(track, {
+      x: () => -dist(), ease: "none",
+      scrollTrigger: {
+        trigger: ".aisles", start: "top top", end: () => "+=" + dist(), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1,
+        onUpdate: (self) => {
+          rail.style.setProperty("--ap", self.progress.toFixed(4));
+          tag.textContent = String(Math.min(7, Math.floor(self.progress * 7) + 1)).padStart(2, "0");
+        },
+      },
+    });
+    $$(".aisle").forEach((a) => {
+      gsap.fromTo($(".aisle-photo img", a), { scale: 1.3, xPercent: -8 }, {
+        scale: 1.05, xPercent: 8, ease: "none",
+        scrollTrigger: { trigger: a, containerAnimation: slide, start: "left right", end: "right left", scrub: true },
+      });
+      gsap.from($$(".aisle-num, h3, .sticker", a), {
+        opacity: 0, y: 40, rotation: 3, stagger: 0.08, duration: 0.8, ease: "expo.out",
+        scrollTrigger: { trigger: a, containerAnimation: slide, start: "left 75%" },
+      });
+    });
+    gsap.from(".aisles-head > *", { opacity: 0, y: 40, stagger: 0.1, duration: 1, ease: "expo.out", scrollTrigger: { trigger: ".aisles", start: "top 70%" } });
+  });
+  mm.add("(max-width: 900px)", () => {
+    $$(".aisle").forEach((a) => {
+      gsap.from(a, { opacity: 0, y: 70, scale: 0.94, duration: 1, ease: "expo.out", scrollTrigger: { trigger: a, start: "top 88%" } });
+      gsap.fromTo($(".aisle-photo img", a), { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: a, start: "top bottom", end: "bottom top", scrub: true } });
+    });
+  });
+
+  /* ---------- Shelf search entrance ---------- */
+  gsap.from(".finder", { y: 80, rotation: 1.5, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".finder", start: "top 85%" } });
+  rise(".shelf-head p", ".shelf-head");
+
+  /* ---------- Gallery: the centre photo starts full screen and zooms out into the grid ---------- */
+  const gallery = $(".gallery");
+  const centre = $(".g-c button");
+  const offsetIn = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return { x, y }; };
+  mm.add("(min-width: 901px)", () => {
+    const fill = () => {
+      const o = offsetIn(centre, gallery);
+      const w = centre.offsetWidth, h = centre.offsetHeight;
+      return { s: Math.max(innerWidth / w, innerHeight / h) * 1.02, dx: innerWidth / 2 - (o.x + w / 2), dy: innerHeight / 2 - (o.y + h / 2) };
+    };
+    gsap.timeline({
+      scrollTrigger: { trigger: gallery, start: "top top", end: () => "+=" + innerHeight * 1.3, pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 },
+    })
+      .fromTo(centre, { x: () => fill().dx, y: () => fill().dy, scale: () => fill().s, borderRadius: 0 },
+        { x: 0, y: 0, scale: 1, borderRadius: 14, ease: "power2.inOut", duration: 1 }, 0)
+      .fromTo(".g-c img", { scale: 1.15 }, { scale: 1, duration: 1 }, 0)
+      // fromTo, not from: this timeline is invalidated on refresh, and a from() would re-read its hidden state as the end state
+      .fromTo(".g-1, .g-2", { xPercent: -40, opacity: 0 }, { xPercent: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power3.out" }, 0.45)
+      .fromTo(".g-3, .g-4", { xPercent: 40, opacity: 0 }, { xPercent: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power3.out" }, 0.45)
+      .fromTo(".gallery-head, .g-cap", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4 }, 0.7);
+  });
+  mm.add("(max-width: 900px)", () => {
+    $$(".g").forEach((g, i) => gsap.from(g, { opacity: 0, y: 60, scale: 0.9, duration: 1, delay: (i % 2) * 0.1, ease: "expo.out", scrollTrigger: { trigger: g, start: "top 90%" } }));
+  });
+
+  /* ---------- Why visit: cards fall into place like shelf tags ---------- */
+  gsap.from(".why-list li", {
+    y: 140, rotation: (i) => [-8, 6, -4, 9][i % 4], opacity: 0, duration: 1.3, stagger: 0.12, ease: "expo.out",
+    scrollTrigger: { trigger: ".why-list", start: "top 85%" },
+  });
+
+  /* ---------- Reviews: numbers count up, cards rise ---------- */
+  gsap.from(".reviews-grid > *", { y: 90, opacity: 0, duration: 1.2, stagger: 0.12, ease: "expo.out", scrollTrigger: { trigger: ".reviews-grid", start: "top 85%" } });
+  const stars = $(".stars span");
+  $$("[data-countup]").forEach((el) => {
+    const end = parseFloat(el.dataset.countup), dec = parseInt(el.dataset.decimals || "0", 10);
+    const o = { v: 0 };
+    gsap.to(o, {
+      v: end, duration: 2, ease: "power3.out",
+      scrollTrigger: { trigger: el, start: "top 90%" },
+      onUpdate: () => {
+        el.textContent = o.v.toFixed(dec);
+        if (dec) stars.style.setProperty("--fill", `${(o.v / 5) * 100}%`); // stars fill in step with the rating
+      },
+    });
+  });
+  gsap.from(".stamp", { scale: 2.2, rotation: -40, opacity: 0, duration: 0.9, ease: "back.out(1.6)", scrollTrigger: { trigger: ".stamp", start: "top 85%" } });
+  gsap.from(".themes li", { x: 40, opacity: 0, stagger: 0.1, duration: 0.9, ease: "expo.out", scrollTrigger: { trigger: ".themes", start: "top 85%" } });
+
+  /* ---------- Find us ---------- */
+  rise(".find-address, .find-facts > div, .find-actions", ".find-copy");
+  gsap.from(".map", { scale: 0.8, rotation: -4, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".map", start: "top 85%" } });
+  gsap.fromTo(".map-lines", { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: ".map", start: "top bottom", end: "bottom top", scrub: true } });
+
+  /* ---------- Closing: the lid goes back on ---------- */
+  const cta = $(".cta");
+  gsap.timeline({ scrollTrigger: { trigger: cta, start: "top bottom", end: "center center", scrub: 1 } })
+    .fromTo(".cta-lid", { xPercent: 60, yPercent: -80, rotation: -160, opacity: 0 }, { xPercent: 0, yPercent: 0, rotation: 0, opacity: 1, ease: "power2.out" }, 0)
+    .fromTo(".cta-base", { rotation: 40, scale: 0.85 }, { rotation: 0, scale: 1, ease: "power2.out" }, 0);
+  rise(".cta-inner > p, .cta-actions", ".cta-inner");
+
+  /* ---------- Footer: giant wordmark slides up from behind the rail ---------- */
+  gsap.from(".foot-giant span", { yPercent: 100, ease: "none", scrollTrigger: { trigger: ".foot", start: "top bottom", end: "bottom bottom", scrub: true } });
+
+  // Recalculate pinned scenes once fonts and images have settled
+  const refresh = () => ST.refresh();
+  document.fonts?.ready.then(refresh);
+  addEventListener("load", refresh);
 })();

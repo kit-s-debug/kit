@@ -11,22 +11,33 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 
 | Path | What it is |
 |---|---|
-| `index.html` | The page: hero, Our Story, product explorer, shelf search, gallery, Why visit, Find Us, closing CTA, footer |
-| `privacy.html` | A short privacy note (no cookies, no forms; Google Fonts, plus Google Maps on request) |
+| `index.html` | The page: dabba hero, manifesto, shelf rail, Our Story, the aisles, shelf search, gallery, Why visit, reviews, Find Us, closing, footer |
+| `privacy.html` | A short privacy note |
 | `css/style.css` | All styles. Palette and type tokens are at the top. |
-| `js/main.js` | Hero intro, sticky nav, mobile menu, scroll reveals, parallax, explorer tabs, search, lightbox, click-to-load map |
+| `js/main.js` | Smooth scroll, scroll scenes, cursor, magnetic buttons, tilt, menu, search, lightbox, click-to-load map |
 | `js/stock.js` | About 480 items read off the shop photographs. Edit this to add or remove items. |
-| `photos/originals/` | All 48 shop photos as supplied |
-| `photos/crops.py` | Cuts the 15 photos the site uses into `assets/img/*-sm.webp` / `*-lg.webp` (`python3 photos/crops.py`) |
+| `js/vendor/` | GSAP 3.12.5, ScrollTrigger and Lenis 1.1.13, self-hosted so the site doesn't depend on a CDN |
+| `art/dabba.py`, `art/render.mjs` | Draw the masala dabba and its lid (SVG), then render them to `assets/img/dabba*.webp` and `lid*.webp` |
+| `photos/originals/`, `photos/crops.py` | The shop photos as supplied, and the script that crops the ones the site uses |
 
 ## Design
 
-- **Palette:** gold `#E7B52F`, saffron `#F4D16B`, forest `#173D2B`, almost-black `#11130F`, ivory `#F8F3E7`, olive `#77845A`.
-- **Type:** Fraunces (display serif, italic for emphasis) and Instrument Sans (body).
-- **Mark:** an eight-point star anise drawn in SVG. It's a placeholder wordmark, not an official logo.
-- **Motion:** pure CSS transitions, triggered by IntersectionObserver. On load the hero image reveals behind a
-  clip-path and the headline rises word by word. After that come image reveals, a light parallax on the hero and
-  the closing CTA, and a clip-path wipe on the mobile menu. All of it turns off under `prefers-reduced-motion`.
+- **Concept:** the masala dabba, the round steel spice tin the shop is named after. The page opens on one. As you
+  scroll, the lid lifts off, the seven spices are labelled, and the view dives into the turmeric and comes out
+  into a gold section. At the end of the page the lid goes back on.
+- **Details from the actual shop:** the green shelf-edge rails, yellow price stickers and handwritten labels
+  (set in Kalam), the green sign, and the handwritten "curry leaves" and "dried red chilli" labels.
+- **Palette:** gold `#E7B52F`, saffron `#F4D16B`, forest `#173D2B`, almost-black `#11130F`, ivory `#F8F3E7`,
+  olive `#77845A`, with chilli red for emphasis.
+- **Type:** Rozha One (display, from the Indian Type Foundry), Kalam (handwriting) and Hanken Grotesk (body).
+- **Motion:**
+  - Lenis smooth scrolling.
+  - Pinned scroll scenes: the dabba opening, the aisles moving sideways, and the gallery zooming out from one
+    full-screen photo.
+  - Scroll-linked effects: parallax spice illustrations, words lighting up as you read, and a shelf rail that
+    speeds up and reverses with your scroll.
+  - On hover: magnetic buttons, 3D card tilt and a custom cursor.
+  - Under `prefers-reduced-motion`, or if the scripts fail to load, everything is static and fully readable.
 
 ## Verified facts used
 
@@ -45,5 +56,6 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 3. **Our Story.** The copy only describes what's visible in the shop. A line on the shop's history would help.
 4. **Halal.** The site says "including the halal freezer", based on the HALAL sign on one freezer.
    Please check that the wording is right.
-5. **Ratings.** The Reviews section shows 4.7/5 from 162 reviews (Cylex) and food hygiene 4 (Good, 28 Jan 2026, FSA record 857091). Update these when they change. Real customer quotes can be pasted where the `OWNER:` comment says.
-6. **Social image.** Once the site has a domain, change `og:image` to an absolute URL.
+5. **Parking.** The Find Us section mentions the pay & display car park on Dew Street, plus Rifleman's Field and Castle Lake (from Parkopedia and the council's car park list). Please check this is still right.
+6. **Ratings.** The Reviews section shows 4.7/5 from 162 reviews (Cylex) and food hygiene 4 (Good, 28 Jan 2026, FSA record 857091). Update these when they change. Real customer quotes can be pasted where the `OWNER:` comment says.
+7. **Social image.** Once the site has a domain, change `og:image` to an absolute URL.
