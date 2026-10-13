@@ -10,10 +10,11 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 ## Sections
 
 - **Hero**: fresh chillies, okra and coriander under the seed shelves.
-- **Walk the aisles**: sixteen photo cards. They cover spices, fresh produce, herbs, oriental foods, poppadoms, Caribbean and African
-  seasonings, noodles, sauces, pickles and tins, snacks, drinks, store-cupboard staples and dried fish.
-- **Halal freezers**: halal meat portioned and labelled in the shop, whole frozen fish, and frozen Thai veg and fruit.
-- **Is it on the shelf?**: a searchable, filterable list of about 400 items read off the shop
+- **Walk the aisles**: twenty-three photo cards. They cover spices, fresh produce, herbs, oriental foods, poppadoms, Caribbean and
+  African seasonings, noodles, sauces, pickles and tins, snacks, drinks, store cupboard, dried fish, rice, lentils and
+  beans, Shan and Laziza mixes, flours, nuts, African staples, and Middle Eastern and Polish groceries.
+- **Halal freezers**: halal meat portioned and labelled in the shop, whole frozen fish, frozen Thai veg and fruit, and frozen parathas and snacks.
+- **Is it on the shelf?**: a searchable, filterable list of about 480 items read off the shop
   photos. It matches alternative names too (e.g. "saunf" finds fennel, "taro" finds eddoes).
   Edit the `STOCK` array in `js/spicebox.js` to add or remove items.
 - **Retailers & wholesalers**: trade pitch with a call-to-order button.

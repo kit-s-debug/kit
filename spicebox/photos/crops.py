@@ -41,6 +41,16 @@ CROPS = {
     "dried-fish":         ("dried-fish-bulk-spices.jpg", (180, 180, 1080, 700), 1000),
     "roti-ghee":          ("groceries-roti-ghee.jpg",   (260, 560, 900, 1120),  800),
     "frozen-thai":        ("frozen-thai.jpg",           (0, 500, 1110, 1260),   1000),
+    # third batch (rice, dals, flours, mixes, nuts, drinks fridges, frozen parathas)
+    "rice":               ("rice-display-3.jpg",        (0, 120, 1170, 1180),   1000),
+    "lentils":            ("shan-lentils.jpg",          (0, 1040, 1170, 1500),  1000),
+    "spice-mixes":        ("shan-lentils.jpg",          (0, 180, 1170, 700),    1000),
+    "flours":             ("flours-powa.jpg",           (100, 420, 940, 1110),  1000),
+    "nuts":               ("nuts-chips.jpg",            (0, 660, 1080, 1120),   1000),
+    "cold-drinks":        ("drinks-fridge-right.jpg",   (400, 560, 960, 1200),  800),
+    "african-staples":    ("african-flours.jpg",        (150, 560, 960, 1460),  800),
+    "world-groceries":    ("middle-eastern-polish.jpg", (80, 480, 1120, 1280),  1000),
+    "frozen-paratha":     ("frozen-parathas-samosas.jpg", (280, 200, 900, 1060), 800),
 }
 
 def main():
