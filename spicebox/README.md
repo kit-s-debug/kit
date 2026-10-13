@@ -45,5 +45,5 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 3. **Our Story.** The copy only describes what's visible in the shop. A line on the shop's history would help.
 4. **Halal.** The site says "including the halal freezer", based on the HALAL sign on one freezer.
    Please check that the wording is right.
-5. **Social links.** No Facebook or Instagram page could be found. Add them to the footer if they exist.
+5. **Ratings.** The Reviews section shows 4.7/5 from 162 reviews (Cylex) and food hygiene 4 (Good, 28 Jan 2026, FSA record 857091). Update these when they change. Real customer quotes can be pasted where the `OWNER:` comment says.
 6. **Social image.** Once the site has a domain, change `og:image` to an absolute URL.
