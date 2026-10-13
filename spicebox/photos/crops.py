@@ -1,68 +1,59 @@
-"""Crop the shop photography into the web images the site uses.
+"""Crop the shop photography into the responsive web images the site uses.
 
     python3 photos/crops.py          (run from the spicebox/ folder)
 
 Each entry: output name -> (original photo, crop box in original pixels
-(left, top, right, bottom), output width). Output height follows the box.
-To use a new photo, drop it in photos/originals/ and add a line here.
+(left, top, right, bottom)). Every crop is written at two widths,
+<name>-sm.webp and <name>-lg.webp, for use in srcset. Originals are 1170px
+wide, so the large size is capped near the crop's native width to avoid
+blurry upscaling.
 """
 from pathlib import Path
 from PIL import Image, ImageFilter, ImageOps
 
 HERE = Path(__file__).parent
-OUT = HERE.parent / "assets" / "photos"
+OUT = HERE.parent / "assets" / "img"
+SMALL, LARGE = 720, 1400
 
 CROPS = {
-    # hero + shopfront
-    "hero-chillies":      ("seeds-okra-herbs.jpg",      (100, 600, 1170, 1380), 1400),
-    "shopfront":          ("shopfront-angle.jpg",       (60, 440, 1150, 1330),  1200),
-    "walls":              ("seasonings-wall-right.jpg", (0, 640, 1170, 1560),   1200),
-    # aisle tiles (4:5 or close)
-    "whole-spices":       ("whole-spices-wall.jpg",     (0, 420, 1170, 1210),   1000),
-    "ground-spices":      ("powders-garlic-onion.jpg",  (280, 380, 1170, 970),  1000),
-    "fresh-veg":          ("seeds-okra-herbs.jpg",      (90, 960, 1170, 1360),  1000),
-    "exotic-fruit":       ("spices-fruit-veg.jpg",      (0, 940, 1170, 1380),   1000),
-    "roots-tubers":       ("seeds-roots-plantain.jpg",  (0, 800, 1170, 1400),   1000),
-    "poppadoms":          ("poppadoms-powders.jpg",     (0, 0, 940, 440),       1000),
-    "herb-stand":         ("herb-stand.jpg",            (430, 380, 950, 1030),  800),
-    "caribbean":          ("seasonings-wall-left.jpg",  (200, 380, 980, 640),   1000),
-    "east-asian":         ("east-asian-shelf.jpg",      (140, 230, 930, 1230),  800),
-    "garlic-ginger":      ("powders-garlic-onion.jpg",  (130, 1180, 1170, 1500), 1000),
-    "dried-chillies":     ("curry-chilli-leaves.jpg",   (90, 110, 1170, 600),   1000),
-    "masala-shelf":       ("poppadoms-peppers.jpg",     (140, 230, 1170, 960),  1000),
-    # second batch (more of the shop: snacks, noodles, sauces, freezers)
-    "halal-meat":         ("halal-freezer-tubs.jpg",    (150, 480, 1030, 1150), 1000),
-    "frozen-fish":        ("frozen-fish.jpg",           (0, 300, 1170, 1250),   1000),
-    "noodles":            ("noodles-sauces-right.jpg",  (0, 90, 1050, 830),     1000),
-    "sauces":             ("noodles-sauces-left.jpg",   (0, 860, 1170, 1500),   1000),
-    "pickles-tins":       ("pickles-tins-left.jpg",     (60, 630, 1170, 1160),  1000),
-    "snacks":             ("snacks-oils-left.jpg",      (0, 300, 1170, 900),    1000),
-    "drinks":             ("snacks-drinks-right.jpg",   (0, 1100, 1170, 1540),  1000),
-    "dried-fish":         ("dried-fish-bulk-spices.jpg", (180, 180, 1080, 700), 1000),
-    "roti-ghee":          ("groceries-roti-ghee.jpg",   (260, 560, 900, 1120),  800),
-    "frozen-thai":        ("frozen-thai.jpg",           (0, 500, 1110, 1260),   1000),
-    # third batch (rice, dals, flours, mixes, nuts, drinks fridges, frozen parathas)
-    "rice":               ("rice-display-3.jpg",        (0, 120, 1170, 1180),   1000),
-    "lentils":            ("shan-lentils.jpg",          (0, 1040, 1170, 1500),  1000),
-    "spice-mixes":        ("shan-lentils.jpg",          (0, 180, 1170, 700),    1000),
-    "flours":             ("flours-powa.jpg",           (100, 420, 940, 1110),  1000),
-    "nuts":               ("nuts-chips.jpg",            (0, 660, 1080, 1120),   1000),
-    "cold-drinks":        ("drinks-fridge-right.jpg",   (400, 560, 960, 1200),  800),
-    "african-staples":    ("african-flours.jpg",        (150, 560, 960, 1460),  800),
-    "world-groceries":    ("middle-eastern-polish.jpg", (80, 480, 1120, 1280),  1000),
-    "frozen-paratha":     ("frozen-parathas-samosas.jpg", (280, 200, 900, 1060), 800),
+    "hero":         ("seeds-okra-herbs.jpg",     (0, 560, 1170, 1560)),
+    "shopfront":    ("shopfront-angle.jpg",      (60, 420, 1150, 1360)),
+    # product categories
+    "cat-spices":   ("whole-spices-wall.jpg",    (0, 380, 1170, 1200)),
+    "cat-fresh":    ("spices-fruit-veg.jpg",     (0, 900, 1170, 1560)),
+    "cat-pantry":   ("rice-display-2.jpg",       (0, 150, 1170, 1250)),
+    "cat-asian":    ("noodles-sauces-right.jpg", (0, 90, 1050, 830)),
+    "cat-world":    ("african-flours.jpg",       (150, 560, 960, 1460)),
+    "cat-frozen":   ("halal-freezer-tubs.jpg",   (150, 480, 1030, 1150)),
+    "cat-drinks":   ("drinks-fridge-right.jpg",  (400, 560, 960, 1200)),
+    # gallery
+    "g-ground":     ("powders-garlic-onion.jpg", (280, 380, 1170, 970)),
+    "g-chillies":   ("curry-chilli-leaves.jpg",  (90, 110, 1170, 600)),
+    "g-herbs":      ("herb-stand.jpg",           (430, 380, 950, 1030)),
+    "g-sauces":     ("noodles-sauces-left.jpg",  (0, 860, 1170, 1500)),
+    "g-roots":      ("seeds-roots-plantain.jpg", (0, 800, 1170, 1400)),
+    # closing call to action
+    "cta":          ("poppadoms-peppers.jpg",    (140, 230, 1170, 960)),
 }
+
+def save(im, width, path):
+    h = round(width * im.height / im.width)
+    out = im.resize((width, h), Image.LANCZOS)
+    out = out.filter(ImageFilter.UnsharpMask(radius=0.8, percent=40, threshold=2))
+    out.save(path, "WEBP", quality=80, method=6)
+    return h
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, (src, box, width) in CROPS.items():
+    for name, (src, box) in CROPS.items():
         im = ImageOps.exif_transpose(Image.open(HERE / "originals" / src)).convert("RGB").crop(box)
-        h = round(width * im.height / im.width)
-        sharpen = (1.6, 70) if width > im.width else (0.8, 40)
-        im = im.resize((width, h), Image.LANCZOS).filter(
-            ImageFilter.UnsharpMask(radius=sharpen[0], percent=sharpen[1], threshold=2))
-        im.save(OUT / f"{name}.webp", "WEBP", quality=82, method=6)
-        print(f"{name:16s} {width}x{h}")
+        large = min(LARGE, round(im.width * 1.15))
+        hs = save(im, min(SMALL, large), OUT / f"{name}-sm.webp")
+        hl = save(im, large, OUT / f"{name}-lg.webp")
+        print(f"{name:12s} sm {min(SMALL, large)}x{hs}  lg {large}x{hl}")
+    # social sharing card
+    hero = ImageOps.exif_transpose(Image.open(HERE / "originals" / CROPS["hero"][0])).convert("RGB")
+    ImageOps.fit(hero.crop(CROPS["hero"][1]), (1200, 630), Image.LANCZOS).save(OUT / "og.jpg", quality=82)
 
 if __name__ == "__main__":
     main()

@@ -3,323 +3,330 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Spice Box Food Store · Haverfordwest</title>
-<meta name="description" content="Spices, fresh world produce, halal meat and oriental foods on Dew Street, Haverfordwest. Retail and wholesale. Call 01437 765791.">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<title>The Spice Box · Asian &amp; World Food Store, Dew Street, Haverfordwest</title>
+<meta name="description" content="The Spice Box on Dew Street, Haverfordwest: spices and masalas, fresh chillies and curry leaves, rice, dals, noodles, sauces and groceries from South Asia, East Asia, Africa, the Caribbean and the Middle East. Retail and wholesale. Call 01437 765791.">
+<meta name="theme-color" content="#11130F">
+<link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+
+<!-- Social sharing. Once the site has a domain, make og:image an absolute URL (https://…/assets/img/og.jpg). -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="The Spice Box">
+<meta property="og:title" content="The Spice Box · A world of flavour on Dew Street, Haverfordwest">
+<meta property="og:description" content="Spices, fresh produce and groceries from across Asia, Africa, the Caribbean and the Middle East. 27 Dew Street, Haverfordwest.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/spicebox.css">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/hero-lg.webp" imagesrcset="assets/img/hero-sm.webp 720w, assets/img/hero-lg.webp 1346w" imagesizes="(max-width: 900px) 100vw, 56vw" fetchpriority="high">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add("js");</script>
+
+<!-- Local business details: only verified facts. Add "openingHoursSpecification" once the owner confirms the hours. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "GroceryStore",
+  "name": "The Spice Box",
+  "alternateName": "The Spice Box Food Store",
+  "description": "Spices, oriental foods and world groceries. Retailers and wholesalers.",
+  "telephone": "+44 1437 765791",
+  "image": "assets/img/og.jpg",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "27 Dew Street",
+    "addressLocality": "Haverfordwest",
+    "addressRegion": "Pembrokeshire",
+    "postalCode": "SA61 1ST",
+    "addressCountry": "GB"
+  }
+}
+</script>
 </head>
 <body>
 
-<header class="top">
-  <a class="brand" href="#top" aria-label="The Spice Box Food Store, home">
-    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="11" width="34" height="26" rx="3"/><path d="M3 17h34M14 11V5h12v6"/><circle cx="13" cy="27" r="3"/><circle cx="27" cy="27" r="3"/><circle cx="20" cy="27" r="3"/></svg>
-    <span>The Spice Box</span>
-  </a>
-  <nav aria-label="Main">
-    <a href="#aisles">The aisles</a>
-    <a href="#halal">Halal meat</a>
-    <a href="#shelves">Find an item</a>
-    <a href="#wholesale">Wholesale</a>
-    <a href="#visit">Visit</a>
-  </nav>
-  <a class="call" href="tel:+441437765791">01437 765791</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="anise" viewBox="0 0 48 48">
+    <path id="pod" d="M24 23.2c-2.6-4.4-2.9-10.4 0-15.6 2.9 5.2 2.6 11.2 0 15.6z"/>
+    <use href="#pod" transform="rotate(45 24 24)"/><use href="#pod" transform="rotate(90 24 24)"/>
+    <use href="#pod" transform="rotate(135 24 24)"/><use href="#pod" transform="rotate(180 24 24)"/>
+    <use href="#pod" transform="rotate(225 24 24)"/><use href="#pod" transform="rotate(270 24 24)"/>
+    <use href="#pod" transform="rotate(315 24 24)"/>
+  </symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="#top" aria-label="The Spice Box, back to top">
+      <svg class="wordmark-mark" aria-hidden="true"><use href="#anise"/></svg>
+      <span class="wordmark-text">The Spice Box<small>Haverfordwest</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#top">Home</a>
+      <a href="#story">Our Story</a>
+      <a href="#products">Products</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#find-us">Find Us</a>
+    </nav>
+    <a class="btn btn-gold btn-sm nav-cta" href="#find-us">Visit Our Shop</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <span></span><span></span>
+    </button>
+  </div>
 </header>
 
-<main id="top">
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Mobile">
+    <a href="#top">Home</a>
+    <a href="#story">Our Story</a>
+    <a href="#products">Products</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#find-us">Find Us</a>
+  </nav>
+  <div class="menu-foot">
+    <a class="btn btn-gold" href="tel:+441437765791">Call 01437 765791</a>
+    <p>27 Dew Street, Haverfordwest, SA61 1ST</p>
+  </div>
+</div>
 
-  <section class="hero">
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <p class="kicker">Dew Street, Haverfordwest</p>
-      <h1>Every spice on the shelf, and the <em>fresh</em> things to cook them with.</h1>
-      <p class="lede">The Spice Box is a spice and world-food shop in the middle of Haverfordwest. We stock whole and ground spices by the bag, fresh chillies, curry leaves, okra and coriander, plus tropical fruit, yams, plantain, noodles, sauces and halal meat. We supply shoppers and restaurants alike.</p>
+      <p class="locator"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.2"/></svg>Haverfordwest, Pembrokeshire</p>
+      <h1 id="hero-title" class="hero-title" data-split>A world of <em>flavour,</em> right here in Haverfordwest.</h1>
+      <p class="hero-lede">Spices by the bag, fresh chillies and curry leaves, rice by the sack, and groceries from South Asia, East Asia, Africa, the Caribbean and the Middle East. All under one green sign on Dew Street.</p>
       <div class="hero-actions">
-        <a class="btn btn-solid" href="#shelves">See what's in stock</a>
-        <a class="btn btn-line" href="#visit">How to find us</a>
+        <a class="btn btn-gold" href="#products">Explore Our Products <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-line" href="#find-us">Find Our Shop</a>
       </div>
+      <svg class="hero-motif" viewBox="0 0 320 24" aria-hidden="true"><path d="M0 12h138"/><use href="#anise" x="148" y="0" width="24" height="24"/><path d="M182 12h138"/></svg>
     </div>
-    <figure class="hero-photo">
-      <img src="assets/photos/hero-chillies.webp" alt="Boxes of fresh okra, green chillies, coriander, scotch bonnets and long red chillies under shelves of seed packets" width="1400" height="1020" fetchpriority="high">
+    <figure class="hero-media">
+      <div class="hero-frame">
+        <img class="hero-img" src="assets/img/hero-lg.webp" srcset="assets/img/hero-sm.webp 720w, assets/img/hero-lg.webp 1346w" sizes="(max-width: 900px) 100vw, 56vw" width="1346" height="1150" alt="Boxes of fresh okra, green finger chillies, coriander and long red chillies on the shop floor at The Spice Box" fetchpriority="high">
+      </div>
+      <figcaption>On the shop floor · okra, chillies &amp; coriander</figcaption>
     </figure>
   </section>
 
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <span>Kala jeera</span><span>Panch puran</span><span>Curry leaves</span><span>Amchoor</span><span>Kasoori methi</span><span>Scotch bonnets</span><span>Black cardamom</span><span>Anardana</span><span>Ajwain</span><span>Star anise</span><span>Mace</span><span>Plantain</span><span>Eddoes</span><span>Thai guava</span><span>Gochujang</span><span>Suya pepper</span><span>Buldak</span><span>Dry chingri</span><span>Halal mutton</span><span>Rooh Afza</span>
-      <span>Kala jeera</span><span>Panch puran</span><span>Curry leaves</span><span>Amchoor</span><span>Kasoori methi</span><span>Scotch bonnets</span><span>Black cardamom</span><span>Anardana</span><span>Ajwain</span><span>Star anise</span><span>Mace</span><span>Plantain</span><span>Eddoes</span><span>Thai guava</span><span>Gochujang</span><span>Suya pepper</span><span>Buldak</span><span>Dry chingri</span><span>Halal mutton</span><span>Rooh Afza</span>
-    </div>
+  <div class="signline" aria-label="From the shop sign">
+    <span>Spices</span><svg aria-hidden="true"><use href="#anise"/></svg><span>Oriental Foods</span><svg aria-hidden="true"><use href="#anise"/></svg><span>Retailers &amp; Wholesalers</span>
   </div>
 
-  <section id="aisles" class="aisles">
-    <header class="section-head">
-      <h2>Walk the aisles</h2>
-      <p>Spices cover whole walls, and beyond them are aisles of rice, dals, flours, noodles, sauces, snacks and store-cupboard staples from South Asia, East Asia, Africa and the Caribbean. Here is what you'll find on the way round.</p>
-    </header>
-
-    <div class="aisle-grid">
-      <article class="aisle aisle-wide">
-        <img src="assets/photos/whole-spices.webp" alt="Rows of East End and Heera spice packets in shelf-ready boxes, each with a handwritten label" loading="lazy" width="1000" height="675">
-        <div class="aisle-text">
-          <h3>Whole spices &amp; seeds</h3>
-          <p>A full wall of whole spices: cumin, fennel, nigella, mustard seed (black, brown and yellow), cloves, mace, nutmeg, cardamom (green and black), star anise, ajwain, dill seed and more.</p>
+  <!-- OUR STORY -->
+  <section class="story" id="story" aria-labelledby="story-title">
+    <div class="wrap story-grid">
+      <div class="story-copy">
+        <p class="eyebrow" data-reveal>Our Story</p>
+        <h2 id="story-title" class="display" data-reveal>A small shop front with a <em>big</em> world behind it.</h2>
+        <div class="story-text" data-reveal>
+          <p>From the street, The Spice Box is a green sign and a bay window on Dew Street. Inside, the shelves run floor to ceiling. Whole spices and seeds sit in neat rows, sacks of rice are stacked by the window, and noodles and sauces fill whole aisles. Fresh produce arrives by the box.</p>
+          <p>It's a shop for cooks. Some come in for a single ingredient a recipe asks for, and some come in for the flavours of home. Plenty come in just to see what's on the shelves. We serve home cooks and trade customers alike.</p>
+          <!-- OWNER: add a sentence or two about the shop's history here once you're happy to share it. -->
         </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/ground-spices.webp" alt="400g bags of Kashmiri chilli, smoked paprika, cayenne, white pepper, cinnamon and ginger powder" loading="lazy" width="1000" height="663">
-        <div class="aisle-text">
-          <h3>Ground spices &amp; masalas</h3>
-          <p>Big 400g bags of Kashmiri chilli, haldi, coriander, garam masala, tandoori and Madras blends, alongside our own Spice Box curry mix.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/fresh-veg.webp" alt="Boxes of fresh coriander, curry leaves, long chillies and scotch bonnets" loading="lazy" width="1000" height="370">
-        <div class="aisle-text">
-          <h3>Fresh veg &amp; herbs</h3>
-          <p>Coriander, methi, curry leaves, okra, karela, long aubergines, mooli, gourds, finger chillies and scotch bonnets.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/exotic-fruit.webp" alt="Thai guava, papaya, mini bananas, fresh figs and ripe plantain in their boxes" loading="lazy" width="1000" height="376">
-        <div class="aisle-text">
-          <h3>Tropical fruit</h3>
-          <p>Thai guava, papaya, elaichi bananas, fresh figs and mangoes in season. Plantain comes both green and ripe.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/roots-tubers.webp" alt="Yams, sweet potatoes, eddoes and plantain in cardboard boxes" loading="lazy" width="1000" height="513">
-        <div class="aisle-text">
-          <h3>Roots &amp; tubers</h3>
-          <p>Yam, eddoes, sweet potato and pumpkin, plus loose garlic, ginger and onions sold by weight.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-tall">
-        <img src="assets/photos/herb-stand.webp" alt="A hanging stand of Bodrum and Sofra herb packets: mixed herbs, mint, chives, basil, paprika, tarragon" loading="lazy" width="800" height="1000">
-        <div class="aisle-text">
-          <h3>Herbs &amp; Middle Eastern</h3>
-          <p>Bodrum and Sofra herbs, za'atar, sumac, hibiscus, pine nuts and green peppercorns, all on the stand by the door.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-tall">
-        <img src="assets/photos/east-asian.webp" alt="Shelves of prawn crackers, rice cakes, bamboo shoots, gochujang, kimchi and Thai curry pastes" loading="lazy" width="800" height="1013">
-        <div class="aisle-text">
-          <h3>Oriental foods</h3>
-          <p>Gochujang, ssamjang, kimchi, Thai curry pastes, bamboo shoots, bean curd, pickled ginger, rice cakes and Manora prawn crackers.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/poppadoms.webp" alt="Packs of plain, cumin, green chilli and red chilli poppadoms" loading="lazy" width="1000" height="468">
-        <div class="aisle-text">
-          <h3>Poppadoms</h3>
-          <p>Plain, cumin, red and green chilli, and garlic poppadoms, with Madras poppadoms in 200g and 250g packs.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/caribbean.webp" alt="Dunn's River and Grace seasonings: lamb, oxtail, barbecue, all-purpose and suya pepper" loading="lazy" width="1000" height="333">
-        <div class="aisle-text">
-          <h3>Caribbean &amp; African</h3>
-          <p>Dunn's River and Grace seasonings for jerk, oxtail and curry goat, Tropical Sun, suya pepper and baking powders.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-wide">
-        <img src="assets/photos/noodles.webp" alt="Shelves of Shin Ramyun, Buldak and Bibimmyeon noodles above rice sticks, Wai Wai and Mama packets" loading="lazy" width="1000" height="705">
-        <div class="aisle-text">
-          <h3>Noodles</h3>
-          <p>Shin Ramyun, Buldak in every heat, Neoguri, Chapagetti, Indomie and Mama at 20p a packet. Also rice sticks, vermicelli, sweet potato glass noodles, udon and soba.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/sauces.webp" alt="Three shelves of soy, oyster, fish and chilli sauces in glass bottles" loading="lazy" width="1000" height="547">
-        <div class="aisle-text">
-          <h3>Sauces &amp; condiments</h3>
-          <p>Kikkoman and Chinese soy sauces, oyster sauce, fish sauce, hoisin, teriyaki, mirin, sesame and chilli oil, sweet chilli, banana ketchup and Datu Puti vinegar.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/pickles-tins.webp" alt="Jars of Patak's pastes and pickles above shelves of tinned fruit, vegetables and curries" loading="lazy" width="1000" height="477">
-        <div class="aisle-text">
-          <h3>Pickles, pastes &amp; tins</h3>
-          <p>Patak's pastes and pickles, plus sambal and Laila pickles. Tins include jackfruit, rambutan, lychees, ackee, callaloo, chickpeas and ready-made dals.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/snacks.webp" alt="Shelves of cassava and plantain chips, Bombay mix, bhujia, chai puri and Kerala mixture" loading="lazy" width="1000" height="513">
-        <div class="aisle-text">
-          <h3>Snacks &amp; sweets</h3>
-          <p>Bombay mix, bhujia, sev, cornflake and Kerala mixtures, plantain and cassava chips, Azka toast and rusks, and Choco Pies. There are mochi ice cream and durian in the freezer.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-tall">
-        <img src="assets/photos/cold-drinks.webp" alt="Chilled drinks fridge with Mighty Malt, Maltina, Coco Mojo, Hata ramune and Rubicon mango" loading="lazy" width="800" height="914">
-        <div class="aisle-text">
-          <h3>Drinks</h3>
-          <p>Two chilled fridges and more on the shelves. Rubicon, Maaza and Foco, malts (Vita Malt, Maltina, Mighty Malt, Malta Guinness), Coco Mojo, Hata ramune, Jeera soda, Old Jamaica ginger beer, aloe vera, basil seed drinks and energy drinks.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/roti-ghee.webp" alt="Tins of mackerel and ghee, trays of eggs, and boxes of roti, tortillas and parathas" loading="lazy" width="800" height="700">
-        <div class="aisle-text">
-          <h3>Store cupboard</h3>
-          <p>Roti, parathas, tortillas and giant naan, eggs, pure butter ghee and vegetable ghee, palm oil, cooking oils and tinned tomatoes.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-wide">
-        <img src="assets/photos/dried-fish.webp" alt="Bags of dried fish labelled Dry Anchovy, Dry Chingri, Dry Keski, Dried Prawns and Whole Crayfish" loading="lazy" width="1000" height="578">
-        <div class="aisle-text">
-          <h3>Dried fish</h3>
-          <p>Shutki for Bengali cooking: Bombay duck (loitta), dried anchovy, chingri, keski and prawns, plus whole crayfish for West African soups.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-wide">
-        <img src="assets/photos/rice.webp" alt="Stacked sacks of Tilda, East End, India Gate, Zeeba, Royal Umbrella jasmine and Ramajeyam rice" loading="lazy" width="1000" height="906">
-        <div class="aisle-text">
-          <h3>Rice by the sack</h3>
-          <p>Basmati from Tilda, East End, India Gate, Zeeba and Laila, 1121 sella, Thai jasmine and glutinous rice, sona masoori, Kerala matta, Egyptian, sushi rice and jollof rice, in bags up to 10kg.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/lentils.webp" alt="Two shelves of lentils and beans: butter beans, chana dal, green and brown lentils, toor dal, black turtle beans" loading="lazy" width="1000" height="393">
-        <div class="aisle-text">
-          <h3>Lentils, dals &amp; beans</h3>
-          <p>Chana, toor, moong, urid and masoor dal, green and brown lentils, moth, kala chana, rosecoco, black-eye, kidney, butter and black turtle beans.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/spice-mixes.webp" alt="Rows of Shan and Laziza recipe mix boxes: biryani, nihari, haleem, karahi, tikka" loading="lazy" width="1000" height="444">
-        <div class="aisle-text">
-          <h3>Shan &amp; Laziza mixes</h3>
-          <p>The whole range of Shan mixes: biryanis, nihari, haleem, korma, seekh kabab, chicken tikka and chaat masala. There are also Laziza, MDH and Eastern mixes, plus falooda and kulfi mixes.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/flours.webp" alt="Shelves of powa, maida, chapatti flour, chakki atta, semolina and corn meal" loading="lazy" width="1000" height="821">
-        <div class="aisle-text">
-          <h3>Flours &amp; grains</h3>
-          <p>Chapatti flour and chakki atta, maida, rice, juwar, bajri and makki flour, powa, semolina, corn meal, idli rava, bulgur, couscous and puffed rice.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/nuts.webp" alt="Bags of almonds, cashews, pistachios, pink peanuts, golden sultanas and almond flakes" loading="lazy" width="1000" height="426">
-        <div class="aisle-text">
-          <h3>Nuts &amp; dried fruit</h3>
-          <p>Almonds (whole, flaked and ground), cashews, pistachios, red and pink peanuts, roasted chana, sultanas, figs, dates and baklava.</p>
-        </div>
-      </article>
-      <article class="aisle aisle-tall">
-        <img src="assets/photos/african-staples.webp" alt="Tropical Sun gari and cassava flour above Golden Morn, Semovita, pounded yam and ground rice" loading="lazy" width="800" height="889">
-        <div class="aisle-text">
-          <h3>African staples</h3>
-          <p>Yellow, white and Ijebu gari, cassava flour, Semovita, pounded yam, ground rice, Golden Morn, palm oil, shito and ackee.</p>
-        </div>
-      </article>
-      <article class="aisle">
-        <img src="assets/photos/world-groceries.webp" alt="Shelves of Bodrum and Sofra jars, Polish pickles, PAN maize flour, peanut butter and tinned beans" loading="lazy" width="1000" height="769">
-        <div class="aisle-text">
-          <h3>Middle Eastern &amp; Polish</h3>
-          <p>Bodrum and Sofra pickled peppers, olives and tahini, falafel and basbousa mixes, halawa, Polish sauerkraut and gherkins, and PAN maize flour.</p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section id="halal" class="halal">
-    <header class="section-head">
-      <p class="kicker">Halal freezers</p>
-      <h2>Halal meat, fish and frozen foods</h2>
-      <p>Our chest freezers hold halal meat portioned and labelled in the shop, as well as whole fish and frozen foods from Asia, Africa and the Caribbean.</p>
-    </header>
-    <div class="halal-grid">
-      <figure>
-        <img src="assets/photos/halal-meat.webp" alt="Freezer tubs labelled Beef Liver, Boneless Mutton, Mutton Mince, Chicken Fillets, Gizzard, Chicken Liver, Lamb Mix and Chicken Mince" loading="lazy" width="1000" height="761">
-        <figcaption>
-          <h3>Halal meat</h3>
-          <p>Boneless mutton, mutton mince, lamb mix, goat (free range mixed cuts), chicken fillets, chicken mince, hard chicken, whole chicken and duck, quails, beef ribs, beef meatballs, liver, gizzards, tripe, cow feet and chicken feet.</p>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="assets/photos/frozen-fish.webp" alt="A frozen bag of Crown Farms whole tilapia beside gutted catfish and mackerel" loading="lazy" width="1000" height="812">
-        <figcaption>
-          <h3>Whole fish</h3>
-          <p>Tilapia, catfish, red snapper, milk fish and mackerel, all gutted and frozen. Yellow catfish too.</p>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="assets/photos/frozen-thai.webp" alt="Freezer baskets with Thai basil cubes, a tom yum set, kaffir lime leaves and boxes of frozen durian" loading="lazy" width="1000" height="685">
-        <figcaption>
-          <h3>Frozen veg &amp; fruit</h3>
-          <p>Kaffir lime leaves, Thai basil cubes, tom yum sets, drumsticks, broad beans, leafy greens, small red onions, durian, and mochi ice cream.</p>
-        </figcaption>
-      </figure>
-      <figure>
-        <img src="assets/photos/frozen-paratha.webp" alt="A freezer of Punjabi samosas, dal and aloo parathas, Shana lacha parathas and falafel" loading="lazy" width="800" height="1110">
-        <figcaption>
-          <h3>Frozen parathas &amp; snacks</h3>
-          <p>Parathas (plain, lacha, aloo, dal, garlic), Malabar porotta, chapatis, Punjabi samosas, mini dal puri, onion bhajis, falafel, kibbeh, uzhunnu vada and beef kofta.</p>
-        </figcaption>
+        <p class="story-sign" data-reveal>Over the door: <span>"The Spice Box Food Store · Retailers &amp; Wholesalers · Spices and Oriental Foods"</span></p>
+      </div>
+      <figure class="story-media" data-reveal="image">
+        <div><img src="assets/img/shopfront-lg.webp" srcset="assets/img/shopfront-sm.webp 720w, assets/img/shopfront-lg.webp 1254w" sizes="(max-width: 900px) 100vw, 42vw" width="1254" height="1081" loading="lazy" decoding="async" alt="The Spice Box shopfront on Dew Street: a dark green sign reading The Spice Box Food Store, Retailers and Wholesalers, above a white bay window"></div>
+        <figcaption>27 Dew Street, Haverfordwest</figcaption>
       </figure>
     </div>
   </section>
 
-  <section id="shelves" class="shelves">
-    <header class="section-head">
-      <h2>Is it on the shelf?</h2>
-      <p>This list is taken from what's on our shelves, and stock moves quickly. If you can't see something, call us. We can usually get it in.</p>
-    </header>
-    <div class="finder">
-      <label class="finder-search">
-        <span class="sr-only">Search the shelves</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input id="q" type="search" placeholder="Try ajwain, plantain or kimchi" autocomplete="off">
-      </label>
-      <div class="chips" role="group" aria-label="Filter by aisle" id="chips"></div>
-      <p class="finder-count" id="count" aria-live="polite"></p>
-      <ul class="finder-list" id="list"></ul>
-      <p class="finder-empty" id="empty" hidden>We couldn't find that one on the list. <a href="tel:+441437765791">Ring 01437 765791</a> to ask, and we can usually order it in.</p>
+  <!-- PRODUCTS -->
+  <section class="products" id="products" aria-labelledby="products-title">
+    <div class="wrap">
+      <header class="section-head on-dark">
+        <p class="eyebrow" data-reveal>Explore Our Products</p>
+        <h2 id="products-title" class="display" data-reveal>Seven corners of the shop, <em>one</em> short walk.</h2>
+        <p class="section-intro" data-reveal>Choose a part of the shop to see what's there. Every item listed was spotted on our shelves. Stock changes, though, so if you need something specific, give us a ring before you come in.</p>
+      </header>
+
+      <div class="explorer" data-reveal>
+        <div class="explorer-tabs" role="tablist" aria-label="Product categories">
+          <button role="tab" id="tab-spices" aria-controls="panel" aria-selected="true" data-cat="spices"><span class="num">01</span>Spices, herbs &amp; masalas</button>
+          <button role="tab" id="tab-fresh" aria-controls="panel" aria-selected="false" tabindex="-1" data-cat="fresh"><span class="num">02</span>Fresh fruit &amp; vegetables</button>
+          <button role="tab" id="tab-pantry" aria-controls="panel" aria-selected="false" tabindex="-1" data-cat="pantry"><span class="num">03</span>Rice, dals &amp; flours</button>
+          <button role="tab" id="tab-asian" aria-controls="panel" aria-selected="false" tabindex="-1" data-cat="asian"><span class="num">04</span>East &amp; South-East Asian</button>
+          <button role="tab" id="tab-world" aria-controls="panel" aria-selected="false" tabindex="-1" data-cat="world"><span class="num">05</span>African, Caribbean &amp; Middle Eastern</button>
+          <button role="tab" id="tab-frozen" aria-controls="panel" aria-selected="false" tabindex="-1" data-cat="frozen"><span class="num">06</span>Meat, fish &amp; frozen</button>
+          <button role="tab" id="tab-drinks" aria-controls="panel" aria-selected="false" tabindex="-1" data-cat="drinks"><span class="num">07</span>Snacks, nuts &amp; drinks</button>
+        </div>
+
+        <div class="explorer-stage">
+          <div class="explorer-media">
+            <img data-cat="spices" class="is-active" src="assets/img/cat-spices-lg.webp" srcset="assets/img/cat-spices-sm.webp 720w, assets/img/cat-spices-lg.webp 1346w" sizes="(max-width: 900px) 100vw, 50vw" width="1346" height="943" loading="lazy" decoding="async" alt="A wall of whole spice packets in labelled shelf boxes">
+            <img data-cat="fresh" src="assets/img/cat-fresh-lg.webp" srcset="assets/img/cat-fresh-sm.webp 720w, assets/img/cat-fresh-lg.webp 1346w" sizes="(max-width: 900px) 100vw, 50vw" width="1346" height="759" loading="lazy" decoding="async" alt="Boxes of Thai guava, papaya, small bananas, fresh figs and plantain">
+            <img data-cat="pantry" src="assets/img/cat-pantry-lg.webp" srcset="assets/img/cat-pantry-sm.webp 720w, assets/img/cat-pantry-lg.webp 1346w" sizes="(max-width: 900px) 100vw, 50vw" width="1346" height="1265" loading="lazy" decoding="async" alt="Stacked sacks of basmati, sella and jasmine rice by the shop window">
+            <img data-cat="asian" src="assets/img/cat-asian-lg.webp" srcset="assets/img/cat-asian-sm.webp 720w, assets/img/cat-asian-lg.webp 1208w" sizes="(max-width: 900px) 100vw, 50vw" width="1208" height="851" loading="lazy" decoding="async" alt="Shelves of Korean ramyun and Buldak noodles above rice sticks and vermicelli">
+            <img data-cat="world" src="assets/img/cat-world-lg.webp" srcset="assets/img/cat-world-sm.webp 720w, assets/img/cat-world-lg.webp 931w" sizes="(max-width: 900px) 100vw, 50vw" width="931" height="1034" loading="lazy" decoding="async" alt="Bags of gari and cassava flour above Semovita, Golden Morn and pounded yam">
+            <img data-cat="frozen" src="assets/img/cat-frozen-lg.webp" srcset="assets/img/cat-frozen-sm.webp 720w, assets/img/cat-frozen-lg.webp 1012w" sizes="(max-width: 900px) 100vw, 50vw" width="1012" height="770" loading="lazy" decoding="async" alt="Freezer tubs labelled in the shop: boneless mutton, mutton mince, chicken fillets, lamb mix and chicken mince">
+            <img data-cat="drinks" src="assets/img/cat-drinks-lg.webp" sizes="(max-width: 900px) 100vw, 50vw" width="644" height="736" loading="lazy" decoding="async" alt="A chilled drinks fridge of malt drinks, Coco Mojo bottles, Japanese ramune and mango juice">
+          </div>
+
+          <div class="explorer-panel" id="panel" role="tabpanel" aria-labelledby="tab-spices" aria-live="polite">
+            <p class="panel-count"><span data-count>0</span> items spotted on the shelves</p>
+            <h3 class="panel-title" data-title>Spices, herbs &amp; masalas</h3>
+            <p class="panel-desc" data-desc></p>
+            <ul class="panel-chips" data-chips></ul>
+            <a class="btn btn-gold btn-sm" href="#shelf-search" data-browse>Browse every item <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category copy, read by js/main.js -->
+      <template id="cat-copy">
+        <p data-cat="spices">A whole wall of whole spices and seeds, with ground spices and masalas in big 400g bags. There are Bodrum and Sofra herbs on the stand by the door, and the full run of Shan, Laziza and MDH recipe mixes.</p>
+        <p data-cat="fresh">Coriander, methi, curry leaves, okra and karela come in by the box, along with chillies from finger to scotch bonnet. There's also Thai guava, papaya, plantain, yam and eddoes, and garlic and ginger sold loose.</p>
+        <p data-cat="pantry">Rice by the sack: basmati, sella, jasmine, sona masoori and matta. Every dal, chapatti flours and atta, powa and semolina, plus pickles, pastes, tins and poppadoms.</p>
+        <p data-cat="asian">Korean ramyun and Buldak, Thai and Vietnamese noodles, gochujang and kimchi, Thai curry pastes, and long shelves of soy, oyster, fish and chilli sauces.</p>
+        <p data-cat="world">Gari, Semovita and pounded yam, Grace and Dunn's River seasonings, ackee and callaloo, and dried fish and crayfish. For Middle Eastern and Polish cooking there's tahini, falafel mix, halawa, sauerkraut and pickles.</p>
+        <p data-cat="frozen">Our freezers hold meat portioned and labelled in the shop, including the halal freezer. You'll also find whole tilapia, catfish and red snapper, frozen parathas and samosas, Thai herbs and durian.</p>
+        <p data-cat="drinks">Bombay mix and bhujia, plantain and cassava chips, and nuts and dried fruit. Two chilled fridges hold malt drinks, mango juices, Coco Mojo and Japanese ramune.</p>
+      </template>
     </div>
   </section>
 
-  <section class="band">
-    <img src="assets/photos/walls.webp" alt="The shop's spice walls, from poppadoms down to garlic, ginger, onions and tomatoes" loading="lazy" width="1200" height="944">
-    <blockquote>
-      <p>"Spices and oriental foods"</p>
-      <footer>That's what the sign above the door promises, and the shelves deliver it.</footer>
-    </blockquote>
+  <!-- SHELF SEARCH -->
+  <section class="shelf" id="shelf-search" aria-labelledby="shelf-title">
+    <div class="wrap shelf-grid">
+      <header class="shelf-head">
+        <p class="eyebrow" data-reveal>Search the shelves</p>
+        <h2 id="shelf-title" class="display display-sm" data-reveal>Looking for something <em>particular?</em></h2>
+        <p data-reveal>Search almost 500 items we've spotted in the shop. It understands other names too, so <button type="button" class="link-btn" data-try="saunf">saunf</button> finds fennel, <button type="button" class="link-btn" data-try="poha">poha</button> finds powa and <button type="button" class="link-btn" data-try="taro">taro</button> finds eddoes.</p>
+        <p class="shelf-note" data-reveal>This is a guide to the range, not a live stock list. Prices aren't shown, so please call <a href="tel:+441437765791">01437 765791</a> to check before a special trip.</p>
+      </header>
+      <div class="finder" data-reveal>
+        <label class="finder-search">
+          <span class="sr-only">Search the shelves</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="q" type="search" placeholder="Try ajwain, gochujang or gari" autocomplete="off" enterkeyhint="search">
+        </label>
+        <div class="finder-filters" role="group" aria-label="Filter by category" id="filters"></div>
+        <p class="finder-count" id="count" aria-live="polite"></p>
+        <ul class="finder-list" id="list"></ul>
+        <p class="finder-empty" id="empty" hidden>Nothing on our list matches that. It might still be on the shelf, so <a href="tel:+441437765791">ring 01437 765791</a> and ask.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="wholesale" class="wholesale">
-    <div class="wholesale-copy">
-      <h2>Retailers &amp; wholesalers</h2>
-      <p>We supply local restaurants, takeaways and caterers as well as home cooks. We sell the trade sizes you'd expect: 400g bags, cases of 20 × 100g and catering tubs of dried herbs.</p>
-      <ul class="ticks">
-        <li>Bulk spices, seeds and masalas</li>
-        <li>Fresh produce in by the box</li>
-        <li>Disposables, napkins and carrier bags for takeaways</li>
-        <li>Items not on our shelves can be ordered in</li>
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <header class="section-head on-dark gallery-head">
+        <p class="eyebrow" data-reveal>Gallery</p>
+        <h2 id="gallery-title" class="display" data-reveal>Inside <em>The Spice Box</em></h2>
+      </header>
+      <ul class="gallery-grid">
+        <li class="g g-a" data-reveal="image"><button type="button" data-lightbox="0" aria-label="View larger: ground spices"><img src="assets/img/g-ground-lg.webp" srcset="assets/img/g-ground-sm.webp 720w, assets/img/g-ground-lg.webp 1023w" sizes="(max-width: 700px) 100vw, 58vw" width="1023" height="678" loading="lazy" decoding="async" alt="400g bags of Kashmiri chilli, smoked paprika, cayenne, cinnamon and ginger powder"></button><p class="g-cap">Ground spices in 400g bags</p></li>
+        <li class="g g-b" data-reveal="image"><button type="button" data-lightbox="1" aria-label="View larger: herb stand"><img src="assets/img/g-herbs-lg.webp" sizes="(max-width: 700px) 100vw, 38vw" width="598" height="748" loading="lazy" decoding="async" alt="A hanging stand of Bodrum herb and spice packets: mint, chives, basil, paprika, pine nuts"></button><p class="g-cap">The herb stand by the door</p></li>
+        <li class="g g-c" data-reveal="image"><button type="button" data-lightbox="2" aria-label="View larger: dried chillies"><img src="assets/img/g-chillies-lg.webp" srcset="assets/img/g-chillies-sm.webp 720w, assets/img/g-chillies-lg.webp 1242w" sizes="(max-width: 700px) 100vw, 46vw" width="1242" height="564" loading="lazy" decoding="async" alt="Bags of dried red chillies, curry leaves and dried herbs on the shelf"></button><p class="g-cap">Dried chillies and curry leaves</p></li>
+        <li class="g g-d" data-reveal="image"><button type="button" data-lightbox="3" aria-label="View larger: roots and plantain"><img src="assets/img/g-roots-lg.webp" srcset="assets/img/g-roots-sm.webp 720w, assets/img/g-roots-lg.webp 1346w" sizes="(max-width: 700px) 100vw, 50vw" width="1346" height="690" loading="lazy" decoding="async" alt="Boxes of yams, sweet potatoes, eddoes and ripe plantain"></button><p class="g-cap">Yams, eddoes and plantain</p></li>
+        <li class="g g-e" data-reveal="image"><button type="button" data-lightbox="4" aria-label="View larger: sauce shelves"><img src="assets/img/g-sauces-lg.webp" srcset="assets/img/g-sauces-sm.webp 720w, assets/img/g-sauces-lg.webp 1346w" sizes="100vw" width="1346" height="736" loading="lazy" decoding="async" alt="Three long shelves of soy, oyster, fish and chilli sauces in glass bottles"></button><p class="g-cap">Soy, oyster, fish and chilli sauces</p></li>
       </ul>
-      <a class="btn btn-solid" href="tel:+441437765791">Call for trade prices</a>
     </div>
-    <figure>
-      <img src="assets/photos/masala-shelf.webp" alt="Poppadoms over 400g bags of garam masala, coriander powder, haldi and Madras curry powder" loading="lazy" width="1000" height="709">
-    </figure>
   </section>
 
-  <section id="visit" class="visit">
-    <figure class="visit-photo">
-      <img src="assets/photos/shopfront.webp" alt="The Spice Box shopfront: a green sign reading The Spice Box Food Store, Retailers and Wholesalers, over the shop window" loading="lazy" width="1200" height="980">
-    </figure>
-    <div class="visit-copy">
-      <h2>Come and find us</h2>
-      <dl class="facts">
-        <div><dt>Address</dt><dd>27 Dew Street<br>Haverfordwest<br>SA61 1ST</dd></div>
-        <div><dt>Phone</dt><dd><a href="tel:+441437765791">01437 765791</a></dd></div>
-        <div><dt>Opening hours</dt><dd>Please ring before you travel. <!-- TODO: add confirmed hours --></dd></div>
-        <div><dt>Paying</dt><dd>Cash and card, including American Express</dd></div>
-      </dl>
-      <p class="visit-note">Look for the green sign above the shop window on Dew Street.</p>
-      <div class="hero-actions">
-        <a class="btn btn-solid" href="https://www.google.com/maps/search/?api=1&amp;query=The+Spice+Box+27+Dew+Street+Haverfordwest+SA61+1ST" target="_blank" rel="noopener">Open in Maps</a>
-        <a class="btn btn-line" href="tel:+441437765791">Call the shop</a>
+  <!-- WHY VISIT -->
+  <section class="why" aria-labelledby="why-title">
+    <div class="wrap why-grid">
+      <header class="why-head">
+        <p class="eyebrow" data-reveal>Why visit</p>
+        <h2 id="why-title" class="display" data-reveal>Come for one ingredient. <em>Leave with dinner plans.</em></h2>
+      </header>
+      <ol class="why-list">
+        <li data-reveal>
+          <svg aria-hidden="true" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"/><path d="M20 5v30M5 20h30M9.4 9.4l21.2 21.2M30.6 9.4 9.4 30.6"/></svg>
+          <h3>Many cuisines, one shop</h3>
+          <p>South Asian, East and South-East Asian, African, Caribbean, Middle Eastern and Polish groceries share the same aisles.</p>
+        </li>
+        <li data-reveal>
+          <svg aria-hidden="true" viewBox="0 0 40 40"><path d="M11 14h18l-2 20H13z"/><path d="M15 14c0-4 2-7 5-7s5 3 5 7"/></svg>
+          <h3>Spices by the bag</h3>
+          <p>Whole and ground spices in everyday packs and big 400g bags, so you can buy for a single dish or for a busy kitchen.</p>
+        </li>
+        <li data-reveal>
+          <svg aria-hidden="true" viewBox="0 0 40 40"><path d="M8 30c4-12 12-20 24-22-1 12-9 20-21 24"/><path d="M8 30 22 16"/></svg>
+          <h3>Fresh ingredients, by the box</h3>
+          <p>Curry leaves, methi, okra, karela, scotch bonnets, plantain and yam: the fresh things the recipe actually asks for.</p>
+        </li>
+        <li data-reveal>
+          <svg aria-hidden="true" viewBox="0 0 40 40"><path d="M6 16h28v18H6z"/><path d="M6 16l4-8h20l4 8M16 34V24h8v10"/></svg>
+          <h3>Retail &amp; wholesale</h3>
+          <p>Shopping for a restaurant, a takeaway or a big family event? We sell to trade customers as well as home cooks. Ask in the shop.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FIND US -->
+  <section class="find" id="find-us" aria-labelledby="find-title">
+    <div class="wrap find-grid">
+      <div class="find-copy">
+        <p class="eyebrow" data-reveal>Find Us</p>
+        <h2 id="find-title" class="display" data-reveal>On Dew Street, <em>under the green sign.</em></h2>
+        <address class="find-address" data-reveal>
+          <strong>The Spice Box</strong><br>
+          27 Dew Street<br>
+          Haverfordwest<br>
+          Pembrokeshire<br>
+          SA61 1ST
+        </address>
+        <dl class="find-facts" data-reveal>
+          <div>
+            <dt>Telephone</dt>
+            <dd><a href="tel:+441437765791">01437 765791</a></dd>
+          </div>
+          <div>
+            <dt>Opening hours</dt>
+            <!-- OWNER: public listings disagree on the hours. Replace this with the confirmed times, e.g.
+                 <dd><table class="hours"><tr><th>Mon–Sat</th><td>…</td></tr><tr><th>Sunday</th><td>…</td></tr></table></dd> -->
+            <dd>Please call before you travel, and we'll tell you today's hours.</dd>
+          </div>
+        </dl>
+        <div class="find-actions" data-reveal>
+          <a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&amp;destination=The+Spice+Box%2C+27+Dew+Street%2C+Haverfordwest+SA61+1ST" target="_blank" rel="noopener">Get Directions <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="btn btn-line" href="tel:+441437765791">Call the Shop</a>
+        </div>
+      </div>
+
+      <div class="map" data-reveal="image">
+        <div class="map-placeholder" id="map-ph">
+          <svg class="map-lines" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path d="M-10 210 C 90 190, 150 120, 230 110 S 380 60, 420 40"/>
+            <path d="M120 -10 C 140 80, 170 160, 160 320"/>
+            <path d="M-10 90 C 80 100, 200 160, 420 170"/>
+            <path d="M260 -10 C 250 90, 300 200, 290 320"/>
+          </svg>
+          <div class="map-pin"><svg aria-hidden="true"><use href="#anise"/></svg></div>
+          <div class="map-text">
+            <p><strong>27 Dew Street</strong>Haverfordwest SA61 1ST</p>
+            <button class="btn btn-ink btn-sm" type="button" id="map-load">Show the map</button>
+            <small>Loads Google Maps, which may set its own cookies.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="cta" aria-labelledby="cta-title">
+    <img class="cta-img" src="assets/img/cta-lg.webp" srcset="assets/img/cta-sm.webp 720w, assets/img/cta-lg.webp 1184w" sizes="100vw" width="1184" height="839" loading="lazy" decoding="async" alt="">
+    <div class="wrap cta-inner">
+      <svg class="cta-mark" aria-hidden="true"><use href="#anise"/></svg>
+      <h2 id="cta-title" class="display" data-split>Discover something <em>full of flavour.</em></h2>
+      <p data-reveal>Take a slow walk round the shelves, ask what's new, and find the ingredient you've been missing. We're on Dew Street, in the middle of Haverfordwest.</p>
+      <div class="cta-actions" data-reveal>
+        <a class="btn btn-gold" href="https://www.google.com/maps/dir/?api=1&amp;destination=The+Spice+Box%2C+27+Dew+Street%2C+Haverfordwest+SA61+1ST" target="_blank" rel="noopener">Get Directions</a>
+        <a class="btn btn-line" href="tel:+441437765791">Call 01437 765791</a>
       </div>
     </div>
   </section>
@@ -327,10 +334,47 @@
 </main>
 
 <footer class="foot">
-  <p><strong>The Spice Box Food Store</strong> · Spices and oriental foods · Retail &amp; wholesale</p>
-  <p>27 Dew Street, Haverfordwest SA61 1ST · <a href="tel:+441437765791">01437 765791</a></p>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="wordmark" href="#top" aria-label="The Spice Box, back to top">
+        <svg class="wordmark-mark" aria-hidden="true"><use href="#anise"/></svg>
+        <span class="wordmark-text">The Spice Box<small>Haverfordwest</small></span>
+      </a>
+      <p>Spices and oriental foods.<br>Retailers &amp; wholesalers.</p>
+    </div>
+    <div>
+      <h2 class="foot-h">Visit</h2>
+      <address>27 Dew Street<br>Haverfordwest<br>Pembrokeshire SA61 1ST</address>
+      <p><a href="tel:+441437765791">01437 765791</a></p>
+    </div>
+    <nav aria-label="Footer">
+      <h2 class="foot-h">Explore</h2>
+      <ul>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#shelf-search">Search the shelves</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#find-us">Find Us</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap foot-base">
+    <p>© <span id="year">2026</span> The Spice Box (Haverfordwest) Ltd</p>
+    <p><a href="privacy.html">Privacy</a></p>
+  </div>
 </footer>
 
-<script src="js/spicebox.js" defer></script>
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <figure>
+    <img id="lb-img" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+  <button class="lb-btn lb-close" type="button" data-lb="close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <button class="lb-btn lb-prev" type="button" data-lb="prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button class="lb-btn lb-next" type="button" data-lb="next" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+</dialog>
+
+<script src="js/stock.js" defer></script>
+<script src="js/main.js" defer></script>
 </body>
 </html>
