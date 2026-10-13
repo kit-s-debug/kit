@@ -119,6 +119,18 @@ h1 em, h2 em { font-style: italic; font-weight: 500; color: var(--chilli); }
   .aisle-tall img { min-height: 0; aspect-ratio: 4 / 4.5; }
 }
 
+/* Halal freezers */
+.halal { padding: clamp(56px, 8vw, 110px) var(--gutter); background: var(--green); color: var(--cream); }
+.halal .kicker { color: var(--saffron); }
+.halal .section-head p { color: rgba(251,246,236,.8); }
+.halal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.halal-grid figure { margin: 0; background: var(--green-deep); border-radius: var(--radius); overflow: hidden; }
+.halal-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.halal-grid figcaption { padding: 20px 22px 24px; }
+.halal-grid h3 { font-size: 24px; margin-bottom: 8px; color: var(--saffron); }
+.halal-grid p { margin: 0; font-size: 15.5px; opacity: .85; }
+@media (max-width: 960px) { .halal-grid { grid-template-columns: 1fr; max-width: 560px; } }
+
 /* Finder */
 .shelves { padding: clamp(56px, 8vw, 110px) var(--gutter); background: var(--paper); }
 .finder { max-width: 1100px; }

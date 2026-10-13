@@ -30,6 +30,17 @@ CROPS = {
     "garlic-ginger":      ("powders-garlic-onion.jpg",  (130, 1180, 1170, 1500), 1000),
     "dried-chillies":     ("curry-chilli-leaves.jpg",   (90, 110, 1170, 600),   1000),
     "masala-shelf":       ("poppadoms-peppers.jpg",     (140, 230, 1170, 960),  1000),
+    # second batch (more of the shop: snacks, noodles, sauces, freezers)
+    "halal-meat":         ("halal-freezer-tubs.jpg",    (150, 480, 1030, 1150), 1000),
+    "frozen-fish":        ("frozen-fish.jpg",           (0, 300, 1170, 1250),   1000),
+    "noodles":            ("noodles-sauces-right.jpg",  (0, 90, 1050, 830),     1000),
+    "sauces":             ("noodles-sauces-left.jpg",   (0, 860, 1170, 1500),   1000),
+    "pickles-tins":       ("pickles-tins-left.jpg",     (60, 630, 1170, 1160),  1000),
+    "snacks":             ("snacks-oils-left.jpg",      (0, 300, 1170, 900),    1000),
+    "drinks":             ("snacks-drinks-right.jpg",   (0, 1100, 1170, 1540),  1000),
+    "dried-fish":         ("dried-fish-bulk-spices.jpg", (180, 180, 1080, 700), 1000),
+    "roti-ghee":          ("groceries-roti-ghee.jpg",   (260, 560, 900, 1120),  800),
+    "frozen-thai":        ("frozen-thai.jpg",           (0, 500, 1110, 1260),   1000),
 }
 
 def main():
