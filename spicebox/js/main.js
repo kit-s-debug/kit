@@ -309,7 +309,16 @@
     scrollTrigger: {
       trigger: hero, start: "top top", end: () => "+=" + innerHeight * 2.4,
       pin: true, scrub: 1, anticipatePin: 1,
-      onUpdate: (self) => hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62),
+      onUpdate: (self) => {
+        hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62);
+        // The lid pops off with a puff of every spice in the box
+        if (self.progress > 0.12 && !hero.dataset.puffed && self.direction > 0) {
+          hero.dataset.puffed = "1";
+          const r = dabba.getBoundingClientRect();
+          window.spiceBurst?.(r.left + r.width / 2, r.top + r.height / 2, { count: 90, power: 16, spread: 300 });
+        }
+        if (self.progress < 0.05) delete hero.dataset.puffed;
+      },
     },
   });
   heroTl
@@ -325,6 +334,12 @@
     .to(".hero .fl", { scale: 2.4, opacity: 0, duration: 1, stagger: 0.04 }, 2)
     .to(".hero-flood", { opacity: 1, duration: 0.35 }, 2.95);
   gsap.set(bowls, { scale: 0.6 });
+  // Tap a bowl for a pinch of that spice
+  const bowlSpice = ["haldi", "chilli", "jeera", "rai", "dhania", "elaichi", "laung"];
+  bowls.forEach((li, i) => li.addEventListener("pointerdown", (e) => {
+    window.spiceBurst?.(e.clientX, e.clientY, { count: 40, power: 11, palette: window.SPICE_PALETTES?.[bowlSpice[i]] });
+    gsap.fromTo($("span", li), { scale: 1.5, rotation: -14 }, { scale: 1, rotation: 0, duration: 0.8, ease: "elastic.out(1.2, 0.35)" });
+  }));
 
   /* ---------- Floating spice bits drift with scroll ---------- */
   $$(".fl").forEach((el) => {
@@ -339,7 +354,10 @@
   /* ---------- Manifesto words light up as you read ---------- */
   gsap.fromTo(".manifesto .mw > span", { opacity: 0.14 }, {
     opacity: 1, stagger: 0.08, ease: "none",
-    scrollTrigger: { trigger: ".manifesto", start: "top 65%", end: "bottom 70%", scrub: true },
+    scrollTrigger: {
+      trigger: ".manifesto", start: "top 65%", end: "bottom 70%", scrub: true,
+      onLeave: () => { const r = $(".manifesto-text").getBoundingClientRect(); window.spiceBurst?.(r.right - 60, r.bottom - 30, { count: 50, power: 12, spread: 160, palette: window.SPICE_PALETTES?.chilli.concat(window.SPICE_PALETTES.haldi) }); },
+    },
   });
   gsap.from(".manifesto-tag", { opacity: 0, x: -40, rotation: -8, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
 
@@ -410,10 +428,11 @@
         scale: 1.05, xPercent: 8, ease: "none",
         scrollTrigger: { trigger: a, containerAnimation: slide, start: "left right", end: "right left", scrub: true },
       });
-      gsap.from($$(".aisle-num, h3, .sticker", a), {
-        opacity: 0, y: 40, rotation: 3, stagger: 0.08, duration: 0.8, ease: "expo.out",
-        scrollTrigger: { trigger: a, containerAnimation: slide, start: "left 75%" },
-      });
+      const tl = gsap.timeline({ scrollTrigger: { trigger: a, containerAnimation: slide, start: "left 72%" } });
+      tl.from($$(".aisle-num, h3", a), { opacity: 0, y: 40, rotation: 3, stagger: 0.08, duration: 0.8, ease: "expo.out" })
+        .from($(".sticker", a), { opacity: 0, scale: 2.6, rotation: -24, duration: 0.6, ease: "back.out(2.6)",
+          onComplete() { const r = this.targets()[0].getBoundingClientRect(); window.spiceBurst?.(r.left + r.width / 2, r.top, { count: 20, power: 7 }); } }, 0.25)
+        .from($$(".aisle-chips li", a), { opacity: 0, scale: 0.2, y: 20, rotation: () => gsap.utils.random(-20, 20), stagger: 0.04, duration: 0.8, ease: "elastic.out(1, 0.55)" }, 0.4);
     });
     gsap.from(".aisles-head > *", { opacity: 0, y: 40, stagger: 0.1, duration: 1, ease: "expo.out", scrollTrigger: { trigger: ".aisles", start: "top 70%" } });
   });
@@ -468,6 +487,7 @@
     gsap.to(o, {
       v: end, duration: 2, ease: "power3.out",
       scrollTrigger: { trigger: el, start: "top 90%" },
+      onComplete: () => { if (dec) { const r = el.getBoundingClientRect(); window.spiceBurst?.(r.left + r.width / 2, r.top, { count: 60, power: 12, palette: window.SPICE_PALETTES?.haldi }); } },
       onUpdate: () => {
         el.textContent = o.v.toFixed(dec);
         if (dec) stars.style.setProperty("--fill", `${(o.v / 5) * 100}%`); // stars fill in step with the rating
@@ -484,7 +504,10 @@
 
   /* ---------- Closing: the lid goes back on ---------- */
   const cta = $(".cta");
-  gsap.timeline({ scrollTrigger: { trigger: cta, start: "top bottom", end: "center center", scrub: 1 } })
+  gsap.timeline({ scrollTrigger: {
+    trigger: cta, start: "top bottom", end: "center center", scrub: 1,
+    onLeave: () => { const r = $(".cta-dabba").getBoundingClientRect(); window.spiceBurst?.(r.left + r.width / 2, r.top + r.height * 0.2, { count: 80, power: 15, spread: 220 }); },
+  } })
     .fromTo(".cta-lid", { xPercent: 60, yPercent: -80, rotation: -160, opacity: 0 }, { xPercent: 0, yPercent: 0, rotation: 0, opacity: 1, ease: "power2.out" }, 0)
     .fromTo(".cta-base", { rotation: 40, scale: 0.85 }, { rotation: 0, scale: 1, ease: "power2.out" }, 0);
   rise(".cta-inner > p, .cta-actions", ".cta-inner");

@@ -14,6 +14,7 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 | `index.html` | The page: dabba hero, manifesto, shelf rail, Our Story, the aisles, shelf search, gallery, Why visit, reviews, Find Us, closing, footer |
 | `privacy.html` | A short privacy note |
 | `css/style.css` | All styles. Palette and type tokens are at the top. |
+| `js/flow.js` | Spice confetti (canvas), the spice trail that draws itself down the page, bouncy "pop" entrances |
 | `js/main.js` | Smooth scroll, scroll scenes, cursor, magnetic buttons, tilt, menu, search, lightbox, click-to-load map |
 | `js/stock.js` | About 480 items read off the shop photographs. Edit this to add or remove items. |
 | `js/vendor/` | GSAP 3.12.5, ScrollTrigger and Lenis 1.1.13, self-hosted so the site doesn't depend on a CDN |
@@ -37,6 +38,11 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
   - Scroll-linked effects: parallax spice illustrations, words lighting up as you read, and a shelf rail that
     speeds up and reverses with your scroll.
   - On hover: magnetic buttons, 3D card tilt and a custom cursor.
+  - **Connecting the page:** a dotted trail of seeds with a star anise on its tip draws itself through every
+    section. Sections join with scalloped label edges, and handwritten "next" notes lead into the following section.
+  - **Moments of joy:** spice confetti when the lid comes off and when you tap a bowl (each bowl throws its own
+    spice). Also when headings land, when the rating finishes counting, when the lid goes back on and wherever you
+    click. Stickers and tags bounce onto the screen, and cards wobble when you hover.
   - Under `prefers-reduced-motion`, or if the scripts fail to load, everything is static and fully readable.
 
 ## Verified facts used

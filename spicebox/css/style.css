@@ -519,3 +519,53 @@ section { position: relative; }
   .story-photo img, .aisle-photo img { transform: none; }
   .bowls li { opacity: 0; }
 }
+
+/* ===================================================================
+   Flow: the spice trail, scalloped joins, "next" notes, confetti
+   =================================================================== */
+
+/* Spice confetti canvas (js/flow.js) */
+.spice-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 140; pointer-events: none; }
+
+/* The spice trail: dotted seeds that draw down the page, a star anise on its tip */
+.trail { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: visible; }
+.trail-reveal { fill: none; stroke: #fff; stroke-width: 26; stroke-linecap: round; }
+.trail-dots { fill: none; stroke: var(--gold); stroke-width: 7; stroke-linecap: round; stroke-dasharray: .1 17; opacity: .75; }
+.manifesto .trail-dots { stroke: var(--forest); opacity: .45; }
+.find .trail-dots, .aisles .trail-dots { stroke: var(--saffron); opacity: .5; }
+.trail-head { filter: drop-shadow(0 6px 6px rgba(0,0,0,.3)); transition: opacity .3s; }
+
+/* Scalloped joins: each section's top edge bites into the one above, like the edge of a shelf label */
+.story, .shelf, .why, .reviews, .find, .cta { overflow-x: clip; overflow-y: visible; }
+.story::before, .shelf::before, .why::before, .reviews::before, .find::before, .cta::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -21px; height: 22px; z-index: 3; pointer-events: none;
+  background: inherit;
+  -webkit-mask: radial-gradient(circle at 18px 22px, #000 17px, transparent 17.5px) 0 0 / 36px 22px repeat-x;
+          mask: radial-gradient(circle at 18px 22px, #000 17px, transparent 17.5px) 0 0 / 36px 22px repeat-x;
+}
+.reviews::before { background: var(--paper); }
+.why::before { background: var(--ivory); }
+.find::before { background: var(--forest); }
+.cta::before { background: var(--ink); }
+.story::before { background: var(--ivory); }
+.shelf::before { background: var(--paper); }
+
+/* "Next" notes that lead into the following section */
+.next {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 34px;
+  font-size: clamp(20px, 1.8vw, 26px); color: var(--chilli); text-decoration: none; rotate: -2deg;
+  transition: color .3s, rotate .4s var(--ease);
+}
+.next svg { width: 22px; height: 34px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.next:hover { color: var(--forest); rotate: 1deg; }
+.find .next, .aisles .next { color: var(--saffron); }
+.why .next { display: flex; width: fit-content; margin: 44px auto 0; }
+.story-copy .next { display: flex; width: fit-content; }
+
+/* Hero bowls are tappable once the lid is off */
+.hero.is-open .bowls li { cursor: pointer; }
+.bowls li span { transition: transform .3s var(--ease); }
+
+/* Stickers feel stuck-on: a little peel shadow */
+.sticker, .rail span { position: relative; }
+.sticker::after, .rail span::after { content: ""; position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,.18) 50%); border-radius: 0 0 3px 0; }
