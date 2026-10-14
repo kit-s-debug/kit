@@ -17,7 +17,7 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 | `js/flow.js` | Spice confetti (canvas), the spice trail that draws itself down the page, bouncy "pop" entrances |
 | `js/main.js` | Smooth scroll, scroll scenes, cursor, magnetic buttons, tilt, menu, search, lightbox, click-to-load map |
 | `js/stock.js` | About 480 items read off the shop photographs. Edit this to add or remove items. |
-| `js/vendor/` | GSAP 3.12.5, ScrollTrigger and Lenis 1.1.13, self-hosted so the site doesn't depend on a CDN |
+| `js/vendor/` | GSAP 3.12.5 and ScrollTrigger, self-hosted so the site doesn't depend on a CDN |
 | `art/dabba.py`, `art/render.mjs` | Draw the masala dabba and its lid (SVG), then render them to `assets/img/dabba*.webp` and `lid*.webp` |
 | `photos/originals/`, `photos/crops.py` | The shop photos as supplied, and the script that crops the ones the site uses |
 
@@ -32,7 +32,7 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
   olive `#77845A`, with chilli red for emphasis.
 - **Type:** Rozha One (display, from the Indian Type Foundry), Kalam (handwriting) and Hanken Grotesk (body).
 - **Motion:**
-  - Lenis smooth scrolling.
+  - Native scrolling: nothing smooths, delays or takes over the scroll. Scroll-linked scenes follow the scroll position exactly.
   - Pinned scroll scenes: the dabba opening, the aisles moving sideways, and the gallery zooming out from one
     full-screen photo.
   - Scroll-linked effects: parallax spice illustrations, words lighting up as you read, and a shelf rail that
@@ -40,9 +40,8 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
   - On hover: magnetic buttons, 3D card tilt and a custom cursor.
   - **Connecting the page:** a dotted trail of seeds with a star anise on its tip draws itself through every
     section. Sections join with scalloped label edges, and handwritten "next" notes lead into the following section.
-  - **Moments of joy:** spice confetti when the lid comes off and when you tap a bowl (each bowl throws its own
-    spice). Also when headings land, when the rating finishes counting, when the lid goes back on and wherever you
-    click. Stickers and tags bounce onto the screen, and cards wobble when you hover.
+  - **Moments of joy:** spice confetti at four moments only: when the lid comes off, when you tap a bowl (each
+    bowl throws its own spice), when the rating finishes counting and when the lid goes back on. Stickers and tags bounce onto the screen, and cards wobble when you hover.
   - Under `prefers-reduced-motion`, or if the scripts fail to load, everything is static and fully readable.
 
 ## Verified facts used

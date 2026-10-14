@@ -105,12 +105,7 @@
     laung: [["#5a3322", "seed"], ["#6b3d27", "round"]],
   };
 
-  // A pinch of spice wherever you click (but not when you're clicking a control)
-  document.addEventListener("pointerdown", (e) => {
-    if (e.button !== 0) return;
-    const control = e.target.closest("a, button, input, label, dialog, .finder-list");
-    window.spiceBurst(e.clientX, e.clientY, { count: control ? 14 : 22, power: control ? 6 : 8, spread: 160 });
-  });
+  // Confetti is saved for a few moments: the lid coming off, tapping a bowl, the rating landing, the lid going back on.
 
   /* Everything below needs GSAP */
   const gsap = window.gsap, ST = window.ScrollTrigger;
@@ -173,7 +168,7 @@
     segs.forEach((s) => {
       build(s);
       ST.create({
-        trigger: s.sec, start: "top 85%", end: "bottom 55%", scrub: 0.6,
+        trigger: s.sec, start: "top 85%", end: "bottom 55%", scrub: true,
         onUpdate: (self) => place(s, self.progress),
         onRefresh: (self) => { build(s); place(s, self.progress); },
       });
@@ -201,16 +196,6 @@
     pop(".g-cap", { scale: 0.5, y: 20 });
     pop(".find-facts dt", { scale: 0.4, y: 10 });
 
-    /* ---------- Headings land with a puff of spice ---------- */
-    document.querySelectorAll("[data-split]").forEach((el) => {
-      ST.create({
-        trigger: el, start: "top 80%", once: true,
-        onEnter: () => {
-          const r = el.getBoundingClientRect();
-          setTimeout(() => window.spiceBurst(r.left + Math.min(r.width, 400) * 0.5, r.top + 10, { count: 18, power: 7, spread: 140 }), 450);
-        },
-      });
-    });
 
     /* ---------- The sticker rail wobbles stickers as they pass ---------- */
     document.querySelectorAll(".rail span, .sticker, .why-list li, .score, .g button").forEach((el) => {

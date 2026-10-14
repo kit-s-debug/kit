@@ -1,5 +1,6 @@
 /* The Spice Box: page behaviour.
-   Motion uses GSAP + ScrollTrigger + Lenis, vendored in js/vendor/. If they fail to load, or the visitor
+   Motion uses GSAP + ScrollTrigger, vendored in js/vendor/. Scrolling is the browser's own: no smoothing
+   or momentum is added, and scroll-linked scenes track the scroll position directly. If they fail to load, or the visitor
    prefers reduced motion, the page is fully usable without them: nothing is hidden by CSS alone. */
 (() => {
   "use strict";
@@ -15,17 +16,9 @@
   if (motion) { root.classList.add("motion"); gsap.registerPlugin(ST); }
 
   /* ---------- Smooth scroll ---------- */
-  let lenis = null;
-  if (motion && window.Lenis) {
-    lenis = new window.Lenis({ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true });
-    lenis.on("scroll", ST.update);
-    gsap.ticker.add((t) => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  }
   const scrollToEl = (el) => {
     if (!el) return;
-    if (lenis) lenis.scrollTo(el, { duration: 1.6, offset: el.id === "top" ? 0 : 0 });
-    else el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
   };
   document.addEventListener("click", (e) => {
     const a = e.target.closest('a[href^="#"]');
@@ -81,14 +74,14 @@
     burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     document.body.classList.toggle("locked", open);
     if (open) {
-      lenis?.stop();
+      
       menu.hidden = false;
       nav.classList.add("is-solid");
       nav.classList.remove("is-hidden");
       requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add("is-open")));
       $("a", menu).focus({ preventScroll: true });
     } else {
-      lenis?.start();
+      
       menu.classList.remove("is-open");
       const done = () => { if (!menu.classList.contains("is-open")) menu.hidden = true; };
       reduceMotion ? done() : setTimeout(done, 700);
@@ -191,8 +184,6 @@
   q.addEventListener("input", () => { clearTimeout(qt); qt = setTimeout(render, 80); });
   $$("[data-try]").forEach((b) => b.addEventListener("click", () => { q.value = b.dataset.try; setFilter("all"); q.focus({ preventScroll: true }); }));
   $$("[data-browse]").forEach((a) => a.addEventListener("click", () => { q.value = ""; setFilter(a.dataset.browse); }));
-  list.addEventListener("wheel", (e) => e.stopPropagation(), { passive: true }); // let the list scroll itself under Lenis
-  list.setAttribute("data-lenis-prevent", "");
   render();
 
   /* ---------- Lightbox ---------- */
@@ -212,9 +203,9 @@
   const supportsDialog = typeof lb.showModal === "function";
   $$("[data-lightbox]").forEach((b) => b.addEventListener("click", () => {
     if (!supportsDialog) { window.open(shots[+b.dataset.lightbox].src, "_blank", "noopener"); return; }
-    opener = b; show(+b.dataset.lightbox); lb.showModal(); document.body.classList.add("locked"); lenis?.stop();
+    opener = b; show(+b.dataset.lightbox); lb.showModal(); document.body.classList.add("locked"); 
   }));
-  lb.addEventListener("close", () => { document.body.classList.remove("locked"); lenis?.start(); lbImg.removeAttribute("src"); opener?.focus({ preventScroll: true }); });
+  lb.addEventListener("close", () => { document.body.classList.remove("locked");  lbImg.removeAttribute("src"); opener?.focus({ preventScroll: true }); });
   lb.addEventListener("click", (e) => {
     const action = e.target.closest("[data-lb]")?.dataset.lb;
     if (action === "close" || e.target === lb) lb.close();
@@ -307,8 +298,8 @@
   const heroTl = gsap.timeline({
     defaults: { ease: "none" },
     scrollTrigger: {
-      trigger: hero, start: "top top", end: () => "+=" + innerHeight * 2.4,
-      pin: true, scrub: 1, anticipatePin: 1,
+      trigger: hero, start: "top top", end: () => "+=" + innerHeight * 1.5,
+      pin: true, scrub: true, anticipatePin: 1,
       onUpdate: (self) => {
         hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62);
         // The lid pops off with a puff of every spice in the box
@@ -356,16 +347,15 @@
     opacity: 1, stagger: 0.08, ease: "none",
     scrollTrigger: {
       trigger: ".manifesto", start: "top 65%", end: "bottom 70%", scrub: true,
-      onLeave: () => { const r = $(".manifesto-text").getBoundingClientRect(); window.spiceBurst?.(r.right - 60, r.bottom - 30, { count: 50, power: 12, spread: 160, palette: window.SPICE_PALETTES?.chilli.concat(window.SPICE_PALETTES.haldi) }); },
     },
   });
   gsap.from(".manifesto-tag", { opacity: 0, x: -40, rotation: -8, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
 
   /* ---------- Shelf rail: speeds up and reverses with scroll ---------- */
   const railTrack = $(".rail-track");
-  let railX = 0, railDir = 1;
+  let railX = 0, railDir = 1, railLastY = window.scrollY;
   gsap.ticker.add(() => {
-    const v = lenis ? lenis.velocity : 0;
+    const y = window.scrollY, v = (y - railLastY) * 0.5; railLastY = y;
     if (v) railDir = v > 0 ? 1 : -1;
     railX -= (0.6 + Math.min(Math.abs(v) * 0.5, 18)) * railDir;
     const half = railTrack.scrollWidth / 2;
@@ -416,7 +406,7 @@
     const slide = gsap.to(track, {
       x: () => -dist(), ease: "none",
       scrollTrigger: {
-        trigger: ".aisles", start: "top top", end: () => "+=" + dist(), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1,
+        trigger: ".aisles", start: "top top", end: () => "+=" + dist() * 0.65 /* shelf moves ~1.5x your scroll, so it never feels stuck */, pin: true, scrub: true, invalidateOnRefresh: true, anticipatePin: 1,
         onUpdate: (self) => {
           rail.style.setProperty("--ap", self.progress.toFixed(4));
           tag.textContent = String(Math.min(7, Math.floor(self.progress * 7) + 1)).padStart(2, "0");
@@ -430,8 +420,7 @@
       });
       const tl = gsap.timeline({ scrollTrigger: { trigger: a, containerAnimation: slide, start: "left 72%" } });
       tl.from($$(".aisle-num, h3", a), { opacity: 0, y: 40, rotation: 3, stagger: 0.08, duration: 0.8, ease: "expo.out" })
-        .from($(".sticker", a), { opacity: 0, scale: 2.6, rotation: -24, duration: 0.6, ease: "back.out(2.6)",
-          onComplete() { const r = this.targets()[0].getBoundingClientRect(); window.spiceBurst?.(r.left + r.width / 2, r.top, { count: 20, power: 7 }); } }, 0.25)
+        .from($(".sticker", a), { opacity: 0, scale: 2.6, rotation: -24, duration: 0.6, ease: "back.out(2.6)" }, 0.25)
         .from($$(".aisle-chips li", a), { opacity: 0, scale: 0.2, y: 20, rotation: () => gsap.utils.random(-20, 20), stagger: 0.04, duration: 0.8, ease: "elastic.out(1, 0.55)" }, 0.4);
     });
     gsap.from(".aisles-head > *", { opacity: 0, y: 40, stagger: 0.1, duration: 1, ease: "expo.out", scrollTrigger: { trigger: ".aisles", start: "top 70%" } });
@@ -458,7 +447,7 @@
       return { s: Math.max(innerWidth / w, innerHeight / h) * 1.02, dx: innerWidth / 2 - (o.x + w / 2), dy: innerHeight / 2 - (o.y + h / 2) };
     };
     gsap.timeline({
-      scrollTrigger: { trigger: gallery, start: "top top", end: () => "+=" + innerHeight * 1.3, pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 },
+      scrollTrigger: { trigger: gallery, start: "top top", end: () => "+=" + innerHeight * 0.8, pin: true, scrub: true, invalidateOnRefresh: true, anticipatePin: 1 },
     })
       .fromTo(centre, { x: () => fill().dx, y: () => fill().dy, scale: () => fill().s, borderRadius: 0 },
         { x: 0, y: 0, scale: 1, borderRadius: 14, ease: "power2.inOut", duration: 1 }, 0)
@@ -505,7 +494,7 @@
   /* ---------- Closing: the lid goes back on ---------- */
   const cta = $(".cta");
   gsap.timeline({ scrollTrigger: {
-    trigger: cta, start: "top bottom", end: "center center", scrub: 1,
+    trigger: cta, start: "top bottom", end: "center center", scrub: true,
     onLeave: () => { const r = $(".cta-dabba").getBoundingClientRect(); window.spiceBurst?.(r.left + r.width / 2, r.top + r.height * 0.2, { count: 80, power: 15, spread: 220 }); },
   } })
     .fromTo(".cta-lid", { xPercent: 60, yPercent: -80, rotation: -160, opacity: 0 }, { xPercent: 0, yPercent: 0, rotation: 0, opacity: 1, ease: "power2.out" }, 0)
