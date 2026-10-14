@@ -73,7 +73,8 @@ The site is ready to host as static files, with no build step.
   For a fresh project, create one from this repo and set **Root Directory** to `spicebox`. `vercel.json` adds cache
   and security headers, and `.vercelignore` keeps `photos/` and `art/` (source material, about 29MB) off the live site.
   `404.html` is served automatically for unknown URLs.
-- **After adding the domain, do these once:**
+- **Live at https://www.spiceboxhaverfordwest.com** (the bare domain redirects to www). The canonical tag, absolute og:image, sitemap.xml and robots.txt all use it.
+- **If the domain ever changes,** update these once:
   1. In `index.html`, make `og:image` (and the `"image"` in the JSON-LD) a full URL, e.g. `https://example.co.uk/assets/img/og.jpg`.
      Add `<link rel="canonical" href="https://example.co.uk/">` in the `<head>`.
   2. In `robots.txt`, uncomment the `Sitemap:` line, and add a `sitemap.xml` listing the home page.

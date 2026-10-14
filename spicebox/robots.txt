@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-# Once the site is on its domain, add: Sitemap: https://YOUR-DOMAIN/sitemap.xml
+
+Sitemap: https://www.spiceboxhaverfordwest.com/sitemap.xml
