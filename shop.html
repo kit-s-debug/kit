@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shop | Bambo Vape Shop, Haverfordwest</title>
+<meta name="description" content="Pod kits from IVG, Lost Mary, Pixl, Hayati, SKE and Elux, nic salts, nicotine pouches, hookahs, rolling papers, lighters and grinders at Bambo in Haverfordwest. Over-18s only.">
+<meta name="theme-color" content="#c8102e">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/archivo-variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/bambo.css">
+<script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<div class="strip"><div class="wrap"><span><b>Over-18s only.</b> We operate Challenge 25.</span><span>Pod kits 2 for £12 · Nic salts 4 for £10</span></div></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="Bambo home">BAMBO<span class="slot"></span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="shop.html" aria-current="page">Shop</a>
+      <a href="shop.html?cat=pod-kits">Kits</a>
+      <a href="shop.html?cat=nic-salts">Nic salts</a>
+      <a href="visit.html">Visit</a>
+    </nav>
+    <a class="basket-link" href="checkout.html" aria-label="Order">Order <span class="bag-count" data-bag-count hidden>0</span></a>
+    <a class="btn btn--sm header-cta" href="visit.html">Find the shop</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav"><span>Menu</span><i></i></button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="shop.html" aria-current="page">Shop</a>
+  <a href="shop.html?cat=pod-kits">Kits</a>
+  <a href="shop.html?cat=nic-salts">Nic salts</a>
+  <a href="visit.html">Visit</a>
+  <a class="btn btn--block" href="visit.html" style="font-size:1rem;font-stretch:100%;text-transform:none;letter-spacing:0;border:0">Find the shop</a>
+</nav>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><span>Shop</span></nav>
+      <h1 class="display">Shop</h1>
+      <p class="lede">Order for delivery or collection. Prices as on the shelf labels.</p>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="wrap">
+      <div class="chips" id="chips" role="group" aria-label="Category"></div>
+      <label class="sort"><span class="sr-only">Sort by</span>
+        <select id="sort">
+          <option value="featured">Featured</option>
+          <option value="new">Newest</option>
+          <option value="price-asc">Price, low to high</option>
+          <option value="price-desc">Price, high to low</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <section class="wrap" style="padding-bottom:clamp(4rem,8vw,7rem)">
+    <div class="result-meta"><h2 class="display" id="cat-title" style="color:var(--ink);font-size:clamp(1.4rem,2.6vw,2rem)">Everything</h2><span id="count" aria-live="polite"></span></div>
+    <div class="grid-products grid-products--4" id="catalogue"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-intro">
+        <a class="logo" href="index.html" aria-label="Bambo home">BAMBO<span class="slot"></span></a>
+        <p>Vapes, nic salts, pouches, shisha, papers and lighters in Haverfordwest.</p>
+      </div>
+      <div>
+        <h4 class="label">Shop</h4>
+        <ul>
+          <li><a href="shop.html?cat=pod-kits">Vape kits</a></li>
+          <li><a href="shop.html?cat=nic-salts">Nic salts</a></li>
+          <li><a href="shop.html?cat=pouches">Nicotine pouches</a></li>
+          <li><a href="shop.html?cat=shisha">Shisha</a></li>
+          <li><a href="shop.html?cat=accessories">Papers, lighters &amp; grinders</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="label">Visit</h4>
+        <ul>
+          <li><a href="visit.html">Hours &amp; directions</a></li>
+          <li><a href="visit.html#recycling">Recycling</a></li>
+          <li><a href="visit.html#faq">Questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="label">In store</h4>
+        <ul>
+          <li>Over-18s only</li>
+          <li>Challenge 25</li>
+          <li>Old vapes recycled</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span><strong>Nicotine products are for adults only.</strong> E-liquids containing nicotine carry the warning: this product contains nicotine which is a highly addictive substance. Vaping products are not for non-smokers. Prices and offers are as shown in store.</span>
+      <span>&copy; <span data-year>2026</span> Bambo Shop, 3 Castle Square, Haverfordwest</span>
+    </div>
+    <div class="foot-mark" aria-hidden="true">BAMBO<span class="slot"></span></div>
+  </div>
+</footer>
+
+<dialog class="age" id="age" aria-labelledby="age-title">
+  <div class="age-top">
+    <span class="logo">BAMBO<span class="slot"></span></span>
+    <h2 class="display" id="age-title">Are you 18<br>or over?</h2>
+  </div>
+  <div class="age-body">
+    <p>This site sells nicotine products, which are for adults only. We operate Challenge 25 in store.</p>
+    <div class="age-actions">
+      <button class="btn" type="button" data-age-yes>Yes, I'm 18+</button>
+      <button class="btn btn--ghost" type="button" data-age-no>No</button>
+    </div>
+    <p class="age-no-msg">Sorry, you need to be 18 or over to visit this site.</p>
+  </div>
+</dialog>
+
+<dialog id="product" aria-label="Product details"></dialog>
+<a class="btn bag-fab" id="bag-fab" href="checkout.html">View order <span class="bag-count" data-bag-count>0</span></a>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/bambo.js"></script>
+</body>
+</html>
