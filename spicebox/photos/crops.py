@@ -22,7 +22,7 @@ CROPS = {
     "cat-fresh":    ("spices-fruit-veg.jpg",     (0, 900, 1170, 1560)),
     "cat-pantry":   ("rice-display-2.jpg",       (0, 150, 1170, 1250)),
     "cat-asian":    ("noodles-sauces-right.jpg", (0, 90, 1050, 830)),
-    "cat-world":    ("african-flours.jpg",       (150, 560, 960, 1460)),
+    "cat-world":    ("middle-eastern-polish.jpg", (480, 270, 1170, 1010)),
     "cat-frozen":   ("halal-freezer-tubs.jpg",   (150, 480, 1030, 1150)),
     "cat-drinks":   ("drinks-fridge-right.jpg",  (400, 560, 960, 1200)),
     # gallery
