@@ -31,6 +31,7 @@ CROPS = {
     "g-chillies":   ("curry-chilli-leaves.jpg",  (90, 110, 1170, 600)),
     "g-herbs":      ("herb-stand.jpg",           (430, 380, 950, 1030)),
     "g-sauces":     ("noodles-sauces-left.jpg",  (0, 860, 1170, 1500)),
+    "g-fresh":      ("seeds-okra-herbs.jpg",     (0, 330, 1170, 1560)),  # full width: the gallery's zoom-out photo
     "g-roots":      ("seeds-roots-plantain.jpg", (0, 800, 1170, 1400)),
     # closing call to action
     "cta":          ("poppadoms-peppers.jpg",    (140, 230, 1170, 960)),
@@ -47,7 +48,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     for name, (src, box) in CROPS.items():
         im = ImageOps.exif_transpose(Image.open(HERE / "originals" / src)).convert("RGB").crop(box)
-        large = min(LARGE, round(im.width * 1.15))
+        large = min(LARGE, im.width)  # never upscale: blur shows when it's zoomed
         hs = save(im, min(SMALL, large), OUT / f"{name}-sm.webp")
         hl = save(im, large, OUT / f"{name}-lg.webp")
         print(f"{name:12s} sm {min(SMALL, large)}x{hs}  lg {large}x{hl}")

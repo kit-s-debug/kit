@@ -205,8 +205,9 @@ section { position: relative; }
 .ht-1 { left: var(--gutter); top: 15%; }
 .ht-2 { right: var(--gutter); bottom: calc(15% + 24px); text-align: right; }
 .hero-title em { font-style: normal; color: var(--gold); }
-.dabba { position: relative; z-index: 2; width: min(62vh, 600px); aspect-ratio: 1; will-change: transform; }
+.dabba { position: relative; z-index: 2; width: min(62vh, 600px); aspect-ratio: 1; }
 .dabba img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.dabba img.dabba-zoom { inset: auto; left: 35%; top: 35%; width: 30%; height: 30%; opacity: 0; clip-path: circle(44.6% at 50% 50%); } /* hi-res turmeric bowl for the dive, clipped to the bowl rim */
 .dabba-lid { will-change: transform; filter: drop-shadow(0 30px 40px rgba(0,0,0,.5)); }
 .bowls { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; }
 .bowls li {
@@ -567,3 +568,10 @@ section { position: relative; }
 /* Stickers feel stuck-on: a little peel shadow */
 .sticker, .rail span { position: relative; }
 .sticker::after, .rail span::after { content: ""; position: absolute; right: 0; bottom: 0; width: 12px; height: 12px; background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,.18) 50%); border-radius: 0 0 3px 0; }
+
+/* Gallery zoom-out: a full-size copy of the centre photo shrinks its frame into the grid (object-fit keeps it sharp) */
+.g-zoom { display: none; }
+@media (min-width: 901px) {
+  .motion .g-zoom { display: block; position: absolute; z-index: 5; overflow: hidden; pointer-events: none; background: var(--ink); }
+  .motion .g-zoom img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+}

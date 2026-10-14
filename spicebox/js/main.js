@@ -13,7 +13,11 @@
   const gsap = window.gsap;
   const ST = window.ScrollTrigger;
   const motion = !!(gsap && ST) && !reduceMotion;
-  if (motion) { root.classList.add("motion"); gsap.registerPlugin(ST); }
+  if (motion) {
+    root.classList.add("motion");
+    gsap.registerPlugin(ST);
+    gsap.globalTimeline.timeScale(0.8); // a touch slower and calmer across the board
+  }
 
   /* ---------- Smooth scroll ---------- */
   const scrollToEl = (el) => {
@@ -286,7 +290,7 @@
   /* ---------- Hero: intro, then scroll lifts the lid and dives into the turmeric ---------- */
   const hero = $(".hero");
   const dabba = $(".dabba"), lid = $(".dabba-lid"), base = $(".dabba-base");
-  gsap.timeline({ defaults: { ease: "expo.out" } })
+  gsap.timeline({ defaults: { ease: "power4.out" } })
     .from(base, { scale: 0.55, rotation: -80, opacity: 0, duration: 1.8 })
     .from(lid, { scale: 1.35, rotation: 90, opacity: 0, duration: 1.6 }, 0.15)
     .from(".ht-line .w > span", { yPercent: 110, duration: 1.2, stagger: 0.06 }, 0.35)
@@ -298,8 +302,8 @@
   const heroTl = gsap.timeline({
     defaults: { ease: "none" },
     scrollTrigger: {
-      trigger: hero, start: "top top", end: () => "+=" + innerHeight * 1.5,
-      pin: true, scrub: true, anticipatePin: 1,
+      trigger: hero, start: "top top", end: () => "+=" + innerHeight * 1.8,
+      pin: true, scrub: 0.4, anticipatePin: 1,
       onUpdate: (self) => {
         hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62);
         // The lid pops off with a puff of every spice in the box
@@ -318,10 +322,11 @@
     .to(".ht-1", { xPercent: -14, duration: 1.4 }, 0)
     .to(".ht-2", { xPercent: 14, duration: 1.4 }, 0)
     .to(base, { rotation: -24, duration: 2.4 }, 0)
-    .to(bowls, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.1, ease: "back.out(2)" }, 0.75)
+    .to(bowls, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.1, ease: "back.out(1.5)" }, 0.75)
     .to(".hero-title, .hero-locator", { opacity: 0, duration: 0.4 }, 1.8)
     .to(bowls, { opacity: 0, duration: 0.25 }, 1.9)
-    .to(dabba, { scale: () => (innerWidth < 900 ? 11 : 9), duration: 1.3, ease: "power2.in" }, 2)
+    .to(dabba, { scale: () => (innerWidth < 900 ? 11 : 9), duration: 1.3, ease: "power2.in", force3D: false }, 2) // 2D so the browser repaints sharp
+    .to(".dabba-zoom", { opacity: 1, duration: 0.5, ease: "none" }, 2.1) // swap in the hi-res turmeric bowl as we dive
     .to(".hero .fl", { scale: 2.4, opacity: 0, duration: 1, stagger: 0.04 }, 2)
     .to(".hero-flood", { opacity: 1, duration: 0.35 }, 2.95);
   gsap.set(bowls, { scale: 0.6 });
@@ -329,7 +334,7 @@
   const bowlSpice = ["haldi", "chilli", "jeera", "rai", "dhania", "elaichi", "laung"];
   bowls.forEach((li, i) => li.addEventListener("pointerdown", (e) => {
     window.spiceBurst?.(e.clientX, e.clientY, { count: 40, power: 11, palette: window.SPICE_PALETTES?.[bowlSpice[i]] });
-    gsap.fromTo($("span", li), { scale: 1.5, rotation: -14 }, { scale: 1, rotation: 0, duration: 0.8, ease: "elastic.out(1.2, 0.35)" });
+    gsap.fromTo($("span", li), { scale: 1.5, rotation: -14 }, { scale: 1, rotation: 0, duration: 0.8, ease: "elastic.out(0.9, 0.6)" });
   }));
 
   /* ---------- Floating spice bits drift with scroll ---------- */
@@ -338,7 +343,7 @@
     const speed = parseFloat(el.dataset.speed || "-1");
     gsap.to(el, {
       y: speed * 120, rotation: speed * 40, ease: "none",
-      scrollTrigger: { trigger: el.closest("section"), start: "top bottom", end: "bottom top", scrub: true },
+      scrollTrigger: { trigger: el.closest("section"), start: "top bottom", end: "bottom top", scrub: 0.4 },
     });
   });
 
@@ -346,10 +351,10 @@
   gsap.fromTo(".manifesto .mw > span", { opacity: 0.14 }, {
     opacity: 1, stagger: 0.08, ease: "none",
     scrollTrigger: {
-      trigger: ".manifesto", start: "top 65%", end: "bottom 70%", scrub: true,
+      trigger: ".manifesto", start: "top 65%", end: "bottom 70%", scrub: 0.4,
     },
   });
-  gsap.from(".manifesto-tag", { opacity: 0, x: -40, rotation: -8, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
+  gsap.from(".manifesto-tag", { opacity: 0, x: -40, rotation: -8, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
 
   /* ---------- Shelf rail: speeds up and reverses with scroll ---------- */
   const railTrack = $(".rail-track");
@@ -367,25 +372,25 @@
   /* ---------- Split headings rise when they enter ---------- */
   $$("[data-split]").forEach((el) => {
     gsap.from($$(".w > span", el), {
-      yPercent: 110, rotation: 4, duration: 1.1, stagger: 0.05, ease: "expo.out",
+      yPercent: 110, rotation: 4, duration: 1.1, stagger: 0.05, ease: "power4.out",
       scrollTrigger: { trigger: el, start: "top 85%" },
     });
   });
   // General entrances
   const rise = (targets, trigger, extra = {}) => gsap.from(targets, {
-    opacity: 0, y: 50, duration: 1.1, stagger: 0.1, ease: "expo.out", ...extra,
+    opacity: 0, y: 50, duration: 1.1, stagger: 0.1, ease: "power4.out", ...extra,
     scrollTrigger: { trigger: trigger || targets, start: "top 85%" },
   });
   rise(".story-text p, .sign-quote", ".story-text");
   $$(".eyebrow").forEach((el) => {
     if (el.closest(".aisles, .gallery")) return; // those enter with their pinned scenes
-    gsap.from(el, { opacity: 0, x: -30, duration: 1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 90%" } });
+    gsap.from(el, { opacity: 0, x: -30, duration: 1, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 90%" } });
   });
 
   /* ---------- Story: photo parallax and hand-drawn notes ---------- */
   gsap.fromTo(".story-photo img", { scale: 1.25, yPercent: -6 }, {
     scale: 1.02, yPercent: 6, ease: "none",
-    scrollTrigger: { trigger: ".story-media", start: "top bottom", end: "bottom top", scrub: true },
+    scrollTrigger: { trigger: ".story-media", start: "top bottom", end: "bottom top", scrub: 0.4 },
   });
   gsap.from(".story-photo", { clipPath: "inset(100% 0 0 0 round 200px 200px 18px 18px)", duration: 1.6, ease: "expo.inOut", scrollTrigger: { trigger: ".story-media", start: "top 80%" } });
   $$(".note").forEach((n, i) => {
@@ -393,7 +398,7 @@
     const len = path.getTotalLength();
     gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
     gsap.timeline({ scrollTrigger: { trigger: ".story-media", start: "top 55%" }, delay: 0.6 + i * 0.4 })
-      .from(n, { opacity: 0, scale: 0.6, rotation: i ? -14 : 14, duration: 0.8, ease: "back.out(2)" })
+      .from(n, { opacity: 0, scale: 0.6, rotation: i ? -14 : 14, duration: 0.8, ease: "back.out(1.5)" })
       .to(path, { strokeDashoffset: 0, duration: 0.9, ease: "power2.out" }, 0.2);
   });
 
@@ -406,7 +411,7 @@
     const slide = gsap.to(track, {
       x: () => -dist(), ease: "none",
       scrollTrigger: {
-        trigger: ".aisles", start: "top top", end: () => "+=" + dist() * 0.65 /* shelf moves ~1.5x your scroll, so it never feels stuck */, pin: true, scrub: true, invalidateOnRefresh: true, anticipatePin: 1,
+        trigger: ".aisles", start: "top top", end: () => "+=" + dist() * 0.65 /* shelf moves ~1.5x your scroll, so it never feels stuck */, pin: true, scrub: 0.4, invalidateOnRefresh: true, anticipatePin: 1,
         onUpdate: (self) => {
           rail.style.setProperty("--ap", self.progress.toFixed(4));
           tag.textContent = String(Math.min(7, Math.floor(self.progress * 7) + 1)).padStart(2, "0");
@@ -416,24 +421,24 @@
     $$(".aisle").forEach((a) => {
       gsap.fromTo($(".aisle-photo img", a), { scale: 1.3, xPercent: -8 }, {
         scale: 1.05, xPercent: 8, ease: "none",
-        scrollTrigger: { trigger: a, containerAnimation: slide, start: "left right", end: "right left", scrub: true },
+        scrollTrigger: { trigger: a, containerAnimation: slide, start: "left right", end: "right left", scrub: 0.4 },
       });
       const tl = gsap.timeline({ scrollTrigger: { trigger: a, containerAnimation: slide, start: "left 72%" } });
-      tl.from($$(".aisle-num, h3", a), { opacity: 0, y: 40, rotation: 3, stagger: 0.08, duration: 0.8, ease: "expo.out" })
-        .from($(".sticker", a), { opacity: 0, scale: 2.6, rotation: -24, duration: 0.6, ease: "back.out(2.6)" }, 0.25)
-        .from($$(".aisle-chips li", a), { opacity: 0, scale: 0.2, y: 20, rotation: () => gsap.utils.random(-20, 20), stagger: 0.04, duration: 0.8, ease: "elastic.out(1, 0.55)" }, 0.4);
+      tl.from($$(".aisle-num, h3", a), { opacity: 0, y: 40, rotation: 3, stagger: 0.08, duration: 0.8, ease: "power4.out" })
+        .from($(".sticker", a), { opacity: 0, scale: 2.6, rotation: -24, duration: 0.6, ease: "back.out(1.7)" }, 0.25)
+        .from($$(".aisle-chips li", a), { opacity: 0, scale: 0.2, y: 20, rotation: () => gsap.utils.random(-20, 20), stagger: 0.04, duration: 0.8, ease: "elastic.out(0.8, 0.75)" }, 0.4);
     });
-    gsap.from(".aisles-head > *", { opacity: 0, y: 40, stagger: 0.1, duration: 1, ease: "expo.out", scrollTrigger: { trigger: ".aisles", start: "top 70%" } });
+    gsap.from(".aisles-head > *", { opacity: 0, y: 40, stagger: 0.1, duration: 1, ease: "power4.out", scrollTrigger: { trigger: ".aisles", start: "top 70%" } });
   });
   mm.add("(max-width: 900px)", () => {
     $$(".aisle").forEach((a) => {
-      gsap.from(a, { opacity: 0, y: 70, scale: 0.94, duration: 1, ease: "expo.out", scrollTrigger: { trigger: a, start: "top 88%" } });
-      gsap.fromTo($(".aisle-photo img", a), { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: a, start: "top bottom", end: "bottom top", scrub: true } });
+      gsap.from(a, { opacity: 0, y: 70, scale: 0.94, duration: 1, ease: "power4.out", scrollTrigger: { trigger: a, start: "top 88%" } });
+      gsap.fromTo($(".aisle-photo img", a), { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: a, start: "top bottom", end: "bottom top", scrub: 0.4 } });
     });
   });
 
   /* ---------- Shelf search entrance ---------- */
-  gsap.from(".finder", { y: 80, rotation: 1.5, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".finder", start: "top 85%" } });
+  gsap.from(".finder", { y: 80, rotation: 1.5, opacity: 0, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: ".finder", start: "top 85%" } });
   rise(".shelf-head p", ".shelf-head");
 
   /* ---------- Gallery: the centre photo starts full screen and zooms out into the grid ---------- */
@@ -441,34 +446,46 @@
   const centre = $(".g-c button");
   const offsetIn = (el, anc) => { let x = 0, y = 0; while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; } return { x, y }; };
   mm.add("(min-width: 901px)", () => {
-    const fill = () => {
-      const o = offsetIn(centre, gallery);
-      const w = centre.offsetWidth, h = centre.offsetHeight;
-      return { s: Math.max(innerWidth / w, innerHeight / h) * 1.02, dx: innerWidth / 2 - (o.x + w / 2), dy: innerHeight / 2 - (o.y + h / 2) };
+    const zoom = $(".g-zoom"), zoomImg = $("img", zoom);
+    // Start: as large as the photo's real pixels allow (full screen on most displays), centred.
+    // End: exactly over the centre grid tile. Only the frame's size changes, so the photo is always drawn sharp.
+    const startBox = () => {
+      const cap = ((zoomImg.naturalWidth || 1170) * 1.3) / (window.devicePixelRatio || 1);
+      const w = Math.min(innerWidth, cap), h = Math.min(innerHeight, (cap * innerHeight) / innerWidth);
+      return { left: (innerWidth - w) / 2, top: (innerHeight - h) / 2, width: w, height: h };
     };
+    const endBox = () => { const o = offsetIn(centre, gallery); return { left: o.x, top: o.y, width: centre.offsetWidth, height: centre.offsetHeight }; };
+    gsap.set(centre, { opacity: 0 });
     gsap.timeline({
-      scrollTrigger: { trigger: gallery, start: "top top", end: () => "+=" + innerHeight * 0.8, pin: true, scrub: true, invalidateOnRefresh: true, anticipatePin: 1 },
+      scrollTrigger: {
+        trigger: gallery, start: "top top", end: () => "+=" + innerHeight * 1.0, pin: true, scrub: 0.4, invalidateOnRefresh: true, anticipatePin: 1,
+        // hand over to the real tile once the frame has landed, so its hover and click work
+        onLeave: () => { gsap.set(centre, { opacity: 1 }); gsap.set(zoom, { autoAlpha: 0 }); },
+        onEnterBack: () => { gsap.set(centre, { opacity: 0 }); gsap.set(zoom, { autoAlpha: 1 }); },
+      },
     })
-      .fromTo(centre, { x: () => fill().dx, y: () => fill().dy, scale: () => fill().s, borderRadius: 0 },
-        { x: 0, y: 0, scale: 1, borderRadius: 14, ease: "power2.inOut", duration: 1 }, 0)
-      .fromTo(".g-c img", { scale: 1.15 }, { scale: 1, duration: 1 }, 0)
+      .fromTo(zoom,
+        { left: () => startBox().left, top: () => startBox().top, width: () => startBox().width, height: () => startBox().height, borderRadius: 0 },
+        { left: () => endBox().left, top: () => endBox().top, width: () => endBox().width, height: () => endBox().height, borderRadius: 14, ease: "power2.inOut", duration: 1 }, 0)
+      .fromTo(zoomImg, { scale: 1.06 }, { scale: 1, duration: 1, ease: "none", force3D: false }, 0)
       // fromTo, not from: this timeline is invalidated on refresh, and a from() would re-read its hidden state as the end state
       .fromTo(".g-1, .g-2", { xPercent: -40, opacity: 0 }, { xPercent: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power3.out" }, 0.45)
       .fromTo(".g-3, .g-4", { xPercent: 40, opacity: 0 }, { xPercent: 0, opacity: 1, stagger: 0.1, duration: 0.6, ease: "power3.out" }, 0.45)
       .fromTo(".gallery-head, .g-cap", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4 }, 0.7);
+    return () => gsap.set(centre, { opacity: 1 });
   });
   mm.add("(max-width: 900px)", () => {
-    $$(".g").forEach((g, i) => gsap.from(g, { opacity: 0, y: 60, scale: 0.9, duration: 1, delay: (i % 2) * 0.1, ease: "expo.out", scrollTrigger: { trigger: g, start: "top 90%" } }));
+    $$(".g").forEach((g, i) => gsap.from(g, { opacity: 0, y: 60, scale: 0.9, duration: 1, delay: (i % 2) * 0.1, ease: "power4.out", scrollTrigger: { trigger: g, start: "top 90%" } }));
   });
 
   /* ---------- Why visit: cards fall into place like shelf tags ---------- */
   gsap.from(".why-list li", {
-    y: 140, rotation: (i) => [-8, 6, -4, 9][i % 4], opacity: 0, duration: 1.3, stagger: 0.12, ease: "expo.out",
+    y: 140, rotation: (i) => [-8, 6, -4, 9][i % 4], opacity: 0, duration: 1.3, stagger: 0.12, ease: "power4.out",
     scrollTrigger: { trigger: ".why-list", start: "top 85%" },
   });
 
   /* ---------- Reviews: numbers count up, cards rise ---------- */
-  gsap.from(".reviews-grid > *", { y: 90, opacity: 0, duration: 1.2, stagger: 0.12, ease: "expo.out", scrollTrigger: { trigger: ".reviews-grid", start: "top 85%" } });
+  gsap.from(".reviews-grid > *", { y: 90, opacity: 0, duration: 1.2, stagger: 0.12, ease: "power4.out", scrollTrigger: { trigger: ".reviews-grid", start: "top 85%" } });
   const stars = $(".stars span");
   $$("[data-countup]").forEach((el) => {
     const end = parseFloat(el.dataset.countup), dec = parseInt(el.dataset.decimals || "0", 10);
@@ -483,18 +500,18 @@
       },
     });
   });
-  gsap.from(".stamp", { scale: 2.2, rotation: -40, opacity: 0, duration: 0.9, ease: "back.out(1.6)", scrollTrigger: { trigger: ".stamp", start: "top 85%" } });
-  gsap.from(".themes li", { x: 40, opacity: 0, stagger: 0.1, duration: 0.9, ease: "expo.out", scrollTrigger: { trigger: ".themes", start: "top 85%" } });
+  gsap.from(".stamp", { scale: 2.2, rotation: -40, opacity: 0, duration: 0.9, ease: "back.out(1.4)", scrollTrigger: { trigger: ".stamp", start: "top 85%" } });
+  gsap.from(".themes li", { x: 40, opacity: 0, stagger: 0.1, duration: 0.9, ease: "power4.out", scrollTrigger: { trigger: ".themes", start: "top 85%" } });
 
   /* ---------- Find us ---------- */
   rise(".find-address, .find-facts > div, .find-actions", ".find-copy");
-  gsap.from(".map", { scale: 0.8, rotation: -4, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".map", start: "top 85%" } });
-  gsap.fromTo(".map-lines", { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: ".map", start: "top bottom", end: "bottom top", scrub: true } });
+  gsap.from(".map", { scale: 0.8, rotation: -4, opacity: 0, duration: 1.4, ease: "power4.out", scrollTrigger: { trigger: ".map", start: "top 85%" } });
+  gsap.fromTo(".map-lines", { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: ".map", start: "top bottom", end: "bottom top", scrub: 0.4 } });
 
   /* ---------- Closing: the lid goes back on ---------- */
   const cta = $(".cta");
   gsap.timeline({ scrollTrigger: {
-    trigger: cta, start: "top bottom", end: "center center", scrub: true,
+    trigger: cta, start: "top bottom", end: "center center", scrub: 0.4,
     onLeave: () => { const r = $(".cta-dabba").getBoundingClientRect(); window.spiceBurst?.(r.left + r.width / 2, r.top + r.height * 0.2, { count: 80, power: 15, spread: 220 }); },
   } })
     .fromTo(".cta-lid", { xPercent: 60, yPercent: -80, rotation: -160, opacity: 0 }, { xPercent: 0, yPercent: 0, rotation: 0, opacity: 1, ease: "power2.out" }, 0)
@@ -502,7 +519,7 @@
   rise(".cta-inner > p, .cta-actions", ".cta-inner");
 
   /* ---------- Footer: giant wordmark slides up from behind the rail ---------- */
-  gsap.from(".foot-giant span", { yPercent: 100, ease: "none", scrollTrigger: { trigger: ".foot", start: "top bottom", end: "bottom bottom", scrub: true } });
+  gsap.from(".foot-giant span", { yPercent: 100, ease: "none", scrollTrigger: { trigger: ".foot", start: "top bottom", end: "bottom bottom", scrub: 0.4 } });
 
   // Recalculate pinned scenes once fonts and images have settled
   const refresh = () => ST.refresh();

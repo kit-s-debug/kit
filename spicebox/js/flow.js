@@ -168,7 +168,7 @@
     segs.forEach((s) => {
       build(s);
       ST.create({
-        trigger: s.sec, start: "top 85%", end: "bottom 55%", scrub: true,
+        trigger: s.sec, start: "top 85%", end: "bottom 55%", scrub: 0.4,
         onUpdate: (self) => place(s, self.progress),
         onRefresh: (self) => { build(s); place(s, self.progress); },
       });
@@ -180,26 +180,26 @@
       once: true,
       onEnter: (els) => gsap.fromTo(els,
         { opacity: 0, scale: vars.scale ?? 0.4, y: vars.y ?? 60, rotation: () => gsap.utils.random(-14, 14) },
-        { opacity: 1, scale: 1, y: 0, rotation: (i, el) => parseFloat(el.dataset.rot || 0), duration: vars.duration ?? 1, ease: vars.ease ?? "elastic.out(1, 0.55)", stagger: 0.07, overwrite: "auto" }),
+        { opacity: 1, scale: 1, y: 0, rotation: (i, el) => parseFloat(el.dataset.rot || 0), duration: vars.duration ?? 1.2, ease: vars.ease ?? "elastic.out(0.8, 0.75)", stagger: 0.07, overwrite: "auto" }),
     });
     // On desktop the aisle stickers and chips ride the sideways shelf, so main.js times them to that instead
     const sideways = matchMedia("(min-width: 901px)").matches;
     gsap.set(".filter, .next, .sign-quote, .g-cap, .find-facts dt", { opacity: 0 });
     if (!sideways) {
       gsap.set(".sticker, .aisle-chips li", { opacity: 0 });
-      pop(".sticker", { scale: 2.4, y: -30, ease: "back.out(2.6)", duration: 0.7 });
+      pop(".sticker", { scale: 2.4, y: -30, ease: "back.out(1.7)", duration: 0.7 });
       pop(".aisle-chips li", { scale: 0.2, y: 30 });
     }
     pop(".filter", { scale: 0.3, y: 30 });
     pop(".next", { scale: 0.3, y: 40 });
-    pop(".sign-quote", { scale: 1.6, y: -20, ease: "back.out(2.2)", duration: 0.8 });
+    pop(".sign-quote", { scale: 1.6, y: -20, ease: "back.out(1.5)", duration: 0.8 });
     pop(".g-cap", { scale: 0.5, y: 20 });
     pop(".find-facts dt", { scale: 0.4, y: 10 });
 
 
     /* ---------- The sticker rail wobbles stickers as they pass ---------- */
     document.querySelectorAll(".rail span, .sticker, .why-list li, .score, .g button").forEach((el) => {
-      el.addEventListener("pointerenter", () => gsap.fromTo(el, { rotation: "-=6" }, { rotation: "+=6", duration: 0.9, ease: "elastic.out(1.4, 0.3)" }));
+      el.addEventListener("pointerenter", () => gsap.fromTo(el, { rotation: "-=6" }, { rotation: "+=6", duration: 0.9, ease: "elastic.out(1, 0.5)" }));
     });
 
     /* ---------- "Next" notes: a joyful hop when they come into view, then a nudge every few seconds ---------- */

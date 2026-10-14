@@ -32,7 +32,7 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
   olive `#77845A`, with chilli red for emphasis.
 - **Type:** Rozha One (display, from the Indian Type Foundry), Kalam (handwriting) and Hanken Grotesk (body).
 - **Motion:**
-  - Native scrolling: nothing smooths, delays or takes over the scroll. Scroll-linked scenes follow the scroll position exactly.
+  - Native scrolling: nothing smooths, delays or takes over the scroll itself. Scroll-linked scenes follow it with a light 0.4s ease, and timed animations run at 0.8x speed for a calmer feel.
   - Pinned scroll scenes: the dabba opening, the aisles moving sideways, and the gallery zooming out from one
     full-screen photo.
   - Scroll-linked effects: parallax spice illustrations, words lighting up as you read, and a shelf rail that
