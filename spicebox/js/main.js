@@ -20,8 +20,18 @@
   }
 
   /* ---------- Smooth scroll ---------- */
+  /* Calmer wheel scrolling: each notch moves about half as far, with a short ease (no long glide).
+     Touch scrolling stays native. */
+  let lenis = null;
+  if (motion && window.Lenis) {
+    lenis = new window.Lenis({ smoothWheel: true, wheelMultiplier: 0.5, lerp: 0.2, syncTouch: false });
+    lenis.on("scroll", ST.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
   const scrollToEl = (el) => {
     if (!el) return;
+    if (lenis) { lenis.scrollTo(el, { duration: 1.2 }); return; }
     el.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
   };
   document.addEventListener("click", (e) => {
@@ -79,6 +89,7 @@
     document.body.classList.toggle("locked", open);
     if (open) {
       
+      lenis?.stop();
       menu.hidden = false;
       nav.classList.add("is-solid");
       nav.classList.remove("is-hidden");
@@ -86,6 +97,7 @@
       $("a", menu).focus({ preventScroll: true });
     } else {
       
+      lenis?.start();
       menu.classList.remove("is-open");
       const done = () => { if (!menu.classList.contains("is-open")) menu.hidden = true; };
       reduceMotion ? done() : setTimeout(done, 700);
@@ -207,9 +219,9 @@
   const supportsDialog = typeof lb.showModal === "function";
   $$("[data-lightbox]").forEach((b) => b.addEventListener("click", () => {
     if (!supportsDialog) { window.open(shots[+b.dataset.lightbox].src, "_blank", "noopener"); return; }
-    opener = b; show(+b.dataset.lightbox); lb.showModal(); document.body.classList.add("locked"); 
+    opener = b; show(+b.dataset.lightbox); lb.showModal(); document.body.classList.add("locked"); lenis?.stop(); 
   }));
-  lb.addEventListener("close", () => { document.body.classList.remove("locked");  lbImg.removeAttribute("src"); opener?.focus({ preventScroll: true }); });
+  lb.addEventListener("close", () => { document.body.classList.remove("locked"); lenis?.start();  lbImg.removeAttribute("src"); opener?.focus({ preventScroll: true }); });
   lb.addEventListener("click", (e) => {
     const action = e.target.closest("[data-lb]")?.dataset.lb;
     if (action === "close" || e.target === lb) lb.close();

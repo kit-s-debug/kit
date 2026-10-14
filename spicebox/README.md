@@ -17,7 +17,7 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 | `js/flow.js` | Spice confetti (canvas), the spice trail that draws itself down the page, bouncy "pop" entrances |
 | `js/main.js` | Smooth scroll, scroll scenes, cursor, magnetic buttons, tilt, menu, search, lightbox, click-to-load map |
 | `js/stock.js` | About 480 items read off the shop photographs. Edit this to add or remove items. |
-| `js/vendor/` | GSAP 3.12.5 and ScrollTrigger, self-hosted so the site doesn't depend on a CDN |
+| `js/vendor/` | GSAP 3.12.5, ScrollTrigger and Lenis 1.1.13, self-hosted so the site doesn't depend on a CDN |
 | `art/dabba.py`, `art/render.mjs` | Draw the masala dabba and its lid (SVG), then render them to `assets/img/dabba*.webp` and `lid*.webp` |
 | `photos/originals/`, `photos/crops.py` | The shop photos as supplied, and the script that crops the ones the site uses |
 
@@ -32,7 +32,7 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
   olive `#77845A`, with chilli red for emphasis.
 - **Type:** Rozha One (display, from the Indian Type Foundry), Kalam (handwriting) and Hanken Grotesk (body).
 - **Motion:**
-  - Native scrolling: nothing smooths, delays or takes over the scroll itself. Scroll-linked scenes follow it with a light 0.4s ease, and timed animations run at 0.8x speed for a calmer feel.
+  - Scrolling: a mouse wheel moves the page about half as far per notch, with a short ease (settles in about 0.3s). Touch scrolling is native. Scroll-linked scenes follow the scroll with a light 0.4s ease, and timed animations run at 0.8x speed.
   - Pinned scroll scenes: the dabba opening, the aisles moving sideways, and the gallery zooming out from one
     full-screen photo.
   - Scroll-linked effects: parallax spice illustrations, words lighting up as you read, and a shelf rail that
