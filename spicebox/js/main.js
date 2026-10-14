@@ -393,7 +393,7 @@
     opacity: 0, y: 50, duration: 1.1, stagger: 0.1, ease: "power4.out", ...extra,
     scrollTrigger: { trigger: trigger || targets, start: "top 85%" },
   });
-  rise(".story-text p, .sign-quote", ".story-text");
+  rise(".story-text p", ".story-text"); // .sign-quote pops in via flow.js
   $$(".eyebrow").forEach((el) => {
     if (el.closest(".aisles, .gallery")) return; // those enter with their pinned scenes
     gsap.from(el, { opacity: 0, x: -30, duration: 1, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 90%" } });
@@ -451,7 +451,7 @@
 
   /* ---------- Shelf search entrance ---------- */
   gsap.from(".finder", { y: 80, rotation: 1.5, opacity: 0, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: ".finder", start: "top 85%" } });
-  rise(".shelf-head p", ".shelf-head");
+  rise(".shelf-head p:not(.eyebrow)", ".shelf-head"); // the eyebrow has its own entrance
 
   /* ---------- Gallery: the centre photo starts full screen and zooms out into the grid ---------- */
   const gallery = $(".gallery");

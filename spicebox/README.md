@@ -64,3 +64,21 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 5. **Parking.** The Find Us section mentions the pay & display car park on Dew Street, plus Rifleman's Field and Castle Lake (from Parkopedia and the council's car park list). Please check this is still right.
 6. **Ratings.** The Reviews section shows 4.7/5 from 162 reviews (Cylex) and food hygiene 4 (Good, 28 Jan 2026, FSA record 857091). Update these when they change. Real customer quotes can be pasted where the `OWNER:` comment says.
 7. **Social image.** Once the site has a domain, change `og:image` to an absolute URL.
+
+## Going live
+
+The site is ready to host as static files, with no build step.
+
+- **Vercel:** create a project from this repo and set **Root Directory** to `spicebox`. `vercel.json` adds cache
+  and security headers, and `.vercelignore` keeps `photos/` and `art/` (source material, about 29MB) off the live site.
+  `404.html` is served automatically for unknown URLs.
+- **After adding the domain, do these once:**
+  1. In `index.html`, make `og:image` (and the `"image"` in the JSON-LD) a full URL, e.g. `https://example.co.uk/assets/img/og.jpg`.
+     Add `<link rel="canonical" href="https://example.co.uk/">` in the `<head>`.
+  2. In `robots.txt`, uncomment the `Sitemap:` line, and add a `sitemap.xml` listing the home page.
+  3. Add the domain in Google Search Console and submit the sitemap.
+- **Checked before launch (October 2026):**
+  - six screen sizes from 360px to 1920px wide: no console errors, no failed requests, no sideways scroll;
+  - all 26 in-page links, every search filter, all five lightbox photos and the map;
+  - keyboard tab order and reduced motion;
+  - with JavaScript off, and with the animation scripts blocked.

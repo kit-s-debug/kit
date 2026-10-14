@@ -16,7 +16,6 @@ OUT = HERE.parent / "assets" / "img"
 SMALL, LARGE = 720, 1400
 
 CROPS = {
-    "hero":         ("seeds-okra-herbs.jpg",     (0, 560, 1170, 1560)),
     "shopfront":    ("shopfront-angle.jpg",      (60, 420, 1150, 1360)),
     # product categories
     "cat-spices":   ("whole-spices-wall.jpg",    (0, 380, 1170, 1200)),
@@ -32,9 +31,7 @@ CROPS = {
     "g-herbs":      ("herb-stand.jpg",           (430, 380, 950, 1030)),
     "g-sauces":     ("noodles-sauces-left.jpg",  (0, 860, 1170, 1500)),
     "g-fresh":      ("seeds-okra-herbs.jpg",     (0, 330, 1170, 1560)),  # full width: the gallery's zoom-out photo
-    "g-roots":      ("seeds-roots-plantain.jpg", (0, 800, 1170, 1400)),
     # closing call to action
-    "cta":          ("poppadoms-peppers.jpg",    (140, 230, 1170, 960)),
 }
 
 def save(im, width, path):
@@ -49,12 +46,12 @@ def main():
     for name, (src, box) in CROPS.items():
         im = ImageOps.exif_transpose(Image.open(HERE / "originals" / src)).convert("RGB").crop(box)
         large = min(LARGE, im.width)  # never upscale: blur shows when it's zoomed
-        hs = save(im, min(SMALL, large), OUT / f"{name}-sm.webp")
+        hs = save(im, SMALL, OUT / f"{name}-sm.webp") if large > SMALL else None
         hl = save(im, large, OUT / f"{name}-lg.webp")
         print(f"{name:12s} sm {min(SMALL, large)}x{hs}  lg {large}x{hl}")
     # social sharing card
-    hero = ImageOps.exif_transpose(Image.open(HERE / "originals" / CROPS["hero"][0])).convert("RGB")
-    ImageOps.fit(hero.crop(CROPS["hero"][1]), (1200, 630), Image.LANCZOS).save(OUT / "og.jpg", quality=82)
+    og = ImageOps.exif_transpose(Image.open(HERE / "originals" / "seeds-okra-herbs.jpg")).convert("RGB")
+    ImageOps.fit(og.crop((0, 560, 1170, 1560)), (1200, 630), Image.LANCZOS).save(OUT / "og.jpg", quality=82)
 
 if __name__ == "__main__":
     main()
