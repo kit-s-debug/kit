@@ -69,7 +69,8 @@ cd spicebox && python3 -m http.server 8000   # then open http://localhost:8000
 
 The site is ready to host as static files, with no build step.
 
-- **Vercel:** create a project from this repo and set **Root Directory** to `spicebox`. `vercel.json` adds cache
+- **Vercel:** the project is `kit-flowstate` (Framework preset: Other, Root Directory: `spicebox`, Production branch: `claude/new-session-wqnw2h`).
+  For a fresh project, create one from this repo and set **Root Directory** to `spicebox`. `vercel.json` adds cache
   and security headers, and `.vercelignore` keeps `photos/` and `art/` (source material, about 29MB) off the live site.
   `404.html` is served automatically for unknown URLs.
 - **After adding the domain, do these once:**
