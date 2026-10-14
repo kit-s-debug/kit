@@ -20,11 +20,11 @@
   }
 
   /* ---------- Smooth scroll ---------- */
-  /* Calmer wheel scrolling: each notch moves about half as far, with a short ease (no long glide).
+  /* Calmer wheel scrolling: each notch moves about 40% as far, with a short ease (no long glide).
      Touch scrolling stays native. */
   let lenis = null;
   if (motion && window.Lenis) {
-    lenis = new window.Lenis({ smoothWheel: true, wheelMultiplier: 0.5, lerp: 0.2, syncTouch: false });
+    lenis = new window.Lenis({ smoothWheel: true, wheelMultiplier: 0.4, lerp: 0.2, syncTouch: false });
     lenis.on("scroll", ST.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
