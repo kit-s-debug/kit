@@ -307,7 +307,29 @@ section { position: relative; }
 .aisle-link { font: 400 20px var(--hand); color: var(--saffron); text-decoration: none; display: inline-block; transition: transform .3s var(--ease); }
 .aisle-link:hover { transform: translateX(6px); }
 .aisles-rail { display: none; }
-@media (max-width: 900px) { .aisle { grid-template-columns: 1fr; } }
+.aisles-swipe { display: none; }
+/* Phones and small tablets: a swipeable row of compact cards instead of seven tall ones */
+@media (max-width: 900px) {
+  .aisles-pin { padding-bottom: 70px; }
+  .aisles-head { margin-bottom: 22px; }
+  .aisles-swipe { display: block; font-size: 19px; color: var(--saffron); margin: 12px 0 0; }
+  .aisles-track {
+    display: flex; gap: 14px; max-width: none; margin: 0; padding: 4px var(--gutter) 18px;
+    overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--gutter); scrollbar-width: none;
+    -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+  }
+  .aisles-track::-webkit-scrollbar { display: none; }
+  .aisle { flex: 0 0 min(80vw, 360px); scroll-snap-align: start; grid-template-columns: 1fr; align-content: start; gap: 14px; padding: 12px 12px 18px; border-radius: 18px; }
+  .aisle-photo { aspect-ratio: 4 / 3; border-radius: 12px; }
+  .aisle-photo img { transform: none; }
+  .aisle-num { font-size: 46px; margin-bottom: 4px; }
+  .aisle h3 { font-size: 23px; margin-bottom: 8px; }
+  .aisle-body > p:not(.aisle-num):not(.sticker) { font-size: 14.5px; line-height: 1.5; }
+  .sticker { font-size: 17px; margin: 4px 0 10px; }
+  .aisle-chips { margin-bottom: 14px; gap: 6px; }
+  .aisle-chips li { font-size: 12.5px; padding: 4px 10px; }
+  .aisle-chips li:nth-child(n+5) { display: none; }
+}
 
 /* Desktop with motion: the track becomes a horizontal shelf */
 @media (min-width: 901px) {
@@ -421,7 +443,14 @@ section { position: relative; }
 .why-ic { position: absolute; right: -18px; bottom: -18px; width: 120px; height: 120px; opacity: .25; transition: transform .8s var(--ease), opacity .4s; }
 .why-list li:hover .why-ic { transform: rotate(40deg) scale(1.15); opacity: .55; }
 @media (max-width: 1000px) { .why-list { grid-template-columns: 1fr 1fr; } .why-list li { margin-top: 0 !important; } }
-@media (max-width: 560px) { .why-list { grid-template-columns: 1fr; } .why-list li { min-height: 0; } }
+@media (max-width: 560px) {
+  .why-list { gap: 10px; }
+  .why-list li { min-height: 0; padding: 18px 14px 20px; border-radius: 16px; }
+  .why-n { font-size: 24px; }
+  .why-list h3 { font-size: 18.5px; margin: 6px 0 8px; }
+  .why-list p { font-size: 13.5px; line-height: 1.45; }
+  .why-ic { width: 70px; height: 70px; right: -12px; bottom: -12px; }
+}
 
 /* ---------- Reviews ---------- */
 .reviews { padding: clamp(100px, 12vw, 160px) 0; background: var(--paper); }
@@ -454,7 +483,21 @@ section { position: relative; }
 .themes-note { font-size: 14px; color: var(--muted); }
 .themes-note a { color: var(--forest); font-weight: 700; text-decoration-color: var(--gold); }
 @media (max-width: 1080px) { .reviews-grid { grid-template-columns: 1fr 1fr; } .themes { grid-column: 1 / -1; padding: 12px 0 0; } }
-@media (max-width: 600px) { .reviews-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) {
+  .reviews-grid { gap: 10px; }
+  .score { padding: 20px 14px 18px; border-radius: 16px; }
+  .score-num { font-size: 58px; }
+  .score-num small { display: block; margin: 4px 0 0; font-size: 15px; }
+  .stars { font-size: 15px; margin: 8px 0 10px; letter-spacing: .08em; }
+  .score-label { font-size: 13px; line-height: 1.45; }
+  .score-link { font-size: 16px; padding-top: 12px; }
+  .stamp { width: 92px; height: 92px; margin-bottom: 10px; }
+  .stamp text { font-size: 13px; }
+  .stamp span { inset: 19px; font-size: 34px; }
+  .fsa-break div { flex-direction: column; gap: 0; padding: 6px 0; font-size: 12px; }
+  .fsa-break dd { text-align: left; }
+}
+@media (max-width: 359px) { .reviews-grid, .why-list { grid-template-columns: 1fr; } }
 
 /* ---------- Find us ---------- */
 .find { padding: clamp(100px, 12vw, 160px) 0; background: var(--forest); color: var(--ivory); overflow: hidden; }

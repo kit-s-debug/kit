@@ -16,6 +16,7 @@
   if (motion) {
     root.classList.add("motion");
     gsap.registerPlugin(ST);
+    ST.config({ ignoreMobileResize: true }); // the phone address bar showing/hiding must not re-lay-out the scenes mid-scroll
     gsap.globalTimeline.timeScale(0.8); // a touch slower and calmer across the board
   }
 
@@ -311,36 +312,56 @@
     .from(".hero .fl", { opacity: 0, scale: 0.4, duration: 1.4, stagger: 0.08 }, 0.6);
 
   const bowls = $$(".bowls li");
-  const heroTl = gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      trigger: hero, start: "top top", end: () => "+=" + innerHeight * 1.8,
-      pin: true, scrub: 0.4, anticipatePin: 1,
-      onUpdate: (self) => {
-        hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62);
-        // The lid pops off with a puff of every spice in the box
-        if (self.progress > 0.12 && !hero.dataset.puffed && self.direction > 0) {
-          hero.dataset.puffed = "1";
-          const r = dabba.getBoundingClientRect();
-          window.spiceBurst?.(r.left + r.width / 2, r.top + r.height / 2, { count: 90, power: 16, spread: 300 });
-        }
-        if (self.progress < 0.05) delete hero.dataset.puffed;
+  const mm = gsap.matchMedia();
+  const puff = (self, at) => {
+    // The lid pops off with a puff of every spice in the box
+    if (self.progress > at && !hero.dataset.puffed && self.direction > 0) {
+      hero.dataset.puffed = "1";
+      const r = dabba.getBoundingClientRect();
+      window.spiceBurst?.(r.left + r.width / 2, r.top + r.height / 2, { count: 90, power: 16, spread: 300 });
+    }
+    if (self.progress < 0.05) delete hero.dataset.puffed;
+  };
+  mm.add("(min-width: 901px)", () => {
+    gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: hero, start: "top top", end: () => "+=" + innerHeight * 1.8,
+        pin: true, scrub: 0.4, anticipatePin: 1,
+        onUpdate: (self) => {
+          hero.classList.toggle("is-open", self.progress > 0.25 && self.progress < 0.62);
+          puff(self, 0.12);
+        },
       },
-    },
+    })
+      .to(lid, { xPercent: 70, yPercent: -95, rotation: 160, ease: "power2.in", duration: 1 }, 0)
+      .to(".hero-hint, .hero-foot", { opacity: 0, y: 30, duration: 0.4 }, 0)
+      .to(".ht-1", { xPercent: -14, duration: 1.4 }, 0)
+      .to(".ht-2", { xPercent: 14, duration: 1.4 }, 0)
+      .to(base, { rotation: -24, duration: 2.4 }, 0)
+      .to(bowls, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.1, ease: "back.out(1.5)" }, 0.75)
+      .to(".hero-title, .hero-locator", { opacity: 0, duration: 0.4 }, 1.8)
+      .to(bowls, { opacity: 0, duration: 0.25 }, 1.9)
+      .to(dabba, { scale: 9, duration: 1.3, ease: "power2.in", force3D: false }, 2) // 2D so the browser repaints sharp
+      .to(".dabba-zoom", { opacity: 1, duration: 0.5, ease: "none" }, 2.1) // swap in the hi-res turmeric bowl as we dive
+      .to(".hero .fl", { scale: 2.4, opacity: 0, duration: 1, stagger: 0.04 }, 2)
+      .to(".hero-flood", { opacity: 1, duration: 0.35 }, 2.95);
   });
-  heroTl
-    .to(lid, { xPercent: 70, yPercent: -95, rotation: 160, ease: "power2.in", duration: 1 }, 0)
-    .to(".hero-hint, .hero-foot", { opacity: 0, y: 30, duration: 0.4 }, 0)
-    .to(".ht-1", { xPercent: -14, duration: 1.4 }, 0)
-    .to(".ht-2", { xPercent: 14, duration: 1.4 }, 0)
-    .to(base, { rotation: -24, duration: 2.4 }, 0)
-    .to(bowls, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.1, ease: "back.out(1.5)" }, 0.75)
-    .to(".hero-title, .hero-locator", { opacity: 0, duration: 0.4 }, 1.8)
-    .to(bowls, { opacity: 0, duration: 0.25 }, 1.9)
-    .to(dabba, { scale: () => (innerWidth < 900 ? 11 : 9), duration: 1.3, ease: "power2.in", force3D: false }, 2) // 2D so the browser repaints sharp
-    .to(".dabba-zoom", { opacity: 1, duration: 0.5, ease: "none" }, 2.1) // swap in the hi-res turmeric bowl as we dive
-    .to(".hero .fl", { scale: 2.4, opacity: 0, duration: 1, stagger: 0.04 }, 2)
-    .to(".hero-flood", { opacity: 1, duration: 0.35 }, 2.95);
+  // Phones: no pinning and no zoom dive (both fight the browser's address bar and stutter on touch).
+  // The lid lifts and the bowls appear as the hero scrolls away, at your pace.
+  mm.add("(max-width: 900px)", () => {
+    gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: hero, start: "top top", end: "bottom top", scrub: 0.4,
+        onUpdate: (self) => { hero.classList.toggle("is-open", self.progress > 0.2); puff(self, 0.1); },
+      },
+    })
+      .to(lid, { xPercent: 60, yPercent: -80, rotation: 140, ease: "power2.in", duration: 0.5 }, 0)
+      .to(".hero-foot", { opacity: 0, y: 30, duration: 0.3 }, 0)
+      .to(base, { rotation: -24, duration: 1 }, 0)
+      .to(bowls, { opacity: 1, scale: 1, duration: 0.2, stagger: 0.04, ease: "back.out(1.5)" }, 0.25);
+  });
   gsap.set(bowls, { scale: 0.6 });
   // Tap a bowl for a pinch of that spice
   const bowlSpice = ["haldi", "chilli", "jeera", "rai", "dhania", "elaichi", "laung"];
@@ -415,7 +436,6 @@
   });
 
   /* ---------- Aisles: horizontal shelf on desktop, stacked on mobile ---------- */
-  const mm = gsap.matchMedia();
   const track = $("#aisles-track");
   const tag = $(".aisles-tag b"), rail = $(".aisles-rail");
   mm.add("(min-width: 901px)", () => {
@@ -442,11 +462,9 @@
     });
     gsap.from(".aisles-head > *", { opacity: 0, y: 40, stagger: 0.1, duration: 1, ease: "power4.out", scrollTrigger: { trigger: ".aisles", start: "top 70%" } });
   });
+  // Phones: the aisles are a swipeable row of cards; they slide in together once
   mm.add("(max-width: 900px)", () => {
-    $$(".aisle").forEach((a) => {
-      gsap.from(a, { opacity: 0, y: 70, scale: 0.94, duration: 1, ease: "power4.out", scrollTrigger: { trigger: a, start: "top 88%" } });
-      gsap.fromTo($(".aisle-photo img", a), { scale: 1.25 }, { scale: 1, ease: "none", scrollTrigger: { trigger: a, start: "top bottom", end: "bottom top", scrub: 0.4 } });
-    });
+    gsap.from(".aisle", { opacity: 0, x: 80, duration: 1, stagger: 0.08, ease: "power4.out", scrollTrigger: { trigger: track, start: "top 85%" } });
   });
 
   /* ---------- Shelf search entrance ---------- */
