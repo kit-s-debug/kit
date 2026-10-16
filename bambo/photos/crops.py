@@ -21,7 +21,7 @@ def b(l, t, r, btm):
 
 CROPS = {
     # hero + section images: cropped inside the shelf frames, no walls, floor or LED strips
-    "hero-wall":          ("lost-mary-pixl-shelves.jpg",     b(40, 195, 1460, 1970),  1000),
+    "hero-wall":          ("lost-mary-pixl-clean.png",       (0, 40, 1086, 1397),    1000),
     "tile-kits":          ("ske-bloody-novamax-shelves.jpg", b(60, 270, 1430, 1982),  1000),
     "tile-salts":         ("elux-salts-full.jpg",            (195, 300, 980, 1281),   900),
     "tile-shisha":        ("hookah-amber.jpg",               b(310, 90, 1334, 1370),  900),
@@ -34,11 +34,11 @@ CROPS = {
     "drinks-fridge":      ("drinks-fridge-3.png",            (0, 783, 1290, 2396),    900),
     # product cards (4:5)
     "ivg-pro-10k":        ("ivg-wall-full.jpg",              (190, 195, 1010, 1220),  800),
-    "lost-mary-bm6000":   ("lost-mary-pixl-shelves.jpg",     b(140, 700, 740, 1450),  800),
-    "lost-mary-nera-30k": ("lost-mary-pixl-shelves.jpg",     b(540, 220, 1140, 970),  800),
+    "lost-mary-bm6000":   ("lost-mary-pixl-clean.png",       (20, 200, 540, 850),    800),
+    "lost-mary-nera-30k": ("lost-mary-pixl-clean.png",       (560, 200, 1060, 825),  800),
     "lost-mary-nera-15k": ("ivg-nera-elux-wall.jpg",         b(275, 710, 835, 1410),  800),
     "lost-mary-bm600":    ("lm600-shisha-shelves.jpg",       b(80, 330, 560, 930),    800),
-    "pixl-8000":          ("lost-mary-pixl-shelves.jpg",     b(450, 1120, 1050, 1870), 800),
+    "pixl-8000":          ("lost-mary-pixl-clean.png",       (400, 860, 870, 1448),  800),
     "hayati-pro-max-plus":("hayati-promax-shelves.jpg",      b(0, 340, 760, 1290),    800),
     "enjoy-ultra-9000":   ("lm600-shisha-shelves.jpg",       b(430, 735, 800, 1198),  800),
     "hayati-30k-shisha":  ("lm600-shisha-shelves.jpg",       b(980, 940, 1450, 1528), 800),
