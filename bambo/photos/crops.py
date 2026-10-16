@@ -31,7 +31,7 @@ CROPS = {
     "shopfront-wide":     ("shopfront.jpg",                  (0, 470, 1170, 1180),    1600),
     "shopfront":          ("shopfront.jpg",                  (50, 200, 1122, 1540),   1000),
     "doorway":            ("doorway.jpg",                    (300, 380, 1000, 1255),  900),
-    "drinks-fridge":      ("drinks-fridge-2.jpg",            b(100, 300, 1396, 1920), 900),
+    "drinks-fridge":      ("drinks-fridge-3.png",            (0, 783, 1290, 2396),    900),
     # product cards (4:5)
     "ivg-pro-10k":        ("ivg-wall-full.jpg",              (190, 195, 1010, 1220),  800),
     "lost-mary-bm6000":   ("lost-mary-pixl-shelves.jpg",     b(140, 700, 740, 1450),  800),
