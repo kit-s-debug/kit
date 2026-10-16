@@ -28,7 +28,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Lost Mary's refillable BM6000 kit.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/lost-mary-bm6000.webp",
+    img: "assets/photos/lost-mary-bm6000.webp?v=202610161212",
     added: 9,
   },
   {
@@ -44,7 +44,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Lost Mary Nera 15K pod kits and Nera refill packs.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/lost-mary-nera-15k.webp",
+    img: "assets/photos/lost-mary-nera-15k.webp?v=202610161212",
     added: 10,
   },
   {
@@ -59,7 +59,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Lost Mary's large-capacity Nera 30K Fullview kit, with replaceable pods and two power modes.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/lost-mary-nera-30k.webp",
+    img: "assets/photos/lost-mary-nera-30k.webp?v=202610161212",
     added: 11,
   },
   {
@@ -75,7 +75,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Prefilled replacement pods for the Lost Mary BM600.",
     specs: ["Prefilled pods", "20mg/ml nicotine", "Fits the Lost Mary BM600"],
     nicotine: true,
-    img: "assets/photos/lost-mary-bm600.webp",
+    img: "assets/photos/lost-mary-bm600.webp?v=202610161212",
     added: 5,
   },
   {
@@ -91,7 +91,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Pixl 8000 and Pixl Duo 12 kits, plus Duo 12 replacement pods.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/pixl-8000.webp",
+    img: "assets/photos/pixl-8000.webp?v=202610161212",
     added: 8,
   },
   {
@@ -107,7 +107,7 @@ window.BAMBO_PRODUCTS = [
     desc: "IVG Pro 10K and IVG Smart Max kits, across a full bay of flavours.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/ivg-pro-10k.webp",
+    img: "assets/photos/ivg-pro-10k.webp?v=202610161212",
     added: 7,
   },
   {
@@ -122,7 +122,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Hayati Pro Max+ kits and refill pods.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/hayati-pro-max-plus.webp",
+    img: "assets/photos/hayati-pro-max-plus.webp?v=202610161212",
     added: 6,
   },
   {
@@ -137,7 +137,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Hayati's Pro Ultra+ 25K kit, including duo-flavour editions.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/hayati-ultra-25k.webp",
+    img: "assets/photos/hayati-ultra-25k.webp?v=202610161212",
     added: 10,
   },
   {
@@ -153,7 +153,7 @@ window.BAMBO_PRODUCTS = [
     desc: "The SKE Crystal Original, across two full shelves of flavours.",
     specs: ["600+ puffs", "Mesh coil", "20mg/ml nicotine"],
     nicotine: true,
-    img: "assets/photos/ske-crystal.webp",
+    img: "assets/photos/ske-crystal.webp?v=202610161212",
     added: 4,
   },
   {
@@ -168,7 +168,7 @@ window.BAMBO_PRODUCTS = [
     desc: "SKE's Bar 15K kit and refill pods.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/ske-bar-15k.webp",
+    img: "assets/photos/ske-bar-15k.webp?v=202610161212",
     added: 3,
   },
   {
@@ -182,7 +182,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Bloody Bar Crystal 10000, with a battery indicator.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/bloody-bar-crystal.webp",
+    img: "assets/photos/bloody-bar-crystal.webp?v=202610161212",
     added: 2,
   },
   {
@@ -196,7 +196,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Elux Legend 15K pod and refill kits, in their own tower by the counter.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/elux-legend-15k.webp",
+    img: "assets/photos/elux-legend-15k.webp?v=202610161212",
     added: 1,
   },
   {
@@ -211,7 +211,7 @@ window.BAMBO_PRODUCTS = [
     desc: "The Enjoy Ultra 9000, with an LED display.",
     specs: ["9000 puffs", "20mg/ml (2%) nicotine", "LED display"],
     nicotine: true,
-    img: "assets/photos/enjoy-ultra-9000.webp",
+    img: "assets/photos/enjoy-ultra-9000.webp?v=202610161212",
     added: 6,
   },
   {
@@ -225,7 +225,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Hayati's large-capacity Pro Ultra kit with shisha-style flavours.",
     specs: ["Rechargeable", "Replaceable prefilled pods", "Nicotine up to 20mg/ml"],
     nicotine: true,
-    img: "assets/photos/hayati-30k-shisha.webp",
+    img: "assets/photos/hayati-30k-shisha.webp?v=202610161212",
     added: 0,
   },
   {
@@ -242,7 +242,7 @@ window.BAMBO_PRODUCTS = [
     strengths: ["10mg", "20mg"],
     specs: ["10ml bottle", "Nicotine salt for pod kits", "Mix any four for £10"],
     nicotine: true,
-    img: "assets/photos/ske-crystal-salts.webp",
+    img: "assets/photos/ske-crystal-salts.webp?v=202610161212",
     added: 9,
   },
   {
@@ -259,7 +259,7 @@ window.BAMBO_PRODUCTS = [
     strengths: ["10mg", "20mg"],
     specs: ["10ml bottle", "Nicotine salt for pod kits", "Mix any four for £10"],
     nicotine: true,
-    img: "assets/photos/pixl-hayati-salts.webp",
+    img: "assets/photos/pixl-hayati-salts.webp?v=202610161212",
     added: 8,
   },
   {
@@ -276,7 +276,7 @@ window.BAMBO_PRODUCTS = [
     strengths: ["10mg", "20mg"],
     specs: ["10ml bottle", "Nicotine salt for pod kits", "Mix any four for £10"],
     nicotine: true,
-    img: "assets/photos/elux-nic-salts.webp",
+    img: "assets/photos/elux-nic-salts.webp?v=202610161212",
     added: 7,
   },
   {
@@ -291,7 +291,7 @@ window.BAMBO_PRODUCTS = [
     desc: "Tobacco-free nicotine pouches. Some of these are very strong, so ask us before trying one for the first time.",
     specs: ["Smoke-free and vapour-free", "Range of strengths", "Over-18s only"],
     nicotine: true,
-    img: "assets/photos/nicotine-pouches.webp",
+    img: "assets/photos/nicotine-pouches.webp?v=202610161212",
     added: 0,
   },
   {
@@ -302,7 +302,7 @@ window.BAMBO_PRODUCTS = [
     spec: "Afnan 9am, French Avenue Vulcan and more",
     desc: "Eau de parfum from Afnan (9am, 9am Elixir), French Avenue (Vulcan Feu, Vulcan Baie) and other Middle Eastern houses. Ask in store for today's range and prices.",
     specs: ["Eau de parfum", "Men's and women's", "Ask to try in store"],
-    img: "assets/photos/fragrances.webp",
+    img: "assets/photos/fragrances.webp?v=202610161212",
     added: 12,
   },
   {
@@ -313,7 +313,7 @@ window.BAMBO_PRODUCTS = [
     spec: "Faceted amber base · Braided gold stem",
     desc: "A faceted amber glass base with a braided gold stem, clay bowl, metal tray and black hose. In our window.",
     specs: ["Faceted glass base", "Clay bowl, metal tray", "Hose included"],
-    img: "assets/photos/hookah.webp",
+    img: "assets/photos/hookah.webp?v=202610161212",
     added: 0,
   },
   {
@@ -324,7 +324,7 @@ window.BAMBO_PRODUCTS = [
     spec: "Speckled black base · Copper stem · Two ports",
     desc: "A speckled black glass base with a copper-finish stem, two hose ports, clay bowl and brown hose. In our window.",
     specs: ["Speckled glass base", "Two hose ports", "Hose included"],
-    img: "assets/photos/hookah-speckled.webp",
+    img: "assets/photos/hookah-speckled.webp?v=202610161212",
     added: 0,
   },
   {
@@ -335,7 +335,7 @@ window.BAMBO_PRODUCTS = [
     spec: "Clear base · Gold stem · Blue hose",
     desc: "A clear glass base with a polished gold stem, wide gold tray, two hose ports and a blue hose. In our window.",
     specs: ["Clear glass base", "Gold stem and tray", "Hose included"],
-    img: "assets/photos/hookah-blue.webp",
+    img: "assets/photos/hookah-blue.webp?v=202610161212",
     added: 0,
   },
   {
@@ -347,7 +347,7 @@ window.BAMBO_PRODUCTS = [
     spec: "RAW, OCB, Elements, Rizla, Zig-Zag",
     desc: "RAW, OCB, Elements, Rizla and Zig-Zag papers, plus RAW tips and cones and Swan filters.",
     specs: ["RAW, OCB, Elements", "Rizla, Zig-Zag", "Swan filters, RAW tips"],
-    img: "assets/photos/rolling-papers.webp",
+    img: "assets/photos/rolling-papers.webp?v=202610161212",
     added: 0,
   },
   {
@@ -359,7 +359,7 @@ window.BAMBO_PRODUCTS = [
     spec: "Refillable · Dozens of designs",
     desc: "Refillable Clipper lighters in dozens of designs, on the stand by the till.",
     specs: ["Refillable", "Lots of designs", "On the stand by the till"],
-    img: "assets/photos/lighters.webp",
+    img: "assets/photos/lighters.webp?v=202610161212",
     added: 0,
   },
   {
@@ -370,7 +370,7 @@ window.BAMBO_PRODUCTS = [
     spec: "Metal and acrylic · Pocket and full size",
     desc: "D&K Dengke metal grinders in a range of colours, plus pocket and wooden grinders.",
     specs: ["Metal or acrylic", "Pocket and full size", "Over-18s only"],
-    img: "assets/photos/grinders.webp",
+    img: "assets/photos/grinders.webp?v=202610161212",
     added: 0,
   },
   {
@@ -381,7 +381,7 @@ window.BAMBO_PRODUCTS = [
     spec: "NCC plugs and cables · USB-C and Lightning",
     desc: "NCC fast-charging plugs and braided cables: USB-A to USB-C, USB-C to USB-C and USB-A to Lightning.",
     specs: ["Fast-charging UK plugs", "Braided cables", "USB-C and Lightning"],
-    img: "assets/photos/chargers.webp",
+    img: "assets/photos/chargers.webp?v=202610161212",
     added: 0,
   },
 ];
