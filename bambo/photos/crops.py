@@ -8,7 +8,7 @@ so keep boxes at the ratio the slot needs: 4:5 for product cards and tiles.
 To use a new photo, drop it in photos/originals/ and add a line here.
 """
 from pathlib import Path
-from PIL import Image, ImageFilter, ImageOps
+from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 
 HERE = Path(__file__).parent
 OUT = HERE.parent / "assets" / "photos"
@@ -61,10 +61,21 @@ CROPS = {
     "hookah-blue":        ("hookah-clear.jpg",               b(170, 0, 1180, 1262),   800),
 }
 
+def enhance(im):
+    """Phone shots of the shelves come out flat and a little dark: stretch the
+    tones, lift exposure and colour, and add gentle local contrast."""
+    im = ImageOps.autocontrast(im, cutoff=(0.4, 0.6))
+    im = ImageEnhance.Brightness(im).enhance(1.05)
+    im = ImageEnhance.Contrast(im).enhance(1.07)
+    im = ImageEnhance.Color(im).enhance(1.2)
+    return im.filter(ImageFilter.UnsharpMask(radius=6, percent=18, threshold=3))
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     for name, (src, box, width) in CROPS.items():
         im = ImageOps.exif_transpose(Image.open(HERE / "originals" / src)).convert("RGB").crop(box)
+        im = enhance(im)
         h = round(width * im.height / im.width)
         if width > im.width:  # small crops: upscale gently, then restore edge crispness
             im = im.resize((width, h), Image.LANCZOS).filter(ImageFilter.UnsharpMask(radius=1.6, percent=70, threshold=2))
