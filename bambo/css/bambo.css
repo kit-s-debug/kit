@@ -1043,3 +1043,13 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
   100% { opacity: 0; transform: translate(var(--dx), calc(var(--rise) * -1)) rotate(calc(var(--spin) * .6)) scale(1.5); }
 }
 .deals .vapour b { background: radial-gradient(circle at 42% 38%, rgba(255, 255, 255, .85) 0 30%, rgba(255, 255, 255, .45) 50%, rgba(255, 255, 255, 0) 72%); filter: blur(2px); }
+
+/* real Bambo badge logo */
+.logo { gap: .55rem; }
+.logo-badge { width: 46px; height: 46px; border-radius: 50%; flex: none; transition: transform .6s var(--ease); }
+.logo:hover .logo-badge { transform: rotate(-12deg) scale(1.06); }
+.logo-word { line-height: 1; }
+.foot-intro .logo-badge { width: 84px; height: 84px; }
+.foot-intro .logo { font-size: 2rem; }
+.age-badge { width: 110px; height: 110px; display: block; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,255,255,.25); }
+@media (max-width: 420px) { .site-header .logo-word { display: none; } .logo-badge { width: 50px; height: 50px; } }
