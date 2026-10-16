@@ -10,6 +10,7 @@ window.BAMBO_CATEGORIES = [
   { id: "pouches", label: "Nicotine pouches" },
   { id: "shisha", label: "Shisha" },
   { id: "accessories", label: "Accessories" },
+  { id: "fragrances", label: "Fragrances" },
 ];
 
 
@@ -292,6 +293,17 @@ window.BAMBO_PRODUCTS = [
     nicotine: true,
     img: "assets/photos/nicotine-pouches.webp",
     added: 0,
+  },
+  {
+    id: "fragrances",
+    name: "Fragrances",
+    cat: "fragrances",
+    price: null,
+    spec: "Afnan 9am, French Avenue Vulcan and more",
+    desc: "Eau de parfum from Afnan (9am, 9am Elixir), French Avenue (Vulcan Feu, Vulcan Baie) and other Middle Eastern houses. Ask in store for today's range and prices.",
+    specs: ["Eau de parfum", "Men's and women's", "Ask to try in store"],
+    img: "assets/photos/fragrances.webp",
+    added: 12,
   },
   {
     id: "hookah",
