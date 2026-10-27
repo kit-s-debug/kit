@@ -1,0 +1,23 @@
+<svg width="600" height="600" class="art art-drink" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a cold drink">
+<defs>
+  <linearGradient id="dr-crustTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3BE6E"/><stop offset=".45" stop-color="#D98939"/><stop offset="1" stop-color="#A4531B"/></linearGradient>
+  <linearGradient id="dr-crustBot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D98939"/><stop offset=".6" stop-color="#A4531B"/><stop offset="1" stop-color="#6E3410"/></linearGradient>
+  <linearGradient id="dr-crumb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8E4B6"/><stop offset="1" stop-color="#E8C68A"/></linearGradient>
+  <linearGradient id="dr-leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9DB5C"/><stop offset=".5" stop-color="#7FAE34"/><stop offset="1" stop-color="#4E7A1E"/></linearGradient>
+  <linearGradient id="dr-cheese" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE07A"/><stop offset=".55" stop-color="#F6B82C"/><stop offset="1" stop-color="#D98E12"/></linearGradient>
+  <linearGradient id="dr-tom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2603F"/><stop offset=".6" stop-color="#D9361F"/><stop offset="1" stop-color="#A52012"/></linearGradient>
+  <radialGradient id="dr-shadow"><stop offset="0" stop-color="#3B1A08" stop-opacity=".42"/><stop offset=".6" stop-color="#3B1A08" stop-opacity=".16"/><stop offset="1" stop-color="#3B1A08" stop-opacity="0"/></radialGradient>
+  <linearGradient id="dr-sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E2" stop-opacity=".55"/><stop offset="1" stop-color="#FFF6E2" stop-opacity="0"/></linearGradient>
+</defs>
+<linearGradient id="dr-can" x1="0" x2="1"><stop offset="0" stop-color="#A8240F"/><stop offset=".35" stop-color="#E34A2A"/><stop offset=".6" stop-color="#D7381E"/><stop offset="1" stop-color="#8E1C0B"/></linearGradient>
+<linearGradient id="dr-metal" x1="0" x2="1"><stop offset="0" stop-color="#9A9A92"/><stop offset=".4" stop-color="#EDEDE6"/><stop offset="1" stop-color="#8A8A82"/></linearGradient>
+<ellipse cx="300" cy="540" rx="170" ry="22" fill="url(#dr-shadow)"/>
+<path d="M196 120 L404 120 L420 160 L420 470 L404 510 L196 510 L180 470 L180 160Z" fill="url(#dr-can)" stroke="#3A1A0A" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M196 120 L404 120 L420 160 L180 160Z" fill="url(#dr-metal)" stroke="#3A1A0A" stroke-width="3.2" stroke-linejoin="round"/>
+<path d="M180 470 L420 470 L404 510 L196 510Z" fill="url(#dr-metal)" stroke="#3A1A0A" stroke-width="3.2" stroke-linejoin="round"/>
+<ellipse cx="300" cy="120" rx="104" ry="14" fill="#D6D6CE" stroke="#3A1A0A" stroke-width="3.2" stroke-linejoin="round"/>
+<rect x="180" y="250" width="240" height="110" fill="#F6ECD8"/>
+<text x="300" y="330" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="84" fill="#D7381E">S</text>
+<path d="M226 180 L230 450" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".45"/>
+<g fill="#fff" opacity=".7"><circle cx="360" cy="200" r="5"/><circle cx="380" cy="420" r="4"/><circle cx="250" cy="400" r="3"/><circle cx="394" cy="232" r="3"/></g>
+</svg>
