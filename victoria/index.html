@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Victoria Bookshop · Independent bookshop in Haverfordwest, Pembrokeshire</title>
+<meta name="description" content="Victoria Bookshop, 6 Bridge Street, Haverfordwest. A family-run independent bookshop specialising in signed and local books, trading in one form or another since 1891. Order online via Bookshop.org and Hive, or call 01437 762750.">
+<meta name="theme-color" content="#1e3a2f">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Victoria Bookshop">
+<meta property="og:title" content="Victoria Bookshop · Haverfordwest">
+<meta property="og:description" content="A great many worlds, and one door on Bridge Street. Signed editions, local books and new books of every kind, in Haverfordwest since 1891.">
+<meta property="og:image" content="assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@Victoria_Books">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/LibreCaslonDisplay-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/LibreCaslonText-400-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  /* Decide before first paint whether the cloth cover plays: once per visit, never with reduced motion. */
+  (function () {
+    var d = document.documentElement;
+    d.classList.add("js");
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var seen = false;
+    try { seen = sessionStorage.getItem("vb-cover") === "1"; } catch (e) {}
+    if (!reduce) d.classList.add("motion-ok");
+    if (!reduce && !seen && !location.hash) d.classList.add("has-cover");
+    // safety net: if the scripts never arrive, never leave the cover or hidden title in place
+    setTimeout(function () {
+      if (!d.classList.contains("vb-ready")) { d.classList.remove("has-cover"); d.classList.add("hero-done"); }
+    }, 3000);
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BookStore",
+  "name": "Victoria Bookshop",
+  "description": "Family-run independent bookshop in Haverfordwest, Pembrokeshire, specialising in signed and local books.",
+  "telephone": "+44 1437 762750",
+  "email": "bethan@victoriabookshop.co.uk",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "6 Bridge Street",
+    "addressLocality": "Haverfordwest",
+    "addressRegion": "Pembrokeshire",
+    "postalCode": "SA61 2AD",
+    "addressCountry": "GB"
+  },
+  "areaServed": ["Haverfordwest", "Pembrokeshire"],
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=Victoria+Bookshop+6+Bridge+Street+Haverfordwest+SA61+2AD",
+  "sameAs": [
+    "https://www.facebook.com/VictoriaBookshop",
+    "https://www.instagram.com/victoriabookshop06/",
+    "https://x.com/Victoria_Books",
+    "https://uk.bookshop.org/shop/victoriabookshop",
+    "https://www.hive.co.uk/shops/victoria-bookshop-haverfordwest",
+    "https://www.ebay.co.uk/str/victoriabookshop"
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- The cloth cover. Decorative: it swings open over a page that is already rendered underneath. -->
+<div class="cover" id="cover" aria-hidden="true">
+  <div class="cover-board">
+    <div class="cover-cloth"></div>
+    <div class="cover-frame">
+      <span class="cover-orn">&#10087;</span>
+      <span class="cover-title">Victoria<br>Bookshop</span>
+      <span class="cover-rule"></span>
+      <span class="cover-place">Haverfordwest</span>
+    </div>
+    <div class="cover-inside"></div>
+  </div>
+  <button class="cover-skip" type="button" tabindex="-1">Skip<span aria-hidden="true"> &rsaquo;</span></button>
+</div>
+
+<header class="masthead" id="masthead">
+  <a class="mast-mark" href="#top" aria-label="Victoria Bookshop, back to the title page">
+    <span class="mast-name">Victoria <i>Bookshop</i></span>
+    <span class="mast-est">Haverfordwest &middot; since 1891</span>
+  </a>
+  <nav class="mast-nav" aria-label="Chapters">
+    <ul>
+      <li><a class="ln" href="#story">Our story</a></li>
+      <li><a class="ln" href="#books">Browse</a></li>
+      <li><a class="ln" href="#signed">Signed</a></li>
+      <li><a class="ln" href="#local">Local</a></li>
+      <li><a class="ln" href="#picks">Picks</a></li>
+      <li><a class="ln" href="#visit">Visit</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn-small mast-order" href="#order">Order books</a>
+  <button class="mast-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="contents">
+    <span class="mast-toggle-label">Contents</span>
+    <span class="mast-toggle-icon" aria-hidden="true"><i></i><i></i></span>
+  </button>
+</header>
+
+<!-- Mobile menu, set as a book's contents page -->
+<div class="contents" id="contents" role="dialog" aria-modal="true" aria-labelledby="contents-title" hidden>
+  <div class="contents-page">
+    <p class="contents-kicker">Victoria Bookshop</p>
+    <h2 class="contents-title" id="contents-title">Contents</h2>
+    <ol class="contents-list">
+      <li><a href="#foreword"><span class="cl-no">I</span><span class="cl-name">Foreword</span><span class="cl-dots"></span><span class="cl-pg">1</span></a></li>
+      <li><a href="#story"><span class="cl-no">II</span><span class="cl-name">The story so far</span><span class="cl-dots"></span><span class="cl-pg">5</span></a></li>
+      <li><a href="#books"><span class="cl-no">III</span><span class="cl-name">A browse</span><span class="cl-dots"></span><span class="cl-pg">19</span></a></li>
+      <li><a href="#signed"><span class="cl-no">IV</span><span class="cl-name">Signed, in ink</span><span class="cl-dots"></span><span class="cl-pg">27</span></a></li>
+      <li><a href="#local"><span class="cl-no">V</span><span class="cl-name">Pembrokeshire, on paper</span><span class="cl-dots"></span><span class="cl-pg">35</span></a></li>
+      <li><a href="#picks"><span class="cl-no">VI</span><span class="cl-name">From the counter</span><span class="cl-dots"></span><span class="cl-pg">43</span></a></li>
+      <li><a href="#order"><span class="cl-no">VII</span><span class="cl-name">Ordering books</span><span class="cl-dots"></span><span class="cl-pg">51</span></a></li>
+      <li><a href="#visit"><span class="cl-no">VIII</span><span class="cl-name">Finding the shop</span><span class="cl-dots"></span><span class="cl-pg">55</span></a></li>
+    </ol>
+    <div class="contents-foot">
+      <a class="ln" href="tel:+441437762750">01437 762750</a>
+      <a class="ln" href="https://www.google.com/maps/dir/?api=1&amp;destination=Victoria+Bookshop%2C+6+Bridge+Street%2C+Haverfordwest+SA61+2AD" target="_blank" rel="noopener">Directions<span class="sr-only"> (opens Google Maps)</span></a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ============ TITLE PAGE ============ -->
+  <section class="title-page" id="top" aria-labelledby="shop-name">
+    <div class="spread">
+      <figure class="frontis" aria-hidden="true">
+        <div class="arch" id="arch">
+          <div class="arch-glow"></div>
+          <div class="arch-shelves">
+            <div class="shelf" data-depth="0.35">
+              <i style="--h:78%;--w:14px;--c:var(--oxblood)"></i><i style="--h:92%;--w:22px;--c:var(--cloth)"></i><i style="--h:70%;--w:12px;--c:var(--ochre)"></i><i style="--h:86%;--w:18px;--c:var(--navy)"></i><i style="--h:64%;--w:26px;--c:var(--paper-3)" class="lean-r"></i><i style="--h:90%;--w:16px;--c:var(--teal)"></i><i style="--h:80%;--w:20px;--c:var(--clay)"></i><i style="--h:94%;--w:13px;--c:var(--ink)"></i><i style="--h:74%;--w:19px;--c:var(--cloth-2)"></i><i style="--h:84%;--w:15px;--c:var(--oxblood-2)"></i><i style="--h:68%;--w:24px;--c:var(--ochre-2)"></i><i style="--h:88%;--w:17px;--c:var(--navy)"></i>
+            </div>
+            <div class="shelf" data-depth="0.6">
+              <i style="--h:90%;--w:20px;--c:var(--teal)"></i><i style="--h:76%;--w:14px;--c:var(--paper-3)"></i><i style="--h:96%;--w:24px;--c:var(--oxblood)"></i><i style="--h:82%;--w:12px;--c:var(--ochre)"></i><i style="--h:70%;--w:18px;--c:var(--cloth)" class="lean-l"></i><i style="--h:88%;--w:16px;--c:var(--clay)"></i><i style="--h:92%;--w:22px;--c:var(--navy)"></i><i style="--h:66%;--w:13px;--c:var(--ink)"></i><i style="--h:86%;--w:19px;--c:var(--ochre-2)"></i><i style="--h:78%;--w:15px;--c:var(--cloth-2)"></i><i style="--h:94%;--w:21px;--c:var(--oxblood-2)"></i>
+            </div>
+            <div class="shelf" data-depth="0.9">
+              <i style="--h:84%;--w:18px;--c:var(--navy)"></i><i style="--h:94%;--w:14px;--c:var(--ochre)"></i><i style="--h:72%;--w:24px;--c:var(--cloth)"></i><i style="--h:90%;--w:16px;--c:var(--oxblood)"></i><i style="--h:80%;--w:20px;--c:var(--paper-3)"></i><i style="--h:96%;--w:12px;--c:var(--teal)"></i><i style="--h:68%;--w:26px;--c:var(--clay)" class="lean-r"></i><i style="--h:88%;--w:15px;--c:var(--ink)"></i><i style="--h:76%;--w:19px;--c:var(--oxblood-2)"></i><i style="--h:92%;--w:17px;--c:var(--cloth-2)"></i>
+            </div>
+          </div>
+          <svg class="arch-line" viewBox="0 0 400 560" preserveAspectRatio="none"><path d="M6 556 V200 A194 194 0 0 1 394 200 V556" /></svg>
+        </div>
+        <figcaption class="frontis-cap"><span>Frontispiece.</span> A great many worlds, one door.</figcaption>
+      </figure>
+
+      <div class="tp">
+        <p class="tp-kicker"><span>Haverfordwest</span><span class="tp-dot">&middot;</span><span>Pembrokeshire</span></p>
+        <h1 class="tp-name" id="shop-name">
+          <span class="tp-line"><span class="tp-word">Victoria</span></span>
+          <span class="tp-line"><span class="tp-word tp-word-2">Bookshop</span></span>
+        </h1>
+        <div class="tp-orn" aria-hidden="true"><span></span>&#10087;<span></span></div>
+        <p class="tp-lede">A great many worlds, and one door on Bridge Street.</p>
+        <p class="tp-sub">Signed editions, local books and new books of every kind, chosen by a family-run independent that has served the town, in one form or another, since 1891.</p>
+        <div class="tp-actions">
+          <a class="btn btn-solid" href="#foreword">Explore the bookshop</a>
+          <a class="btn btn-line" href="#picks">Find your next read</a>
+        </div>
+        <p class="tp-imprint">
+          <span>6 Bridge Street &middot; SA61 2AD</span>
+          <span>In one form or another, since 1891</span>
+        </p>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#foreword"><span>Turn the page</span><i aria-hidden="true"></i></a>
+  </section>
+
+  <!-- ============ I. FOREWORD ============ -->
+  <section class="foreword chapter" id="foreword" aria-labelledby="foreword-h">
+    <header class="chap"><span class="chap-no">I</span><span class="chap-rule"></span><span class="chap-name">Foreword</span></header>
+    <div class="fw-grid">
+      <h2 class="fw-h reveal-lines" id="foreword-h">Fun, local, friendly. <em>The shop&rsquo;s words, and hard to improve on.</em></h2>
+      <div class="fw-body">
+        <p class="dropcap reveal-lines">Step in from Bridge Street and you are in a family-run independent bookshop: new fiction and non-fiction, history, biography, gardening, travel and natural history, with a particular weakness for two things. Books signed by their authors, and books about this corner of Wales.</p>
+        <p class="reveal-lines">Many of those signed and local titles are never listed online at all. They are on the shelves, and the people behind the counter know where.</p>
+      </div>
+      <aside class="margin-note fw-note" aria-label="Margin note">
+        <span class="hand">&ldquo;We specialise in signed &amp; local books.&rdquo;</span>
+        <span class="mn-src">The shop, in its own words</span>
+        <svg class="mn-arrow" viewBox="0 0 120 60" aria-hidden="true"><path d="M4 8 C40 4, 80 18, 108 48 M96 46 L109 49 L106 36"/></svg>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ II. THE STORY SO FAR ============ -->
+  <section class="story chapter" id="story" aria-labelledby="story-h">
+    <div class="story-pin">
+      <div class="story-intro">
+        <header class="chap"><span class="chap-no">II</span><span class="chap-rule"></span><span class="chap-name">The story so far</span></header>
+        <h2 class="story-h" id="story-h">Five generations of readers, <em>and counting.</em></h2>
+        <p class="story-p">From a newsagent&rsquo;s counter to a shelf of signed first editions: the shop&rsquo;s history, a page at a time.</p>
+        <ol class="story-index" aria-hidden="true">
+          <li class="is-on">1891</li><li>1981</li><li>1996</li><li>2010</li><li>2021</li><li>Today</li>
+        </ol>
+      </div>
+
+      <div class="story-book">
+        <div class="sb-base" aria-hidden="true">
+          <div class="verso"><span class="verso-yr">c.<br>1891</span><span class="verso-cap">Stationers &amp; newsagents</span></div>
+        </div>
+        <div class="sb-leaves">
+          <article class="leaf" data-verso-yr="1981" data-verso-cap="5 Victoria Place">
+            <div class="leaf-front">
+              <p class="leaf-date">Around 1891</p>
+              <h3 class="leaf-title">Paper, ink and the morning news</h3>
+              <p>The shop has served Haverfordwest, in one form or another, since about 1891. It began life as stationers and newsagents, with greeting cards, confectionery and tobacco on the counter beside the papers.</p>
+              <span class="folio">5</span>
+            </div>
+          </article>
+          <article class="leaf" data-verso-yr="1996" data-verso-cap="6 Bridge Street">
+            <div class="leaf-front">
+              <p class="leaf-date">1 May 1981</p>
+              <h3 class="leaf-title">Marley Davies buys a newsagent&rsquo;s</h3>
+              <p>The shop he takes on stands at 5 Victoria Place, one of the terraces finished in 1839 and named for the young Queen. It trades very much as a newsagent, with very few books. Marley sets about expanding the book department.</p>
+              <span class="folio">7</span>
+            </div>
+          </article>
+          <article class="leaf" data-verso-yr="2010" data-verso-cap="The town&rsquo;s 900th">
+            <div class="leaf-front">
+              <p class="leaf-date">1996</p>
+              <h3 class="leaf-title">Down the hill to Bridge Street</h3>
+              <p>The shop moves to 6 Bridge Street, the street that runs down to the Old Bridge. For centuries this was part of the main way through town, carrying trade to and from the Quay.</p>
+              <span class="folio">9</span>
+            </div>
+          </article>
+          <article class="leaf" data-verso-yr="2021" data-verso-cap="Bookshop of the Month">
+            <div class="leaf-front">
+              <p class="leaf-date">2010</p>
+              <h3 class="leaf-title">A book for the town</h3>
+              <p>For Haverfordwest&rsquo;s 900th anniversary celebrations, the Civic Society publishes Mark Muller&rsquo;s <cite>People Who Shaped Haverfordwest</cite>. Victoria Bookshop becomes its main outlet, and Marley passes every penny of the sales on to the Society.</p>
+              <span class="folio">11</span>
+            </div>
+          </article>
+          <article class="leaf" data-verso-yr="Today" data-verso-cap="Signed &amp; local">
+            <div class="leaf-front">
+              <p class="leaf-date">May 2021</p>
+              <h3 class="leaf-title">Bookshop of the Month</h3>
+              <p>LoveReading features Victoria Bookshop as its Bookshop of the Month, talking to Marley and to Bethan, who buys the books. The well-attended author events get a mention, and so does the shop&rsquo;s own summary: fun, local, friendly.</p>
+              <span class="folio">13</span>
+            </div>
+          </article>
+          <article class="leaf leaf-last">
+            <div class="leaf-front">
+              <p class="leaf-date">Today</p>
+              <h3 class="leaf-title">Still family-run, still turning pages</h3>
+              <p>Bethan buys the books. The shelves lean towards signed editions and local stories, and new books of every kind fill the rest. If it is not on the shelf, ask at the counter.</p>
+              <span class="folio">15</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ III. A BROWSE ============ -->
+  <section class="browse chapter" id="books" aria-labelledby="books-h">
+    <header class="chap"><span class="chap-no">III</span><span class="chap-rule"></span><span class="chap-name">A browse</span></header>
+    <div class="browse-head">
+      <h2 class="browse-h reveal-lines" id="books-h">Browse the way you would in the shop: <em>one spine at a time.</em></h2>
+      <p class="browse-hint"><span class="hand">pull one out</span> <span class="sr-only">Select a spine to read about that part of the shop.</span></p>
+    </div>
+
+    <div class="shelf-wrap">
+      <div class="bookshelf" id="bookshelf" role="group" aria-label="Sections of the shop">
+        <button class="spine" type="button" aria-pressed="true" aria-controls="shelf-card" data-key="fiction" style="--c:var(--oxblood);--w:76px;--h:94%"><span class="spine-t">Fiction</span><span class="spine-mk">I</span></button>
+        <button class="spine" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="history" style="--c:var(--cloth);--w:64px;--h:88%"><span class="spine-t">History</span><span class="spine-mk">II</span></button>
+        <button class="spine" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="biography" style="--c:var(--navy);--w:70px;--h:97%"><span class="spine-t">Biography</span><span class="spine-mk">III</span></button>
+        <button class="spine" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="gardening" style="--c:var(--ochre-2);--w:58px;--h:84%"><span class="spine-t">Gardening</span><span class="spine-mk">IV</span></button>
+        <button class="spine" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="travel" style="--c:var(--teal);--w:66px;--h:91%"><span class="spine-t">Travel guides</span><span class="spine-mk">V</span></button>
+        <button class="spine" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="nature" style="--c:var(--cloth-2);--w:72px;--h:86%"><span class="spine-t">Natural history</span><span class="spine-mk">VI</span></button>
+        <button class="spine spine-gilt" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="local" style="--c:#87402e;--w:84px;--h:100%"><span class="spine-t">Local interest</span><span class="spine-mk">VII</span></button>
+        <button class="spine spine-gilt" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="signed" style="--c:var(--ink);--w:78px;--h:95%"><span class="spine-t">Signed editions</span><span class="spine-mk">VIII</span></button>
+        <button class="spine spine-light" type="button" aria-pressed="false" aria-controls="shelf-card" data-key="tokens" style="--c:var(--paper-3);--w:60px;--h:80%"><span class="spine-t">Book tokens</span><span class="spine-mk">IX</span></button>
+        <span class="bookend" aria-hidden="true"></span>
+      </div>
+      <article class="shelf-card" id="shelf-card" aria-live="polite">
+        <p class="sc-mark">Shelf mark <span id="sc-mark">VB &middot; I</span></p>
+        <h3 class="sc-title" id="sc-title">Fiction</h3>
+        <p class="sc-text" id="sc-text">New novels and short stories, from the year&rsquo;s big releases to the collections the booksellers press into people&rsquo;s hands.</p>
+        <p class="sc-links" id="sc-links"><a class="ln" href="https://uk.bookshop.org/shop/victoriabookshop" target="_blank" rel="noopener">Browse on Bookshop.org<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a></p>
+      </article>
+      <div class="shelf-plank" aria-hidden="true"></div>
+    </div>
+
+    <!-- Shelf copy lives in js/main.js (SHELF). Every link goes to a real page or a section on this page. -->
+  </section>
+
+  <!-- ============ IV. SIGNED ============ -->
+  <section class="signed chapter dark" id="signed" aria-labelledby="signed-h">
+    <header class="chap"><span class="chap-no">IV</span><span class="chap-rule"></span><span class="chap-name">Signed, in ink</span></header>
+    <div class="signed-head">
+      <h2 class="signed-h" id="signed-h">
+        <span class="sh-a">Signed</span>
+        <span class="sh-b"><em>by the hand that</em></span>
+        <span class="sh-c">wrote it.</span>
+        <svg class="sig-stroke" viewBox="0 0 640 120" aria-hidden="true"><path d="M8 82 C60 30, 96 24, 112 52 C124 74, 92 96, 86 72 C80 48, 150 22, 176 46 C196 64, 170 92, 196 82 C232 68, 246 34, 270 46 C292 58, 262 90, 296 84 C336 76, 356 40, 388 52 C420 64, 400 96, 440 86 C500 70, 560 58, 632 66"/></svg>
+      </h2>
+      <div class="signed-copy">
+        <p>Signed copies are the shop&rsquo;s speciality. When authors visit or sign stock, the books arrive on Bridge Street with a name inked on the title page, and sometimes with sprayed edges too.</p>
+        <p class="signed-small">Many are never listed online. Below are a few the shop has offered recently, to give you the flavour. <strong>Signed stock changes all the time, so please ask what is in.</strong></p>
+      </div>
+    </div>
+
+    <div class="plates-wrap">
+      <ul class="plates" id="plates" aria-label="Examples of signed books the shop has offered">
+        <li class="plate" style="--tone:#2c4a3d"><div class="plate-in"><span class="plate-stamp">Signed</span><p class="plate-t">The Killing Stones</p><p class="plate-a">Ann Cleeves</p><p class="plate-n">Hardback, sprayed edges</p></div></li>
+        <li class="plate" style="--tone:#5b2228"><div class="plate-in"><span class="plate-stamp">Signed</span><p class="plate-t">Rare Singles</p><p class="plate-a">Benjamin Myers</p><p class="plate-n">Hardback, sprayed edges</p></div></li>
+        <li class="plate" style="--tone:#24304a"><div class="plate-in"><span class="plate-stamp">Signed</span><p class="plate-t">Evil in High Places</p><p class="plate-a">Rory Clements</p><p class="plate-n">First edition hardback</p></div></li>
+        <li class="plate" style="--tone:#6b4a1f"><div class="plate-in"><span class="plate-stamp">Signed</span><p class="plate-t">Redemption</p><p class="plate-a">Jack Jordan</p><p class="plate-n">Thriller</p></div></li>
+        <li class="plate" style="--tone:#3a3a46"><div class="plate-in"><span class="plate-stamp">Signed</span><p class="plate-t">Empire of the Dawn</p><p class="plate-a">Jay Kristoff</p><p class="plate-n">First edition hardback</p></div></li>
+        <li class="plate" style="--tone:#7a4b3e"><div class="plate-in"><span class="plate-stamp">Signed</span><p class="plate-t">Is That You, Petula?</p><p class="plate-a">Petula Clark</p><p class="plate-n">Autobiography</p></div></li>
+      </ul>
+      <div class="plates-ctrl">
+        <button class="pc-btn" type="button" data-dir="-1" aria-controls="plates"><span aria-hidden="true">&larr;</span><span class="sr-only">Previous books</span></button>
+        <span class="pc-track" aria-hidden="true"><i id="pc-thumb"></i></span>
+        <button class="pc-btn" type="button" data-dir="1" aria-controls="plates"><span aria-hidden="true">&rarr;</span><span class="sr-only">More books</span></button>
+      </div>
+    </div>
+
+    <div class="signed-actions">
+      <a class="btn btn-gilt" href="mailto:bethan@victoriabookshop.co.uk?subject=Signed%20copies%20enquiry">Ask what&rsquo;s signed now</a>
+      <a class="btn btn-line-light" href="https://www.ebay.co.uk/str/victoriabookshop" target="_blank" rel="noopener">Signed books on the shop&rsquo;s eBay<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
+    </div>
+    <p class="signed-foot">Titles shown are examples of signed books the shop has listed. Availability isn&rsquo;t guaranteed.</p>
+  </section>
+
+  <!-- ============ V. LOCAL ============ -->
+  <section class="local chapter" id="local" aria-labelledby="local-h">
+    <div class="local-scene">
+      <svg class="contours" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <path d="M-20 620 C180 560 260 640 420 590 S700 470 860 520 S1100 600 1240 540"/>
+          <path d="M-20 560 C160 500 300 580 440 530 S690 410 850 455 S1090 540 1240 480"/>
+          <path d="M-20 500 C150 440 320 520 460 470 S700 350 860 392 S1080 480 1240 420"/>
+          <path d="M-20 440 C140 380 330 460 470 412 S710 300 870 334 S1070 420 1240 362"/>
+          <path d="M-20 380 C130 320 340 400 490 356 S720 250 880 278 S1060 362 1240 306"/>
+          <path d="M120 300 C240 250 380 330 510 300 S730 210 890 230 S1050 300 1240 250"/>
+          <path d="M300 230 C400 200 470 250 560 236 S740 170 900 186 S1040 230 1180 200"/>
+          <path d="M520 180 C600 160 660 190 740 170 S880 140 980 160"/>
+          <path class="river" d="M640 820 C620 740 680 700 650 640 S560 560 600 500 S700 430 660 360 S600 260 640 200"/>
+        </g>
+      </svg>
+      <p class="coords" aria-hidden="true">51&deg;48&prime; N &nbsp; 4&deg;58&prime; W</p>
+
+      <header class="chap"><span class="chap-no">V</span><span class="chap-rule"></span><span class="chap-name">Pembrokeshire, on paper</span></header>
+      <h2 class="local-h" id="local-h"><span class="lh-small">Books about the place you are standing in</span><span class="lh-big" aria-hidden="true">Pembrokeshire</span><span class="sr-only">: Pembrokeshire</span></h2>
+
+      <div class="local-grid">
+        <div class="local-copy">
+          <p class="local-lede reveal-lines">Haverfordwest is the county town of Pembrokeshire, and the shop keeps its shelves that way. Local history, local authors, and the books that only a bookshop in this town would think to stock.</p>
+          <p>Visiting authors from the area sign here too, so the local shelf and the signed shelf often meet in the middle.</p>
+          <div class="local-actions">
+            <a class="btn btn-solid" href="mailto:bethan@victoriabookshop.co.uk?subject=Local%20books%20enquiry">Ask about local books</a>
+            <a class="ln" href="https://haverfordwestcivicsociety.org.uk/publications.html" target="_blank" rel="noopener">Haverfordwest Civic Society publications<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
+          </div>
+        </div>
+
+        <figure class="tome-feature">
+          <div class="tome" style="--tone:var(--cloth)">
+            <span class="tome-pub">Haverfordwest Civic Society</span>
+            <span class="tome-t">People Who Shaped Haverfordwest</span>
+            <span class="tome-rule"></span>
+            <span class="tome-a">Mark Muller</span>
+          </div>
+          <figcaption>
+            <p class="tf-label">A local example</p>
+            <p>Mini-biographies of the men and women who shaped the town, written for its 900th anniversary in 2010. Victoria Bookshop is the book&rsquo;s main outlet, and the sales money goes to the Civic Society.</p>
+          </figcaption>
+        </figure>
+
+        <ul class="local-notes" aria-label="Local notes">
+          <li><span class="ln-yr">1726</span><span class="ln-t">The Old Bridge, at the bottom of Bridge Street, is built in stone, paid for by Sir John Philipps of Picton Castle.</span></li>
+          <li><span class="ln-yr">1839</span><span class="ln-t">The Victoria Place terraces are completed, named for the new Queen. The shop was at No.&nbsp;5 in 1981.</span></li>
+          <li><span class="ln-yr">&infin;</span><span class="ln-t">For almost six hundred years, trade to and from the Quay crossed the river at this point.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VI. FROM THE COUNTER ============ -->
+  <section class="picks chapter" id="picks" aria-labelledby="picks-h">
+    <header class="chap"><span class="chap-no">VI</span><span class="chap-rule"></span><span class="chap-name">From the counter</span></header>
+    <div class="picks-head">
+      <h2 class="picks-h reveal-lines" id="picks-h">A reader asked Bethan for <em>British short stories.</em> Here is what she handed over.</h2>
+      <p class="picks-src">From National Book Tokens&rsquo; <a class="ln" href="https://www.nationalbooktokens.com/ask-a-bookseller/ask-victoria-bookshop" target="_blank" rel="noopener"><cite>Ask a Bookseller</cite><span class="sr-only"> (opens in a new tab)</span></a>, where Bethan answered readers&rsquo; questions. Short descriptions below are ours.</p>
+    </div>
+
+    <ol class="notes">
+      <li class="note" style="--r:-2.2deg">
+        <div class="tome tome-sm" style="--tone:var(--oxblood)"><span class="tome-t">Fresh Apples</span><span class="tome-rule"></span><span class="tome-a">Rachel Trezise</span></div>
+        <div class="note-card">
+          <p class="note-hand hand">modern, contemporary</p>
+          <h3 class="note-t"><cite>Fresh Apples</cite> <span>Rachel Trezise</span></h3>
+          <p>The Welsh writer&rsquo;s first collection of stories, and the winner of the very first Dylan Thomas Prize, in 2006.</p>
+        </div>
+      </li>
+      <li class="note" style="--r:1.6deg">
+        <div class="tome tome-sm" style="--tone:var(--navy)"><span class="tome-t">Fool for Love</span><span class="tome-rule"></span><span class="tome-a">Deborah Moggach</span></div>
+        <div class="note-card">
+          <p class="note-hand hand">all about human nature</p>
+          <h3 class="note-t"><cite>Fool for Love</cite> <span>Deborah Moggach</span></h3>
+          <p>Stories from the author of <cite>These Foolish Things</cite>, the novel that became <cite>The Best Exotic Marigold Hotel</cite>.</p>
+        </div>
+      </li>
+      <li class="note note-fav" style="--r:-1deg">
+        <div class="tome tome-sm" style="--tone:var(--cloth)"><span class="tome-t">The Haunting Season</span><span class="tome-rule"></span><span class="tome-a">Eight authors</span></div>
+        <div class="note-card">
+          <p class="note-hand hand">her favourite <svg viewBox="0 0 80 30" aria-hidden="true"><path d="M2 20 C20 4, 40 30, 58 12 S76 10, 78 16"/></svg></p>
+          <h3 class="note-t"><cite>The Haunting Season</cite> <span>Collins, Hermes Gowar, Kidd, Hurley, Purcell, Millwood Hargrave, Pulley &amp; Macneal</span></h3>
+          <p>Ghostly tales for long winter nights, from eight historical novelists including Laura Purcell and Natasha Pulley.</p>
+        </div>
+      </li>
+    </ol>
+    <p class="picks-more">And for a reader looking for more writing by women, Bethan&rsquo;s suggestion was <strong>Elif Shafak</strong>. <a class="ln" href="mailto:bethan@victoriabookshop.co.uk?subject=Book%20recommendation%20please">Ask for a recommendation of your own</a>.</p>
+  </section>
+
+  <!-- ============ EVENTS (renders from js/events.js) ============ -->
+  <section class="events" id="events" aria-labelledby="events-h">
+    <div class="events-in">
+      <h2 class="events-h" id="events-h"><span class="ev-kick">Signings &amp; events</span>Authors at the counter</h2>
+      <div class="events-body" id="events-body">
+        <p class="events-empty">The shop welcomes authors for signings and events, and they are well attended. Nothing is announced just now, so keep an eye on <a class="ln" href="https://www.facebook.com/VictoriaBookshop" target="_blank" rel="noopener">Facebook<span class="sr-only"> (opens in a new tab)</span></a> and <a class="ln" href="https://www.instagram.com/victoriabookshop06/" target="_blank" rel="noopener">Instagram<span class="sr-only"> (opens in a new tab)</span></a> for the next one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VII. ORDERING ============ -->
+  <section class="order chapter dark-ink" id="order" aria-labelledby="order-h">
+    <header class="chap"><span class="chap-no">VII</span><span class="chap-rule"></span><span class="chap-name">Ordering books</span></header>
+    <div class="order-grid">
+      <h2 class="order-h" id="order-h">Order from anywhere. <em>It still goes through Bridge Street.</em></h2>
+      <ol class="routes">
+        <li><a class="route" href="https://uk.bookshop.org/shop/victoriabookshop" target="_blank" rel="noopener">
+          <span class="r-no">01</span><span class="r-name">Bookshop.org</span>
+          <span class="r-text">Search millions of titles and buy through the shop&rsquo;s own page, so the sale supports Victoria Bookshop.</span>
+          <span class="r-go" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="route" href="https://www.hive.co.uk/shops/victoria-bookshop-haverfordwest" target="_blank" rel="noopener">
+          <span class="r-no">02</span><span class="r-name">Hive</span>
+          <span class="r-text">Choose Victoria Bookshop as your local shop on Hive, and part of what you spend comes back to it.</span>
+          <span class="r-go" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="route" href="https://www.ebay.co.uk/str/victoriabookshop" target="_blank" rel="noopener">
+          <span class="r-no">03</span><span class="r-name">eBay shop</span>
+          <span class="r-text">Where many of the shop&rsquo;s signed copies are listed for sale.</span>
+          <span class="r-go" aria-hidden="true">&nearr;</span><span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a class="route" href="tel:+441437762750">
+          <span class="r-no">04</span><span class="r-name">Ring the shop</span>
+          <span class="r-text">01437 762750. The best route for local and signed books, most of which never reach a website. The team are happy to help with orders.</span>
+          <span class="r-go" aria-hidden="true">&rarr;</span></a></li>
+        <li><a class="route" href="mailto:bethan@victoriabookshop.co.uk?subject=Book%20order%20enquiry">
+          <span class="r-no">05</span><span class="r-name">Email Bethan</span>
+          <span class="r-text">bethan@victoriabookshop.co.uk, with the title, author and how you would like to collect.</span>
+          <span class="r-go" aria-hidden="true">&rarr;</span></a></li>
+      </ol>
+      <p class="order-token"><span class="hand">a gift?</span> The shop is a National Book Tokens stockist. <a class="ln" href="https://www.nationalbooktokens.com/stockist/victoria-bookshop-haverfordwest-1" target="_blank" rel="noopener">See the listing<span class="sr-only"> (opens in a new tab)</span></a></p>
+    </div>
+  </section>
+
+  <!-- ============ VIII. VISIT ============ -->
+  <section class="visit chapter" id="visit" aria-labelledby="visit-h">
+    <header class="chap"><span class="chap-no">VIII</span><span class="chap-rule"></span><span class="chap-name">Finding the shop</span></header>
+    <div class="visit-grid">
+      <div class="visit-info">
+        <h2 class="visit-h" id="visit-h"><span class="sr-only">Visit Victoria Bookshop at </span>
+          <span class="va-1">6 Bridge Street</span>
+          <span class="va-2">Haverfordwest</span>
+          <span class="va-3">Pembrokeshire &middot; SA61 2AD</span>
+        </h2>
+        <p class="visit-p">In the middle of the county town, on the street that runs down to the Old Bridge. Come in and browse, or ring ahead to check a particular book is in.</p>
+        <div class="visit-actions">
+          <a class="btn btn-solid" href="https://www.google.com/maps/dir/?api=1&amp;destination=Victoria+Bookshop%2C+6+Bridge+Street%2C+Haverfordwest+SA61+2AD" target="_blank" rel="noopener">Get directions<span class="sr-only"> (opens Google Maps)</span></a>
+          <a class="btn btn-line" href="tel:+441437762750">Call 01437 762750</a>
+          <a class="btn btn-line" href="mailto:bethan@victoriabookshop.co.uk">Email the shop</a>
+        </div>
+        <dl class="visit-facts">
+          <div><dt>Telephone</dt><dd><a class="ln" href="tel:+441437762750">01437 762750</a></dd></div>
+          <div><dt>Email</dt><dd><a class="ln" href="mailto:bethan@victoriabookshop.co.uk">bethan@victoriabookshop.co.uk</a></dd></div>
+          <!-- HOURS: published listings disagree, so only the day every source agrees on is shown. Replace with confirmed hours. -->
+          <div><dt>Opening hours</dt><dd>Open Monday to Saturday. <strong>Closed on Sundays.</strong> <span class="vf-note">Times vary between listings, so please ring before a special trip.</span></dd></div>
+          <div><dt>Elsewhere</dt><dd class="socials">
+            <a class="ln" href="https://www.facebook.com/VictoriaBookshop" target="_blank" rel="noopener">Facebook<span class="sr-only"> (opens in a new tab)</span></a>
+            <a class="ln" href="https://www.instagram.com/victoriabookshop06/" target="_blank" rel="noopener">Instagram<span class="sr-only"> (opens in a new tab)</span></a>
+            <a class="ln" href="https://x.com/Victoria_Books" target="_blank" rel="noopener">X<span class="sr-only"> (opens in a new tab)</span></a>
+          </dd></div>
+        </dl>
+      </div>
+      <figure class="visit-map">
+        <div class="map-frame" id="map-frame">
+          <div class="map-fallback" aria-hidden="true">
+            <span class="mf-pin">&#10087;</span>
+            <span>6 Bridge Street</span>
+          </div>
+          <!-- iframe injected on approach by js/main.js to keep the first load light -->
+        </div>
+        <figcaption><span>Fig. 2</span> Victoria Bookshop, Bridge Street. <a class="ln" href="https://www.google.com/maps/search/?api=1&amp;query=Victoria+Bookshop+6+Bridge+Street+Haverfordwest+SA61+2AD" target="_blank" rel="noopener">Open in Google Maps<span class="sr-only"> (opens in a new tab)</span></a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ THE END ============ -->
+  <section class="end" id="end" aria-labelledby="end-h">
+    <div class="end-stage">
+      <div class="end-page">
+        <p class="end-kick">Here the page ends.</p>
+        <p class="end-big">The next book is on Bridge Street.</p>
+      </div>
+      <div class="end-board">
+        <div class="cover-cloth"></div>
+        <div class="end-board-in">
+          <span class="cover-orn" aria-hidden="true">&#10087;</span>
+          <h2 class="end-h" id="end-h">Come in and <em>choose the next one.</em></h2>
+          <div class="end-actions">
+            <a class="btn btn-gilt" href="https://www.google.com/maps/dir/?api=1&amp;destination=Victoria+Bookshop%2C+6+Bridge+Street%2C+Haverfordwest+SA61+2AD" target="_blank" rel="noopener">Plan a visit<span class="sr-only"> (opens Google Maps)</span></a>
+            <a class="btn btn-line-light" href="https://uk.bookshop.org/shop/victoriabookshop" target="_blank" rel="noopener">Order online<span class="sr-only"> (opens in a new tab)</span> <span aria-hidden="true">&nearr;</span></a>
+          </div>
+          <span class="cover-place">Victoria Bookshop &middot; Haverfordwest</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <div class="col-grid">
+    <div class="col-brand">
+      <p class="col-name">Victoria <i>Bookshop</i></p>
+      <p class="col-addr">6 Bridge Street, Haverfordwest,<br>Pembrokeshire SA61 2AD</p>
+      <p><a class="ln" href="tel:+441437762750">01437 762750</a><br><a class="ln" href="mailto:bethan@victoriabookshop.co.uk">bethan@victoriabookshop.co.uk</a></p>
+    </div>
+    <nav class="col-nav" aria-label="Footer">
+      <p class="col-h">Chapters</p>
+      <ul>
+        <li><a class="ln" href="#story">Our story</a></li>
+        <li><a class="ln" href="#books">Browse</a></li>
+        <li><a class="ln" href="#signed">Signed editions</a></li>
+        <li><a class="ln" href="#local">Local books</a></li>
+        <li><a class="ln" href="#picks">Recommendations</a></li>
+        <li><a class="ln" href="#visit">Visit</a></li>
+      </ul>
+    </nav>
+    <div class="col-nav">
+      <p class="col-h">Order online</p>
+      <ul>
+        <li><a class="ln" href="https://uk.bookshop.org/shop/victoriabookshop" target="_blank" rel="noopener">Bookshop.org</a></li>
+        <li><a class="ln" href="https://www.hive.co.uk/shops/victoria-bookshop-haverfordwest" target="_blank" rel="noopener">Hive</a></li>
+        <li><a class="ln" href="https://www.ebay.co.uk/str/victoriabookshop" target="_blank" rel="noopener">eBay shop</a></li>
+        <li><a class="ln" href="https://www.nationalbooktokens.com/stockist/victoria-bookshop-haverfordwest-1" target="_blank" rel="noopener">National Book Tokens</a></li>
+      </ul>
+    </div>
+    <div class="col-nav">
+      <p class="col-h">Follow</p>
+      <ul>
+        <li><a class="ln" href="https://www.facebook.com/VictoriaBookshop" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a class="ln" href="https://www.instagram.com/victoriabookshop06/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a class="ln" href="https://x.com/Victoria_Books" target="_blank" rel="noopener">X</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-foot">
+    <p class="col-colophon"><span class="col-h">Colophon.</span> Set in Libre Caslon, after the types William Caslon cut in the 1720s, with Instrument Sans for the small print. Bound in green cloth.</p>
+    <p>&copy; <span id="year">2026</span> Victoria Bookshop Limited &middot; Company no. 03514234</p>
+  </div>
+</footer>
+
+<script src="js/vendor/gsap.min.js" defer></script>
+<script src="js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="js/events.js" defer></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
