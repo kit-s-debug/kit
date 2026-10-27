@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Snippers strand renderer</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;max-width:100%}</style>
+</head>
+<body>
+<canvas id="out"></canvas>
+<script>
+/*
+  Generative "hair studies" for the Snippers site.
+
+  Each image is a field of a few thousand strands. Strands share a set of
+  waves (so the hair moves together), are bundled into locks (so it clumps
+  like real hair), and pick up a sheen band wherever their slope matches
+  the light, which is what gives brushed hair its bright crossways shine.
+  An optional cut line ends every strand cleanly: the "snip".
+
+  render(spec) draws into #out at spec.w x spec.h (already supersampled
+  by the caller) and resolves when done.
+*/
+
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function hexToRgb(h) {
+  h = h.replace("#", "");
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+function samplePalette(stops, g) {
+  g = Math.max(0, Math.min(1, g));
+  var n = stops.length - 1, x = g * n, i = Math.min(n - 1, Math.floor(x)), f = x - i;
+  var a = stops[i], b = stops[i + 1];
+  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+}
+
+function mix(a, b, f) {
+  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f];
+}
+
+function gauss(rand) {
+  var u = 1 - rand(), v = rand();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+function render(spec) {
+  var W = spec.w, H = spec.h, rand = mulberry32(spec.seed || 1);
+  var out = document.getElementById("out");
+  out.width = W; out.height = H;
+  var ctx = out.getContext("2d");
+
+  var bg = spec.bg || ["#0f0c0a", "#1c1511"];
+  var grd = ctx.createLinearGradient(0, 0, W * 0.3, H);
+  grd.addColorStop(0, bg[0]); grd.addColorStop(1, bg[1]);
+  ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
+
+  var stops = spec.palette.map(hexToRgb);
+  var sheenCol = hexToRgb(spec.sheen || "#ffe2c0");
+  var angle = spec.angle || 0;
+  var ca = Math.cos(angle), sa = Math.sin(angle);
+  var cx = W * (spec.cx != null ? spec.cx : 0.5), cy = H * (spec.cy != null ? spec.cy : 0.5);
+  var diag = Math.hypot(W, H);
+  var span = diag * (spec.span || 1.15);
+  var len = diag * (spec.len || 1.25);
+  var scale = W / 1000;
+
+  // shared waves: [amplitude (fraction of W), wavelength (fraction of W), phase, drift across u]
+  var waves = (spec.waves || [[0.06, 0.9, 0, 1.2]]).map(function (w) {
+    return { a: w[0] * W, k: 2 * Math.PI / (w[1] * W), p: w[2], d: w[3] || 0 };
+  });
+  var curl = spec.curl ? { b: spec.curl[0] * W, k: 2 * Math.PI / (spec.curl[1] * W) } : null;
+
+  function offset(s, u, lock) {
+    var t = 0, ds = 0;
+    for (var i = 0; i < waves.length; i++) {
+      var w = waves[i];
+      t += w.a * Math.sin(w.k * s + w.p + w.d * u + lock.ph * 0.35);
+    }
+    t += lock.amp * Math.sin(lock.k * s + lock.ph);
+    if (curl) {
+      var c = curl.k * s + lock.ph * 3;
+      t += curl.b * Math.sin(c);
+      ds += curl.b * Math.cos(c);
+    }
+    return [t, ds];
+  }
+
+  var nLocks = spec.locks || 60;
+  var locks = [];
+  for (var L = 0; L < nLocks; L++) {
+    locks.push({
+      u: (L + 0.5 + (rand() - 0.5) * 0.6) / nLocks,
+      ph: rand() * Math.PI * 2,
+      amp: (spec.lockAmp || 0.012) * W * (0.4 + rand()),
+      k: 2 * Math.PI / ((0.25 + rand() * 0.5) * W),
+      tone: (rand() - 0.5) * (spec.lockTone || 0.25),
+      lift: rand() < (spec.highlightLocks || 0) ? 0.35 + rand() * 0.25 : 0
+    });
+  }
+
+  var cut = spec.cut ? {
+    nx: Math.cos(spec.cut.angle), ny: Math.sin(spec.cut.angle),
+    px: spec.cut.x * W, py: spec.cut.y * H, jitter: (spec.cut.jitter || 0.004) * W
+  } : null;
+
+  var step = 5 * scale;
+  var lightSlope = spec.lightSlope != null ? spec.lightSlope : 0.25;
+  var sheenW = spec.sheenWidth || 0.22;
+  var sheenAmt = spec.sheenAmount != null ? spec.sheenAmount : 0.75;
+  var along = spec.along || 0; // how much colour shifts root -> ends along the strand
+  var across = spec.across || 0; // how much colour shifts across the head (lift stages)
+
+  function drawLayer(c2, count, back) {
+    c2.lineCap = "round";
+    for (var n = 0; n < count; n++) {
+      var lock = locks[Math.floor(rand() * nLocks)];
+      var u = lock.u + gauss(rand) * (spec.lockSpread || 0.006);
+      var strandTone = (rand() - 0.5) * (spec.strandTone || 0.3) + lock.tone + lock.lift;
+      var jitPh = rand() * 6.28, jitA = (rand() * 0.004 + 0.001) * W, jitK = 2 * Math.PI / ((0.08 + rand() * 0.2) * W);
+      var width = (back ? 1.6 : 0.9 + rand() * 0.9) * scale * (spec.widthMul || 1);
+      var alpha = back ? 0.22 + rand() * 0.2 : 0.35 + rand() * 0.5;
+      var shine = 0.5 + rand() * 0.8;
+      var s0 = -len / 2 + rand() * len * (spec.startJitter || 0.15);
+      var s1 = len / 2 - rand() * len * (spec.endJitter || 0.25);
+      var cutJ = cut ? (rand() - 0.5) * cut.jitter * 2 : 0;
+      var tBase = (u - 0.5) * span;
+      if (spec.scatter) { var sh0 = (rand() - 0.5) * diag * spec.scatter; s0 += sh0; s1 += sh0; }
+
+      var prev = null, pieceCol = null, pieceN = 0;
+      c2.beginPath();
+      for (var s = s0; s < s1; s += step) {
+        var o = offset(s, u, lock);
+        var t = tBase + o[0] + jitA * Math.sin(jitK * s + jitPh);
+        var sx = s + o[1];
+        var x = cx + sx * ca - t * sa, y = cy + sx * sa + t * ca;
+        if (cut && ((x - cut.px) * cut.nx + (y - cut.py) * cut.ny) > cutJ) break;
+        if (prev) {
+          if (pieceN === 0) {
+            var slope = (t - prev.t) / (sx - prev.sx || 1);
+            var gl = 0.5 + strandTone + along * ((s - s0) / (s1 - s0) - 0.5) + across * (u - 0.5);
+            var col = samplePalette(stops, gl);
+            if (back) col = mix(col, [0, 0, 0], 0.35);
+            var sh = Math.exp(-Math.pow((slope - lightSlope) / sheenW, 2)) * sheenAmt * shine;
+            if (spec.sheenBand) {
+              // a broad diffuse highlight band across the image (studio softbox)
+              var by = spec.sheenBand.y * H + spec.sheenBand.tilt * (x - W / 2);
+              sh += Math.exp(-Math.pow((y - by) / (spec.sheenBand.w * H), 2)) * spec.sheenBand.amt * shine;
+            }
+            col = mix(col, sheenCol, Math.min(0.85, sh * (back ? 0.4 : 1)));
+            pieceCol = "rgba(" + (col[0] | 0) + "," + (col[1] | 0) + "," + (col[2] | 0) + "," + alpha.toFixed(3) + ")";
+            c2.beginPath();
+            c2.moveTo(prev.x, prev.y);
+          }
+          c2.lineTo(x, y);
+          pieceN++;
+          if (pieceN >= 7) {
+            c2.strokeStyle = pieceCol; c2.lineWidth = width; c2.stroke();
+            pieceN = 0;
+          }
+        }
+        prev = { x: x, y: y, t: t, sx: sx };
+      }
+      if (pieceN > 0) { c2.strokeStyle = pieceCol; c2.lineWidth = width; c2.stroke(); }
+    }
+  }
+
+  var total = spec.count || 3200;
+
+  // back layer, blurred: depth of field
+  var back = document.createElement("canvas");
+  back.width = W; back.height = H;
+  var bctx = back.getContext("2d");
+  drawLayer(bctx, Math.floor(total * 0.45), true);
+  ctx.save();
+  ctx.filter = "blur(" + (spec.blur != null ? spec.blur : 3) * scale + "px)";
+  ctx.drawImage(back, 0, 0);
+  ctx.restore();
+
+  drawLayer(ctx, total, false);
+
+  // grade: vignette
+  var v = ctx.createRadialGradient(W * 0.5, H * 0.45, Math.min(W, H) * 0.25, W * 0.5, H * 0.5, diag * 0.62);
+  v.addColorStop(0, "rgba(0,0,0,0)");
+  v.addColorStop(1, "rgba(0,0,0," + (spec.vignette != null ? spec.vignette : 0.45) + ")");
+  ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+
+  // film grain
+  var img = ctx.getImageData(0, 0, W, H), d = img.data, gAmt = spec.grain != null ? spec.grain : 7;
+  for (var i = 0; i < d.length; i += 4) {
+    var gn = (rand() - 0.5) * gAmt;
+    d[i] += gn; d[i + 1] += gn; d[i + 2] += gn;
+  }
+  ctx.putImageData(img, 0, 0);
+  return true;
+}
+window.render = render;
+</script>
+</body>
+</html>

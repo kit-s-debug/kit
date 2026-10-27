@@ -1,0 +1,2 @@
+# Supersampled PNGs from tools/render-strands.mjs; regenerate with `node tools/render-strands.mjs`
+photos/rendered/
