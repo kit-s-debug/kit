@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"Cormorant Garamond";src:url(../../assets/fonts/cormorant.woff2) format("woff2");font-weight:300 700;font-style:normal}
+@font-face{font-family:"Cormorant Garamond";src:url(../../assets/fonts/cormorant-italic.woff2) format("woff2");font-weight:300 700;font-style:italic}
+@font-face{font-family:"Jost";src:url(../../assets/fonts/jost.woff2) format("woff2");font-weight:100 900}
+html,body{margin:0;height:100%;background:#000}canvas{display:block;width:100vw;height:100vh}
+</style>
+<script type="importmap">{"imports":{"three":"../../assets/vendor/three/three.module.min.js"}}</script>
+</head><body><canvas id="c"></canvas>
+<script type="module">
+  // Renders one station of the 3D salon; used by tools/stills/shoot.mjs to make
+  // the fallback stills (no WebGL / reduced motion) and the social image.
+  await Promise.all([document.fonts.load('500 40px "Cormorant Garamond"'), document.fonts.load('italic 500 40px "Cormorant Garamond"'), document.fonts.load('500 20px "Jost"')]);
+  const { createSalon } = await import("../../js/salon3d.js");
+  const q = new URLSearchParams(location.search);
+  const salon = createSalon(document.getElementById("c"), { quality: q.get("q") || "high", capture: true });
+  window.salon = salon;
+  const n = salon.stations;
+  window.show = (i) => { salon.jump(i / (n - 1)); salon.renderNow(); salon.renderNow(); return true; };
+  window.ready = true;
+</script></body></html>

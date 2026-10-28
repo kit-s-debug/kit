@@ -1,2 +1,4 @@
 # Supersampled PNGs from tools/render-strands.mjs; regenerate with `node tools/render-strands.mjs`
 photos/rendered/
+# full-size PNG renders from tools/stills/shoot.mjs
+photos/

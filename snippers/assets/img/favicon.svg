@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#120e0b"/>
-  <defs>
-    <clipPath id="a"><polygon points="0,0 64,0 64,28 0,38"/></clipPath>
-    <clipPath id="b"><polygon points="0,38 64,28 64,64 0,64"/></clipPath>
-  </defs>
-  <g font-family="Bodoni Moda, Didot, 'Bodoni 72', Georgia, serif" font-size="52" font-weight="500" text-anchor="middle">
-    <text x="30.5" y="51.5" fill="#efe8dc" clip-path="url(#a)">S</text>
-    <text x="33.5" y="53.5" fill="#c8662f" clip-path="url(#b)">S</text>
-  </g>
+  <rect width="64" height="64" rx="14" fill="#ecd3c9"/>
+  <text x="32" y="47" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="46" font-weight="600" fill="#2d211e">S</text>
+  <rect x="16" y="52" width="32" height="1.6" fill="#b4884b"/>
 </svg>
