@@ -1,55 +1,72 @@
 # The Chrysalis Beautique: website
 
-A static, single-page site for The Chrysalis Beautique, 15 Dew Street,
-Haverfordwest. Plain HTML/CSS/JS (the same no-build approach as the other
-sites in this repo), with GSAP + ScrollTrigger served from `js/vendor/` and
-self-hosted fonts. No runtime calls to third-party CDNs.
+A single-page, real-time 3D site for The Chrysalis Beautique, 15 Dew Street,
+Haverfordwest. One WebGL world (Three.js) sits behind the whole page: a jade
+chrysalis hangs on a silk thread, shatters into gold dust as you scroll, and
+that same dust re-forms as each treatment before ringing the booking button.
 
 ## Run it locally
 
 ```
 cd chrysalis
-python3 -m http.server 8000
+python3 -m http.server 8000      # or: npm run serve
 ```
 
-Open http://localhost:8000. There is no build step. Deploy the `chrysalis/`
-folder as the site root (for Vercel, set the project root to `chrysalis`;
-`vercel.json` sets cache headers).
+Open http://localhost:8000. The built bundle `js/app.js` is committed, so the
+site runs as plain static files. Deploy the `chrysalis/` folder as the site
+root (for Vercel, set the project root to `chrysalis`).
 
-## Creative concept: "Jade & Gilt"
+To change the scripts, edit `src/` and rebuild:
 
-*Chrysalis* comes from the Greek *chrysós*, gold. A real chrysalis is jade
-green with a ring of gold dots where the change happens. The identity takes
-that one detail and leaves the butterfly out:
+```
+npm install
+npm run build        # or npm run watch while working
+```
 
-- **Palette:** deep jade and green-black for the hero, menu, reviews and
-  booking; warm ivory and pale celadon for the reading sections; gilt only as
-  dots and the main button; a muted clay rose for warmth in headings.
-- **Type:** Bodoni Moda (high-contrast didone, mostly italic) for display,
-  Hanken Grotesk for text and UI.
-- **Motif:** the "crown" (a row of 5–7 gilt dots) marks the wordmark, section
-  labels, the booking close and the footer. The hero image sits in a
-  chrysalis-shaped capsule with a single fine gilt outline.
+## Concept: "The Unfolding"
 
-## What's on the page
+*Chrysalis* comes from the Greek *chrysós*, gold, and a real chrysalis is jade
+green with a crown of gold dots. The site turns that into one continuous scene:
 
-| Section | Notes |
-|---|---|
-| Navigation | Transparent over the hero; turns solid on scroll, hides when scrolling down and comes back when scrolling up. Marks the current section. Full-screen mobile menu with focus trap, Escape to close and focus return. |
-| Hero | The capsule opens from a horizontal slit, the image settles from 1.45× zoom, "Chrysalis" arrives letter by letter, then the gilt dots appear one at a time (about 2s in total; nothing blocks the page). On scroll the capsule drifts and swells while the name slides away. |
-| Our story | A paragraph that brightens word by word as you read it (scrubbed). Count-up facts. A team card for Rebecca James (monogram until a portrait arrives). |
-| In focus | Three featured treatments (Brows, Lashes, Skin), each in a different layout. Each image opens from a close crop to the full plate as you scroll, and the title arrives letter by letter. |
-| Treatment menu | Accessible tabs (arrow keys, Home/End) with a sliding gilt underline, plus an outline marquee that drifts with scroll. Every row has name, description, time, price and a Book/Call/Email action. Without JS, every category is listed. |
-| The visit | A layered image composition with parallax at three depths, plus the verified amenities. |
-| Reviews | Recurring themes from Treatwell reviews (no quotes, no names, no counts), linked to the source. |
-| The work | Gallery driven by `js/gallery.js`, with a dense editorial grid and a `<dialog>` lightbox (arrow keys, Escape, focus return). **Ships empty on purpose**: until real photos are added, it shows a link to Facebook. |
-| Booking | The closing scene: background scale, dots that spread from the centre, three honest steps ("nothing is booked until Treatwell confirms"), and phone/email guidance for treatments that need a conversation first. |
-| Visit | Address, directions link, phone, email, Treatwell, Facebook, and opening hours with today highlighted (UK time). |
-| Footer | A giant italic wordmark that tightens as you reach the end. |
+1. **The chrysalis.** A procedural jade shell (custom shader: mottled,
+   translucent at the rim, a gilt seam) with 26 gold dots, hanging in front
+   of a giant "Chrysalis" so it stands in for the *y*. It sways, follows the
+   light of your cursor, and can be **dragged to spin** or **tapped to wake**
+   (the dots flash).
+2. **The unfolding.** Scrolling shatters the shell face by face, starting at
+   the gold band, into a spiral of gold dust. The shatter is tied to the
+   scroll, so it can be scrubbed back and forth.
+3. **The dust becomes each treatment.** 9,000 particles (4,200 on phones)
+   morph into a **brow arch made of individual hairs**, a **fan of curled
+   lashes** and a **dewdrop**, each placed opposite its text. The cursor
+   gently parts the dust.
+4. **The crown.** At the booking section the dust gathers into seven gilt
+   orbs ringing a magnetic gold "Book on Treatwell" orb. The ring is measured
+   from the button, so it stays aligned at any screen size.
 
-`prefers-reduced-motion` turns the animation layer off completely (no
-splitting, no scrubbing), and all content is visible without JavaScript.
-A CSS failsafe reveals the hero if the scripts never load.
+The atmosphere colour shifts with each chapter (gilt for brows, clay for
+lashes, celadon for skin) and there is no pinning or scroll-jacking. Sections
+scroll normally while the world reacts.
+
+### Smaller touches
+
+- Custom cursor with contextual labels (Book, Menu, Drag, Turn, Call…), on mouse/trackpad only.
+- Magnetic buttons; nav links whose letters shuffle on hover.
+- **Live "Open now · until 4pm" status** in the nav, worked out in UK time from the hours table (today is highlighted in the table too).
+- A "silk thread" progress line on the right with a dot per chapter (clickable).
+- Treatment menu under frosted glass with **filters by category and by time available** ("I've got 30 min / an hour / an afternoon"). Rows glide into place as you filter.
+- Award medals that flip in 3D to reveal each category.
+- Rebecca's card tilts in 3D with a moving glare.
+- A marquee of review themes (pauses on hover).
+- Lenis smooth scrolling; GSAP + ScrollTrigger for the text reveals (word-by-word brightening, letter-by-letter chapter titles, counters).
+
+### Fallbacks and accessibility
+
+- `prefers-reduced-motion`: no smooth scroll, cursor, splitting or morphing. The chrysalis renders once as a still and fades as you scroll.
+- No WebGL: a pre-rendered still of the chrysalis (`assets/img/poster.webp`) takes its place.
+- No JavaScript: all content, including all 20 treatments, is visible. A CSS failsafe reveals the hero if the script fails to load.
+- Keyboard: skip link, visible focus, menu focus trap with Escape, filter chips and medals are real buttons with `aria-pressed`.
+- Performance: pixel ratio is capped and drops automatically if the first seconds run slowly; rendering pauses in background tabs. About 185 KB gzipped of JS, mostly Three.js.
 
 ## Research: what was verified and where
 
@@ -121,41 +138,30 @@ Prices and times shown (all from Treatwell snapshots):
 10. **Domain.** Once known, make `og:image` an absolute URL, add
     `<link rel="canonical">`, add `"url"` to the JSON-LD, and add a sitemap.
 
-## Images: all temporary
+## Images
 
-No genuine photographs of the salon or its work could be downloaded here, and
-stock images of other people's results would misrepresent the salon. So
-**every image on the site is an abstract "plate"**: soft-focus satin rendered
-procedurally by `tools/render-plates.mjs` (`node tools/render-plates.mjs`,
-which needs ffmpeg). They suggest texture and light, and don't depict
-treatments or results.
+There is no stock photography on the site. All the visuals are rendered
+in real time. Real photos are still needed for:
 
-| Where | File | Replace with |
+| Where | What's there now | Replace with |
 |---|---|---|
-| Hero capsule | `satin-jade-*` | A strong portrait-format image: a close-up of the work, or the salon interior |
-| No. I Brows | `satin-gilt-*` | Brow work (own client, with consent) |
-| No. II Lashes | `satin-clay-*` | Lash lift close-up |
-| No. III Skin | `satin-ivory-*` | Facial room or treatment in progress |
-| The visit (two layers) | `satin-ivory-*`, `satin-clay-*` | Salon interior, reception, the drinks offer |
-| Booking background | `satin-ink-*` | Dark, atmospheric interior detail (heavily overlaid) |
-| Rebecca's card | monogram on `satin-gilt` | Portrait |
-| Gallery | empty, see `js/gallery.js` | Real work only |
-
-Keep the same file names and widths (or update each `srcset`) to swap them
-in. Export around 1800px on the long edge, then generate WebP + JPEG at the
-listed widths. `tools/render-og.mjs` re-renders the social card
-(`assets/img/og.jpg`) and the touch icon.
+| Rebecca's card | Gold "RJ" monogram | A portrait (commented `<img>` is in place) |
+| The work | Link to Facebook (`js/gallery.js` is empty) | Genuine photos of the salon's own work, with consent |
+| Share image / no-WebGL still | Rendered from the scene | Re-render with `node tools/render-og.mjs http://localhost:8000/` after changes |
 
 ## Files
 
 ```
 chrysalis/
-  index.html            page
-  css/chrysalis.css     design system + layout
-  js/chrysalis.js       nav, menu, tabs, gallery, motion
-  js/gallery.js         gallery photo list (empty until real photos exist)
-  js/vendor/            GSAP 3.15 + ScrollTrigger
-  assets/fonts/         Bodoni Moda, Hanken Grotesk (OFL)
-  assets/img/           plates, og.jpg, favicon.svg, apple-touch-icon.png
-  tools/                image render scripts
+  index.html          page
+  css/chrysalis.css   layout, type, glass, cursor, fallbacks
+  src/main.js         scroll → scene states, smooth scroll, reveals
+  src/scene.js        the WebGL world (chrysalis, dust, shaders)
+  src/shapes.js       particle formations (shell, cloud, brow, lashes, drop, crown)
+  src/ui.js           cursor, magnetic, status, filters, medals, menu, gallery
+  js/app.js           built bundle (npm run build)
+  js/gallery.js       gallery photo list
+  assets/fonts/       Bodoni Moda, Hanken Grotesk (OFL)
+  assets/img/         og.jpg, poster.webp, favicon, touch icon
+  tools/render-og.mjs re-renders og.jpg / poster.webp from the live scene
 ```
