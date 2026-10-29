@@ -1,2 +1,3 @@
+# Design preview: not for search engines until launch
 User-agent: *
-Allow: /
+Disallow: /

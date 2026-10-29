@@ -23,6 +23,21 @@ npm install
 npm run build        # or npm run watch while working
 ```
 
+## Shareable preview
+
+Live at **https://chrysalis-beautique.vercel.app/** (Vercel project
+`chrysalis-beautique`, root directory `chrysalis`). While it's a proposal:
+
+- a small "Design preview · not yet live" label sits under the logo;
+- search engines are kept out (`<meta name="robots">`, the `X-Robots-Tag`
+  header in `vercel.json`, and `robots.txt`);
+- the share image uses that absolute URL, so links show a preview card in
+  email and messaging apps.
+
+**At launch:** delete the `.preview-tag` paragraph (and its CSS), remove the
+robots meta, the `X-Robots-Tag` header and the `Disallow`, and point the
+`og:` URLs and JSON-LD at the real domain.
+
 ## Concept: "The Unfolding"
 
 *Chrysalis* comes from the Greek *chrysós*, gold, and a real chrysalis is jade

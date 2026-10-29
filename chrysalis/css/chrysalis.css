@@ -470,6 +470,16 @@ main, .foot { position: relative; z-index: 3; }
 }
 .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: .82rem; color: var(--text-soft); }
 
+/* ---------- preview label (remove at launch) ---------- */
+.preview-tag {
+  position: fixed; left: var(--gutter); top: calc(var(--nav-h) + .4rem); z-index: 45; pointer-events: none;
+  transition: top .5s var(--ease);
+  padding: .4rem .85rem; border-radius: 999px; border: 1px solid rgba(210, 171, 85, .45);
+  background: rgba(11, 21, 17, .78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--gilt-hi);
+}
+.preview-tag span { color: var(--text-soft); }
+
 /* ---------- lightbox ---------- */
 .lightbox { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(8, 15, 12, .96); color: var(--text); }
 .lightbox[open] { display: grid; place-items: center; }
