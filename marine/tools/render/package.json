@@ -1,0 +1,7 @@
+{
+  "name": "marine-render",
+  "private": true,
+  "description": "Renders the stand-in photography until real photos are supplied. Not shipped with the site.",
+  "type": "module",
+  "dependencies": { "three": "0.170.0" }
+}
