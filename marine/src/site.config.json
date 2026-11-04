@@ -1,0 +1,42 @@
+{
+  "_readme": "Everything the business may want to change lives here. Edit, then run: node tools/build.mjs",
+
+  "brand": {
+    "name": "NAVICREW",
+    "descriptor": "Ltd",
+    "legalName": "Navicrew Ltd",
+    "tagline": "Marine detailing and maintenance.",
+    "emblem": "assets/img/brand/emblem-300.webp",
+    "_emblem": "The logo mark shown beside the wordmark. Remove this line to use the text wordmark alone."
+  },
+
+  "contact": {
+    "phoneDisplay": "+44 7931 988951",
+    "phoneE164": "+447931988951",
+    "whatsapp": "447931988951",
+    "email": "rajabi.ark@gmail.com"
+  },
+
+  "site": {
+    "url": "",
+    "_url": "Set to the live address (e.g. https://arkmarine.co.uk) once known. It enables canonical links, absolute share images and the sitemap.",
+    "locale": "en_GB"
+  },
+
+  "form": {
+    "endpoint": "",
+    "_endpoint": "Leave empty and the enquiry form hands the visitor's message to WhatsApp (or email) ready to send. Paste a Formspree / Web3Forms / Getform endpoint URL here to have the form post directly instead. See README.",
+    "accessKey": "",
+    "_accessKey": "Only for Web3Forms: its public access key."
+  },
+
+  "photos": {
+    "_readme": "Each slot names a file set in assets/img/photos (name-<width>.webp). 'tall' is an optional portrait version for phones. 'focus' is the crop focal point (object-position). 'caption' is optional.",
+    "hero":     { "file": "bow",         "focus": "50% 40%", "alt": "The navy hull of a sailing yacht seen bow-on in the yard, its polished topsides reflecting the sky" },
+    "about":    { "file": "bow-sun",     "focus": "50% 45%", "alt": "Looking up the polished bow of a navy-hulled yacht on the hard, sun behind the rigging" },
+    "exterior": { "file": "hull-gloss",  "focus": "40% 40%", "alt": "Close view of glossy navy topsides and porthole, with the hull below prepared for antifouling" },
+    "wood":     { "file": "planks-wide", "focus": "40% 70%", "alt": "Teak deck planks with black caulking, catching low evening light" },
+    "interior": { "file": "porthole",    "focus": "50% 42%", "alt": "A stainless steel porthole surround set into a navy hull" },
+    "break":    { "file": "yacht-side",  "tall": "bow-straps", "focus": "50% 30%", "tallFocus": "50% 40%", "alt": "A navy-hulled sailing yacht out of the water in the boatyard, masts against a blue sky" }
+  }
+}
