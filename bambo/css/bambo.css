@@ -1053,3 +1053,38 @@ dialog[open]::backdrop { animation: fade-in .4s var(--ease); }
 .foot-intro .logo { font-size: 2rem; }
 .age-badge { width: 110px; height: 110px; display: block; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,255,255,.25); }
 @media (max-width: 420px) { .site-header .logo-word { display: none; } .logo-badge { width: 50px; height: 50px; } }
+
+/* ---------- intro splash ---------- */
+.intro {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-content: center; justify-items: center; gap: 1.2rem;
+  background: var(--white); cursor: pointer; overflow: hidden;
+  transition: transform .75s cubic-bezier(.76, 0, .24, 1);
+}
+.intro[hidden] { display: none; }
+.intro::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image: radial-gradient(rgba(200, 16, 46, .12) 1.4px, transparent 1.5px);
+  background-size: 26px 26px; opacity: 0; transition: opacity 1s ease .2s;
+}
+.intro.is-playing::before { opacity: 1; }
+.intro-word {
+  display: flex; align-items: flex-end; gap: .02em;
+  font-weight: 900; font-stretch: 125%; letter-spacing: -0.05em; line-height: .82;
+  font-size: clamp(3rem, 15.5vw, 15rem); color: var(--red);
+}
+.intro-word span { display: inline-block; transform: translateY(110%) rotate(8deg); opacity: 0; }
+.intro-slot { display: inline-block; width: .26em; height: .68em; margin: 0 0 .05em .06em; border-radius: 99px; background: var(--ink); transform: scaleY(0); transform-origin: bottom; }
+.intro-sub { margin: 0; font-weight: 650; font-size: clamp(.8rem, 1.6vw, 1rem); letter-spacing: .3em; text-transform: uppercase; color: var(--ink-2); opacity: 0; transform: translateY(10px); }
+.intro.is-playing .intro-word span { animation: intro-letter .8s cubic-bezier(.2, 1.4, .4, 1) forwards; }
+.intro.is-playing .intro-word span:nth-child(2) { animation-delay: .08s; }
+.intro.is-playing .intro-word span:nth-child(3) { animation-delay: .16s; }
+.intro.is-playing .intro-word span:nth-child(4) { animation-delay: .24s; }
+.intro.is-playing .intro-word span:nth-child(5) { animation-delay: .32s; }
+.intro.is-playing .intro-slot { animation: intro-slot .7s cubic-bezier(.2, 1.4, .4, 1) .6s forwards, intro-pulse 1.2s ease-in-out 1.3s infinite; }
+.intro.is-playing .intro-sub { transition: opacity .6s ease .95s, transform .6s ease .95s; opacity: 1; transform: none; }
+@keyframes intro-letter { to { transform: none; opacity: 1; } }
+@keyframes intro-slot { to { transform: none; background: var(--red); } }
+@keyframes intro-pulse { 50% { transform: scaleY(1.15); } }
+.intro.is-leaving { transform: translateY(-100%); }
+.intro.is-leaving .intro-word { transform: scale(1.15); opacity: 0; transition: transform .6s ease, opacity .5s ease; }
