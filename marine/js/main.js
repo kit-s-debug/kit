@@ -319,93 +319,16 @@
     });
   }
 
-  /* ---------------- stand-out details ---------------- */
-  // gold hairline across the top of each section as it arrives
+  /* ---------------- quiet details ---------------- */
   const edgeIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-edged"); edgeIO.unobserve(e.target); } }), { rootMargin: "0px 0px -20% 0px" });
   $$(".edge").forEach(el => edgeIO.observe(el.closest("section")));
 
-  // ticker: drifts on its own, speeds up and changes direction with your scroll
-  const ticker = $("[data-ticker]"), track = $("[data-ticker-track]");
-  if (ticker && track && !reduced.matches) {
-    let x = 0, vel = 0, dir = -1, prevY = scrollY, visible = false, rowW = 0;
-    const measureRow = () => { rowW = track.firstElementChild.offsetWidth; };
-    measureRow(); addEventListener("resize", measureRow);
-    new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(ticker);
-    const tick = () => {
-      const y = scrollY, d = y - prevY; prevY = y;
-      if (d) dir = d > 0 ? -1 : 1;
-      vel += (Math.min(Math.abs(d), 60) * 0.12 - vel) * 0.08;
-      if (visible && rowW) {
-        x += dir * (0.45 + vel);
-        if (x <= -rowW) x += rowW;
-        if (x > 0) x -= rowW;
-        track.style.setProperty("--tx", x.toFixed(1) + "px");
-      }
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
-
-  // engraved numerals drift slower than the page
-  const ghosts = $$("[data-ghost]");
-  if (ghosts.length && !reduced.matches) {
-    const drift = () => ghosts.forEach(g => {
-      const r = g.parentElement.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
-      g.style.setProperty("--gy", (-r.top * 0.18).toFixed(1) + "px");
-    });
-    addEventListener("scroll", () => requestAnimationFrame(drift), { passive: true }); drift();
-  }
-
-  // floating WhatsApp: after the hero, out of the way once the contact section is on screen
   const fwa = $("[data-float-wa]"), contactSec = $("#contact");
   if (fwa && contactSec) {
     let inContact = false;
     const place = () => fwa.classList.toggle("is-shown", scrollY > vh * 0.8 && !inContact);
     new IntersectionObserver(es => { inContact = es[0].isIntersecting; place(); }, { threshold: 0.15 }).observe(contactSec);
     addEventListener("scroll", place, { passive: true }); place();
-  }
-
-  if (fine.matches && !reduced.matches) {
-    // cursor ring with contextual labels
-    const ring = $("[data-cursor-ring]"), lab = $(".cursor__label", ring);
-    let cx = -100, cy = -100, tx = -100, ty = -100, raf = 0;
-    const follow = () => {
-      cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
-      ring.style.setProperty("--cx", cx.toFixed(1) + "px"); ring.style.setProperty("--cy", cy.toFixed(1) + "px");
-      raf = Math.abs(tx - cx) + Math.abs(ty - cy) > 0.3 ? requestAnimationFrame(follow) : 0;
-    };
-    addEventListener("pointermove", e => {
-      if (e.pointerType !== "mouse") return;
-      tx = e.clientX; ty = e.clientY; ring.classList.add("is-on");
-      if (!raf) raf = requestAnimationFrame(follow);
-    }, { passive: true });
-    document.documentElement.addEventListener("mouseleave", () => ring.classList.remove("is-on"));
-    document.addEventListener("pointerover", e => {
-      const t = e.target.closest("a, button, select, label, [data-cursor]");
-      const label = t && t.dataset.cursor;
-      ring.classList.toggle("is-link", !!t && !label);
-      ring.classList.toggle("is-label", !!label);
-      if (label) lab.textContent = label;
-    });
-    addEventListener("mousedown", () => ring.style.setProperty("--cs", .85));
-    addEventListener("mouseup", () => ring.style.setProperty("--cs", 1));
-
-    // magnetic pull on buttons
-    $$(".btn, .link-wa__icon, .float-wa").forEach(el => {
-      el.addEventListener("pointermove", e => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--mgx", (((e.clientX - r.left) / r.width - .5) * 10).toFixed(1) + "px");
-        el.style.setProperty("--mgy", (((e.clientY - r.top) / r.height - .5) * 8).toFixed(1) + "px");
-      });
-      el.addEventListener("pointerleave", () => { el.style.setProperty("--mgx", "0px"); el.style.setProperty("--mgy", "0px"); });
-    });
-
-    // light that follows the pointer across cards
-    $$(".value").forEach(el => el.addEventListener("pointermove", e => {
-      const r = el.getBoundingClientRect();
-      el.style.setProperty("--lx", (e.clientX - r.left).toFixed(0) + "px");
-      el.style.setProperty("--ly", (e.clientY - r.top).toFixed(0) + "px");
-    }));
   }
 
   /* ---------------- small things ---------------- */
