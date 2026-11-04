@@ -191,7 +191,11 @@ const clientConfig = JSON.stringify({ brand: cfg.brand.legalName, contact: cfg.c
 const version = createHash("sha1").update(readFileSync(join(root, "css/marine.css"))).update(readFileSync(join(root, "js/main.js"))).digest("hex").slice(0, 8);
 
 // ---------- fill tokens (simple values first, so they can nest inside {{wa:...}}) ----------
-const simple = { meta, jsonld, preloadHero, clientConfig, version, wordmark, year: String(new Date().getFullYear()),
+const emblem = cfg.brand.emblem ? (() => {
+  const [w, h] = webpSize(join(root, cfg.brand.emblem));
+  return `<img class="emblem" src="${cfg.brand.emblem}" alt="" width="${w}" height="${h}" decoding="async">`;
+})() : "";
+const simple = { meta, jsonld, preloadHero, clientConfig, version, wordmark, emblem, year: String(new Date().getFullYear()),
   chart: chart(), contours: contours(), soundings: soundings(), mailSubject: encodeURIComponent(`Enquiry for ${cfg.brand.legalName}`) };
 html = html.replace(/<!--\s*SOURCE TEMPLATE[\s\S]*?-->\n/, "<!-- Built from src/index.html by tools/build.mjs. Edit the source, not this file. -->\n");
 html = html.replace(/\{\{([a-zA-Z][\w.]*)\}\}/g, (m, k) => {

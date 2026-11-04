@@ -428,9 +428,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* ---------- cinematic break ---------- */
 .break { position: relative; background: var(--deep); color: var(--ivory); }
 .break__title { position: relative; z-index: 3; padding: 0 var(--gutter); max-width: calc(var(--max)); margin: 0 auto -0.48em; font-size: clamp(54px, 10vw, 184px); line-height: .9; }
-.break__media { position: relative; height: clamp(520px, 92vh, 980px); overflow: hidden; clip-path: inset(0 var(--inset, 0px) 0 var(--inset, 0px)); }
+.break__media { position: relative; height: clamp(480px, 76vh, 860px); overflow: hidden; clip-path: inset(0 var(--inset, 0px) 0 var(--inset, 0px)); }
 .break__img { position: absolute; inset: 0; --pr: 90px; }
-.break__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(10, 29, 28, .9) 0%, rgba(10, 29, 28, 0) 26%, rgba(5, 11, 20, 0) 60%, rgba(5, 11, 20, .75) 100%); }
+.break__shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(10, 29, 28, .9) 0%, rgba(10, 29, 28, 0) 26%, rgba(5, 11, 20, 0) 50%, rgba(5, 11, 20, .78) 78%, rgba(5, 11, 20, .94) 100%); }
 .break__note { position: absolute; right: var(--gutter); bottom: clamp(36px, 7vh, 80px); max-width: 360px; margin: 0; padding-left: 22px; border-left: 1px solid var(--champagne); color: rgba(243, 238, 228, .82); font: italic 400 clamp(17px, 1.4vw, 21px)/1.5 var(--serif); }
 
 /* ---------- why ---------- */
@@ -587,3 +587,33 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .scroll-cue__line span { animation: none; transform: translateY(100%); }
   .contact__chart { animation: none; }
 }
+
+/* ==========================================================================
+   Logo emblem + real photography (portrait hero)
+   ========================================================================== */
+.emblem { display: block; height: auto; }
+.nav__brand { display: inline-flex; align-items: center; gap: 14px; }
+.nav__brand .emblem { width: 46px; transition: width .5s var(--ease); }
+.nav.is-scrolled .nav__brand .emblem { width: 38px; }
+.intro__mark { display: flex; flex-direction: column; align-items: center; gap: 28px; }
+.intro .emblem { width: clamp(150px, 20vw, 230px); }
+.js:not(.intro-seen) .intro .emblem { opacity: 0; transform: translateY(14px) scale(.96); animation: emblemIn 1.4s var(--ease) .1s forwards; }
+@keyframes emblemIn { to { opacity: 1; transform: none; } }
+.footer__mark { display: inline-flex; align-items: center; gap: clamp(18px, 2.4vw, 36px); }
+.footer__mark .emblem { width: clamp(80px, 9vw, 132px); }
+
+/* Hero: the photograph is portrait, so on wide screens it becomes a tall
+   panel on the right that the headline runs into, rather than being
+   stretched edge to edge. Phones keep it full-bleed. */
+@media (min-width: 960px) {
+  .hero { background: radial-gradient(80% 90% at 20% 100%, rgba(26, 50, 80, .45), transparent 70%), var(--navy-950); }
+  .hero__media { left: auto; width: min(50%, 860px);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 34%); mask-image: linear-gradient(90deg, transparent 0, #000 34%); }
+  .hero__shade { background:
+    linear-gradient(180deg, rgba(5, 11, 20, .55) 0%, rgba(5, 11, 20, 0) 20%, rgba(5, 11, 20, 0) 55%, rgba(5, 11, 20, .9) 100%); }
+  .hero__lede { color: rgba(243, 238, 228, .74); }
+}
+@media (max-width: 959px) {
+  .hero__shade { background: linear-gradient(180deg, rgba(5, 11, 20, .65) 0%, rgba(5, 11, 20, .25) 18%, rgba(5, 11, 20, .62) 36%, rgba(5, 11, 20, .9) 60%, rgba(5, 11, 20, .97) 100%); }
+}
+@media (max-width: 680px) { .nav__brand .emblem { width: 38px; } .nav__brand { gap: 10px; } }

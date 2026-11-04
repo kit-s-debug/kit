@@ -1,6 +1,6 @@
-# ARK Marine website
+# Navicrew Ltd website
 
-A one-page site for a premium marine services company: exterior care, marine woodworking, interior and metal finishing, and specialist services (captain services, help buying and selling). ARK Marine is a working name. The brand is set in one place, so the company can be renamed easily (see below).
+A one-page site for a premium marine services company: exterior care, marine woodworking, interior and metal finishing, and specialist services (captain services, help buying and selling). The brand is now **Navicrew Ltd**, matching the supplied logo; it started as the working name "ARK Marine". The brand is set in one place, so it can be changed easily (see below).
 
 It's static HTML, CSS and JS with no framework and no runtime dependencies. A small Node build script fills the template from a config file.
 
@@ -12,27 +12,31 @@ python3 -m http.server 8000   # open http://localhost:8000
 
 Deploy the `marine/` folder as a static site. On Vercel, set it as the project root; `vercel.json` sets the cache headers.
 
-## ⚠ The photographs are placeholders
+## Photography
 
-No photos of the client's own boats or work had been supplied yet. So every image on the site is a **rendered placeholder**, made in code with three.js (`tools/render/`): a blue-hour seascape with a yacht at anchor, a sunset horizon, a navy hull flank, teak decking and a stainless cleat. They set the mood and crops, but they are not real work and should be replaced before launch.
+The site uses the client's own photos of a navy-hulled sailing yacht in the yard. The originals are in `photos/originals/`. They were exported with `tools/photos.py --grade`, a light house grade: slightly calmer colour, a little more contrast, shadows nudged towards navy. There is no retouching, cropping or stretching.
 
-**To use real photos:**
-
-1. Put the originals (JPG/PNG, any size, phone photos are fine) in one folder, named after the slot they replace, e.g. `hero-wide.jpg`, `hull-wide.jpg`.
-2. `python3 -I tools/photos.py path/to/folder` makes responsive WebP sets (`name-640/960/1440/1920/2560.webp`) in `assets/img/photos/` and fixes phone rotation.
-3. In `src/site.config.json → photos`, point each slot at its file and update `alt`. `focus` is the crop focal point (`"35% 50%"` = left of centre). `tall` is an optional portrait crop for phones.
-4. `node tools/build.mjs`, and `node tools/og/shoot.mjs` to remake the share image.
-
-| Slot | Where it appears | Best photo |
+| Slot | Photo | Where |
 |---|---|---|
-| `hero` (+ `tall`) | Full-screen opening | The best yacht shot, with calm space on the left for the headline |
-| `about` | About, tall frame | A detail: a fitting, a finish, hands at work |
-| `exterior` | Service 01 | Hull, polishing, washing |
-| `wood` | Service 02 | Teak, varnished brightwork |
-| `interior` | Service 03 | Interior, polished stainless |
-| `break` (+ `tall`) | Full-width cinematic break | A wide, atmospheric vessel or seascape |
+| `hero` | `bow`: bow-on, the polished topsides reflecting the sky | Opening. On desktop it's a tall panel on the right that the headline runs into; on phones it's full-bleed |
+| `about` | `bow-sun`: looking up the bow into the sun | About frame |
+| `exterior` | `hull-gloss`: glossy topsides above a hull prepared for antifouling | Service 01 |
+| `interior` | `porthole`: stainless porthole surround | Service 03 |
+| `break` | `yacht-side` (desktop) / `bow-straps` (phones) | Cinematic break |
+| `wood` | `planks-wide`: **still a rendered placeholder**, because no woodwork photos were supplied | Service 02 |
 
-Service 04 uses an illustrated sea chart (generated SVG), so it needs no photo.
+Not used:
+- The walkaround video (478×850, handheld, mostly the sanded hull bottom). It is too low-resolution and unsteady for a premium site.
+- Photo 7 (wide yard shot). It's cluttered next to the others.
+- Several photos and a second video that were Google Drive links in the email, not attachments. Those couldn't be downloaded here.
+
+Steady, landscape, high-resolution footage of finished work would make a good hero video later.
+
+**To add or swap photos:** put the originals in `photos/originals/`, named after the file set you want, then run `python3 -I tools/photos.py photos/originals assets/img/photos --grade`. Point the slot in `src/site.config.json → photos` at the file, set `alt`, `focus` and optionally `tall`, then run `node tools/build.mjs` and `node tools/og/shoot.mjs`.
+
+## Logo
+
+`assets/img/brand/emblem*.webp` is the supplied NAVICREW LTD emblem (crown, monogram and yacht), lifted off its black background. It appears in the nav, the opening title, the footer, the share image and the favicons. The text wordmark beside it is set in the site's typeface. The supplied logo is a 816×1301 JPEG, so a vector (SVG) or high-resolution PNG version would sharpen it on large screens.
 
 ## Renaming the company
 

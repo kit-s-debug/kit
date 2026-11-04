@@ -2,10 +2,12 @@
   "_readme": "Everything the business may want to change lives here. Edit, then run: node tools/build.mjs",
 
   "brand": {
-    "name": "ARK",
-    "descriptor": "Marine",
-    "legalName": "ARK Marine",
-    "tagline": "Premium marine care, detailing and specialist services."
+    "name": "NAVICREW",
+    "descriptor": "Ltd",
+    "legalName": "Navicrew Ltd",
+    "tagline": "Marine detailing and maintenance.",
+    "emblem": "assets/img/brand/emblem-300.webp",
+    "_emblem": "The logo mark shown beside the wordmark. Remove this line to use the text wordmark alone."
   },
 
   "contact": {
@@ -29,12 +31,12 @@
   },
 
   "photos": {
-    "_readme": "Each slot names a file set in assets/img/photos (name-<width>.webp). 'tall' is an optional portrait version for phones. 'focus' is the crop focal point (object-position).",
-    "hero":     { "file": "hero-wide",   "tall": "hero-tall",  "focus": "35% 50%", "tallFocus": "50% 50%", "alt": "A motor yacht at anchor at blue hour, cabin lights reflected on calm water" },
-    "about":    { "file": "teak-wide",   "focus": "50% 50%", "alt": "A polished stainless steel cleat on a caulked teak deck" },
-    "exterior": { "file": "hull-wide",   "focus": "30% 50%", "alt": "A glossy navy hull and waterline stripe reflected in still water" },
+    "_readme": "Each slot names a file set in assets/img/photos (name-<width>.webp). 'tall' is an optional portrait version for phones. 'focus' is the crop focal point (object-position). 'caption' is optional.",
+    "hero":     { "file": "bow",         "focus": "50% 40%", "alt": "The navy hull of a sailing yacht seen bow-on in the yard, its polished topsides reflecting the sky" },
+    "about":    { "file": "bow-sun",     "focus": "50% 45%", "alt": "Looking up the polished bow of a navy-hulled yacht on the hard, sun behind the rigging" },
+    "exterior": { "file": "hull-gloss",  "focus": "40% 40%", "alt": "Close view of glossy navy topsides and porthole, with the hull below prepared for antifouling" },
     "wood":     { "file": "planks-wide", "focus": "40% 70%", "alt": "Teak deck planks with black caulking, catching low evening light" },
-    "interior": { "file": "cleat-wide",  "focus": "45% 50%", "alt": "Close detail of a mirror-polished stainless steel deck cleat" },
-    "break":    { "file": "break-wide",  "tall": "break-tall", "focus": "50% 50%", "tallFocus": "30% 50%", "alt": "A yacht on the horizon as the sun sets over open water" }
+    "interior": { "file": "porthole",    "focus": "50% 42%", "alt": "A stainless steel porthole surround set into a navy hull" },
+    "break":    { "file": "yacht-side",  "tall": "bow-straps", "focus": "50% 30%", "tallFocus": "50% 40%", "alt": "A navy-hulled sailing yacht out of the water in the boatyard, masts against a blue sky" }
   }
 }

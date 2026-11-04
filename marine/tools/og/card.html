@@ -5,28 +5,27 @@
 <style>
   html, body { margin: 0; background: #050b14; }
   .card { position: relative; width: 1200px; height: 630px; overflow: hidden; color: var(--ivory); }
-  .card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 50%; }
+  .card { background: #07101c; } .card #bg { position: absolute; top: 0; right: 0; width: 52%; height: 100%; object-fit: cover; object-position: 50% 42%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%); }
   .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,11,20,.92) 0%, rgba(5,11,20,.55) 45%, rgba(5,11,20,0) 75%), linear-gradient(0deg, rgba(5,11,20,.6), transparent 40%); }
   .card__in { position: absolute; z-index: 2; left: 72px; top: 64px; bottom: 64px; display: flex; flex-direction: column; justify-content: space-between; }
   .card h1 { margin: 0; font: 400 80px/.95 var(--serif); letter-spacing: -.03em; }
   .card h1 em { font-style: italic; background: var(--metal); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .card .eyebrow { color: rgba(243,238,228,.75); margin-bottom: 26px; }
   .icon { position: relative; display: grid; place-items: center; width: 512px; height: 512px; background: #0a1626; }
-  .icon b { font: 500 300px/1 var(--serif); color: var(--ivory); transform: translateY(-14px); }
-  .icon i { position: absolute; left: 96px; right: 96px; bottom: 132px; height: 10px; background: var(--metal); }
+  .icon img { width: 82%; }
   .wordmark__name { font-size: 40px; } .wordmark__line { width: 40px; margin: 0 14px 4px 4px; } .wordmark__desc { font-size: 12px; }
 </style></head><body>
 <div class="card" id="card"><img id="bg" alt=""><div class="card__in">
-  <span id="mark"></span>
-  <div><p class="eyebrow"><span class="eyebrow__rule"></span>Marine care · Detailing · Specialist services</p>
-  <h1>Exceptional Care.<br><em>For Exceptional Vessels.</em></h1></div>
+  <span id="mark" style="display:flex;align-items:center;gap:16px"></span>
+  <div><p class="eyebrow"><span class="eyebrow__rule"></span>Marine detailing · Maintenance</p>
+  <h1>Exceptional Care.<br><em>For Exceptional<br>Vessels.</em></h1></div>
 </div></div>
-<div class="icon" id="icon"><b id="initial"></b><i></i></div>
+<div class="icon" id="icon"><img id="em" alt=""></div>
 <script type="module">
   const cfg = await (await fetch("../../src/site.config.json")).json();
   const n = cfg.brand.name;
-  document.getElementById("mark").innerHTML = `<span class="wordmark"><span class="wordmark__name">${[...n].map(c => `<span>${c}</span>`).join("")}</span><span class="wordmark__line"></span><span class="wordmark__desc">${cfg.brand.descriptor}</span></span>`;
-  document.getElementById("initial").textContent = n[0];
+  document.getElementById("mark").innerHTML = `<img src="../../${cfg.brand.emblem}" style="width:64px" alt=""><span class="wordmark"><span class="wordmark__name">${[...n].map(c => `<span>${c}</span>`).join("")}</span><span class="wordmark__line"></span><span class="wordmark__desc">${cfg.brand.descriptor}</span></span>`;
+  const em = document.getElementById("em"); em.src = "../../" + cfg.brand.emblem; await em.decode();
   const bg = document.getElementById("bg"); bg.src = `../../assets/img/photos/${cfg.photos.hero.file}-1440.webp`;
   await bg.decode(); await document.fonts.ready; window.ready = true;
 </script></body></html>
