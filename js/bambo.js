@@ -15,7 +15,7 @@
   const money = (n) => (n == null ? "Ask in store" : "£" + (Number.isInteger(n) ? n : n.toFixed(2)));
 
   /* ---------- page entrance ---------- */
-  const markLoaded = () => requestAnimationFrame(() => document.documentElement.classList.add("is-loaded"));
+  const markLoaded = () => { if (document.documentElement.classList.contains("intro-on")) return; requestAnimationFrame(() => document.documentElement.classList.add("is-loaded")); };
   const heroImg = $(".hero-stage img");
   Promise.all([
     document.fonts ? document.fonts.ready : Promise.resolve(),
@@ -137,13 +137,36 @@
   });
 
   /* ---------- age check ---------- */
+  /* ---------- intro: big red BAMBO, once per visit ---------- */
+  const intro = $("#intro");
+  const introDone = new Promise((resolve) => {
+    if (!intro || intro.hidden) return resolve();
+    document.body.style.overflow = "hidden";
+    let finished = false;
+    const finish = () => {
+      if (finished) return; finished = true;
+      intro.classList.add("is-leaving");
+      setTimeout(() => {
+        intro.remove();
+        document.documentElement.classList.remove("intro-on");
+        document.body.style.overflow = "";
+        markLoaded();
+        resolve();
+      }, 750);
+    };
+    requestAnimationFrame(() => intro.classList.add("is-playing"));
+    const t = setTimeout(finish, 2300);
+    intro.addEventListener("click", () => { clearTimeout(t); finish(); });
+    addEventListener("keydown", () => { clearTimeout(t); finish(); }, { once: true });
+  });
+
   const age = $("#age");
-  if (age && !store.get("bambo-18", false) && typeof age.showModal === "function") {
+  if (age && !store.get("bambo-18", false) && typeof age.showModal === "function") introDone.then(() => {
     age.showModal();
     age.addEventListener("cancel", (e) => e.preventDefault());
     $("[data-age-yes]", age).addEventListener("click", () => { store.set("bambo-18", true); age.close(); });
     $("[data-age-no]", age).addEventListener("click", () => age.classList.add("is-under"));
-  }
+  });
 
   /* ---------- catalogue ---------- */
   const PRODUCTS = window.BAMBO_PRODUCTS || [];
