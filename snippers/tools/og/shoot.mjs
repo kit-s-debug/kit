@@ -1,0 +1,20 @@
+// Renders the social-share image and app icons from the HTML next to this file.
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+const { chromium } = createRequire(import.meta.url)("playwright");
+const here = dirname(fileURLToPath(import.meta.url));
+const img = join(here, "..", "..", "assets", "img");
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 1200, height: 630 } });
+await p.goto("file://" + join(here, "og.html")); await p.evaluate(() => document.fonts.ready);
+await p.screenshot({ path: join(img, "og.jpg"), type: "jpeg", quality: 86 });
+await p.setViewportSize({ width: 180, height: 180 });
+await p.goto("file://" + join(here, "icon.html")); await p.evaluate(() => document.fonts.ready);
+await p.screenshot({ path: join(img, "apple-touch-icon.png") });
+await p.setViewportSize({ width: 180, height: 180 });
+const buf = await p.screenshot();
+await b.close();
+const { execFileSync } = await import("node:child_process");
+execFileSync("python3", ["-I", "-c", `from PIL import Image; Image.open(r"${join(img, "apple-touch-icon.png")}").resize((32,32), Image.LANCZOS).save(r"${join(img, "favicon-32.png")}")`]);
+console.log("ok");

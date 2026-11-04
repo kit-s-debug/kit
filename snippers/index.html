@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en-GB" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Snippers Hairdressers | 57 Portfield, Haverfordwest, Pembrokeshire</title>
+<meta name="description" content="Snippers is the hairdresser at 57 Portfield, Haverfordwest. Cuts, colour, colour correction, blow-dries and occasion hair for women, men and children. Book by phone on 01437 762114.">
+<meta name="theme-color" content="#f7f1ea">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Snippers Hairdressers">
+<meta property="og:title" content="Snippers Hairdressers, Haverfordwest">
+<meta property="og:description" content="Cuts, colour and styling for women, men and children at 57 Portfield, Haverfordwest. Book by phone on 01437 762114.">
+<meta property="og:url" content="https://snippers-omega.vercel.app/">
+<meta property="og:image" content="https://snippers-omega.vercel.app/assets/img/og.jpg">
+<meta property="og:image:alt" content="The Snippers shopfront on Portfield, with Come on in.">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://snippers-omega.vercel.app/assets/img/og.jpg">
+<link rel="canonical" href="https://snippers-omega.vercel.app/">
+
+<link rel="preload" href="assets/fonts/cormorant.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/jost.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/img/stills/stop-0-wide.webp" as="image" media="(min-aspect-ratio: 1/1)">
+<link rel="preload" href="assets/img/stills/stop-0-tall.webp" as="image" media="(max-aspect-ratio: 1/1)">
+<link rel="stylesheet" href="css/snippers.css">
+
+<script>
+  document.documentElement.classList.replace("no-js", "js");
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+</script>
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three/three.module.min.js" } }</script>
+
+<!--
+  Structured data holds only verified facts: name, address, telephone and
+  the Facebook page. Opening hours, prices and ratings are left out until
+  the salon confirms them. Add "url" once the domain is live.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "name": "Snippers",
+  "alternateName": "Snippers Hairdressers",
+  "telephone": "+441437762114",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "57 Portfield",
+    "addressLocality": "Haverfordwest",
+    "addressRegion": "Pembrokeshire",
+    "postalCode": "SA61 1BS",
+    "addressCountry": "GB"
+  },
+  "areaServed": ["Haverfordwest", "Pembrokeshire"],
+  "sameAs": ["https://www.facebook.com/p/Snippers-Hairdressing-Salons-100063592809616/"]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" data-state="top">
+  <a class="brand" href="#top" aria-label="Snippers, back to the start">
+    <span class="brand__word">Snippers</span>
+    <span class="brand__sub">Hairdressers</span>
+  </a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#salon">The salon</a>
+    <a href="#services">Services</a>
+    <a href="#colour">Colour</a>
+    <a href="#visit">Visit</a>
+  </nav>
+  <a class="nav__call" href="tel:+441437762114">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5 9 3l1.6 4.3-2 1.5a12 12 0 0 0 6.6 6.6l1.5-2L21 15l-.5 2.4A2.5 2.5 0 0 1 18 19.5 15.5 15.5 0 0 1 4.5 6 2.5 2.5 0 0 1 6.6 3.5Z"/></svg>
+    <span>01437 762114</span>
+  </a>
+  <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu">
+    <span class="sr-only">Menu</span><span class="burger" aria-hidden="true"><span></span><span></span></span>
+  </button>
+</header>
+
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Mobile">
+    <a href="#salon">The salon</a>
+    <a href="#services">Services</a>
+    <a href="#colour">Colour</a>
+    <a href="#visit">Visit &amp; book</a>
+  </nav>
+  <a class="btn btn--dark" href="tel:+441437762114">Call 01437 762114</a>
+  <p>57 Portfield, Haverfordwest SA61 1BS</p>
+</div>
+
+<main id="main">
+
+<!-- ================================================================
+     THE TOUR
+     A fixed stage holds the 3D salon (or a still of each stop when
+     WebGL or motion isn't available). The stops scroll over it; each
+     one moves the camera to its station.
+     ================================================================ -->
+<section class="tour" aria-label="A walk through the salon">
+  <div class="tour__stage" aria-hidden="true">
+    <picture class="tour__poster">
+      <source media="(max-aspect-ratio: 1/1)" srcset="assets/img/stills/stop-0-tall.webp">
+      <img src="assets/img/stills/stop-0-wide.webp" alt="" width="1600" height="900" fetchpriority="high">
+    </picture>
+    <div class="tour__stills"></div>
+    <canvas class="tour__canvas"></canvas>
+    <div class="tour__veil"></div>
+  </div>
+
+  <nav class="tour__index" aria-label="Tour stops">
+    <ol>
+      <li><a href="#top" data-index="0"><span>Portfield</span></a></li>
+      <li><a href="#salon" data-index="1"><span>Come in</span></a></li>
+      <li><a href="#welcome" data-index="2"><span>The salon</span></a></li>
+      <li><a href="#booking" data-index="3"><span>Reception</span></a></li>
+      <li><a href="#services" data-index="4"><span>The chairs</span></a></li>
+      <li><a href="#colour" data-index="5"><span>Colour bar</span></a></li>
+      <li><a href="#basins" data-index="6"><span>Basins</span></a></li>
+      <li><a href="#portfield" data-index="7"><span>See you soon</span></a></li>
+    </ol>
+  </nav>
+
+  <div class="tour__stops">
+
+    <!-- 0: the street -->
+    <section class="stop stop--hero" id="top" data-stop="0" aria-labelledby="hero-title">
+      <div class="hero">
+        <p class="eyebrow">Hairdressers &middot; 57 Portfield &middot; Haverfordwest</p>
+        <h1 class="hero__title" id="hero-title">
+          <span class="line"><span>Snippers</span></span>
+        </h1>
+        <p class="hero__tag"><span class="line"><span><em>Come on in.</em></span></span></p>
+        <p class="hero__lede">Cuts, colour and styling for women, men and children on Portfield in Haverfordwest. Scroll to step inside, or give us a ring to book.</p>
+        <div class="hero__actions">
+          <a class="btn btn--dark" href="tel:+441437762114">Call to book</a>
+          <a class="btn btn--line" href="#salon">Step inside <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+        </div>
+      </div>
+      <p class="hero__note">An illustrated salon, not a photograph. Pop in to see the real one.</p>
+      <span class="scroll-cue" aria-hidden="true"><span></span>Scroll to walk in</span>
+    </section>
+
+    <!-- 1: through the door -->
+    <section class="stop stop--left" id="salon" data-stop="1" aria-labelledby="s1">
+      <div class="card">
+        <p class="card__n">01 <span>The salon</span></p>
+        <h2 id="s1">Your hairdresser on&nbsp;Portfield</h2>
+        <p>Snippers is the hairdresser at 57 Portfield, Haverfordwest. Cuts, colour and styling for women, men and children, all under one roof.</p>
+      </div>
+    </section>
+
+    <!-- 2: the room -->
+    <section class="stop stop--right" id="welcome" data-stop="2" aria-labelledby="s2">
+      <div class="card">
+        <p class="card__n">02 <span>Why Snippers</span></p>
+        <h2 id="s2">Local, simple, <em>for everyone</em></h2>
+        <ul class="ticks">
+          <li><strong>Local.</strong> Right here at 57 Portfield, Haverfordwest.</li>
+          <li><strong>Everyone.</strong> Women, men and children.</li>
+          <li><strong>Colour.</strong> From soft balayage to rescuing home box dye.</li>
+          <li><strong>Simple.</strong> No apps or accounts. Call and book.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3: reception -->
+    <section class="stop stop--left" id="booking" data-stop="3" aria-labelledby="s3">
+      <div class="card">
+        <p class="card__n">03 <span>Booking</span></p>
+        <h2 id="s3">Booking is a phone call&nbsp;away</h2>
+        <p>We take appointments by phone. Tell us what you&rsquo;d like and we&rsquo;ll find you a time and give you a price.</p>
+        <a class="phone" href="tel:+441437762114">01437&nbsp;762114</a>
+        <p class="small">Can&rsquo;t get through? Try again shortly, or message us on <a href="https://www.facebook.com/p/Snippers-Hairdressing-Salons-100063592809616/" rel="noopener" target="_blank">Facebook</a>.</p>
+      </div>
+    </section>
+
+    <!-- 4: the chairs. Services from the salon's directory listings; data-confirm items need the owner's OK. -->
+    <section class="stop stop--right" id="services" data-stop="4" aria-labelledby="s4">
+      <div class="card card--wide">
+        <p class="card__n">04 <span>Services</span></p>
+        <h2 id="s4">In the chair</h2>
+        <dl class="services">
+          <div><dt>Women&rsquo;s cuts</dt><dd>A tidy trim or a complete change of shape.</dd></div>
+          <div><dt>Men&rsquo;s &amp; children&rsquo;s cuts</dt><dd>The whole family, at the same salon.</dd></div>
+          <div><dt>Blow-dries &amp; styling</dt><dd>Shine and movement for a night out, or just because.</dd></div>
+          <div data-confirm="true"><dt>Wedding &amp; occasion hair</dt><dd>Call early to talk through dates and trials.</dd></div>
+        </dl>
+        <p class="small">Every head of hair is different, so we price when you call.</p>
+      </div>
+    </section>
+
+    <!-- 5: colour bar -->
+    <section class="stop stop--left" id="colour" data-stop="5" aria-labelledby="s5">
+      <div class="card card--wide">
+        <p class="card__n">05 <span>Colour</span></p>
+        <h2 id="s5">Colour, balayage <em>&amp; correction</em></h2>
+        <p>All-over colour, or hand-painted balayage that grows out softly. We also lift home box dye toward a softer shade. It&rsquo;s done gradually, keeping the hair in good condition.</p>
+        <ol class="lift" aria-label="How dark dye lightens">
+          <li style="--c:#1d1513"><span>Box dye</span></li>
+          <li style="--c:#7b2c14"><span>First lift</span></li>
+          <li style="--c:#c97a32"><span>Warm stage</span></li>
+          <li style="--c:#ead3a2"><span>Toned</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6: basins -->
+    <section class="stop stop--right" id="basins" data-stop="6" aria-labelledby="s6">
+      <div class="card">
+        <p class="card__n">06 <span>Treatments</span></p>
+        <h2 id="s6">Treatments &amp; extensions</h2>
+        <p data-confirm="true">Keratin smoothing treatments and hair extensions. Ask about them when you call.</p>
+        <p class="note"><strong>Booking colour?</strong> Most colour services need a skin allergy test 48&nbsp;hours beforehand. Ask when you book.</p>
+      </div>
+    </section>
+
+    <!-- 7: looking back out -->
+    <section class="stop stop--left" id="portfield" data-stop="7" aria-labelledby="s7">
+      <div class="card">
+        <p class="card__n">07 <span>Find us</span></p>
+        <h2 id="s7">See you on <em>Portfield</em></h2>
+        <p>57 Portfield, Haverfordwest SA61&nbsp;1BS</p>
+        <a class="btn btn--line" href="https://www.google.com/maps/dir/?api=1&amp;destination=Snippers%2C%2057%20Portfield%2C%20Haverfordwest%20SA61%201BS" rel="noopener" target="_blank">Get directions <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     VISIT & BOOK
+     ================================================================ -->
+<section class="visit" id="visit" aria-labelledby="visit-title">
+  <div class="visit__inner">
+    <p class="eyebrow">Visit &amp; book</p>
+    <h2 class="visit__title" id="visit-title">Ready for something&nbsp;<em>new?</em></h2>
+    <a class="visit__phone" href="tel:+441437762114"><span>Call to book</span>01437&nbsp;762114</a>
+
+    <div class="visit__cols">
+      <div>
+        <h3>Find us</h3>
+        <address>Snippers<br>57 Portfield<br>Haverfordwest<br>Pembrokeshire SA61 1BS</address>
+        <a class="link" href="https://www.google.com/maps/dir/?api=1&amp;destination=Snippers%2C%2057%20Portfield%2C%20Haverfordwest%20SA61%201BS" rel="noopener" target="_blank">Get directions</a>
+      </div>
+      <div>
+        <h3>Booking</h3>
+        <p>Appointments are made by phone. If you&rsquo;d rather message, you&rsquo;ll find us on Facebook.</p>
+        <a class="link" href="https://www.facebook.com/p/Snippers-Hairdressing-Salons-100063592809616/" rel="noopener" target="_blank">Snippers on Facebook</a>
+      </div>
+      <div>
+        <h3>Opening hours</h3>
+        <div class="hours" data-hours><p>Please call to check today&rsquo;s opening times before you visit.</p></div>
+      </div>
+    </div>
+
+    <div class="map">
+      <div class="map__placeholder">
+        <p>57 Portfield, Haverfordwest SA61 1BS</p>
+        <button class="btn btn--line" type="button" data-map-load>Show the map</button>
+        <p class="small">Loads an embedded Google Map.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p class="foot__word" aria-hidden="true">Snippers</p>
+  <div class="foot__meta">
+    <p>Snippers Hairdressers, 57 Portfield, Haverfordwest, Pembrokeshire SA61&nbsp;1BS</p>
+    <p><a href="tel:+441437762114">01437 762114</a> &middot; <a href="https://www.facebook.com/p/Snippers-Hairdressing-Salons-100063592809616/" rel="noopener" target="_blank">Facebook</a> &middot; <a href="#top">Back to the street</a></p>
+    <p>&copy; <span data-year>2026</span> Snippers. The salon on this page is an illustration.</p>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
