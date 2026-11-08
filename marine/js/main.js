@@ -338,7 +338,9 @@
       "Teak deck: deep clean and restoration, bringing back the colour of the wood.",
       "Sailing yacht: topsides and deck brought back to a finish fit for the mooring.",
       "Cockpit: years of staining and mould lifted, ready to enjoy again.",
+      "On the hard: a slow look along freshly polished topsides.",
     ];
+    const film = $("[data-work-video]");
     const capEl = $("[data-work-cap]");
     const select = i => {
       workTabs.forEach((t, j) => { const on = i === j; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
@@ -347,6 +349,8 @@
         else { p.classList.remove("is-active"); setTimeout(() => { if (!p.classList.contains("is-active")) p.hidden = true; }, 900); }
       });
       capEl.textContent = caps[i];
+      // the film only loads and plays while its tab is open
+      if (film) { if (i === 3 && !reduced.matches) film.play().catch(() => {}); else if (i === 3) film.load(); else film.pause(); }
     };
     workTabs.forEach((t, i) => {
       t.addEventListener("click", () => select(i));

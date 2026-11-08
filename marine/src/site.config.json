@@ -33,13 +33,13 @@
   "photos": {
     "_readme": "Each slot names a file set in assets/img/photos (name-<width>.webp). 'tall' is an optional portrait version for phones. 'focus' is the crop focal point (object-position). 'caption' is optional.",
     "hero":     { "file": "bow",         "focus": "50% 40%", "alt": "The navy hull of a sailing yacht seen bow-on in the yard, its polished topsides reflecting the sky" },
-    "about":    { "file": "bow-sun",     "focus": "50% 45%", "alt": "Looking up the polished bow of a navy-hulled yacht on the hard, sun behind the rigging" },
-    "exterior": { "file": "hull-gloss",  "focus": "40% 40%", "alt": "Close view of glossy navy topsides and porthole, with the hull below prepared for antifouling" },
+    "about": { "file": "prop-antifoul",  "focus": "50% 52%", "alt": "A polished bronze propeller beneath a freshly antifouled hull, on the hard" },
+    "exterior": { "file": "hull-polished",  "focus": "62% 42%", "alt": "A sailing yacht's topsides polished to a mirror finish above fresh antifouling" },
     "wood":     { "file": "teak-after",  "focus": "55% 60%", "alt": "A teak cockpit deck after cleaning and restoration, the wood back to a warm, even colour" },
-    "interior": { "file": "porthole",    "focus": "50% 42%", "alt": "A stainless steel porthole surround set into a navy hull" },
+    "interior": { "file": "stainless-rails", "focus": "62% 50%", "alt": "Polished stainless steel rails and a deck cleat on a white motor cruiser" },
     "w_deck":    { "file": "work-deck",    "alt": "Before and after: a weathered, grey teak cockpit deck, then cleaned and restored to a warm teak colour" },
     "w_yacht":   { "file": "work-yacht",   "alt": "During and finished: a sailing yacht being polished in the yard, then gleaming at its mooring" },
     "w_cockpit": { "file": "work-cockpit", "alt": "Before and after: a stained, mouldy cockpit floor, then the boat clean and bright" },
-    "break":    { "file": "yacht-side",  "tall": "bow-straps", "focus": "50% 30%", "tallFocus": "50% 40%", "alt": "A navy-hulled sailing yacht out of the water in the boatyard, masts against a blue sky" }
+    "break": { "file": "motor-yacht",   "focus": "58% 55%", "alt": "A burgundy-hulled motor yacht on the hard, its gelcoat gleaming" }
   }
 }

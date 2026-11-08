@@ -129,7 +129,7 @@
         <div class="about__frame" data-parallax="0.08">
           {{picture:about:(min-width: 960px) 40vw, 100vw}}
         </div>
-        <figcaption class="caption"><span>Fig. 01</span> Polished topsides, out of the water.</figcaption>
+        <figcaption class="caption"><span>Fig. 01</span> Fresh antifouling and a polished propeller.</figcaption>
       </figure>
 
       <div class="about__copy">
@@ -233,7 +233,7 @@
         <!-- Desktop: a fixed viewing frame that changes as each discipline comes into focus -->
         <div class="svc__stage" aria-hidden="true">
           <div class="stage" data-stage>
-            <figure class="stage__panel" data-panel="exterior">{{picture:exterior:(min-width: 960px) 46vw, 1px}}<span class="stage__waterline"></span></figure>
+            <figure class="stage__panel" data-panel="exterior">{{picture:exterior:(min-width: 960px) 46vw, 1px}}</figure>
             <figure class="stage__panel" data-panel="wood">{{picture:wood:(min-width: 960px) 46vw, 1px}}</figure>
             <figure class="stage__panel" data-panel="interior">{{picture:interior:(min-width: 960px) 46vw, 1px}}<span class="stage__sheen"></span></figure>
             <figure class="stage__panel stage__panel--chart" data-panel="specialist">{{chart}}</figure>
@@ -265,9 +265,10 @@
           </h2>
         </div>
         <div class="work__tabs" role="tablist" aria-label="Recent projects" data-reveal style="--d:.1s">
-          <button class="work__tab" role="tab" id="wt-0" aria-controls="wp-0" aria-selected="true" tabindex="0"><span>01</span>Teak deck</button>
+          <button class="work__tab" role="tab" id="wt-0" aria-controls="wp-0" aria-selected="true" tabindex="0"><span>01</span>Teak</button>
           <button class="work__tab" role="tab" id="wt-1" aria-controls="wp-1" aria-selected="false" tabindex="-1"><span>02</span>Yacht</button>
           <button class="work__tab" role="tab" id="wt-2" aria-controls="wp-2" aria-selected="false" tabindex="-1"><span>03</span>Cockpit</button>
+          <button class="work__tab" role="tab" id="wt-3" aria-controls="wp-3" aria-selected="false" tabindex="-1"><span>04</span>Film</button>
         </div>
       </header>
       <div class="work__stage media-reveal" data-reveal data-work>
@@ -275,6 +276,11 @@
           <figure class="work__panel is-active" role="tabpanel" id="wp-0" aria-labelledby="wt-0">{{picture:w_deck:(min-width: 1480px) 1290px, 92vw}}</figure>
           <figure class="work__panel" role="tabpanel" id="wp-1" aria-labelledby="wt-1" hidden>{{picture:w_yacht:(min-width: 1480px) 1290px, 92vw}}</figure>
           <figure class="work__panel" role="tabpanel" id="wp-2" aria-labelledby="wt-2" hidden>{{picture:w_cockpit:(min-width: 1480px) 1290px, 92vw}}</figure>
+          <figure class="work__panel work__panel--film" role="tabpanel" id="wp-3" aria-labelledby="wt-3" hidden>
+            <video muted loop playsinline preload="none" poster="assets/video/hull-polish-poster.webp" aria-label="A slow pan along a freshly polished sailing yacht hull" data-work-video>
+              <source src="assets/video/hull-polish.webm" type="video/webm"><source src="assets/video/hull-polish.mp4" type="video/mp4">
+            </video>
+          </figure>
         </div>
       </div>
       <p class="work__cap" data-work-cap aria-live="polite">Teak deck: deep clean and restoration, bringing back the colour of the wood.</p>
