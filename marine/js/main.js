@@ -88,7 +88,7 @@
       else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
     }
   });
-  matchMedia("(min-width: 1081px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
+  matchMedia("(min-width: 1281px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
 
   /* ---------------- scroll-driven pieces ---------------- */
   const hero = $(".hero"), heroPic = $("[data-hero-media] .pic"), heroContent = $(".hero__content");

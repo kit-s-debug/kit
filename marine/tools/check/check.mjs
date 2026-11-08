@@ -35,15 +35,16 @@ for (const [name, opts] of [["desktop", { viewport: { width: 1440, height: 900 }
     await p.waitForTimeout(1300);
     await p.screenshot({ path: join(out, `${name}-${String(i++).padStart(2, "0")}.png`) });
   }
-  const audit = await p.evaluate(() => {
+  const audit = await p.evaluate(vw => {
     const r = {};
-    r.overflow = document.documentElement.scrollWidth - innerWidth;
+    // innerWidth grows past the device width when a phone has to zoom out to fit something too wide
+    r.overflow = Math.max(document.documentElement.scrollWidth, innerWidth) - vw;
     r.wide = [...document.querySelectorAll("body *")].filter(e => { const b = e.getBoundingClientRect(); return b.right > innerWidth + 1 && getComputedStyle(e).position !== "fixed" && !e.closest(".contact__chart,.approach__soundings,.menu,.intro"); }).slice(0, 5).map(e => e.className || e.tagName);
     r.brokenImgs = [...document.images].filter(i => i.complete && i.naturalWidth === 0 && i.loading !== "lazy").map(i => i.currentSrc || i.src);
     r.badAnchors = [...document.querySelectorAll('a[href^="#"]')].map(a => a.getAttribute("href")).filter(h => h.length > 1 && !document.querySelector(h));
     r.emptyLinks = [...document.querySelectorAll("a")].filter(a => !a.getAttribute("href")).length;
     return r;
-  });
+  }, opts.viewport.width);
   console.log(name, JSON.stringify(audit), errs.length ? "\n  ERRORS: " + errs.join("\n  ") : "");
   if (audit.overflow > 0 || audit.brokenImgs.length || audit.badAnchors.length || errs.length) problems++;
   await ctx.close();

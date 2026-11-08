@@ -35,7 +35,7 @@
     "hero":     { "file": "bow",         "focus": "50% 40%", "alt": "The navy hull of a sailing yacht seen bow-on in the yard, its polished topsides reflecting the sky" },
     "about":    { "file": "bow-sun",     "focus": "50% 45%", "alt": "Looking up the polished bow of a navy-hulled yacht on the hard, sun behind the rigging" },
     "exterior": { "file": "hull-gloss",  "focus": "40% 40%", "alt": "Close view of glossy navy topsides and porthole, with the hull below prepared for antifouling" },
-    "wood":     { "file": "planks-wide", "focus": "40% 70%", "alt": "Teak deck planks with black caulking, catching low evening light" },
+    "wood":     { "file": "teak-after",  "focus": "55% 60%", "alt": "A teak cockpit deck after cleaning and restoration, the wood back to a warm, even colour" },
     "interior": { "file": "porthole",    "focus": "50% 42%", "alt": "A stainless steel porthole surround set into a navy hull" },
     "w_deck":    { "file": "work-deck",    "alt": "Before and after: a weathered, grey teak cockpit deck, then cleaned and restored to a warm teak colour" },
     "w_yacht":   { "file": "work-yacht",   "alt": "During and finished: a sailing yacht being polished in the yard, then gleaming at its mooring" },

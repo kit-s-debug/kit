@@ -23,7 +23,8 @@ The site uses the client's own photos of a navy-hulled sailing yacht in the yard
 | `exterior` | `hull-gloss`: glossy topsides above a hull prepared for antifouling | Service 01 |
 | `interior` | `porthole`: stainless porthole surround | Service 03 |
 | `break` | `yacht-side` (desktop) / `bow-straps` (phones) | Cinematic break |
-| `wood` | `planks-wide`: **still a rendered placeholder**, because no woodwork photos were supplied | Service 02 |
+| `wood` | `teak-after`: the restored teak deck (the AFTER half of the deck project, label cropped off) | Service 02 |
+| `w_deck`, `w_yacht`, `w_cockpit` | before/after composites, used exactly as supplied (`photos/work/`) | Recent work |
 
 Not used:
 - The walkaround video (478×850, handheld, mostly the sanded hull bottom). It is too low-resolution and unsteady for a premium site.
@@ -105,7 +106,8 @@ assets/fonts  assets/img/photos  assets/img/icons  assets/img/og.jpg
 tools/build.mjs         template → index.html, robots.txt (and sitemap.xml once site.url is set)
 tools/photos.py         photos → responsive WebP sets
 tools/og/               share card + favicons from the config
-tools/render/           the placeholder photography (needs: cd tools/render && npm i)
+404.html                branded not-found page (Vercel serves it automatically)
+site.webmanifest        name, colours and icons for home-screen bookmarks
 tools/check/check.mjs   smoke test: console errors, broken images, dead anchors, overflow, screenshots
 ```
 
