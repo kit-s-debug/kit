@@ -41,6 +41,7 @@
       <a href="#home" data-link="home">Home</a>
       <a href="#about" data-link="about">About</a>
       <a href="#services" data-link="services">Services</a>
+      <a href="#work" data-link="work">Our Work</a>
       <a href="#approach" data-link="approach">Our Approach</a>
       <a href="#contact" data-link="contact">Contact</a>
     </nav>
@@ -56,8 +57,9 @@
     <a href="#home"><span class="menu__n">01</span>Home</a>
     <a href="#about"><span class="menu__n">02</span>About</a>
     <a href="#services"><span class="menu__n">03</span>Services</a>
-    <a href="#approach"><span class="menu__n">04</span>Our Approach</a>
-    <a href="#contact"><span class="menu__n">05</span>Contact</a>
+    <a href="#work"><span class="menu__n">04</span>Our Work</a>
+    <a href="#approach"><span class="menu__n">05</span>Our Approach</a>
+    <a href="#contact"><span class="menu__n">06</span>Contact</a>
   </nav>
   <div class="menu__foot">
     <a class="btn btn--solid" href="#contact"><span class="btn__label" data-text="Request a Quote">Request a Quote</span></a>
@@ -74,6 +76,7 @@
   <span class="passage__track"><span class="passage__fill"></span></span>
   <a href="#about" data-wp="about"><i></i><span>About</span></a>
   <a href="#services" data-wp="services"><i></i><span>Services</span></a>
+  <a href="#work" data-wp="work"><i></i><span>Our work</span></a>
   <a href="#approach" data-wp="approach"><i></i><span>Approach</span></a>
   <a href="#why" data-wp="why"><i></i><span>Values</span></a>
   <a href="#contact" data-wp="contact"><i></i><span>Contact</span></a>
@@ -240,6 +243,35 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ RECENT WORK (before / after) ============ -->
+  <section class="work tone-light" id="work" data-section="work" aria-labelledby="work-title">
+    <span class="edge" aria-hidden="true"></span>
+    <div class="wrap">
+      <header class="work__head">
+        <div>
+          <p class="label" data-reveal><span class="label__rule"></span>Recent work</p>
+          <h2 class="display work__title" id="work-title" data-reveal-lines>
+            <span class="line"><span>The difference,</span></span>
+            <span class="line"><span><em>side by side.</em></span></span>
+          </h2>
+        </div>
+        <div class="work__tabs" role="tablist" aria-label="Recent projects" data-reveal style="--d:.1s">
+          <button class="work__tab" role="tab" id="wt-0" aria-controls="wp-0" aria-selected="true" tabindex="0"><span>01</span>Teak deck</button>
+          <button class="work__tab" role="tab" id="wt-1" aria-controls="wp-1" aria-selected="false" tabindex="-1"><span>02</span>Yacht</button>
+          <button class="work__tab" role="tab" id="wt-2" aria-controls="wp-2" aria-selected="false" tabindex="-1"><span>03</span>Cockpit</button>
+        </div>
+      </header>
+      <div class="work__stage media-reveal" data-reveal data-work>
+        <div class="work__frame">
+          <figure class="work__panel is-active" role="tabpanel" id="wp-0" aria-labelledby="wt-0">{{picture:w_deck:(min-width: 1480px) 1290px, 92vw}}</figure>
+          <figure class="work__panel" role="tabpanel" id="wp-1" aria-labelledby="wt-1" hidden>{{picture:w_yacht:(min-width: 1480px) 1290px, 92vw}}</figure>
+          <figure class="work__panel" role="tabpanel" id="wp-2" aria-labelledby="wt-2" hidden>{{picture:w_cockpit:(min-width: 1480px) 1290px, 92vw}}</figure>
+        </div>
+      </div>
+      <p class="work__cap" data-work-cap aria-live="polite">Teak deck: deep clean and restoration, bringing back the colour of the wood.</p>
     </div>
   </section>
 
@@ -478,6 +510,7 @@
           <li><a class="u-link" href="#home">Home</a></li>
           <li><a class="u-link" href="#about">About</a></li>
           <li><a class="u-link" href="#services">Services</a></li>
+          <li><a class="u-link" href="#work">Our Work</a></li>
           <li><a class="u-link" href="#approach">Our Approach</a></li>
           <li><a class="u-link" href="#contact">Contact</a></li>
         </ul>

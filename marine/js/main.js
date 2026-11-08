@@ -331,6 +331,32 @@
     addEventListener("scroll", place, { passive: true }); place();
   }
 
+  /* ---------------- recent work tabs ---------------- */
+  const workTabs = $$(".work__tab");
+  if (workTabs.length) {
+    const caps = [
+      "Teak deck: deep clean and restoration, bringing back the colour of the wood.",
+      "Sailing yacht: topsides and deck brought back to a finish fit for the mooring.",
+      "Cockpit: years of staining and mould lifted, ready to enjoy again.",
+    ];
+    const capEl = $("[data-work-cap]");
+    const select = i => {
+      workTabs.forEach((t, j) => { const on = i === j; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
+      $$(".work__panel").forEach((p, j) => {
+        if (j === i) { p.hidden = false; requestAnimationFrame(() => p.classList.add("is-active")); }
+        else { p.classList.remove("is-active"); setTimeout(() => { if (!p.classList.contains("is-active")) p.hidden = true; }, 900); }
+      });
+      capEl.textContent = caps[i];
+    };
+    workTabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(i));
+      t.addEventListener("keydown", e => {
+        const k = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!k) return;
+        e.preventDefault(); const n = (i + k + workTabs.length) % workTabs.length; workTabs[n].focus(); select(n);
+      });
+    });
+  }
+
   /* ---------------- small things ---------------- */
   $$("[data-year]").forEach(el => { el.textContent = new Date().getFullYear(); });
 })();
