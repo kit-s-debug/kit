@@ -6,8 +6,11 @@
     "descriptor": "Ltd",
     "legalName": "Navicrew Ltd",
     "tagline": "Marine detailing and maintenance.",
-    "emblem": "assets/img/brand/emblem-300.webp",
-    "_emblem": "The logo mark shown beside the wordmark. Remove this line to use the text wordmark alone."
+    "emblem": "assets/img/brand/monogram.webp",
+    "seal": "assets/img/brand/seal-320.webp",
+    "lockup": "assets/img/brand/lockup.webp",
+    "areas": ["United Kingdom", "Norway"],
+    "_emblem": "emblem: the A*R monogram beside the name in the menu bar. seal: the round seal (opening, Why section, icons, 404). lockup: the full logo in the footer."
   },
 
   "contact": {

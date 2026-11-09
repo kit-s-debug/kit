@@ -178,6 +178,7 @@ const jsonld = JSON.stringify({
   "@context": "https://schema.org", "@type": "ProfessionalService",
   name: cfg.brand.legalName, description: desc, ...(url && { url: url + "/", image: abs("assets/img/og.jpg") }),
   telephone: cfg.contact.phoneE164, email: cfg.contact.email,
+  ...(cfg.brand.areas && { areaServed: cfg.brand.areas.map(name => ({ "@type": "Country", name })) }),
   hasOfferCatalog: { "@type": "OfferCatalog", name: "Marine services", itemListElement: services.map(n => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })) },
 }).replace(/</g, "\\u003c");
 
@@ -195,7 +196,13 @@ const emblem = cfg.brand.emblem ? (() => {
   const [w, h] = webpSize(join(root, cfg.brand.emblem));
   return `<img class="emblem" src="${cfg.brand.emblem}" alt="" width="${w}" height="${h}" decoding="async">`;
 })() : "";
-const simple = { meta, jsonld, preloadHero, clientConfig, version, wordmark, emblem, year: String(new Date().getFullYear()),
+const brandImg = (key, cls, alt = "") => cfg.brand[key] ? (() => {
+  const [w, h] = webpSize(join(root, cfg.brand[key]));
+  return `<img class="${cls}" src="${cfg.brand[key]}" alt="${esc(alt)}" width="${w}" height="${h}" decoding="async">`;
+})() : "";
+const seal = brandImg("seal", "seal");
+const lockup = brandImg("lockup", "lockup", `${cfg.brand.legalName}, ${(cfg.brand.areas || []).join(" and ")}`);
+const simple = { meta, jsonld, preloadHero, clientConfig, version, wordmark, emblem, seal, lockup, year: String(new Date().getFullYear()),
   chart: chart(), contours: contours(), soundings: soundings(), mailSubject: encodeURIComponent(`Enquiry for ${cfg.brand.legalName}`) };
 html = html.replace(/<!--\s*SOURCE TEMPLATE[\s\S]*?-->\n/, "<!-- Built from src/index.html by tools/build.mjs. Edit the source, not this file. -->\n");
 html = html.replace(/\{\{([a-zA-Z][\w.]*)\}\}/g, (m, k) => {

@@ -12,7 +12,7 @@
   .card h1 em { font-style: italic; background: var(--metal); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .card .eyebrow { color: rgba(243,238,228,.75); margin-bottom: 26px; }
   .icon { position: relative; display: grid; place-items: center; width: 512px; height: 512px; background: #0a1626; }
-  .icon img { width: 82%; }
+  .icon img { width: 96%; }
   .wordmark__name { font-size: 40px; } .wordmark__line { width: 40px; margin: 0 14px 4px 4px; } .wordmark__desc { font-size: 12px; }
 </style></head><body>
 <div class="card" id="card"><img id="bg" alt=""><div class="card__in">
@@ -24,8 +24,8 @@
 <script type="module">
   const cfg = await (await fetch("../../src/site.config.json")).json();
   const n = cfg.brand.name;
-  document.getElementById("mark").innerHTML = `<img src="../../${cfg.brand.emblem}" style="width:64px" alt=""><span class="wordmark"><span class="wordmark__name">${[...n].map(c => `<span>${c}</span>`).join("")}</span><span class="wordmark__line"></span><span class="wordmark__desc">${cfg.brand.descriptor}</span></span>`;
-  const em = document.getElementById("em"); em.src = "../../" + cfg.brand.emblem; await em.decode();
+  document.getElementById("mark").innerHTML = `<img src="../../${cfg.brand.emblem}" style="width:92px" alt=""><span class="wordmark"><span class="wordmark__name">${[...n].map(c => `<span>${c}</span>`).join("")}</span><span class="wordmark__line"></span><span class="wordmark__desc">${cfg.brand.descriptor}</span></span>`;
+  const em = document.getElementById("em"); em.src = "../../" + (cfg.brand.seal || cfg.brand.emblem); await em.decode();
   const bg = document.getElementById("bg"); bg.src = `../../assets/img/photos/${cfg.photos.hero.file}-1440.webp`;
   await bg.decode(); await document.fonts.ready; window.ready = true;
 </script></body></html>
