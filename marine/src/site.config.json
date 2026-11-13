@@ -1,0 +1,45 @@
+{
+  "_readme": "Everything the business may want to change lives here. Edit, then run: node tools/build.mjs",
+
+  "brand": {
+    "name": "NAVICREW",
+    "descriptor": "",
+    "legalName": "NAVICREW",
+    "tagline": "Marine detailing and maintenance.",
+    "emblem": "assets/img/brand/monogram.webp",
+    "seal": "assets/img/brand/seal-320.webp",
+    "lockup": "assets/img/brand/lockup.webp",
+    "areas": ["United Kingdom", "Norway"],
+    "_emblem": "emblem: the A*R monogram beside the name in the menu bar. seal: the round seal (opening, Why section, icons, 404). lockup: the full logo in the footer."
+  },
+
+  "contact": {
+    "phoneDisplay": "+44 7931 988951",
+    "phoneE164": "+447931988951",
+    "whatsapp": "447931988951",
+    "email": "rajabi.ark@gmail.com"
+  },
+
+  "site": {
+    "url": "https://www.navicrewofficial.com",
+    "_url": "Set to the live address (e.g. https://arkmarine.co.uk) once known. It enables canonical links, absolute share images and the sitemap.",
+    "locale": "en_GB"
+  },
+
+  "form": {
+    "endpoint": "",
+    "_endpoint": "Leave empty and the enquiry form hands the visitor's message to WhatsApp (or email) ready to send. Paste a Formspree / Web3Forms / Getform endpoint URL here to have the form post directly instead. See README.",
+    "accessKey": "",
+    "_accessKey": "Only for Web3Forms: its public access key."
+  },
+
+  "photos": {
+    "_readme": "Each slot names a file set in assets/img/photos (name-<width>.webp). 'tall' is an optional portrait version for phones. 'focus' is the crop focal point (object-position). 'caption' is optional.",
+    "hero":     { "file": "hull-polished", "tall": "bow", "focus": "60% 45%", "tallFocus": "50% 40%", "alt": "A sailing yacht's topsides polished to a mirror finish above fresh antifouling" },
+    "about":    { "file": "motor-yacht",  "focus": "58% 55%", "alt": "A burgundy-hulled motor yacht on the hard, its gelcoat gleaming" },
+    "w_deck":    { "file": "work-deck",    "alt": "Before and after: a weathered, grey teak cockpit deck, then cleaned and restored to a warm teak colour" },
+    "w_yacht":   { "file": "work-yacht",   "alt": "During and finished: a sailing yacht being polished in the yard, then gleaming at its mooring" },
+    "w_cockpit": { "file": "work-cockpit", "alt": "Before and after: a stained, mouldy cockpit floor, then the boat clean and bright" },
+    "break": { "file": "motor-yacht",   "focus": "58% 55%", "alt": "A burgundy-hulled motor yacht on the hard, its gelcoat gleaming" }
+  }
+}

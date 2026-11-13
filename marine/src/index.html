@@ -1,0 +1,273 @@
+<!doctype html>
+<!--
+  SOURCE TEMPLATE. Edit this file, not /index.html, then run: node tools/build.mjs
+  {{...}} tokens are filled from src/site.config.json (name, contact details,
+  photos), so renaming or changing the email is a one-line change there.
+-->
+<html lang="en-GB" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{brand.legalName}} | Marine Detailing &amp; Maintenance, UK &amp; Norway</title>
+<meta name="description" content="{{brand.legalName}}: boat washing, antifouling, hull and deck polishing, marine woodwork and varnishing, interior cleaning, stainless steel polishing, captain services and help buying or selling a boat. UK &amp; Norway.">
+<meta name="theme-color" content="#0a1626">
+{{meta}}
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preload" href="assets/fonts/jost-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+{{preloadHero}}
+<link rel="stylesheet" href="css/marine.css?v={{version}}">
+<script>document.documentElement.classList.replace("no-js", "js");</script>
+<script type="application/ld+json">{{jsonld}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" data-nav>
+  <div class="wrap nav__inner">
+    <a class="nav__brand" href="#home" aria-label="{{brand.legalName}}, back to top">{{emblem}}<span class="nav__name">{{brand.name}}</span></a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#work">Our Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn--gold nav__cta" href="#contact">Request a quote</a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span><span></span></button>
+  </div>
+  <nav class="menu" id="menu" aria-label="Mobile" hidden>
+    <a href="#services">Services</a>
+    <a href="#work">Our Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a class="btn btn--gold" href="#contact">Request a quote</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero__media">{{picture:hero:100vw:eager}}</div>
+    <div class="wrap hero__inner">
+      <div class="hero__text">
+        <p class="hero__kicker">Marine detailing &amp; maintenance <span class="nowrap">· UK &amp; Norway</span></p>
+        <h1 class="hero__title">{{brand.name}}</h1>
+        <p class="hero__lede">Exceptional care for exceptional vessels.</p>
+      </div>
+      <aside class="hero__card" aria-label="Get in touch">
+        <p class="hero__card-k">Get in touch</p>
+        <a class="hero__phone" href="tel:{{contact.phoneE164}}">{{contact.phoneDisplay}}</a>
+        <a class="btn btn--navy btn--block" href="{{wa:Hello {{brand.legalName}}, I'd like to talk about my vessel.}}" target="_blank" rel="noopener"><span class="btn__icon" aria-hidden="true">{{icon:wa}}</span>WhatsApp us</a>
+        <a class="hero__card-link" href="#contact">or send us a message</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- INTRO CARDS -->
+  <section class="intro" aria-label="Why choose us">
+    <div class="wrap intro__grid">
+      <div class="intro__card intro__card--navy" data-reveal>
+        <h2>Every size of vessel</h2>
+        <p>From tenders and RIBs to sailing yachts, motor yachts and superyachts: every service is available for every type of boat.</p>
+        <a class="btn btn--light" href="#services">Our services</a>
+      </div>
+      <div class="intro__card intro__card--gold" data-reveal style="--d:.08s">
+        <h2>Friendly, direct service</h2>
+        <p>Talk to us directly by phone or WhatsApp. We'll look at your vessel and what it needs, and talk you through the options before any work begins.</p>
+        <a class="btn btn--light" href="#contact">Get a quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Our Services</h2>
+        <p>Whether it's regular washing, annual antifouling and polishing, or getting your boat looking its best for sale, we'll put together the care your vessel needs.</p>
+      </div>
+      <ul class="svc-grid">
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:wash}}</span>Boat washing</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:antifoul}}</span>Antifouling</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:polish}}</span>Hull polishing</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:deck}}</span>Deck polishing</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:chisel}}</span>Marine woodworking</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:grain}}</span>Wood restoration</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:brush}}</span>Marine varnishing</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:seat}}</span>Interior cleaning</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:shine}}</span>Stainless steel polishing</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:helm}}</span>Captain services</li>
+        <li class="svc" data-reveal><span class="svc__icon" aria-hidden="true">{{icon:key}}</span>Boat buying &amp; selling help</li>
+        <li class="svc svc--ask" data-reveal><a href="{{wa:Hello {{brand.legalName}}, I have a question about my vessel.}}" target="_blank" rel="noopener"><span class="svc__icon" aria-hidden="true">{{icon:wa}}</span>Something else? Ask us</a></li>
+      </ul>
+
+      <details class="vessels" data-reveal>
+        <summary><span>Boats we work on</span><span class="vessels__icon" aria-hidden="true"></span></summary>
+        <div class="vessels__body">
+          <div><h3>Small craft</h3><ul><li>Dinghies &amp; tenders</li><li>RIBs &amp; inflatables</li><li>Jet skis / PWC</li><li>Kayaks &amp; paddleboards</li></ul></div>
+          <div><h3>Sports &amp; motor</h3><ul><li>Speedboats &amp; bowriders</li><li>Sportsboats &amp; ski boats</li><li>Cabin cruisers</li><li>Flybridge &amp; motor yachts</li></ul></div>
+          <div><h3>Sail</h3><ul><li>Day sailers &amp; keelboats</li><li>Cruising &amp; racing yachts</li><li>Catamarans &amp; trimarans</li><li>Classic &amp; wooden yachts</li></ul></div>
+          <div><h3>Large &amp; specialist</h3><ul><li>Superyachts</li><li>Narrowboats &amp; widebeams</li><li>Houseboats &amp; river cruisers</li><li>Fishing &amp; work boats</li></ul></div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="wrap">
+      <div class="section-head section-head--row" data-reveal>
+        <h2>Our Work</h2>
+        <div class="work__tabs" role="tablist" aria-label="Recent projects">
+          <button class="work__tab" role="tab" id="wt-0" aria-controls="wp-0" aria-selected="true" tabindex="0">Teak deck</button>
+          <button class="work__tab" role="tab" id="wt-1" aria-controls="wp-1" aria-selected="false" tabindex="-1">Yacht</button>
+          <button class="work__tab" role="tab" id="wt-2" aria-controls="wp-2" aria-selected="false" tabindex="-1">Cockpit</button>
+          <button class="work__tab" role="tab" id="wt-3" aria-controls="wp-3" aria-selected="false" tabindex="-1">Film</button>
+        </div>
+      </div>
+      <div class="work__frame" data-reveal>
+        <figure class="work__panel is-active" role="tabpanel" id="wp-0" aria-labelledby="wt-0">{{picture:w_deck:(min-width: 1240px) 1160px, 94vw}}</figure>
+        <figure class="work__panel" role="tabpanel" id="wp-1" aria-labelledby="wt-1" hidden>{{picture:w_yacht:(min-width: 1240px) 1160px, 94vw}}</figure>
+        <figure class="work__panel" role="tabpanel" id="wp-2" aria-labelledby="wt-2" hidden>{{picture:w_cockpit:(min-width: 1240px) 1160px, 94vw}}</figure>
+        <figure class="work__panel work__panel--film" role="tabpanel" id="wp-3" aria-labelledby="wt-3" hidden>
+          <video muted loop playsinline preload="none" poster="assets/video/hull-polish-poster.webp" aria-label="A slow pan along a freshly polished sailing yacht hull" data-work-video>
+            <source src="assets/video/hull-polish.webm" type="video/webm"><source src="assets/video/hull-polish.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
+      <p class="work__cap" data-work-cap aria-live="polite">Teak deck: deep clean and restoration, bringing back the colour of the wood.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap about__grid">
+      <div class="about__text" data-reveal>
+        <h2>About {{brand.name}}</h2>
+        <p>Every vessel deserves exceptional care. We provide a considered approach to marine maintenance, detailing and specialist services, combining attention to detail with a genuine appreciation for the craft of boating.</p>
+        <p>From the condition of your hull to the smallest interior finish, our aim is to help protect, maintain and enhance your vessel, for owners across the UK and Norway.</p>
+        <a class="btn btn--gold" href="#contact">Talk to us</a>
+      </div>
+      <figure class="about__img" data-reveal style="--d:.08s">{{picture:about:(min-width: 900px) 46vw, 94vw}}</figure>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" aria-label="Get in touch">
+    <div class="wrap">
+      <div class="cta__box" data-reveal>
+        <p class="cta__text">Get in touch today to talk about your vessel.</p>
+        <a class="btn btn--navy" href="#contact">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap contact__grid">
+      <div class="contact__info" data-reveal>
+        <h2>Contact us</h2>
+        <p>Call, message or email us, or fill in the form and we'll get back to you.</p>
+        <ul class="channels">
+          <li><a class="channel" href="tel:{{contact.phoneE164}}"><span class="channel__icon" aria-hidden="true">{{icon:phone}}</span><span><small>Call or text</small>{{contact.phoneDisplay}}</span></a></li>
+          <li><a class="channel" href="{{wa:Hello {{brand.legalName}}, I'd like to talk about my vessel.}}" target="_blank" rel="noopener"><span class="channel__icon" aria-hidden="true">{{icon:wa}}</span><span><small>WhatsApp</small>Message us</span></a></li>
+          <li><a class="channel" href="mailto:{{contact.email}}?subject={{mailSubject}}"><span class="channel__icon" aria-hidden="true">{{icon:mail}}</span><span><small>Email</small>{{contact.email}}</span></a></li>
+        </ul>
+      </div>
+
+      <form class="enquiry" data-form novalidate data-reveal style="--d:.08s" aria-labelledby="enquiry-title">
+        <h3 class="enquiry__title" id="enquiry-title">Send us a message</h3>
+        <div class="field">
+          <label for="f-name">Name *</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
+          <span class="field__error" id="f-name-err" aria-live="polite"></span>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-email">Email *</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160">
+            <span class="field__error" id="f-email-err" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone *</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="40">
+            <span class="field__error" id="f-phone-err" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-vessel">Vessel name (optional)</label>
+            <input id="f-vessel" name="vessel" type="text" maxlength="120">
+            <span class="field__error" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="f-service">Service *</label>
+            <select id="f-service" name="service" required>
+              <option value="" selected disabled>Choose a service</option>
+              <option>Boat washing</option>
+              <option>Antifouling</option>
+              <option>Hull polishing</option>
+              <option>Deck polishing</option>
+              <option>Marine woodworking</option>
+              <option>Wood restoration</option>
+              <option>Marine varnishing</option>
+              <option>Interior cleaning</option>
+              <option>Stainless steel polishing</option>
+              <option>Captain services</option>
+              <option>Boat buying &amp; selling help</option>
+              <option>Something else / not sure yet</option>
+            </select>
+            <span class="field__error" id="f-service-err" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-message">Message *</label>
+          <textarea id="f-message" name="message" rows="4" required maxlength="3000"></textarea>
+          <span class="field__error" id="f-message-err" aria-live="polite"></span>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="f-company">Company</label><input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="enquiry__actions">
+          <button class="btn btn--navy" type="submit" data-submit><span data-submit-label>Send message</span></button>
+          <button class="btn-text" type="button" data-email-fallback>or send it by email</button>
+        </div>
+        <p class="enquiry__note" data-form-note></p>
+        <div class="enquiry__status" data-status role="status" aria-live="polite" tabindex="-1"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__grid">
+    <div class="footer__brand">
+      <a href="#home" aria-label="{{brand.legalName}}, back to top">{{lockup}}</a>
+      <p>Marine detailing and maintenance for owners across the UK and Norway.</p>
+    </div>
+    <nav aria-label="Footer">
+      <h3>Menu</h3>
+      <ul><li><a href="#services">Services</a></li><li><a href="#work">Our Work</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul>
+    </nav>
+    <div>
+      <h3>Contact</h3>
+      <ul>
+        <li><a href="tel:{{contact.phoneE164}}">{{contact.phoneDisplay}}</a></li>
+        <li><a href="mailto:{{contact.email}}">{{contact.email}}</a></li>
+        <li><a href="{{wa:Hello {{brand.legalName}}, I'd like to talk about my vessel.}}" target="_blank" rel="noopener">WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer__base">
+    <p>© <span data-year>{{year}}</span> {{brand.legalName}}</p>
+    <a href="#home">Back to top ↑</a>
+  </div>
+</footer>
+
+<a class="float-wa" href="{{wa:Hello {{brand.legalName}}, I'd like to talk about my vessel.}}" target="_blank" rel="noopener" data-float-wa aria-label="Chat with {{brand.legalName}} on WhatsApp"><span aria-hidden="true">{{icon:wa}}</span></a>
+
+<script>window.SITE = {{clientConfig}};</script>
+<script src="js/main.js?v={{version}}" defer></script>
+</body>
+</html>
