@@ -140,6 +140,15 @@ function soundings() {
 }
 
 const ICONS = {
+  wash: `<svg viewBox="0 0 48 48"><path d="M16 6c-5 8-8 12-8 17a8 8 0 0 0 16 0c0-5-3-9-8-17zM34 18c-3.5 5.5-5.5 8.3-5.5 11.8a5.5 5.5 0 0 0 11 0c0-3.5-2-6.3-5.5-11.8z"/><path d="M6 40c4 0 4 2.5 8 2.5s4-2.5 8-2.5 4 2.5 8 2.5 4-2.5 8-2.5 4 2.5 4 2.5"/></svg>`,
+  antifoul: `<svg viewBox="0 0 48 48"><path d="M4 24h40l-5 11a6 6 0 0 1-5.5 3.5h-19A6 6 0 0 1 9 35z"/><path d="M10 24l4-9h16l4 9"/><path d="M8 31h32" stroke-dasharray="3 3"/></svg>`,
+  polish: `<svg viewBox="0 0 48 48"><circle cx="24" cy="28" r="14"/><circle cx="24" cy="28" r="7"/><path d="M24 14V5h10"/><path d="M38 10l2-2M41 15h3M36 6V3"/></svg>`,
+  deck: `<svg viewBox="0 0 48 48"><path d="M6 14h36M6 22h36M6 30h36M6 38h36M6 14v24M42 14v24M18 14v8M30 22v8M14 30v8M34 30v8"/><path d="M38 4l1.5 3.5L43 9l-3.5 1.5L38 14l-1.5-3.5L33 9l3.5-1.5z"/></svg>`,
+  chisel: `<svg viewBox="0 0 48 48"><path d="M30 6l12 12-6 6L24 12z"/><path d="M24 12L8 28l-2 14 14-2 16-16"/><path d="M14 34l-4 4"/></svg>`,
+  brush: `<svg viewBox="0 0 48 48"><path d="M28 6h12v14H28zM31 20v6a3 3 0 0 0 3 3 3 3 0 0 0 3-3v-6"/><path d="M34 29v13"/><path d="M6 42c6-1 10-5 12-12 1-4 4-6 8-6" /></svg>`,
+  seat: `<svg viewBox="0 0 48 48"><path d="M10 26V14a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v12"/><path d="M6 26a4 4 0 0 1 8 0v4h20v-4a4 4 0 0 1 8 0v10H6z"/><path d="M10 36v4M38 36v4"/></svg>`,
+  shine: `<svg viewBox="0 0 48 48"><path d="M24 4l4 14 14 4-14 4-4 14-4-14-14-4 14-4z"/><path d="M39 33l1.5 4.5L45 39l-4.5 1.5L39 45l-1.5-4.5L33 39l4.5-1.5z"/></svg>`,
+  key: `<svg viewBox="0 0 48 48"><circle cx="16" cy="32" r="9"/><circle cx="16" cy="32" r="3"/><path d="M22.5 25.5L40 8M33 15l5 5M28 20l4 4"/></svg>`,
   wa: `<svg viewBox="0 0 24 24"><path d="M4.2 19.8l1.1-3.9A8.3 8.3 0 1 1 8.4 19l-4.2.8z"/><path d="M9.1 8.2c.2-.4.5-.5.8-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.7l-.5.6c-.1.1-.1.3 0 .5.6 1 1.4 1.8 2.4 2.4.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.7-.1l1.6.7c.3.1.4.3.4.6v.5c0 .4-.2.7-.5.9-.6.4-1.4.6-2.2.4-2.6-.7-4.7-2.8-5.4-5.4-.2-.8 0-1.6.5-2.2z"/></svg>`,
   phone: `<svg viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.3 4.2-1.9 1.3a10.6 10.6 0 0 0 6.4 6.4l1.3-1.9 4.2 1.3v2.6c0 1.2-1 2.1-2.2 2.1A15.9 15.9 0 0 1 4.5 5.7c0-1.2.9-2.2 2.1-2.2z"/></svg>`,
   mail: `<svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3.6 6.6l8.4 6.6 8.4-6.6"/></svg>`,
@@ -151,13 +160,13 @@ const ICONS = {
 
 // ---------- wordmark: each letter rises from behind a waterline ----------
 const wordmark = `<span class="wordmark"><span class="wordmark__name" aria-hidden="true">${[...cfg.brand.name].map((c, i) => `<span style="--i:${i}">${esc(c)}</span>`).join("")}</span>` +
-  `<span class="wordmark__line" aria-hidden="true"></span><span class="wordmark__desc" aria-hidden="true">${esc(cfg.brand.descriptor)}</span>` +
+  (cfg.brand.descriptor ? `<span class="wordmark__line" aria-hidden="true"></span><span class="wordmark__desc" aria-hidden="true">${esc(cfg.brand.descriptor)}</span>` : "") +
   `<span class="sr-only">${esc(cfg.brand.legalName)}</span></span>`;
 
 // ---------- metadata ----------
 const url = (cfg.site.url || "").replace(/\/$/, "");
 const abs = p => (url ? `${url}/${p}` : p);
-const title = `${cfg.brand.legalName} | Premium Marine Care, Detailing & Specialist Services`;
+const title = `${cfg.brand.legalName} | Marine Detailing & Maintenance, UK & Norway`;
 const desc = `${cfg.brand.tagline} Exterior care, marine woodworking, interior finishing, captain services and help buying or selling a boat.`;
 const meta = [
   url && `<link rel="canonical" href="${url}/">`,

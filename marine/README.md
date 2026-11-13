@@ -1,14 +1,27 @@
-# Navicrew Ltd website
+# NAVICREW website
 
-A one-page site for a premium marine services company: exterior care, marine woodworking, interior and metal finishing, and specialist services (captain services, help buying and selling). The brand is now **Navicrew Ltd**, matching the supplied logo; it started as the working name "ARK Marine". The brand is set in one place, so it can be changed easily (see below).
+Live at **https://www.navicrewofficial.com** (Vercel project `navicrew`, root directory `marine`).
 
-It's static HTML, CSS and JS with no framework and no runtime dependencies. A small Node build script fills the template from a config file.
+A deliberately simple one-page site for NAVICREW, a marine detailing and maintenance business working across the UK and Norway. At the owner's request it follows the plain, practical layout of a typical marine-services site:
+- a photo hero with the name and a "get in touch" card showing the phone number
+- two intro cards and a services grid with icons
+- a "Boats we work on" pull-down
+- before/after work tabs and an About band
+- a call-to-action strip, the contact form and the footer
+
+It's static HTML, CSS and JS with no framework and no runtime dependencies (the page is about 25 kB plus images). One typeface (Jost), navy and brushed gold. A small Node build script fills the template from a config file.
 
 ```
 cd marine
 node tools/build.mjs          # src/ → index.html
 python3 -m http.server 8000   # open http://localhost:8000
 ```
+
+## Business email
+
+The site currently shows **rajabi.ark@gmail.com**. To switch to a business address, first create the mailbox with an email provider, then change `contact.email` in `src/site.config.json` and rebuild. Don't change it before the mailbox exists, or enquiries will bounce.
+- The domain is **navicrewofficial.com**, so the address would be `info@navicrewofficial.com`. `navicrew.com` belongs to someone else.
+- Vercel hosts the website only, not email. Use Google Workspace, Microsoft 365, Zoho Mail or similar, and add the MX/SPF/DKIM records the provider gives you under Vercel → navicrew → Settings → Domains → DNS.
 
 Deploy the `marine/` folder as a static site. On Vercel, set it as the project root; `vercel.json` sets the cache headers.
 

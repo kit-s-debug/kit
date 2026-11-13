@@ -1,225 +1,72 @@
-/* Marine site behaviour. No dependencies.
-   - opening title, hero entrance, nav states, mobile menu
-   - scroll reveals, parallax, the services stage, the approach course
-   - the enquiry form (posts to an endpoint if one is configured, otherwise
-     hands the written enquiry to WhatsApp or email) */
+/* NAVICREW site behaviour. No dependencies.
+   Header state, mobile menu, gentle fade-ins, floating WhatsApp, the work tabs
+   and the enquiry form (posts to an endpoint if one is configured, otherwise
+   hands the written enquiry to WhatsApp or email). */
 (() => {
   "use strict";
-  const doc = document.documentElement;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const SITE = window.SITE || {};
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  const fine = matchMedia("(hover: hover) and (pointer: fine)");
-  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-  let vh = innerHeight;
 
-  /* ---------------- opening + hero entrance ---------------- */
-  const intro = $(".intro");
-  const nav = $("[data-nav]");
-  const heroSeq = [".hero__eyebrow", ".hero__title .line:nth-child(1) > span", ".hero__title .line:nth-child(2) > span",
-    ".hero__title .line:nth-child(3) > span", ".hero__lede", ".hero__ctas", ".scroll-cue"];
-  heroSeq.forEach((s, i) => { const el = $(s); if (el) el.style.setProperty("--d", (0.25 + i * 0.12 + (i > 3 ? 0.25 : 0)).toFixed(2) + "s"); });
-
-  const start = () => {
-    doc.classList.add("is-loaded");
-    setTimeout(() => nav.classList.add("is-ready"), reduced.matches ? 0 : 650);
-  };
-  const playIntro = !doc.classList.contains("intro-seen") && !reduced.matches && intro;
-  if (playIntro) {
-    try { sessionStorage.setItem("intro-seen", "1"); } catch (e) {}
-    const lift = () => {
-      intro.classList.add("is-done");
-      setTimeout(start, 380);
-      intro.addEventListener("animationend", e => { if (e.target === intro) intro.remove(); });
-    };
-    // hold the title for its own animation, but never longer than it needs if fonts are slow
-    Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 900))])
-      .then(() => setTimeout(lift, 1500));
-  } else {
-    if (intro) intro.remove();
-    requestAnimationFrame(() => requestAnimationFrame(start));
-  }
-
-  /* ---------------- reveals ---------------- */
-  $$("[data-reveal-lines]").forEach(h => $$(".line", h).forEach((l, i) => l.style.setProperty("--li", i)));
-  const revealIO = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-in"); revealIO.unobserve(e.target); } });
-  }, { rootMargin: "0px 0px -12% 0px", threshold: 0.01 });
-  $$("[data-reveal], [data-reveal-lines], .svc-item, .value").forEach(el => revealIO.observe(el));
-
-  /* ---------------- nav ---------------- */
-  let lastY = scrollY;
-  const links = $$("[data-link]");
-  const sectionIO = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (!e.isIntersecting) return;
-      const id = e.target.dataset.section;
-      links.forEach(a => a.classList.toggle("is-active", a.dataset.link === id));
-      $$("[data-wp]").forEach(a => a.classList.toggle("is-active", a.dataset.wp === id));
-    });
-  }, { rootMargin: "-45% 0px -54% 0px" });
-  $$("[data-section]").forEach(s => sectionIO.observe(s));
-
-  /* mobile menu */
-  const toggle = $(".nav__toggle"), menu = $("#menu");
+  /* ---------------- header + mobile menu ---------------- */
+  const nav = $("[data-nav]"), toggle = $(".nav__toggle"), menu = $("#menu");
+  const onScroll = () => nav.classList.toggle("is-scrolled", scrollY > 20);
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
   const setMenu = open => {
     toggle.setAttribute("aria-expanded", open);
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    doc.classList.toggle("menu-open", open);
-    if (open) {
-      menu.hidden = false;
-      requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add("is-open")));
-      nav.classList.remove("is-hidden");
-      setTimeout(() => $("a", menu).focus({ preventScroll: true }), 300);
-    } else {
-      menu.classList.remove("is-open");
-      const done = () => { if (!menu.classList.contains("is-open")) menu.hidden = true; };
-      reduced.matches ? done() : setTimeout(done, 900);
-    }
+    nav.classList.toggle("is-open", open);
+    menu.hidden = !open;
   };
   toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
   $$("a", menu).forEach(a => a.addEventListener("click", () => setMenu(false)));
-  addEventListener("keydown", e => {
-    if (e.key === "Escape" && doc.classList.contains("menu-open")) { setMenu(false); toggle.focus(); }
-    if (e.key === "Tab" && doc.classList.contains("menu-open")) { // keep focus inside the open menu
-      const f = [toggle, ...$$("a", menu)], i = f.indexOf(document.activeElement);
-      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
-      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
-    }
-  });
-  matchMedia("(min-width: 1281px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
+  addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); toggle.focus(); } });
+  matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
 
-  /* ---------------- scroll-driven pieces ---------------- */
-  const hero = $(".hero"), heroPic = $("[data-hero-media] .pic"), heroContent = $(".hero__content");
-  const passage = $("[data-passage]"), wps = $$("[data-wp]");
-  const parallax = $$("[data-parallax]");
-  const breakMedia = $("[data-break]");
-  const totop = $("[data-totop]");
-  const approach = $("[data-approach]")?.closest(".approach");
-  const steps = $$(".stage-step");
-  const course = $(".course");
-  const pinMQ = matchMedia("(min-width: 900px)");
+  /* ---------------- fade-ins ---------------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  $$("[data-reveal]").forEach(el => io.observe(el));
 
-  const setPin = () => approach && approach.classList.toggle("is-pinned", pinMQ.matches && !reduced.matches);
-  setPin(); pinMQ.addEventListener("change", () => { setPin(); measure(); });
+  /* ---------------- floating WhatsApp (after the hero, hidden over Contact) ---------------- */
+  const fwa = $("[data-float-wa]"), contact = $("#contact");
+  if (fwa && contact) {
+    let inContact = false;
+    const place = () => fwa.classList.toggle("is-shown", scrollY > innerHeight * .7 && !inContact);
+    new IntersectionObserver(es => { inContact = es[0].isIntersecting; place(); }, { threshold: .15 }).observe(contact);
+    addEventListener("scroll", place, { passive: true }); place();
+  }
 
-  let sections = [];
-  const measure = () => {
-    vh = innerHeight;
-    sections = wps.map(a => $("#" + a.dataset.wp)).filter(Boolean).map(s => s.getBoundingClientRect().top + scrollY);
-    parallax.forEach(el => el.style.setProperty("--pr", Math.round(el.offsetHeight * parseFloat(el.dataset.parallax || .1)) + "px"));
-    update();
-  };
-
-  let ticking = false;
-  const update = () => {
-    ticking = false;
-    const y = scrollY, moving = !reduced.matches;
-
-    // nav background + hide while reading downwards, return on any upward scroll
-    nav.classList.toggle("is-scrolled", y > 30);
-    if (!doc.classList.contains("menu-open")) nav.classList.toggle("is-hidden", y > vh * 0.9 && y > lastY + 2);
-    if (y < lastY - 2) nav.classList.remove("is-hidden");
-    lastY = y;
-
-    // hero: slow image drift and a gentle fade of the copy
-    if (moving && y < vh * 1.2 && heroPic) {
-      const k = y / vh;
-      if (doc.classList.contains("is-loaded")) heroPic.style.setProperty("--py", (y * 0.32).toFixed(1) + "px");
-      heroContent.style.opacity = clamp(1 - k * 1.3).toFixed(3);
-      heroContent.style.transform = `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`;
-    }
-
-    // passage waypoints
-    if (passage && sections.length) {
-      const first = sections[0], last = sections[sections.length - 1], probe = y + vh * 0.5;
-      passage.classList.toggle("is-visible", y > vh * 0.6);
-      passage.style.setProperty("--p", clamp((probe - first) / (last - first)).toFixed(4));
-      wps.forEach((a, i) => a.classList.toggle("is-past", probe >= sections[i]));
-    }
-
-    // parallax photographs
-    if (moving) parallax.forEach(el => {
-      const r = el.getBoundingClientRect(); if (r.bottom < -100 || r.top > vh + 100) return;
-      const range = parseFloat(el.style.getPropertyValue("--pr")) || 0;
-      const p = clamp((r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2), -1, 1);
-      el.style.setProperty("--py", (-p * range).toFixed(1) + "px");
-    });
-
-    // cinematic break: the frame opens to full bleed as it arrives
-    if (breakMedia) {
-      const r = breakMedia.getBoundingClientRect();
-      const p = moving ? clamp((vh - r.top) / (vh * 0.85)) : 1;
-      breakMedia.style.setProperty("--inset", ((1 - p) * Math.min(innerWidth * 0.06, 90)).toFixed(1) + "px");
-    }
-
-    // approach: the course draws as you travel through the section
-    if (approach) {
-      let cp;
-      if (reduced.matches) cp = 1;
-      else if (approach.classList.contains("is-pinned")) {
-        const r = approach.getBoundingClientRect();
-        cp = clamp((-r.top / (r.height - vh) - 0.06) / 0.78);
-      } else {
-        const r = course.getBoundingClientRect();
-        cp = clamp((vh * 0.72 - r.top) / r.height);
-      }
-      course.style.setProperty("--cp", cp.toFixed(4));
-      const pts = approach.classList.contains("is-pinned") ? [0.14, 0.5, 0.84] : null;
-      steps.forEach((s, i) => {
-        let reached;
-        if (pts) reached = cp >= pts[i];
-        else reached = cp * course.offsetHeight >= s.offsetTop + 4;
-        s.classList.toggle("is-reached", reached || reduced.matches);
+  /* ---------------- recent work tabs ---------------- */
+  const workTabs = $$(".work__tab");
+  if (workTabs.length) {
+    const caps = [
+      "Teak deck: deep clean and restoration, bringing back the colour of the wood.",
+      "Sailing yacht: topsides and deck brought back to a finish fit for the mooring.",
+      "Cockpit: years of staining and mould lifted, ready to enjoy again.",
+      "On the hard: a slow look along freshly polished topsides.",
+    ];
+    const film = $("[data-work-video]");
+    const capEl = $("[data-work-cap]");
+    const select = i => {
+      workTabs.forEach((t, j) => { const on = i === j; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
+      $$(".work__panel").forEach((p, j) => {
+        if (j === i) { p.hidden = false; requestAnimationFrame(() => p.classList.add("is-active")); }
+        else { p.classList.remove("is-active"); setTimeout(() => { if (!p.classList.contains("is-active")) p.hidden = true; }, 900); }
       });
-    }
-
-    // back-to-top ring shows how far down the page you are
-    if (totop) totop.style.setProperty("--sp", clamp(y / (doc.scrollHeight - vh)).toFixed(4));
-  };
-  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-  addEventListener("scroll", onScroll, { passive: true });
-  addEventListener("resize", () => { clearTimeout(measure.t); measure.t = setTimeout(measure, 120); });
-  addEventListener("load", measure);
-  measure();
-
-  // once the hero image has finished its entrance, follow scroll without easing lag
-  if (heroPic) setTimeout(() => heroPic.classList.add("is-tracking"), playIntro ? 4800 : 2900);
-
-  /* ---------------- services stage ---------------- */
-  const svcRoot = $("[data-svc-root]");
-  if (svcRoot) {
-    const items = $$(".svc-item", svcRoot), panels = $$("[data-panel]", svcRoot);
-    const nameEl = $("[data-stage-name]"), numEl = $("[data-stage-n]"), stage = $("[data-stage]");
-    let current = null;
-    const show = key => {
-      if (key === current) return;
-      const prev = current; current = key;
-      items.forEach(it => it.classList.toggle("is-current", it.dataset.svc === key));
-      panels.forEach(p => {
-        p.classList.remove("is-leaving");
-        if (p.dataset.panel === prev) p.classList.add("is-leaving");
-        p.classList.toggle("is-active", p.dataset.panel === key);
-      });
-      const it = items.find(i => i.dataset.svc === key);
-      if (it) { nameEl.textContent = $(".svc-item__title", it).textContent; numEl.textContent = $(".svc-item__num", it).textContent; }
+      capEl.textContent = caps[i];
+      // the film only loads and plays while its tab is open
+      if (film) { if (i === 3 && !reduced.matches) film.play().catch(() => {}); else if (i === 3) film.load(); else film.pause(); }
     };
-    show(items[0].dataset.svc);
-    const focusIO = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && show(e.target.dataset.svc)), { rootMargin: "-42% 0px -42% 0px" });
-    items.forEach(it => {
-      focusIO.observe(it);
-      it.addEventListener("pointerenter", () => fine.matches && show(it.dataset.svc));
-      it.addEventListener("focusin", () => show(it.dataset.svc));
-    });
-    // a little cursor-led drift inside the frame (desktop pointers only)
-    if (stage) stage.addEventListener("pointermove", e => {
-      if (!fine.matches || reduced.matches) return;
-      const r = stage.getBoundingClientRect();
-      stage.style.setProperty("--mx", (((e.clientX - r.left) / r.width - .5) * -14).toFixed(1) + "px");
-      stage.style.setProperty("--my", (((e.clientY - r.top) / r.height - .5) * -10).toFixed(1) + "px");
+    workTabs.forEach((t, i) => {
+      t.addEventListener("click", () => select(i));
+      t.addEventListener("keydown", e => {
+        const k = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!k) return;
+        e.preventDefault(); const n = (i + k + workTabs.length) % workTabs.length; workTabs[n].focus(); select(n);
+      });
     });
   }
+
 
   /* ---------------- enquiry form ---------------- */
   const form = $("[data-form]");
@@ -305,7 +152,7 @@
         const url = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(compose(d))}`;
         say(`Sorry, your enquiry couldn’t be sent just now. You can <a href="${url}" target="_blank" rel="noopener">send it on WhatsApp</a> instead, or email <a href="mailto:${c.email}">${c.email}</a>. Your details are still in the form.`, true);
       } finally {
-        submit.disabled = false; setLabel("Send enquiry"); status.focus();
+        submit.disabled = false; setLabel("Send message"); status.focus();
       }
     });
 
@@ -319,48 +166,6 @@
     });
   }
 
-  /* ---------------- quiet details ---------------- */
-  const edgeIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-edged"); edgeIO.unobserve(e.target); } }), { rootMargin: "0px 0px -20% 0px" });
-  $$(".edge").forEach(el => edgeIO.observe(el.closest("section")));
 
-  const fwa = $("[data-float-wa]"), contactSec = $("#contact");
-  if (fwa && contactSec) {
-    let inContact = false;
-    const place = () => fwa.classList.toggle("is-shown", scrollY > vh * 0.8 && !inContact);
-    new IntersectionObserver(es => { inContact = es[0].isIntersecting; place(); }, { threshold: 0.15 }).observe(contactSec);
-    addEventListener("scroll", place, { passive: true }); place();
-  }
-
-  /* ---------------- recent work tabs ---------------- */
-  const workTabs = $$(".work__tab");
-  if (workTabs.length) {
-    const caps = [
-      "Teak deck: deep clean and restoration, bringing back the colour of the wood.",
-      "Sailing yacht: topsides and deck brought back to a finish fit for the mooring.",
-      "Cockpit: years of staining and mould lifted, ready to enjoy again.",
-      "On the hard: a slow look along freshly polished topsides.",
-    ];
-    const film = $("[data-work-video]");
-    const capEl = $("[data-work-cap]");
-    const select = i => {
-      workTabs.forEach((t, j) => { const on = i === j; t.setAttribute("aria-selected", on); t.tabIndex = on ? 0 : -1; });
-      $$(".work__panel").forEach((p, j) => {
-        if (j === i) { p.hidden = false; requestAnimationFrame(() => p.classList.add("is-active")); }
-        else { p.classList.remove("is-active"); setTimeout(() => { if (!p.classList.contains("is-active")) p.hidden = true; }, 900); }
-      });
-      capEl.textContent = caps[i];
-      // the film only loads and plays while its tab is open
-      if (film) { if (i === 3 && !reduced.matches) film.play().catch(() => {}); else if (i === 3) film.load(); else film.pause(); }
-    };
-    workTabs.forEach((t, i) => {
-      t.addEventListener("click", () => select(i));
-      t.addEventListener("keydown", e => {
-        const k = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0; if (!k) return;
-        e.preventDefault(); const n = (i + k + workTabs.length) % workTabs.length; workTabs[n].focus(); select(n);
-      });
-    });
-  }
-
-  /* ---------------- small things ---------------- */
   $$("[data-year]").forEach(el => { el.textContent = new Date().getFullYear(); });
 })();

@@ -1,31 +1,32 @@
 <!doctype html>
 <!-- Share card and icons, rendered by tools/og/shoot.mjs from src/site.config.json -->
 <html><head><meta charset="utf-8">
-<link rel="stylesheet" href="../../css/marine.css">
 <style>
-  html, body { margin: 0; background: #050b14; }
-  .card { position: relative; width: 1200px; height: 630px; overflow: hidden; color: var(--ivory); }
-  .card { background: #07101c; } .card #bg { position: absolute; top: 0; right: 0; width: 52%; height: 100%; object-fit: cover; object-position: 50% 42%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%); }
-  .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,11,20,.92) 0%, rgba(5,11,20,.55) 45%, rgba(5,11,20,0) 75%), linear-gradient(0deg, rgba(5,11,20,.6), transparent 40%); }
-  .card__in { position: absolute; z-index: 2; left: 72px; top: 64px; bottom: 64px; display: flex; flex-direction: column; justify-content: space-between; }
-  .card h1 { margin: 0; font: 400 80px/.95 var(--serif); letter-spacing: -.03em; }
-  .card h1 em { font-style: italic; background: var(--metal); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .card .eyebrow { color: rgba(243,238,228,.75); margin-bottom: 26px; }
-  .icon { position: relative; display: grid; place-items: center; width: 512px; height: 512px; background: #0a1626; }
+  @font-face { font-family: "Jost"; src: url("../../assets/fonts/jost-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+  html, body { margin: 0; background: #0a1626; font-family: "Jost", sans-serif; }
+  .card { position: relative; width: 1200px; height: 630px; overflow: hidden; color: #fff; background: #0a1626; }
+  .card #bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 45%; }
+  .card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,22,38,.92) 0%, rgba(10,22,38,.6) 55%, rgba(10,22,38,.25) 100%); }
+  .in { position: absolute; z-index: 2; left: 72px; top: 64px; bottom: 64px; display: flex; flex-direction: column; justify-content: space-between; }
+  .mark { display: flex; align-items: center; gap: 16px; font-weight: 600; font-size: 26px; letter-spacing: .28em; }
+  .mark img { width: 92px; }
+  .k { margin: 0 0 18px; font-size: 18px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: #d8bf8e; }
+  h1 { margin: 0; font-size: 120px; font-weight: 600; letter-spacing: .12em; line-height: 1; }
+  .l { margin: 18px 0 0; font-size: 32px; font-weight: 300; color: rgba(255,255,255,.9); }
+  .icon { display: grid; place-items: center; width: 512px; height: 512px; background: #0a1626; }
   .icon img { width: 96%; }
-  .wordmark__name { font-size: 40px; } .wordmark__line { width: 40px; margin: 0 14px 4px 4px; } .wordmark__desc { font-size: 12px; }
 </style></head><body>
-<div class="card" id="card"><img id="bg" alt=""><div class="card__in">
-  <span id="mark" style="display:flex;align-items:center;gap:16px"></span>
-  <div><p class="eyebrow"><span class="eyebrow__rule"></span>Marine detailing · Maintenance</p>
-  <h1>Exceptional Care.<br><em>For Exceptional<br>Vessels.</em></h1></div>
+<div class="card" id="card"><img id="bg" alt=""><div class="in">
+  <div class="mark"><img id="mono" alt=""><span id="name"></span></div>
+  <div><p class="k">Marine detailing &amp; maintenance · UK &amp; Norway</p><h1 id="h1"></h1><p class="l">Exceptional care for exceptional vessels.</p></div>
 </div></div>
 <div class="icon" id="icon"><img id="em" alt=""></div>
 <script type="module">
   const cfg = await (await fetch("../../src/site.config.json")).json();
-  const n = cfg.brand.name;
-  document.getElementById("mark").innerHTML = `<img src="../../${cfg.brand.emblem}" style="width:92px" alt=""><span class="wordmark"><span class="wordmark__name">${[...n].map(c => `<span>${c}</span>`).join("")}</span><span class="wordmark__line"></span><span class="wordmark__desc">${cfg.brand.descriptor}</span></span>`;
-  const em = document.getElementById("em"); em.src = "../../" + (cfg.brand.seal || cfg.brand.emblem); await em.decode();
-  const bg = document.getElementById("bg"); bg.src = `../../assets/img/photos/${cfg.photos.hero.file}-1440.webp`;
-  await bg.decode(); await document.fonts.ready; window.ready = true;
+  document.getElementById("name").textContent = document.getElementById("h1").textContent = cfg.brand.name;
+  const set = async (id, src) => { const i = document.getElementById(id); i.src = src; await i.decode(); };
+  await set("mono", "../../" + cfg.brand.emblem);
+  await set("em", "../../" + (cfg.brand.seal || cfg.brand.emblem));
+  await set("bg", `../../assets/img/photos/${cfg.photos.hero.file}-1440.webp`);
+  await document.fonts.ready; window.ready = true;
 </script></body></html>
