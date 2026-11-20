@@ -164,7 +164,8 @@ p { text-wrap: pretty; }
 .person__photo img { width: 88%; height: auto; }
 .person figcaption { padding: 20px 22px 24px; border-top: 3px solid var(--gold); }
 .person__role { display: block; font-size: 13px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
-.person p { margin: 8px 0 14px; color: var(--muted); }
+.person p { margin: 8px 0 12px; color: var(--muted); }
+.person p + p { margin-top: 0; }
 
 /* products */
 .products { display: flex; align-items: center; gap: clamp(20px, 4vw, 44px); padding: clamp(24px, 4vw, 44px); border: 1px solid var(--line); border-top: 3px solid var(--gold); border-radius: var(--radius); }
@@ -227,4 +228,11 @@ p { text-wrap: pretty; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; }
   .js [data-reveal] { opacity: 1; transform: none; }
+}
+/* one founder: photo beside the text on wider screens */
+@media (min-width: 700px) {
+  .team { grid-template-columns: 1fr; }
+  .person { max-width: 860px; display: grid; grid-template-columns: 300px 1fr; }
+  .person__photo { aspect-ratio: auto; min-height: 320px; }
+  .person figcaption { border-top: 0; border-left: 3px solid var(--gold); padding: 30px 32px; align-self: center; }
 }
