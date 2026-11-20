@@ -140,6 +140,9 @@ function soundings() {
 }
 
 const ICONS = {
+  car: `<svg viewBox="0 0 48 48"><path d="M6 30v-6l5-9a4 4 0 0 1 3.5-2h19a4 4 0 0 1 3.5 2l5 9v6a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M6 24h36M13 13l-2 11M35 13l2 11"/><circle cx="14" cy="32" r="4"/><circle cx="34" cy="32" r="4"/><path d="M10 40c3 0 3 2 6 2s3-2 6-2 3 2 6 2 3-2 6-2 3 2 6 2"/></svg>`,
+  carfull: `<svg viewBox="0 0 48 48"><path d="M5 32v-6l5-9a4 4 0 0 1 3.5-2h17a4 4 0 0 1 3.5 2l5 9v6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M5 26h34"/><circle cx="13" cy="34" r="4"/><circle cx="31" cy="34" r="4"/><path d="M40 4l1.6 4.4L46 10l-4.4 1.6L40 16l-1.6-4.4L34 10l4.4-1.6z"/></svg>`,
+  bottle: `<svg viewBox="0 0 48 48"><path d="M20 4h8v6h-8zM18 10h12l3 6v24a4 4 0 0 1-4 4H19a4 4 0 0 1-4-4V16z"/><path d="M15 22h18M15 34h18"/><path d="M36 8l6-2M36 13h6M36 18l6 2"/></svg>`,
   wash: `<svg viewBox="0 0 48 48"><path d="M16 6c-5 8-8 12-8 17a8 8 0 0 0 16 0c0-5-3-9-8-17zM34 18c-3.5 5.5-5.5 8.3-5.5 11.8a5.5 5.5 0 0 0 11 0c0-3.5-2-6.3-5.5-11.8z"/><path d="M6 40c4 0 4 2.5 8 2.5s4-2.5 8-2.5 4 2.5 8 2.5 4-2.5 8-2.5 4 2.5 4 2.5"/></svg>`,
   antifoul: `<svg viewBox="0 0 48 48"><path d="M4 24h40l-5 11a6 6 0 0 1-5.5 3.5h-19A6 6 0 0 1 9 35z"/><path d="M10 24l4-9h16l4 9"/><path d="M8 31h32" stroke-dasharray="3 3"/></svg>`,
   polish: `<svg viewBox="0 0 48 48"><circle cx="24" cy="28" r="14"/><circle cx="24" cy="28" r="7"/><path d="M24 14V5h10"/><path d="M38 10l2-2M41 15h3M36 6V3"/></svg>`,
@@ -191,8 +194,8 @@ const jsonld = JSON.stringify({
   hasOfferCatalog: { "@type": "OfferCatalog", name: "Marine services", itemListElement: services.map(n => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })) },
 }).replace(/</g, "\\u003c");
 
-const hero = cfg.photos.hero, heroSet = set(hero.file), heroTall = hero.tall && set(hero.tall);
-const preloadHero = [
+const hero = /\{\{picture:hero:/.test(html) && cfg.photos.hero, heroSet = hero && set(hero.file), heroTall = hero && hero.tall && set(hero.tall);
+const preloadHero = !hero ? "" : [
   `<link rel="preload" as="image" imagesrcset="${heroSet.srcset}" imagesizes="100vw" fetchpriority="high"${heroTall ? ` media="not ((orientation: portrait) and (max-width: 820px))"` : ""}>`,
   heroTall && `<link rel="preload" as="image" imagesrcset="${heroTall.srcset}" imagesizes="100vw" fetchpriority="high" media="(orientation: portrait) and (max-width: 820px)">`,
 ].filter(Boolean).join("\n");

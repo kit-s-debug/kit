@@ -68,6 +68,33 @@
   }
 
 
+  /* ---------------- gallery viewer ---------------- */
+  const lb = $("[data-lightbox]");
+  if (lb && typeof lb.showModal === "function") {
+    const img = $("[data-lightbox-img]", lb), vid = $("[data-lightbox-video]", lb), cap = $("[data-lightbox-cap]", lb);
+    let opener = null;
+    $$(".g-item").forEach(btn => btn.addEventListener("click", () => {
+      opener = btn;
+      const video = btn.dataset.video;
+      img.hidden = !!video; vid.hidden = !video;
+      if (video) {
+        vid.innerHTML = `<source src="${video}.webm" type="video/webm"><source src="${video}.mp4" type="video/mp4">`;
+        vid.load(); vid.play().catch(() => {});
+      } else {
+        img.src = btn.dataset.full; img.alt = (btn.querySelector("img") || {}).alt || "";
+      }
+      cap.textContent = btn.dataset.cap || "";
+      lb.showModal();
+    }));
+    const close = () => lb.close();
+    $("[data-lightbox-close]", lb).addEventListener("click", close);
+    lb.addEventListener("click", e => { if (e.target === lb) close(); });
+    lb.addEventListener("close", () => { vid.pause(); vid.removeAttribute("src"); vid.innerHTML = ""; img.removeAttribute("src"); if (opener) opener.focus(); });
+  } else {
+    // very old browsers: open the full photo directly
+    $$(".g-item").forEach(btn => btn.addEventListener("click", () => { location.href = btn.dataset.full || (btn.dataset.video + ".mp4"); }));
+  }
+
   /* ---------------- enquiry form ---------------- */
   const form = $("[data-form]");
   if (form) {
