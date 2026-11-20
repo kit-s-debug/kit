@@ -19,7 +19,7 @@ python3 -m http.server 8000   # open http://localhost:8000
 
 ## Business email
 
-The site currently shows **rajabi.ark@gmail.com**. To switch to a business address, first create the mailbox with an email provider, then change `contact.email` in `src/site.config.json` and rebuild. Don't change it before the mailbox exists, or enquiries will bounce.
+The site shows **arknavicrew@gmail.com**. To change it, first create the mailbox with an email provider, then change `contact.email` in `src/site.config.json` and rebuild. Don't change it before the mailbox exists, or enquiries will bounce.
 - The domain is **navicrewofficial.com**, so the address would be `info@navicrewofficial.com`. `navicrew.com` belongs to someone else.
 - Vercel hosts the website only, not email. Use Google Workspace, Microsoft 365, Zoho Mail or similar, and add the MX/SPF/DKIM records the provider gives you under Vercel → navicrew → Settings → Domains → DNS.
 
@@ -68,7 +68,7 @@ Edit `brand` in `src/site.config.json`, then run `node tools/build.mjs` and `nod
 
 To have the form deliver directly to the inbox:
 
-1. Create a free form at [Formspree](https://formspree.io) (or Getform / Web3Forms) using `rajabi.ark@gmail.com`.
+1. Create a free form at [Formspree](https://formspree.io) (or Getform / Web3Forms) using `arknavicrew@gmail.com`.
 2. Paste its endpoint into `src/site.config.json → form.endpoint`, e.g. `"https://formspree.io/f/abcdwxyz"`. For Web3Forms, use `https://api.web3forms.com/submit` and put the access key in `form.accessKey`.
 3. Rebuild. The button becomes "Send enquiry", the form posts JSON, and the visitor sees a real success or failure message. On failure, the details stay in the form and the message offers WhatsApp and email instead.
 
@@ -78,7 +78,7 @@ There is also a hidden spam-trap field.
 
 - WhatsApp: `https://wa.me/447931988951?text=…`. This works on phones (opens the app) and desktops (WhatsApp Desktop or Web). Each service has its own pre-filled message.
 - Call: `tel:+447931988951`
-- Email: `mailto:rajabi.ark@gmail.com`
+- Email: `mailto:arknavicrew@gmail.com`
 
 ## Design
 
