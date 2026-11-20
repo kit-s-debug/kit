@@ -19,7 +19,7 @@
 <script type="module">
   const cfg = await (await fetch("../../src/site.config.json")).json();
   document.getElementById("h1").textContent = cfg.brand.name;
-  const big = "../../assets/img/brand/seal-ark.webp";
+  const big = "../../assets/img/brand/seal-2021.webp";
   const set = async (id, src) => { const i = document.getElementById(id); i.src = src; await i.decode(); };
   await set("seal", big); await set("em", big);
   await document.fonts.ready; window.ready = true;
