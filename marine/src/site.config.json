@@ -157,6 +157,35 @@
       "file": "hull-side-shine",
       "focus": "50% 40%",
       "alt": "A freshly polished sailing yacht hull with deep blue stripes"
+    },
+    "w_stripes": {
+      "file": "work-stripes",
+      "alt": "Before and after: a sailing yacht with worn, faded blue stripes, then polished with fresh red stripes"
+    },
+    "m_mirror": {
+      "file": "stripe-mirror",
+      "focus": "50% 40%",
+      "alt": "A navy hull stripe polished to a mirror finish"
+    },
+    "m_prop": {
+      "file": "propeller-polished",
+      "focus": "45% 35%",
+      "alt": "A polished bronze propeller beneath a freshly antifouled motor yacht"
+    },
+    "m_gloss": {
+      "file": "motor-hull-gloss",
+      "focus": "35% 40%",
+      "alt": "The glossy white side of a motor yacht reflecting the yard"
+    },
+    "m_lift": {
+      "file": "motor-bow-lift",
+      "focus": "50% 45%",
+      "alt": "A motor yacht lifted on a boat hoist, seen bow-on from below"
+    },
+    "m_red": {
+      "file": "red-stripe-bow",
+      "focus": "55% 45%",
+      "alt": "A polished white sailing yacht with new red stripes, on the hard at sunset"
     }
   }
 }

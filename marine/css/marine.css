@@ -292,3 +292,5 @@ p { text-wrap: pretty; }
 @media (max-width: 960px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
 .gallery--wide { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 760px) { .gallery--wide { grid-template-columns: 1fr; } }
+
+@media (min-width: 761px) { .gallery--wide > li:first-child { grid-column: 1 / -1; } .gallery--wide > li:first-child .g-item { aspect-ratio: 2.1 / 1; } }
