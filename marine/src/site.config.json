@@ -186,6 +186,16 @@
       "file": "red-stripe-bow",
       "focus": "55% 45%",
       "alt": "A polished white sailing yacht with new red stripes, on the hard at sunset"
+    },
+    "m_apply1": {
+      "file": "stripes-applying-side",
+      "focus": "55% 45%",
+      "alt": "New red stripes being applied to a polished sailing yacht hull, masking tape still in place"
+    },
+    "m_apply2": {
+      "file": "stripes-applying-bow",
+      "focus": "50% 45%",
+      "alt": "Bow-on view of a polished hull with new red stripes being applied"
     }
   }
 }
