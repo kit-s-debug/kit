@@ -84,6 +84,16 @@
     </div>
   </section>
 
+  <!-- PHOTO STRIP -->
+  <section class="strip" aria-label="Recent work">
+    <div class="wrap strip__grid">
+      <figure class="strip__item strip__item--big" data-reveal>{{picture:n_bow:(min-width: 900px) 46vw, 94vw}}</figure>
+      <figure class="strip__item" data-reveal style="--d:.06s">{{picture:n_side:(min-width: 900px) 23vw, 47vw}}</figure>
+      <figure class="strip__item" data-reveal style="--d:.12s">{{picture:n_close:(min-width: 900px) 23vw, 47vw}}</figure>
+    </div>
+    <div class="wrap"><p class="strip__cap">Recent work: a full hull polish on a sailing yacht, ready for the season. <a class="link" href="#gallery">See the gallery →</a></p></div>
+  </section>
+
   <!-- SERVICES -->
   <section class="section" id="services">
     <div class="wrap">
@@ -153,12 +163,24 @@
       </ul>
       <h3 class="sub">Our work</h3>
       <ul class="gallery">
-        <li data-reveal><button class="g-item" type="button" aria-label="View larger photo: Polished topsides above fresh antifouling" data-full="assets/img/photos/hull-polished-1440.webp" data-cap="Polished topsides above fresh antifouling">{{picture:g_hull:(min-width: 900px) 380px, 47vw}}</button></li>
-        <li data-reveal style="--d:.05s"><button class="g-item" type="button" aria-label="View larger photo: Motor yacht on the hard" data-full="assets/img/photos/motor-yacht-1440.webp" data-cap="Motor yacht on the hard">{{picture:g_motor:(min-width: 900px) 380px, 47vw}}</button></li>
-        <li data-reveal style="--d:.1s"><button class="g-item" type="button" aria-label="View larger photo: Polished bow, bow-on" data-full="assets/img/photos/bow-1440.webp" data-cap="Polished bow, bow-on">{{picture:g_bow:(min-width: 900px) 380px, 47vw}}</button></li>
-        <li data-reveal><button class="g-item" type="button" aria-label="View larger photo: Polished propeller and fresh antifouling" data-full="assets/img/photos/prop-antifoul-1200.webp" data-cap="Polished propeller and fresh antifouling">{{picture:g_prop:(min-width: 900px) 380px, 47vw}}</button></li>
-                <li data-reveal style="--d:.1s"><button class="g-item" type="button" aria-label="View larger photo: Restored teak deck" data-full="assets/img/photos/teak-after-1200.webp" data-cap="Restored teak deck">{{picture:g_teak:(min-width: 900px) 380px, 47vw}}</button></li>
-        <li data-reveal style="--d:.1s" class="gallery__film"><button class="g-item g-item--film" type="button" aria-label="Play video: A slow look along freshly polished topsides" data-video="assets/video/hull-polish" data-cap="A slow look along freshly polished topsides"><img src="assets/video/hull-polish-poster.webp" alt="Video: freshly polished sailing yacht hull" width="478" height="850" loading="lazy" decoding="async"><span class="g-item__play" aria-hidden="true"></span></button></li>
+        <li data-reveal style="--d:0.0s"><button class="g-item" type="button" aria-label="View larger photo: Full hull polish, bow-on" data-full="assets/img/photos/r43-bow-on-1440.webp" data-cap="Full hull polish, bow-on">{{picture:n_bow:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.05s"><button class="g-item" type="button" aria-label="View larger photo: Polished topsides and stripes" data-full="assets/img/photos/r43-side-1440.webp" data-cap="Polished topsides and stripes">{{picture:n_side:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.1s"><button class="g-item" type="button" aria-label="View larger photo: Polished bow against the sky" data-full="assets/img/photos/r43-bow-low-960.webp" data-cap="Polished bow against the sky">{{picture:n_low:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.0s"><button class="g-item" type="button" aria-label="View larger photo: Mirror finish along the hull" data-full="assets/img/photos/r43-side-close-1440.webp" data-cap="Mirror finish along the hull">{{picture:n_close:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.05s"><button class="g-item" type="button" aria-label="View larger photo: Polished topsides above fresh antifouling" data-full="assets/img/photos/hull-polished-1440.webp" data-cap="Polished topsides above fresh antifouling">{{picture:g_hull:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.1s"><button class="g-item" type="button" aria-label="View larger photo: Motor yacht on the hard" data-full="assets/img/photos/motor-yacht-1440.webp" data-cap="Motor yacht on the hard">{{picture:g_motor:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.0s"><button class="g-item" type="button" aria-label="View larger photo: Polished bow, bow-on" data-full="assets/img/photos/bow-1440.webp" data-cap="Polished bow, bow-on">{{picture:g_bow:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.05s"><button class="g-item" type="button" aria-label="View larger photo: Polished propeller and fresh antifouling" data-full="assets/img/photos/prop-antifoul-1200.webp" data-cap="Polished propeller and fresh antifouling">{{picture:g_prop:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.1s"><button class="g-item" type="button" aria-label="View larger photo: Restored teak deck" data-full="assets/img/photos/teak-after-1200.webp" data-cap="Restored teak deck">{{picture:g_teak:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.0s"><button class="g-item" type="button" aria-label="View larger photo: Polishing pad and compound, ready to work" data-full="assets/img/photos/polish-pad-1200.webp" data-cap="Polishing pad and compound, ready to work">{{picture:n_pad:(min-width: 900px) 380px, 47vw}}</button></li>
+        <li data-reveal style="--d:0.05s"><button class="g-item" type="button" aria-label="View larger photo: Polished stainless steel rails" data-full="assets/img/photos/stainless-rails-960.webp" data-cap="Polished stainless steel rails">{{picture:g_rails:(min-width: 900px) 380px, 47vw}}</button></li>
+      </ul>
+      <h3 class="sub">Videos</h3>
+      <ul class="gallery gallery--video">
+        <li data-reveal style="--d:0.00s"><button class="g-item g-item--film" type="button" aria-label="Play video: The finished yacht, in the sun" data-video="assets/video/yacht-pan" data-cap="The finished yacht, in the sun"><img src="assets/video/yacht-pan-poster.webp" alt="Video: The finished yacht, in the sun" width="464" height="848" loading="lazy" decoding="async"><span class="g-item__play" aria-hidden="true"></span><span class="g-item__cap">The finished yacht, in the sun</span></button></li>
+        <li data-reveal style="--d:0.05s"><button class="g-item g-item--film" type="button" aria-label="Play video: Lifting out for the season" data-video="assets/video/lift-out" data-cap="Lifting out for the season"><img src="assets/video/lift-out-poster.webp" alt="Video: Lifting out for the season" width="464" height="848" loading="lazy" decoding="async"><span class="g-item__play" aria-hidden="true"></span><span class="g-item__cap">Lifting out for the season</span></button></li>
+        <li data-reveal style="--d:0.10s"><button class="g-item g-item--film" type="button" aria-label="Play video: Out on the water" data-video="assets/video/sailing" data-cap="Out on the water"><img src="assets/video/sailing-poster.webp" alt="Video: Out on the water" width="464" height="848" loading="lazy" decoding="async"><span class="g-item__play" aria-hidden="true"></span><span class="g-item__cap">Out on the water</span></button></li>
+        <li data-reveal style="--d:0.15s"><button class="g-item g-item--film" type="button" aria-label="Play video: A slow look along polished topsides" data-video="assets/video/hull-polish" data-cap="A slow look along polished topsides"><img src="assets/video/hull-polish-poster.webp" alt="Video: A slow look along polished topsides" width="464" height="848" loading="lazy" decoding="async"><span class="g-item__play" aria-hidden="true"></span><span class="g-item__cap">A slow look along polished topsides</span></button></li>
       </ul>
     </div>
   </section>
@@ -184,10 +206,10 @@
   <!-- PRODUCTS -->
   <section class="section" id="products">
     <div class="wrap products" data-reveal>
-      <div class="products__icon" aria-hidden="true">{{icon:bottle}}</div>
+      <figure class="products__img">{{picture:n_pad:(min-width: 700px) 260px, 94vw}}</figure>
       <div>
         <h2>Buy Products</h2>
-        <p>Looking for cleaning, polishing or protection products for your boat or car? Message us and we'll let you know what we can supply and the prices.</p>
+        <p>We use and supply professional cleaning, polishing and protection products for boats and cars. There's no online checkout: message us with what you're looking for and we'll tell you what we have and the prices.</p>
         <a class="btn btn--navy" href="{{wa:Hello {{brand.legalName}}, I'd like to ask about buying products.}}" target="_blank" rel="noopener"><span class="btn__icon" aria-hidden="true">{{icon:wa}}</span>Ask about products</a>
       </div>
     </div>

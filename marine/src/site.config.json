@@ -73,6 +73,31 @@
       "file": "teak-after",
       "focus": "55% 60%",
       "alt": "A teak cockpit deck after cleaning and restoration"
+    },
+    "n_bow": {
+      "file": "r43-bow-on",
+      "focus": "50% 45%",
+      "alt": "A blue-and-white sailing yacht seen bow-on, its polished hull reflecting the sky"
+    },
+    "n_side": {
+      "file": "r43-side",
+      "focus": "50% 45%",
+      "alt": "Side view of a sailing yacht on the hard with gleaming white topsides and blue stripes"
+    },
+    "n_close": {
+      "file": "r43-side-close",
+      "focus": "45% 50%",
+      "alt": "Close view along a freshly polished sailing yacht hull"
+    },
+    "n_low": {
+      "file": "r43-bow-low",
+      "focus": "45% 50%",
+      "alt": "Low angle of a polished sailing yacht bow against a blue sky"
+    },
+    "n_pad": {
+      "file": "polish-pad",
+      "focus": "50% 50%",
+      "alt": "A polishing pad loaded with compound, ready to use"
     }
   }
 }
