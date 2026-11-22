@@ -68,6 +68,28 @@
   }
 
 
+  /* ---------------- gallery filters + show more ---------------- */
+  const gal = $("[data-gallery]");
+  if (gal) {
+    const tiles = $$("li", gal), more = $("[data-more]"), wrap = more && more.parentElement;
+    const LIMIT = 9; let filter = "all", expanded = false;
+    const render = () => {
+      const match = tiles.filter(t => filter === "all" || t.dataset.cat === filter);
+      tiles.forEach(t => { t.hidden = true; });
+      match.forEach((t, i) => { t.hidden = !expanded && i >= LIMIT; if (!t.hidden) t.classList.add("is-in"); });
+      const rest = match.length - LIMIT;
+      if (wrap) wrap.hidden = expanded || rest <= 0;
+      if (more) more.textContent = `Show ${rest} more photo${rest === 1 ? "" : "s"}`;
+    };
+    $$(".g-filter").forEach(btn => btn.addEventListener("click", () => {
+      filter = btn.dataset.filter; expanded = false;
+      $$(".g-filter").forEach(b => { const on = b === btn; b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on); });
+      render();
+    }));
+    if (more) more.addEventListener("click", () => { expanded = true; render(); });
+    render();
+  }
+
   /* ---------------- gallery viewer ---------------- */
   const lb = $("[data-lightbox]");
   if (lb && typeof lb.showModal === "function") {

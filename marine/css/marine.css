@@ -294,3 +294,44 @@ p { text-wrap: pretty; }
 @media (max-width: 760px) { .gallery--wide { grid-template-columns: 1fr; } }
 
 @media (min-width: 761px) { .gallery--wide > li:first-child { grid-column: 1 / -1; } .gallery--wide > li:first-child .g-item { aspect-ratio: 2.1 / 1; } }
+
+/* ===== final polish ===== */
+/* trust strip */
+.trust { list-style: none; display: flex; flex-wrap: wrap; gap: 0; margin: 30px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.trust li { padding: 16px 26px 0 0; margin-right: 26px; font-size: 14px; color: var(--muted); border-right: 1px solid var(--line); }
+.trust li:last-child { border-right: 0; margin-right: 0; }
+.trust b { display: block; font-size: 19px; font-weight: 700; color: var(--navy); }
+@media (max-width: 520px) { .trust li { padding-right: 14px; margin-right: 14px; } .trust b { font-size: 16px; } }
+
+/* gallery header + filters */
+.g-head { display: flex; justify-content: space-between; align-items: center; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 14px; }
+.g-head .sub { margin: 0; }
+.g-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.g-filter { min-height: 38px; padding: 0 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); font: 500 14px "Jost", sans-serif; color: var(--muted); cursor: pointer; transition: all .2s; }
+.g-filter:hover { color: var(--navy); border-color: var(--navy); }
+.g-filter.is-on { background: var(--navy); border-color: var(--navy); color: var(--white); }
+.gallery--work > li[hidden] { display: none; }
+.g-more { display: flex; justify-content: center; margin: -14px 0 40px; }
+.g-more[hidden] { display: none; }
+.btn--outline { background: var(--white); color: var(--navy); border: 1px solid var(--navy); }
+.btn--outline:hover { background: var(--navy); color: var(--white); }
+
+/* soft hover lift on photo tiles */
+.g-item { transition: box-shadow .25s, transform .25s var(--ease); }
+.g-item:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+/* videos: all five in one row on desktop, swipe row on phones */
+.gallery--video { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 900px) {
+  .gallery--video { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); padding: 0 var(--gutter) 6px; scrollbar-width: none; }
+  .gallery--video::-webkit-scrollbar { display: none; }
+  .gallery--video > li { flex: 0 0 44%; scroll-snap-align: start; }
+}
+@media (max-width: 520px) { .gallery--video > li { flex-basis: 62%; } }
+
+/* products: consistent soft white plinth behind every bottle */
+.product__img { background: radial-gradient(70% 60% at 50% 55%, #fff 0%, var(--alt) 100%); }
+.product__img img { filter: drop-shadow(0 10px 14px rgba(13, 31, 54, .18)); }
+
+/* section headings: small gold rule */
+.section-head h2::after { content: ""; display: block; width: 44px; height: 3px; margin-top: 14px; background: var(--gold); border-radius: 2px; }
