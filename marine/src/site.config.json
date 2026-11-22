@@ -123,6 +123,40 @@
       "file": "stripe-before",
       "focus": "50% 50%",
       "alt": "Before: scratches and water marks on a navy hull stripe"
+    },
+    "w_teakdeck": {
+      "file": "work-teakdeck",
+      "alt": "Before and after: a grey, weathered teak deck with a compass rose inlay, then cleaned back to warm teak"
+    },
+    "i_helm": {
+      "file": "flybridge-helm",
+      "focus": "50% 50%",
+      "alt": "A cleaned flybridge helm and white seating on a motor yacht"
+    },
+    "i_seats": {
+      "file": "flybridge-seats",
+      "focus": "50% 60%",
+      "alt": "Bright white flybridge seating overlooking the harbour"
+    },
+    "i_console": {
+      "file": "helm-console",
+      "focus": "50% 40%",
+      "alt": "A clean helm console with wooden wheel and instruments"
+    },
+    "i_seat": {
+      "file": "helm-seat",
+      "focus": "50% 55%",
+      "alt": "A spotless white helm seat after interior cleaning"
+    },
+    "i_steps": {
+      "file": "teak-steps",
+      "focus": "50% 60%",
+      "alt": "Restored teak steps with fresh black caulking lines"
+    },
+    "n_shine": {
+      "file": "hull-side-shine",
+      "focus": "50% 40%",
+      "alt": "A freshly polished sailing yacht hull with deep blue stripes"
     }
   }
 }

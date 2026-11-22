@@ -287,3 +287,8 @@ p { text-wrap: pretty; }
 .product__img { height: 300px; padding: 14px; }
 .product__img img { max-height: 272px; }
 @media (max-width: 480px) { .product__img { height: 230px; } .product__img img { max-height: 202px; } }
+
+.products-grid { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 960px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+.gallery--wide { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 760px) { .gallery--wide { grid-template-columns: 1fr; } }
