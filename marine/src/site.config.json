@@ -98,6 +98,31 @@
       "file": "polish-pad",
       "focus": "50% 50%",
       "alt": "A polishing pad loaded with compound, ready to use"
+    },
+    "n_stripe": {
+      "file": "hull-stripe-polished",
+      "focus": "40% 45%",
+      "alt": "A white hull and navy stripe polished to a mirror finish"
+    },
+    "n_cat1": {
+      "file": "cat-underside",
+      "focus": "50% 40%",
+      "alt": "The underside of a catamaran bridge deck, polished and reflecting the yard"
+    },
+    "n_cat2": {
+      "file": "cat-underside-2",
+      "focus": "50% 35%",
+      "alt": "Polished catamaran hull underside, worked section by section"
+    },
+    "n_catlift": {
+      "file": "cat-lift",
+      "focus": "50% 45%",
+      "alt": "A catamaran lifted out of the water on a boat hoist"
+    },
+    "n_before": {
+      "file": "stripe-before",
+      "focus": "50% 50%",
+      "alt": "Before: scratches and water marks on a navy hull stripe"
     }
   }
 }
