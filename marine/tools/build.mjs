@@ -224,6 +224,12 @@ html = html.replace(/\{\{([a-zA-Z][\w.]*)\}\}/g, (m, k) => {
 html = html.replace(/\{\{wa:(.*?)\}\}/g, (m, text) => `https://wa.me/${cfg.contact.whatsapp}?text=${encodeURIComponent(text.replace(/&amp;/g, "&"))}`);
 html = html.replace(/\{\{icon:(\w+)\}\}/g, (m, k) => ICONS[k] || fail(`unknown icon ${k}`));
 html = html.replace(/\{\{picture:(\w+):(.+?)(:eager)?\}\}/g, (m, slot, sizes, eager) => picture(slot, sizes, !!eager));
+// gallery "view larger" links: always point at the largest file that really exists
+html = html.replace(/data-full="assets\/img\/photos\/([a-z0-9-]+?)-\d+\.webp"/g, (m, name) => {
+  const sizes = photoFiles.map(f => new RegExp("^" + name + "-(\\d+)\\.webp$").exec(f)).filter(Boolean).map(x => +x[1]);
+  if (!sizes.length) fail(`no photo files for gallery link "${name}"`);
+  return `data-full="assets/img/photos/${name}-${Math.max(...sizes)}.webp"`;
+});
 const left = html.match(/\{\{[^}]*\}\}/); if (left) fail(`unfilled token ${left[0]}`);
 writeFileSync(join(root, "index.html"), html);
 

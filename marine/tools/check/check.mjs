@@ -42,11 +42,12 @@ for (const [name, opts] of [["desktop", { viewport: { width: 1440, height: 900 }
     r.wide = [...document.querySelectorAll("body *")].filter(e => { const b = e.getBoundingClientRect(); return b.right > innerWidth + 1 && getComputedStyle(e).position !== "fixed" && !e.closest(".contact__chart,.approach__soundings,.menu,.intro"); }).slice(0, 5).map(e => e.className || e.tagName);
     r.brokenImgs = [...document.images].filter(i => i.hasAttribute("src") && i.complete && i.naturalWidth === 0 && i.loading !== "lazy").map(i => i.currentSrc || i.src);
     r.badAnchors = [...document.querySelectorAll('a[href^="#"]')].map(a => a.getAttribute("href")).filter(h => h.length > 1 && !document.querySelector(h));
+    r.missingFull = [...document.querySelectorAll("[data-full]")].map(b => b.dataset.full).filter(u => { const x = new XMLHttpRequest(); x.open("HEAD", u, false); try { x.send(); } catch (e) { return true; } return x.status >= 400; });
     r.emptyLinks = [...document.querySelectorAll("a")].filter(a => !a.getAttribute("href")).length;
     return r;
   }, opts.viewport.width);
   console.log(name, JSON.stringify(audit), errs.length ? "\n  ERRORS: " + errs.join("\n  ") : "");
-  if (audit.overflow > 0 || audit.brokenImgs.length || audit.badAnchors.length || errs.length) problems++;
+  if (audit.overflow > 0 || audit.missingFull.length || audit.brokenImgs.length || audit.badAnchors.length || errs.length) problems++;
   await ctx.close();
 }
 await b.close(); srv.close();
