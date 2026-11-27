@@ -1,0 +1,4 @@
+tools/check/shots/
+tools/render/out/
+tools/og/out/
+node_modules/

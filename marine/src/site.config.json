@@ -1,0 +1,181 @@
+{
+  "_readme": "Everything the business may want to change lives here. Edit, then run: node tools/build.mjs",
+  "brand": {
+    "name": "ARK.NAVICREW",
+    "descriptor": "",
+    "legalName": "ARK.NAVICREW",
+    "tagline": "Marine detailing and maintenance.",
+    "emblem": "assets/img/brand/seal-2021-240.webp",
+    "seal": "assets/img/brand/seal-2021-240.webp",
+    "areas": [
+      "United Kingdom",
+      "Norway"
+    ],
+    "_emblem": "emblem: the logo beside the name in the menu bar. seal: the logo used in the hero, footer, icons and 404."
+  },
+  "contact": {
+    "phoneDisplay": "+44 7931 988951",
+    "phoneE164": "+447931988951",
+    "whatsapp": "447931988951",
+    "email": "arknavicrew@gmail.com"
+  },
+  "site": {
+    "url": "https://www.navicrewofficial.com",
+    "_url": "Set to the live address (e.g. https://arkmarine.co.uk) once known. It enables canonical links, absolute share images and the sitemap.",
+    "locale": "en_GB"
+  },
+  "form": {
+    "endpoint": "",
+    "_endpoint": "Leave empty and the enquiry form hands the visitor's message to WhatsApp (or email) ready to send. Paste a Formspree / Web3Forms / Getform endpoint URL here to have the form post directly instead. See README.",
+    "accessKey": "",
+    "_accessKey": "Only for Web3Forms: its public access key."
+  },
+  "photos": {
+    "_readme": "Each slot names a file set in assets/img/photos (name-<width>.webp). 'tall' is an optional portrait version for phones. 'focus' is the crop focal point (object-position). 'caption' is optional.",
+    "w_deck": {
+      "file": "work-deck",
+      "alt": "Before and after: a weathered, grey teak cockpit deck, then cleaned and restored to a warm teak colour"
+    },
+    "w_yacht": {
+      "file": "work-yacht",
+      "alt": "During and finished: a sailing yacht being polished in the yard, then gleaming at its mooring"
+    },
+    "w_cockpit": {
+      "file": "work-cockpit",
+      "alt": "Before and after: a stained, mouldy cockpit floor, then the boat clean and bright"
+    },
+    "g_hull": {
+      "file": "hull-polished",
+      "focus": "60% 45%",
+      "alt": "A sailing yacht's topsides polished to a mirror finish above fresh antifouling"
+    },
+    "g_motor": {
+      "file": "motor-yacht",
+      "focus": "58% 55%",
+      "alt": "A burgundy-hulled motor yacht on the hard, its gelcoat gleaming"
+    },
+    "g_bow": {
+      "file": "bow",
+      "focus": "50% 40%",
+      "alt": "The navy hull of a sailing yacht seen bow-on, polished topsides reflecting the sky"
+    },
+    "g_rails": {
+      "file": "stainless-rails",
+      "focus": "60% 50%",
+      "alt": "Polished stainless steel rails and a deck cleat on a white motor cruiser"
+    },
+    "g_teak": {
+      "file": "teak-after",
+      "focus": "55% 60%",
+      "alt": "A teak cockpit deck after cleaning and restoration"
+    },
+    "n_bow": {
+      "file": "r43-bow-on",
+      "focus": "50% 45%",
+      "alt": "A blue-and-white sailing yacht seen bow-on, its polished hull reflecting the sky"
+    },
+    "n_side": {
+      "file": "r43-side",
+      "focus": "50% 45%",
+      "alt": "Side view of a sailing yacht on the hard with gleaming white topsides and blue stripes"
+    },
+    "n_close": {
+      "file": "r43-side-close",
+      "focus": "45% 50%",
+      "alt": "Close view along a freshly polished sailing yacht hull"
+    },
+    "n_stripe": {
+      "file": "hull-stripe-polished",
+      "focus": "40% 45%",
+      "alt": "A white hull and navy stripe polished to a mirror finish"
+    },
+    "n_cat1": {
+      "file": "cat-underside",
+      "focus": "50% 40%",
+      "alt": "The underside of a catamaran bridge deck, polished and reflecting the yard"
+    },
+    "n_cat2": {
+      "file": "cat-underside-2",
+      "focus": "50% 35%",
+      "alt": "Polished catamaran hull underside, worked section by section"
+    },
+    "n_catlift": {
+      "file": "cat-lift",
+      "focus": "50% 45%",
+      "alt": "A catamaran lifted out of the water on a boat hoist"
+    },
+    "n_before": {
+      "file": "stripe-before",
+      "focus": "50% 50%",
+      "alt": "Before: scratches and water marks on a navy hull stripe"
+    },
+    "w_teakdeck": {
+      "file": "work-teakdeck",
+      "alt": "Before and after: a grey, weathered teak deck with a compass rose inlay, then cleaned back to warm teak"
+    },
+    "i_helm": {
+      "file": "flybridge-helm",
+      "focus": "50% 50%",
+      "alt": "A cleaned flybridge helm and white seating on a motor yacht"
+    },
+    "i_seats": {
+      "file": "flybridge-seats",
+      "focus": "50% 60%",
+      "alt": "Bright white flybridge seating overlooking the harbour"
+    },
+    "i_console": {
+      "file": "helm-console",
+      "focus": "50% 40%",
+      "alt": "A clean helm console with wooden wheel and instruments"
+    },
+    "i_seat": {
+      "file": "helm-seat",
+      "focus": "50% 55%",
+      "alt": "A spotless white helm seat after interior cleaning"
+    },
+    "i_steps": {
+      "file": "teak-steps",
+      "focus": "50% 60%",
+      "alt": "Restored teak steps with fresh black caulking lines"
+    },
+    "w_stripes": {
+      "file": "work-stripes",
+      "alt": "Before and after: a sailing yacht with worn, faded blue stripes, then polished with fresh red stripes"
+    },
+    "m_mirror": {
+      "file": "stripe-mirror",
+      "focus": "50% 40%",
+      "alt": "A navy hull stripe polished to a mirror finish"
+    },
+    "m_prop": {
+      "file": "propeller-polished",
+      "focus": "45% 35%",
+      "alt": "A polished bronze propeller beneath a freshly antifouled motor yacht"
+    },
+    "m_gloss": {
+      "file": "motor-hull-gloss",
+      "focus": "35% 40%",
+      "alt": "The glossy white side of a motor yacht reflecting the yard"
+    },
+    "m_lift": {
+      "file": "motor-bow-lift",
+      "focus": "50% 45%",
+      "alt": "A motor yacht lifted on a boat hoist, seen bow-on from below"
+    },
+    "m_red": {
+      "file": "red-stripe-bow",
+      "focus": "55% 45%",
+      "alt": "A polished white sailing yacht with new red stripes, on the hard at sunset"
+    },
+    "m_apply1": {
+      "file": "stripes-applying-side",
+      "focus": "55% 45%",
+      "alt": "New red stripes being applied to a polished sailing yacht hull, masking tape still in place"
+    },
+    "m_apply2": {
+      "file": "stripes-applying-bow",
+      "focus": "50% 45%",
+      "alt": "Bow-on view of a polished hull with new red stripes being applied"
+    }
+  }
+}
