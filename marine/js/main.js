@@ -24,6 +24,19 @@
   addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { setMenu(false); toggle.focus(); } });
   matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
 
+  /* ---------------- menu: highlight the section in view ---------------- */
+  const navLinks = $$(".nav__links a");
+  const navSecs = navLinks.map(a => document.querySelector(a.getAttribute("href")));
+  let navTick = false;
+  const markNav = () => {
+    navTick = false;
+    const line = innerHeight * 0.4; let cur = -1;
+    navSecs.forEach((s, i) => { if (s && s.getBoundingClientRect().top <= line) cur = i; });
+    navLinks.forEach((a, i) => a.classList.toggle("is-active", i === cur));
+  };
+  addEventListener("scroll", () => { if (!navTick) { navTick = true; requestAnimationFrame(markNav); } }, { passive: true });
+  markNav();
+
   /* ---------------- fade-ins ---------------- */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   $$("[data-reveal]").forEach(el => io.observe(el));

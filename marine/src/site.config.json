@@ -59,11 +59,6 @@
       "focus": "50% 40%",
       "alt": "The navy hull of a sailing yacht seen bow-on, polished topsides reflecting the sky"
     },
-    "g_prop": {
-      "file": "prop-antifoul",
-      "focus": "50% 55%",
-      "alt": "A polished bronze propeller beneath a freshly antifouled hull"
-    },
     "g_rails": {
       "file": "stainless-rails",
       "focus": "60% 50%",
@@ -88,16 +83,6 @@
       "file": "r43-side-close",
       "focus": "45% 50%",
       "alt": "Close view along a freshly polished sailing yacht hull"
-    },
-    "n_low": {
-      "file": "r43-bow-low",
-      "focus": "45% 50%",
-      "alt": "Low angle of a polished sailing yacht bow against a blue sky"
-    },
-    "n_pad": {
-      "file": "polish-pad",
-      "focus": "50% 50%",
-      "alt": "A polishing pad loaded with compound, ready to use"
     },
     "n_stripe": {
       "file": "hull-stripe-polished",
@@ -152,11 +137,6 @@
       "file": "teak-steps",
       "focus": "50% 60%",
       "alt": "Restored teak steps with fresh black caulking lines"
-    },
-    "n_shine": {
-      "file": "hull-side-shine",
-      "focus": "50% 40%",
-      "alt": "A freshly polished sailing yacht hull with deep blue stripes"
     },
     "w_stripes": {
       "file": "work-stripes",
