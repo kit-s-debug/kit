@@ -1,0 +1,9 @@
+{
+  "framework": "nextjs",
+  "headers": [
+    {
+      "source": "/(.*)\\.(webp|jpg|png|svg|woff2)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, must-revalidate" }]
+    }
+  ]
+}

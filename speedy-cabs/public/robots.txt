@@ -1,0 +1,6 @@
+# Demo build: not indexed until the owner approves launch.
+# Before launch, replace with:
+#   User-agent: *
+#   Allow: /
+User-agent: *
+Disallow: /
