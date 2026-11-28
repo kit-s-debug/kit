@@ -1,8 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useMemo, useRef, useState } from "react";
 import { business } from "@/lib/business";
+import { townPhotos } from "@/lib/photos";
+import { Photo } from "../ui/Photo";
 import { useBooking } from "@/lib/booking";
 import { ArrowRight } from "../ui/Icons";
 import { Reveal } from "../ui/Reveal";
@@ -101,7 +103,7 @@ export function JourneyMap() {
         className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:radial-gradient(rgba(17,24,39,0.07)_1px,transparent_1px)] [background-size:22px_22px]"
         aria-hidden
       />
-      <div className="relative mx-auto grid max-w-[88rem] gap-14 px-5 sm:px-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10">
+      <div className="relative mx-auto grid max-w-[88rem] gap-14 px-5 sm:px-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-x-12 lg:gap-y-16">
         <div className="flex flex-col">
           <SectionHeading
             id="journeys-title"
@@ -110,68 +112,13 @@ export function JourneyMap() {
             eyebrow="Where we go"
             title="From Haverfordwest"
             accent="to the coast."
-            intro="Based in the county town, we cover Haverfordwest and the wider county. Choose a destination to start a booking."
+            intro="Based in the county town, we cover Haverfordwest and the wider county: harbour towns, castle towns and the coast between them. Choose a destination to start a booking."
           />
 
-          <Reveal delay={0.1} className="mt-10">
-            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2" aria-label="Destinations">
-              {towns.map((t) => {
-                const on = selected === t.name;
-                return (
-                  <li key={t.name}>
-                    <button
-                      type="button"
-                      onMouseEnter={() => setActive(t.name)}
-                      onFocus={() => setActive(t.name)}
-                      onClick={() => setActive(t.name)}
-                      aria-pressed={on}
-                      className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-all ${
-                        on
-                          ? "border-ink bg-ink text-ivory shadow-[0_18px_40px_-20px_rgba(17,24,39,0.6)]"
-                          : "border-ink/10 bg-white/50 text-ink hover:border-ink/30"
-                      }`}
-                    >
-                      <span className="display text-xl">{t.name}</span>
-                      <span className={`text-sm ${on ? "text-gold" : "text-gold-deep"}`} aria-hidden>
-                        ●
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="mt-6 min-h-[8.5rem]" aria-live="polite">
-              <AnimatePresence mode="wait">
-                {selected ? (
-                  <motion.div
-                    key={selected}
-                    initial={reduce ? false : { opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={reduce ? undefined : { opacity: 0, y: -6 }}
-                    transition={{ duration: 0.35 }}
-                    className="rounded-2xl border border-ink/10 bg-white/70 p-5"
-                  >
-                    <p className="text-sm text-ink-soft">
-                      Haverfordwest <span aria-hidden>→</span>
-                      <span className="sr-only">to</span> <strong className="text-ink">{selected}</strong>
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => prefill({ destination: selected })}
-                      className="group mt-3 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ivory transition-colors hover:bg-navy"
-                    >
-                      Request a journey to {selected}
-                      <ArrowRight width={16} height={16} className="text-gold transition-transform group-hover:translate-x-1" />
-                    </button>
-                  </motion.div>
-                ) : (
-                  <motion.p key="hint" className="pt-2 text-sm text-ink-soft" initial={false}>
-                    Not on the list? We also take pre-booked long-distance journeys. Just tell us where you&apos;re going.
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </div>
+          <Reveal delay={0.1} className="mt-8">
+            <p className="max-w-md text-[0.95rem] leading-relaxed text-ink-soft">
+              Not on the list? We also take pre-booked long-distance journeys. Just tell us where you&apos;re going.
+            </p>
           </Reveal>
         </div>
 
@@ -318,6 +265,43 @@ export function JourneyMap() {
             </figcaption>
           </figure>
         </Reveal>
+
+        <ul className="grid grid-cols-2 gap-3 sm:gap-5 lg:col-span-2 lg:grid-cols-3" aria-label="Destinations">
+          {towns.map((t, i) => {
+            const on = selected === t.name;
+            return (
+              <Reveal as="li" key={t.name} delay={(i % 3) * 0.06}>
+                <article
+                  onMouseEnter={() => setActive(t.name)}
+                  onFocus={() => setActive(t.name)}
+                  className={`group relative isolate flex aspect-[4/5] flex-col justify-end overflow-hidden rounded-[1.5rem] transition-shadow sm:aspect-[5/4] ${
+                    on ? "shadow-[0_30px_60px_-30px_rgba(17,24,39,0.7)] ring-2 ring-gold" : ""
+                  }`}
+                >
+                  <Photo
+                    id={townPhotos[t.name]}
+                    sizes="(min-width: 1024px) 30vw, 50vw"
+                    className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(10,18,34,0)_35%,rgba(10,18,34,0.85)_100%)]" aria-hidden />
+                  <div className="p-4 sm:p-6">
+                    <p className="hidden text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-soft sm:block">From Haverfordwest</p>
+                    <h3 className="display mt-1 text-[1.15rem] leading-tight text-ivory sm:text-3xl">{t.name}</h3>
+                    <button
+                      type="button"
+                      onClick={() => prefill({ destination: t.name })}
+                      className="mt-3 inline-flex items-center gap-2 text-[0.82rem] font-semibold text-ivory after:absolute after:inset-0 sm:text-sm"
+                    >
+                      Request a journey
+                      <span className="sr-only"> to {t.name}</span>
+                      <ArrowRight width={15} height={15} className="text-gold transition-transform group-hover:translate-x-1" />
+                    </button>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

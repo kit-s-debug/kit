@@ -1,8 +1,8 @@
 # Speedy Cabs & Minibus, Haverfordwest: demo website
 
-A premium one-page website prepared as a sales demo for Speedy Cabs & Minibus, 48 Portfield, Haverfordwest. It opens on an interactive 3D scene: an illustrated dark saloon with a lit roof sign, parked on a wet clifftop road on the Pembrokeshire coast at dusk.
+A premium one-page website prepared as a sales demo for Speedy Cabs & Minibus, 48 Portfield, Haverfordwest. It is built around real photography of Haverfordwest and Pembrokeshire: a full-screen slideshow of the Western Cleddau in Haverfordwest, Pembroke Castle, Tenby and Whitesands Bay, with photo cards for each service and destination town.
 
-**Stack:** Next.js 15 (static export), React 19, TypeScript, Tailwind CSS 4, Framer Motion, three.js with React Three Fiber and drei.
+**Stack:** Next.js 15 (static export), React 19, TypeScript, Tailwind CSS 4, Framer Motion.
 
 ```bash
 cd speedy-cabs
@@ -38,22 +38,24 @@ To launch:
 - **Taken from the brief:** the name, both phone numbers, the address, the Google profile link, the services and the towns.
 - **Marked †, owner to confirm:** 24/7 service, card payments, and WhatsApp on 07587 549017. The existing website advertises the first two. It could not be reached from the build environment, so nothing was copied from it.
 - **Deliberately left out:** prices, fleet models, vehicle capacities, licensing, driver details, the review rating (the sources disagree), and all testimonials.
-- **The vehicle is an illustration.** It is built in code, unbranded, and does not represent a company car. The site says so in the demo note and in the footer.
+- **No vehicle photos.** No photos of the company's own cars were available, so the site shows places, not vehicles. Nothing implies a particular fleet.
 - **The map is illustrative.** It has a hand-simplified coastline and approximate town positions, and it is captioned "not to scale, not live tracking".
 
 ## How the booking works
 
 The form validates the pickup, destination, date and time (no past dates or times), passengers (1 to 16), name and a UK phone number. **Request a Booking** shows a review step. Nothing is sent until the customer picks **WhatsApp**, **text message**, **call** or **copy details**. The WhatsApp and text options open the customer's own app with the full journey details already written. Every screen states that journeys are subject to confirmation by the operator. Service cards, the hero bar and the map all prefill the form.
 
-## 3D, performance and accessibility
+## Photography
 
-- `src/components/hero/HeroScene.tsx` contains the whole scene. The sky shader, sea glitter, cliffs, wet road reflections, cat's eyes, lighthouse, vehicle and reflection lighting are all generated in code. **Nothing is downloaded:** no models, textures or HDR files.
-- The 3D bundle loads lazily after first paint. A still of the same scene (`public/hero-poster*.webp`, 54 KB and 26 KB) shows immediately and stays as the fallback when WebGL is missing or data saver is on.
-- Small or low-core devices get a lighter scene, with no planar reflections and a lower pixel ratio. Rendering pauses while the hero is off screen.
-- Reduced-motion users get a still scene and no entrance or scroll animation.
+All 13 photos are from **Wikimedia Commons**, under Creative Commons licences (CC BY or CC BY-SA). Each is credited, with links to its source and licence, under "Photo credits" in the footer. Those credits are what the licences require, so keep them while the photos are in use.
+
+- `src/lib/photos.ts` holds the caption, alt text and credit for each photo, and says which photos the hero, service cards, town cards and local section use.
+- The files are in `public/photos/` as responsive WebP sizes (`<id>-<width>.webp`), 4.4 MB for all sizes together. Each visitor downloads only the size their screen needs.
+- **To use the owner's own photos:** save new files under the same ids and widths, and update the entries in `photos.ts`. Photos of the real cars, drivers or office would make the site stronger still.
+
+## Performance and accessibility
+
+- The hero slideshow pauses for reduced-motion users and has a pause button. Each slide is labelled with its location.
+- Images load lazily below the fold, with explicit dimensions so the layout doesn't shift.
 - The page has semantic landmarks, a skip link, labelled controls, keyboard-operable everything, focus moved to the first invalid field, and live regions for status changes.
-- First-load JS is 168 KB. The 3D engine loads separately.
-
-## Regenerating the posters
-
-The posters and `public/og.jpg` are screenshots of the live scene. After you change the scene, run the dev server and capture new ones with Playwright at 1600×1000 (desktop) and 430×932 at 2× (portrait). Save them as WebP over the files in `public/`.
+- First-load JS is 168 KB.

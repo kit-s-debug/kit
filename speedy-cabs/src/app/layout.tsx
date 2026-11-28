@@ -94,7 +94,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-GB">
       <head>
-        <link rel="preload" href="/hero-poster.webp" as="image" type="image/webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData()) }}

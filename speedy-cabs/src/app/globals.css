@@ -182,20 +182,16 @@ select.field option {
   display: none;
 }
 
-/* ── Service illustrations: purposeful motion on hover ───────────────────── */
-.svc-draw {
-  stroke-dasharray: 420;
-  stroke-dashoffset: 0;
+/* ── Hero slideshow progress ────────────────────────────────────────────── */
+.hero-progress {
+  animation: hero-progress linear forwards;
 }
-.svc-card:hover .svc-draw {
-  animation: svc-draw 1.6s var(--ease-out-expo);
-}
-@keyframes svc-draw {
+@keyframes hero-progress {
   from {
-    stroke-dashoffset: 420;
+    width: 0;
   }
   to {
-    stroke-dashoffset: 0;
+    width: 100%;
   }
 }
 .svc-pulse {
@@ -214,41 +210,9 @@ select.field option {
     transform: scale(1.1);
   }
 }
-.svc-float {
-  transition: transform 0.9s var(--ease-out-expo);
-}
-.svc-card:hover .svc-float {
-  transform: translateX(10px);
-}
-.svc-seat {
-  opacity: 0.25;
-  transition: opacity 0.4s ease;
-}
-.svc-seat:nth-child(-n + 3) {
-  opacity: 1;
-}
-.svc-card:hover .svc-seat {
-  opacity: 1;
-}
-.svc-plane {
-  offset-path: path("M30 200 Q 200 20 370 120");
-  offset-rotate: auto;
-  offset-distance: 38%;
-  transition: offset-distance 1.8s var(--ease-out-expo);
-}
-.svc-card:hover .svc-plane {
-  offset-distance: 72%;
-}
-.svc-hand {
-  transform-box: view-box;
-  transform-origin: 0 0;
-  transition: transform 1.4s var(--ease-out-expo);
-}
-.svc-card:hover .svc-hand {
-  transform: rotate(150deg);
-}
 @media (prefers-reduced-motion: reduce) {
-  .svc-pulse {
+  .svc-pulse,
+  .hero-progress {
     animation: none;
   }
 }

@@ -1,46 +1,12 @@
 "use client";
 
 import { business, telHref, visibleClaim } from "@/lib/business";
+import { localPhoto, photos } from "@/lib/photos";
+import { Photo } from "../ui/Photo";
 import { CardIcon, ExternalIcon, MoonIcon, PhoneIcon, PinIcon, RouteIcon, StarIcon, UsersIcon } from "../ui/Icons";
 import { Pending } from "../ui/Pending";
 import { Reveal } from "../ui/Reveal";
 import { SectionHeading } from "../ui/SectionHeading";
-
-function Locator() {
-  // Stylised "you are here" locator for the Portfield base
-  return (
-    <svg viewBox="0 0 320 320" className="h-full w-full" aria-hidden>
-      <defs>
-        <radialGradient id="loc-g" cx="50%" cy="50%" r="50%">
-          <stop offset="0" stopColor="#e9ab3c" stopOpacity="0.25" />
-          <stop offset="1" stopColor="#e9ab3c" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <circle cx="160" cy="160" r="150" fill="url(#loc-g)" />
-      {[40, 75, 110, 145].map((r) => (
-        <circle key={r} cx="160" cy="160" r={r} fill="none" stroke="#f4efe6" strokeOpacity={0.12} strokeDasharray={r > 100 ? "2 6" : undefined} />
-      ))}
-      <g stroke="#f4efe6" strokeOpacity="0.16">
-        <line x1="160" y1="5" x2="160" y2="315" />
-        <line x1="5" y1="160" x2="315" y2="160" />
-      </g>
-      {/* Abstract streets around Portfield */}
-      <g fill="none" stroke="#c3c9d3" strokeOpacity="0.35" strokeWidth="2" strokeLinecap="round">
-        <path d="M30 210 C 90 190, 130 170, 160 160 S 250 120, 300 70" />
-        <path d="M90 40 C 120 100, 140 130, 160 160 S 190 250, 200 300" strokeOpacity="0.2" />
-        <path d="M40 120 C 100 130, 220 200, 290 250" strokeOpacity="0.15" />
-      </g>
-      <circle cx="160" cy="160" r="22" fill="#e9ab3c" fillOpacity="0.2" className="svc-pulse" />
-      <circle cx="160" cy="160" r="8" fill="#e9ab3c" stroke="#0a1222" strokeWidth="3" />
-      <text x="174" y="150" fontSize="11" letterSpacing="2.5" fill="#f4efe6" fillOpacity="0.8" fontWeight="600">
-        PORTFIELD
-      </text>
-      <text x="174" y="166" fontSize="10" letterSpacing="2" fill="#e9ab3c">
-        {business.address.postcode}
-      </text>
-    </svg>
-  );
-}
 
 export function Local() {
   const a = business.address;
@@ -72,9 +38,11 @@ export function Local() {
           {/* Address card */}
           <Reveal className="lg:col-span-5">
             <div className="relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/[0.07] bg-gradient-to-b from-deep to-navy">
-              <div className="relative mx-auto aspect-square w-full max-w-[22rem] p-6">
-                <Locator />
-              </div>
+              <figure className="relative aspect-[4/3] w-full overflow-hidden">
+                <Photo id={localPhoto} sizes="(min-width: 1024px) 40vw, 100vw" className="h-full w-full object-cover" />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(10,18,34,0)_55%,rgba(15,26,46,0.95)_100%)]" aria-hidden />
+                <figcaption className="absolute bottom-4 left-6 text-xs text-ivory/80">{photos[localPhoto].caption}</figcaption>
+              </figure>
               <div className="mt-auto border-t border-white/[0.07] p-7 sm:p-8">
                 <p className="eyebrow text-fog">Find us</p>
                 <address className="display mt-3 text-2xl not-italic leading-tight text-ivory sm:text-[1.7rem]">

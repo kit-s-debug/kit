@@ -1,4 +1,5 @@
 import { business, telHref, visibleClaim } from "@/lib/business";
+import { photos } from "@/lib/photos";
 import { ArrowRight, PhoneIcon } from "../ui/Icons";
 import { Pending } from "../ui/Pending";
 import { Reveal } from "../ui/Reveal";
@@ -122,8 +123,27 @@ export function Footer() {
           <p>
             © {year} {business.fullName}. All journeys subject to confirmation by the operator.
           </p>
-          <p>The vehicle in the opening scene is an illustration, not a company vehicle.</p>
+          <p>Photography of Pembrokeshire from Wikimedia Commons, used under the licences credited below.</p>
         </div>
+        <details className="group mt-4 text-xs text-fog">
+          <summary className="cursor-pointer list-none font-semibold text-mist hover:text-ivory [&::-webkit-details-marker]:hidden">
+            Photo credits <span className="inline-block transition-transform group-open:rotate-90" aria-hidden>›</span>
+          </summary>
+          <ul className="mt-3 grid gap-x-8 gap-y-1.5 sm:grid-cols-2">
+            {Object.entries(photos).map(([id, p]) => (
+              <li key={id}>
+                {p.caption}:{" "}
+                <a href={p.credit.source} target="_blank" rel="noopener noreferrer" className="underline-offset-2 hover:text-ivory hover:underline">
+                  photo by {p.credit.author}
+                </a>
+                , <a href={p.credit.licenseUrl} target="_blank" rel="noopener noreferrer license" className="underline-offset-2 hover:text-ivory hover:underline">
+                  {p.credit.license}
+                </a>
+                {p.credit.modified ? ", resized for the web" : ""}
+              </li>
+            ))}
+          </ul>
+        </details>
         {business.demoMode && (
           <p className="mt-3 text-xs text-fog">
             <span className="text-gold">†</span> Demo website: claims marked † are taken from existing business listings and must be

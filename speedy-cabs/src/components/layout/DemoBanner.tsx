@@ -23,7 +23,7 @@ export function DemoBanner() {
       <span className="mt-0.5 rounded-full bg-gold/15 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-widest text-gold">Demo</span>
       <p className="hidden sm:block">
         A demonstration site prepared for {business.name}. Items marked <span className="text-gold">†</span> are business claims the
-        owner must confirm before launch. The 3D vehicle is an illustration, not a company car.
+        owner must confirm before launch.
       </p>
       <p className="sm:hidden">
         Demo site. <span className="text-gold">†</span> = owner to confirm before launch.
