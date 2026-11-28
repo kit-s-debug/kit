@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 const { chromium } = createRequire(import.meta.url)("playwright");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const out = process.argv[2] || join(root, "tools", "check", "shots"); mkdirSync(out, { recursive: true });
-const T = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".webp": "image/webp", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".json": "application/json", ".txt": "text/plain" };
+const T = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".webp": "image/webp", ".woff2": "font/woff2", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".json": "application/json", ".txt": "text/plain", ".mp4": "video/mp4", ".webm": "video/webm" };
 const srv = createServer((q, r) => {
   let p = join(root, decodeURIComponent(q.url.split("?")[0])); if (existsSync(p) && statSync(p).isDirectory()) p = join(p, "index.html");
   if (!existsSync(p)) { r.writeHead(404); return r.end(); }
@@ -23,7 +23,8 @@ for (const [name, opts] of [["desktop", { viewport: { width: 1440, height: 900 }
   const errs = [];
   p.on("console", m => m.type() === "error" && errs.push(m.text()));
   p.on("pageerror", e => errs.push(e.message));
-  p.on("requestfailed", r => errs.push("failed " + r.url()));
+  // browsers cancel video downloads when a clip pauses off-screen or the page moves on; that is normal
+  p.on("requestfailed", r => { const why = (r.failure() || {}).errorText || ""; if (r.resourceType() === "media" && /ABORTED/.test(why)) return; errs.push("failed " + r.url() + " " + why); });
   p.on("response", r => r.status() >= 400 && errs.push(r.status() + " " + r.url()));
   await p.goto(base, { waitUntil: "load" });
   await p.waitForTimeout(4200);

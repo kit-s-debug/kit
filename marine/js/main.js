@@ -37,6 +37,18 @@
   addEventListener("scroll", () => { if (!navTick) { navTick = true; requestAnimationFrame(markNav); } }, { passive: true });
   markNav();
 
+  /* ---------------- background videos: play only while on screen ---------------- */
+  const bgVids = $$("[data-bgvideo]");
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (bgVids.length && !reduced.matches && !saveData) {
+    const vio = new IntersectionObserver(es => es.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { if (v.preload === "none") { v.preload = "auto"; v.load(); } v.play().catch(() => {}); }
+      else v.pause();
+    }), { rootMargin: "120px 0px" });
+    bgVids.forEach(v => vio.observe(v));
+  }
+
   /* ---------------- fade-ins ---------------- */
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   $$("[data-reveal]").forEach(el => io.observe(el));
